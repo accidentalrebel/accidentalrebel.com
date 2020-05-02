@@ -26,5 +26,6 @@ DELETE_OUTPUT_DIRECTORY = True
 
 # Following items are often useful when publishing
 
-DISQUS_SITENAME = "accidentalrebel-com"
+DISQUS_SITENAME = "AccidentalRebel"
+DISQUS_URL = "https://accidentalrebel.disqus.com/"
 GOOGLE_ANALYTICS = "UA-55068085-3"
