@@ -28,4 +28,4 @@ DELETE_OUTPUT_DIRECTORY = True
 
 DISQUS_SITENAME = "AccidentalRebel"
 DISQUS_URL = "https://accidentalrebel.disqus.com/"
-GOOGLE_ANALYTICS = "UA-55068085-3"
+GOOGLE_ANALYTICS = "UA-55068085-2"
