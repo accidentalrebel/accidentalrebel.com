@@ -1,4 +1,4 @@
-Title: Thinking of adding Lisp to my custom game engine
+Title: #1 - Thinking of adding Lisp to my custom game engine
 Date: 2020-05-03 11:19
 Slug: thinking-of-adding-lisp-to-my-custom-game-engine
 Tags: dev, lisp, engine, 
