@@ -1,4 +1,4 @@
-Title: Implemented basic Scheme scripting for Rebel Game Engine
+Title: #2 - Implemented basic Scheme scripting for Rebel Game Engine
 Date: 2020-05-07 21:35
 Slug: implemented-basic-scheme-scripting-for-rebel-game-engine
 Tags: lisp, game_engine, dev, 
