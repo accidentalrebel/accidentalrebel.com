@@ -3,6 +3,7 @@ Date: 2020-10-05 11:13
 Slug: hunt-the-kingdom-ctf-challenge
 Tags: ctf, cybersecurity, 
 Category: ctf
+FacebookImage: https://www.accidentalrebel.com/images/hunt-the-kingdom-ctf-challenge-04.PNG
 
 > TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more
 
@@ -16,6 +17,8 @@ I took one whole day to study and prepare. I went through all our slides and hav
 I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it but there were [some social media posts](https://www.facebook.com/guidemtraining/photos/a.142012317191141/229536238438748/) that contained screenshots on how the challenge looked like. These gave me a lot of information on what to expect.
 
 ![hunt-the-kingdom-ctf-challenge-01]({attach}/images/hunt-the-kingdom-ctf-challenge-01.jpg)
+
+    It's OSINT in practice :P
 
 For example, with the screenshot above I learned how the UI looked like, that there were categories that we could switch to, leaderboards, how a question is structured, and that "areas" on the map can get added, enabled, and disabled during the game. The last part is particularly important as it means that not all questions are available from the start and some can get disabled during the game.
 
