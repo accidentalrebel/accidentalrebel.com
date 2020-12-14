@@ -29,7 +29,7 @@ SOCIAL = (('Twitter', 'https://www.twitter.com/accidentalrebel'),
           ('Github','https://github.com/accidentalrebel'),
           ('YouTube', 'https://www.youtube.com/user/AccidentalRebelGames'))
 
-BLURB = "Programmer from the Philippines. Co-founder and lead dev at @mindcakes. Currently delving into cyber security and pentesting. Also a #maker of game engines, electronics, and machines."
+BLURB = "I am a professional programmer for 11 years who is now seeking new challenges in Cyber Security. I am the co-founder and CTO at @mindcakes. Also a #maker of games, game engines, electronics, and machines."
 
 DEFAULT_PAGINATION = 10
 
