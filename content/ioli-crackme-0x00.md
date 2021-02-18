@@ -18,7 +18,7 @@ I knew that whatever password I enter in the program would be checked against th
 
 ![ioli-crackme-0x00-02]({attach}/images/ioli-crackme-0x00-02.png)
 
-```
+```asm
 mov [esp+38h+Str2], offset Str2; "250382"
 mov [esp+38h+Format], eax; 
 call _strcmp
@@ -38,7 +38,7 @@ Looking at the graph view, we want the program to always go to the node on the r
 
 The line that we could change to allow us to do this would be this one:
 
-```
+```asm
 jz short loc_40138A
 ```
 
