@@ -9,7 +9,7 @@ I am continuing my reverse engineering review by tackling the *IOLI crackmes* by
 
 # Getting the password
 
-After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge [0x02]({filename}/ioli-crackme-0x02.md) with the exception of our expected `cmp` command being inside the `_test` function.
+After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge [0x02]({filename}/ioli-crackme-0x02.md), with the exception of our expected `cmp` command being inside the `_test` function.
 
 ![ioli-crackme-0x03-01]({attach}/images/ioli-crackme-0x03-01.png)
 
@@ -25,7 +25,7 @@ Opening up the `_shift` function shows us a short, but interesting looking progr
 
 ![ioli-crackme-0x03-03]({attach}/images/ioli-crackme-0x03-03.png)
 
-If we look at the input that the function takes we will find out that the strings that are being passed from the `_test` function are `Lqydolg#Sdvvzrug$` and `Sdvvzrug#RN$$$#=,` for the *failure* and *success* messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using and how, is what we'll be trying to find out.
+If we look at the input that the function takes we will find out that the strings that are being passed from the `_test` function are `Lqydolg#Sdvvzrug$` and `Sdvvzrug#RN$$$#=,` for the *failure* and *success* messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.
 
 # Discovering the cipher
 
@@ -33,11 +33,11 @@ The best way to discover the cipher used is to step through the code. We can do 
 
 ![ioli-crackme-0x03-04]({attach}/images/ioli-crackme-0x03-04.png)
 
-The code above starts with `mov eax, [ebp+arg_0]` which copies the address to the string passed to our `_shift` function which is saved at `[ebp+arg_0]`. We then copy that address to `[esp+98h+Str]` which is at the top of the current stack, so that it can be passed as an argument when we do `call _strlen`.
+The code above starts with `mov eax, [ebp+arg_0]` which copies the pointer to the string passed to our `_shift` function. We then copy that pointer to `[esp+98h+Str]` which is the memory location pointing to the top of the current stack. This is done so that it can be passed as an argument when we do `call _strlen`.
 
-`_strlen` returns the length of the specified string and is saved to register `eax`.
+After executing, `_strlen` returns the length of the specified string and is saved to register `eax`. This is then used in the line `cmp [ebp+var_7C], eax`. 
 
-The value of `eax` is then compared with `cmp [ebp+var_7C], eax`. But what is `[ebp+var_7C]`? If you scroll up at the start of the subroutine, `[ebp+var_7C]` is assigned a value of zero. If you know how loops work, this seems like a variable that will hold a counter value. It starts at a value of `0` and it will then be incremented after every loop. Which is what is happening at position `401348`.
+But what is the value of `var_7C`? If you scroll up at the start of the subroutine, `var_7C` is assigned a value of zero. If you know how loops work, you'll realize that this variable is going to be used to hold a counter value. It starts at a value of `0` and it will eventually be incremented after every loop, which is what is happening at `401348`.
 
 To make it easy for us to remember this, let's rename `var_7C` to a more memorable name like `var_counter`.
 
@@ -47,17 +47,19 @@ So going back, to the comparison command `cmp [ebp+var_counter], eax`, which now
 
 ![ioli-crackme-0x03-06]({attach}/images/ioli-crackme-0x03-06.png)
 
-Now this block is interesting. There's a lot that is happening so let's go through each line one by one.
+Now this block is interesting. There's a lot that is happening but the gist of it is that the program gets one character from the input string, with `var_counter` as an offset. It then decrements that character value by 3, and added to a destination string. I'll be going through the code that I described step by step in the next section.
 
-`lea eax, [ebp+var_78]` loads the address to `var_78` which is currently undefined. In my case the address is `28FE90`.
+# Stepping through
+
+So to start, `lea eax, [ebp+var_78]` loads the address to `var_78` which in my case points to the address `28FE90`.
 
 `mov edx, eax` copies that address to `edx` so we can use it on the next line.
 
 `add edx, [ebp+var_counter]` adds to the address of `var_78`. Because `var_counter` is still `0`, the address remains at `28FE90`.
 
-`add eax, [ebp+arg_0]` does the same thing as above but this time adding to `[arg_0]` which contains the address `28FF10`. If it isn't clear what's happening right now, it's fine, it'll become clear the next time this part loops.
+`add eax, [ebp+arg_0]` does the same thing as above but this time adding to `[arg_0]` which contains the address `28FF10`.
 
-`movzx eax, byte ptr [eax]` copies the byte from contained in `[eax]` or `28FF10`. In this case that byte contains the value `4Ch` or `L` in ASCII. This is the first letter in our failure string `Lqydolg#Sdvvzrug$`!
+`movzx eax, byte ptr [eax]` copies the byte contained in `[eax]` or `28FF10`. In this case that byte contains the value `4Ch` or `L` in ASCII. This is the first letter in our failure string `Lqydolg#Sdvvzrug$`!
 
 `sub al, 3` then substracts 3 to `4Ch` making it `49h` which is ASCII for `I`.
 
@@ -81,14 +83,14 @@ By the time `movzx eax, byte ptr [eax]` is executed it now gets the next charact
 
 If I haven't lost you, then you should now be able to follow what will happen in the next steps:
 
-`var_counter` will get incremented again and again, which will point to the next characters in the string (`y` then `d` then `o` and so on), get shifted (`v` then `a` then `l` and so on), and then finally they are all saved back to `var_dest`. 
+`var_counter` will get incremented again and again, which will point to the next characters in the string. For example, the next characters: `y` then `d` then `o` will get shifted to `v` then `a` then `l`, respectively. This shifting of each characters will continue until `cmp [ebp+var_counter` equates to `cmp 17, 17`. 
 
-This will continue until `cmp [ebp+var_counter` equates to `cmp 17, 17`. By the end, `var_dest` now contains the string `Invalid Password!`. Each character now all fully shifted.
+By the end, `var_dest` now contains the newly shifted string `Invalid Password!`. Finally! Applying the same code above to the success message, the garbled message would end with `Password OK!!! :)`.
 
-Applied to the success message, the garbled message would end with `Password OK!!! :)`.
+Wasn't that fun?
 
 # On to the next challenge
 
-I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. 
+I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it.
 
-In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it. 
+I look forward to the next challenge. Hopefully, you are too!
