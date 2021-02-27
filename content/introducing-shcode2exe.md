@@ -12,14 +12,12 @@ One big problem with the tool is that it needs to use [Wine](https://www.winehq.
 
 ## shcode2exe
 
-While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine. The compiler and linker are already included in the repository so there's no need to download them. The only dependency is Python, which should be in any malware analysis lab, anyway. 
-
-Here is a list of features that the tool has:
+While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine along with other features as listed below:
 
   * Can accept a shellcode blob or string (String format `\x5e\x31`)
-  * Can target both 32bit or 64bit Windows architecture.
+  * Can target both 32bit or 64bit Windows architecture. 
   * Cross platform. Works on Linux or Windows.
-  * No external dependencies except for Python (No need for Wine)
+  * No dependency on Wine when running on Linux
   * Tested working with Python v3.3 and above
   * Tested working on Windows 7 (Non SP1) and above
   
@@ -68,7 +66,7 @@ test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for
 
 ## Next steps
 
-I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway.
+I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway. (Update 2021-02-07: It's now [under review](https://github.com/REMnux/salt-states/issues/169))
 
 For more information about the tool and it's code, go to [it's Github page](https://github.com/accidentalrebel/shcode2exe). If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at [@accidentalrebel](https://twitter.com/accidentalrebel).
 
