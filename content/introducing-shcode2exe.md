@@ -4,6 +4,8 @@ Slug: introducing-shcode2exe
 Tags: re, tools, malware_analysis
 Category: tools
 
+**[Edit: shcode2exe is [now part of Remnux](https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe)]**
+
 I've been playing around with [Remnux](https://remnux.org/) and encountered a problem trying to get one of the tools to run properly. The tool is [shellcode2exe](https://github.com/repnz/shellcode2exe), it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.
 
 When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the `incbin` assembly instruction. From there, the file is then automatically compiled and linked.

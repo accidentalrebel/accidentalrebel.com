@@ -1,9 +1,9 @@
 Title: IOLI Crackme 0x03
-Date: 2021-03-06 17:34
+Date: 2021-03-22 20:03
 Slug: ioli-crackme-0x03
 Tags: re, crackme
 Category: re 
-Status: draft
+Image: ioli-crackme-0x03-03.png
 
 I am continuing my reverse engineering review by tackling the *IOLI crackmes* by [@pof](https://twitter.com/pof). These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for [0x00]({filename}/ioli-crackme-0x00.md), [0x01]({filename}/ioli-crackme-0x01.md), and [0x02]({filename}/ioli-crackme-0x02.md).
 
@@ -91,6 +91,6 @@ Wasn't that fun?
 
 # On to the next challenge
 
-I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it.
+I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it. Or maybe a video would be a much better format for these kinds of challenges?
 
-I look forward to the next challenge. Hopefully, you are too!
+Anyway, I look forward to the next challenge. Hopefully, you are too!
