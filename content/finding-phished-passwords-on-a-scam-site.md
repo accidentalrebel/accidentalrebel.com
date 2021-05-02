@@ -1,6 +1,6 @@
-Title: Finding phished passwords from a scam site
+Title: Finding phished passwords on a scam site
 Date: 2021-05-01 20:56
-Slug: finding-phished-passwords-from-a-scam-site
+Slug: finding-phished-passwords-on-a-scam-site
 Tags: phishing
 Category: phishing, threat-hunting, osint
 Image: investigating-another-phishing-site-01.png
