@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*- #
 from __future__ import unicode_literals
 
-AUTHOR = 'Karlo Licudine'
+AUTHOR = 'AccidentalRebel'
 SITENAME = 'AccidentalRebel.com'
 SITEURL = ''
 THEME = '/home/arebel/blog/arebel-themes/medium-rebel-fox'
 
 PATH = 'content'
 
-TIMEZONE = 'Asia/Manila'
+TIMEZONE = 'Asia/Singapore'
 
 DEFAULT_LANG = 'en'
 

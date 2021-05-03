@@ -7,7 +7,7 @@ FacebookImage: {attach}/images/making-unity-beep-after-scripts-finish-reloading-
 
 Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! 
 
-Thankfully, I have managed to shorten this wait time through the use of [assembly definitions](https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/). If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also [purchased an SSD](http://karlo.licudine.me/computery-has-evolved-.html) and that also helped reduce compile times (Not much as the assembly definitions though).
+Thankfully, I have managed to shorten this wait time through the use of [assembly definitions](https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/). If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).
 
 However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.
 
