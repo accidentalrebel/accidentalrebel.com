@@ -63,5 +63,5 @@ This investigation has taught me a lot about phishing sites. It's different from
 
 This particular site may be down now, but I bet there will be more in the future. As long as there are people to fall for scams like these, this type of attack will continue.
 
-> If you want to know more or discuss the details about the phishing site, I would be happy to exchange notes. Drop me a line on Twitter @accidentalrebel or via email at kAarlLolLicuDdIinEe@gGmaIilL.com (Remove the capital letters).
+> If you want to know more or discuss the details about the phishing site, I would be happy to exchange notes. Drop me a line on Twitter @accidentalrebel.
 
