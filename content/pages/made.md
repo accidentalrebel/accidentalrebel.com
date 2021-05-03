@@ -1,5 +1,6 @@
 Title: Things I've made
 Slug: made
+Status: Draft
 
 I've done a lot of stuff throughout my life and have listed down everything noteworthy below.
 
