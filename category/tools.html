@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AccidentalRebel.com - tools category</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="canonical" href="..">
+
+  <link href="../favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href="..">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="../theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+<div class="container">
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../introducing-shcode2exe.html">Introducing shcode2exe</a></h1>
+	<div class="meta">
+          <time datetime="2021-02-26T07:34:00+08:00">February 26, 2021</time>
+          in <span class="categories">
+            <a href="../tag/re.html">re</a>,            <a href="../tag/tools.html">tools</a>,            <a href="../tag/malware_analysis.html">malware_analysis</a>          </span>
+	</div>
+        <p><p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
+<p>I've been playing around with <a href="https://remnux.org/">Remnux</a> and encountered a problem trying to get one of the tools to run properly. The tool is <a href="https://github.com/repnz/shellcode2exe">shellcode2exe</a>, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.</p>
+<p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
+<p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
+<h2 id="shcode2exe">shcode2exe</h2>
+<p>While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine along with other features as listed below:</p>
+<ul>
+<li>Can accept a shellcode blob or string (String format <code>\x5e\x31</code>)</li>
+<li>Can target both 32bit or 64bit Windows architecture. </li>
+<li>Cross platform. Works on Linux or Windows.</li>
+<li>No dependency on Wine when running on Linux</li>
+<li>Tested working with Python v3.3 and above</li>
+<li>Tested working on Windows 7 (Non SP1) and above</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Here's the help message for the tool:</p>
+<div class="codehilite"><pre><span></span><code><span class="go">usage: shcode2exe.py [-h] [-o OUTPUT] [-s] [-a {32,64}] input</span>
+
+<span class="go">Compile a binary shellcode blob into an exe file. Can target both 32bit or 64bit architecture.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  input                 The input file containing the shellcode.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        Set output exe file.</span>
+<span class="go">  -s, --string          Set if input file contains shellcode in string format.</span>
+<span class="go">  -a {32,64}, --architecture {32,64}</span>
+<span class="go">                        The windows architecture to use</span>
+</code></pre></div>
+
+<p>Here's how to load a file with shellcode in the format of a string</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>cat test.txt
+<span class="go">\x5e\x31\xc0\xb0\x24\xcd\x80\xb0\x24\xcd\x80\xb0\x58\xbb\xad\xde\xe1\xfe\xb9\x69\x19\x12\x28\xba\x67\x45\x23\x01\xcd\x80</span>
+<span class="gp">$ </span>./shcode2exe.py -s -o test-string.exe test.bin
+</code></pre></div>
+
+<p>Load a file with shellcode in the format of a blob</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py -o test-blob.exe test.bin
+</code></pre></div>
+
+<p>Use 64 bit architecture for the output (32 bit is the default)</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py -o test-blob.exe -a <span class="m">64</span> test.bin
+<span class="gp">$ </span>file test-blob.exe
+<span class="go">test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows</span>
+</code></pre></div>
+
+<h2 id="next-steps">Next steps</h2>
+<p>I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway. (Update 2021-02-07: It's now <a href="https://github.com/REMnux/salt-states/issues/169">under review</a>)</p>
+<p>For more information about the tool and it's code, go to <a href="https://github.com/accidentalrebel/shcode2exe">it's Github page</a>. If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at <a href="https://twitter.com/accidentalrebel">@accidentalrebel</a>.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../introducing-shcode2exe.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+</div>
+<div class="pagination">
+</div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>

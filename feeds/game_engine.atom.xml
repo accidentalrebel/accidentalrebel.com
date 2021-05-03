@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - game_engine</title><link href="http://www.accidentalrebel.com/" rel="alternate"></link><link href="http://www.accidentalrebel.com/feeds/game_engine.atom.xml" rel="self"></link><id>http://www.accidentalrebel.com/</id><updated>2020-05-19T17:59:00+08:00</updated><entry><title>#5 - Switching from C/C++ to C</title><link href="http://www.accidentalrebel.com/switching-from-c-c---to-c.html" rel="alternate"></link><published>2020-05-19T17:59:00+08:00</published><updated>2020-05-19T17:59:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2020-05-19:/switching-from-c-c---to-c.html</id><content type="html">&lt;p&gt;After the recent changes to the &lt;a href="http://www.accidentalrebel.com/following-lispy-conventions.html"&gt;lisp side of my engine&lt;/a&gt;, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. &lt;/p&gt;
+&lt;p&gt;When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.&lt;/p&gt;
+&lt;p&gt;Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know it's not a solid reason but I figured it's better to act now while it is still early.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="switching-from-c-c---to-c-01" src="http://www.accidentalrebel.com/images/switching-from-c-c---to-c-01.png" /&gt;&lt;/p&gt;
+&lt;p&gt;For the most part, dropping C++ was easy. Most of the difficulty I encountered was making sure the changes worked on all three supported platforms. There was a situation when &lt;a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix"&gt;I thought I was done&lt;/a&gt; only to find it doesn't work on Mac and Windows. I had to &lt;a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix"&gt;slowly re-apply&lt;/a&gt; the changes just to see where exactly things went wrong.&lt;/p&gt;
+&lt;p&gt;What's funny is that I learned that I was using a lot more C++ features than I thought. Namespaces and default arguments are some that really surprised me. I always assumed they were supported on both languages. This just proves to me that I still have a lot to learn with these languages.&lt;/p&gt;
+&lt;p&gt;I also took the chance during the transition to switch from &lt;a href="https://glm.g-truc.net/0.9.9/index.html"&gt;GLM&lt;/a&gt;, an OpenGL Mathematics lirary using C++, to &lt;a href="https://github.com/recp/cglm"&gt;CGLM&lt;/a&gt; a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.&lt;/p&gt;
+&lt;p&gt;While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.&lt;/p&gt;
+&lt;p&gt;If you are interested to check out my still-under-construction game engine, you can do so &lt;a href="https://github.com/accidentalrebel/Rebel-Game-Engine"&gt;here&lt;/a&gt;.&lt;/p&gt;</content><category term="game_engine"></category><category term="dev"></category><category term="game_engine"></category></entry><entry><title>#4 - Following Lispy conventions</title><link href="http://www.accidentalrebel.com/following-lispy-conventions.html" rel="alternate"></link><published>2020-05-15T07:00:00+08:00</published><updated>2020-05-15T07:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2020-05-15:/following-lispy-conventions.html</id><content type="html">&lt;p&gt;&lt;img alt="following-lispy-conventions-01" src="http://www.accidentalrebel.com/images/following-lispy-conventions-01.png" /&gt;&lt;/p&gt;
+&lt;p&gt;I was adding new Lisp functions to &lt;a href="https://github.com/accidentalrebel/Rebel-Game-Engine"&gt;my game engine&lt;/a&gt; when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like &lt;em&gt;sprite_create&lt;/em&gt; and &lt;em&gt;shader_create&lt;/em&gt; but this one function I named &lt;em&gt;make_vec3&lt;/em&gt;. I proceeded to rename &lt;em&gt;make_vec3&lt;/em&gt; to &lt;em&gt;vec3_create&lt;/em&gt;. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. &lt;/p&gt;
+&lt;p&gt;This made me wonder if there are other ways I could improve which led me to this page &lt;a href="http://community.schemewiki.org/?variable-naming-convention"&gt;about variable naming conventions&lt;/a&gt; for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. &lt;/p&gt;
+&lt;p&gt;For example, adding a &lt;em&gt;?&lt;/em&gt; prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function &lt;em&gt;is_key_down&lt;/em&gt;. Changing it to &lt;em&gt;key_down?&lt;/em&gt; looked weird at first but I liked how it made the function name shorter and the &lt;em&gt;?&lt;/em&gt; prefix made it easy to spot and parse.&lt;/p&gt;
+&lt;p&gt;Okay, cool! What's next?&lt;/p&gt;
+&lt;p&gt;Adding a &lt;em&gt;!&lt;/em&gt; indicates a function that mutates data. Most commonly used for setting a variable. I saw I had variables like &lt;em&gt;set_vec3_x&lt;/em&gt;, to which I changed to &lt;em&gt;vec3_x!&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;This went on as I continue to find improvements. Here's a list of all the naming convention changes that I've made:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="center"&gt;&lt;strong&gt;The change&lt;/strong&gt;&lt;/th&gt;
+&lt;th align="center"&gt;&lt;strong&gt;From&lt;/strong&gt;&lt;/th&gt;
+&lt;th align="center"&gt;&lt;strong&gt;To&lt;/strong&gt;&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;&lt;em&gt;:&lt;/em&gt; infix for namespaces.&lt;/td&gt;
+&lt;td align="center"&gt;vec3_create&lt;/td&gt;
+&lt;td align="center"&gt;vec3:create&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;&lt;em&gt;?&lt;/em&gt; postfix for boolean functions&lt;/td&gt;
+&lt;td align="center"&gt;key_down?&lt;/td&gt;
+&lt;td align="center"&gt;key:down?&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;&lt;em&gt;!&lt;/em&gt; postfix for destructive functions&lt;/td&gt;
+&lt;td align="center"&gt;set_camera_position&lt;/td&gt;
+&lt;td align="center"&gt;camera:position!&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;&lt;em&gt;%&lt;/em&gt; postfix for low level functions&lt;/td&gt;
+&lt;td align="center"&gt;free&lt;/td&gt;
+&lt;td align="center"&gt;free%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;&lt;em&gt;%&lt;/em&gt; prefix and postfix for low level variables&lt;/td&gt;
+&lt;td align="center"&gt;shader-pointer&lt;/td&gt;
+&lt;td align="center"&gt;%shader-pointer%&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;&lt;em&gt;*&lt;/em&gt; prefix and postfix for global variables&lt;/td&gt;
+&lt;td align="center"&gt;cube-shader&lt;/td&gt;
+&lt;td align="center"&gt;*cube-shader*&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Again, these new changes felt weird at first but I quickly became accustomed the more of these functions I changed. The code became easier to scan as there are now key characters for my eyes to easily latch onto. Something to appreciate especially with multi-level nested expressions.&lt;/p&gt;
+&lt;p&gt;Here's how the code now looks like with the new functions:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;MOVEMENT_SPEED&lt;/span&gt; &lt;span class="mf"&gt;0.001&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;*cube*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;*cube-shader*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;*cube-positions*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;init&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;set! &lt;/span&gt;&lt;span class="nv"&gt;*cube*&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;cube:create&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;assets/textures&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;awesomeface.png&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;set! &lt;/span&gt;&lt;span class="nv"&gt;*cube-shader*&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;shader:create&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;shaders/simple-3d.vs&amp;quot;&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;shaders/simple.fs&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;set! &lt;/span&gt;&lt;span class="nv"&gt;*cube-positions*&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;list &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:create&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:create&lt;/span&gt; &lt;span class="mf"&gt;1.25&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:create&lt;/span&gt; &lt;span class="mf"&gt;-1.25&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;update&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;window:clear&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let* &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;main-camera&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;camera:main&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;current-projection&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;camera:projection&lt;/span&gt; &lt;span class="nv"&gt;main-camera&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;camera-pos&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;camera:position&lt;/span&gt; &lt;span class="nv"&gt;main-camera&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;key:up?&lt;/span&gt; &lt;span class="nv"&gt;KEY_C&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;if &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;= &lt;/span&gt;&lt;span class="nv"&gt;current-projection&lt;/span&gt; &lt;span class="nv"&gt;PERSPECTIVE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;camera:projection!&lt;/span&gt; &lt;span class="nv"&gt;main-camera&lt;/span&gt; &lt;span class="nv"&gt;ORTHOGRAPHIC&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;camera:projection!&lt;/span&gt; &lt;span class="nv"&gt;main-camera&lt;/span&gt; &lt;span class="nv"&gt;PERSPECTIVE&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;key:down?&lt;/span&gt; &lt;span class="nv"&gt;KEY_A&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:x!&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+ &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:x&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;MOVEMENT_SPEED&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;key:down?&lt;/span&gt; &lt;span class="nv"&gt;KEY_E&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:x!&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;- &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:x&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;MOVEMENT_SPEED&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;key:down?&lt;/span&gt; &lt;span class="nv"&gt;KEY_COMMA&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:z!&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;+ &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:z&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;MOVEMENT_SPEED&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;when&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;key:down?&lt;/span&gt; &lt;span class="nv"&gt;KEY_O&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:z!&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;
+          &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;- &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:z&lt;/span&gt; &lt;span class="nv"&gt;camera-pos&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="nv"&gt;MOVEMENT_SPEED&lt;/span&gt;&lt;span class="p"&gt;))))&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;for-each&lt;/span&gt;
+   &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;position&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+     &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;%tint%&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3:create%&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;cube:draw&lt;/span&gt; &lt;span class="nv"&gt;*cube*&lt;/span&gt; &lt;span class="nv"&gt;position&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="nv"&gt;%tint%&lt;/span&gt; &lt;span class="nv"&gt;*cube-shader*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+       &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;free%&lt;/span&gt; &lt;span class="nv"&gt;%tint%&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+   &lt;span class="nv"&gt;*cube-positions*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;window:swap&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;I also changed my C functions to reflect a &lt;em&gt;NamespaceVerb&lt;/em&gt; convention. I could have used &lt;em&gt;namespace::Verb&lt;/em&gt; but the &lt;a href="http://wiki.call-cc.org/eggref/5/bind"&gt;FFI that I use&lt;/a&gt; to communicate with C cannot parse C namespaces. So instead of &lt;em&gt;Shader::Create&lt;/em&gt;, I am left with &lt;em&gt;ShaderCreate&lt;/em&gt;. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, &lt;a href="https://www.raylib.com/examples.html"&gt;Raylib also uses this convention&lt;/a&gt; for their functions).&lt;/p&gt;
+&lt;p&gt;I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.&lt;/p&gt;</content><category term="game_engine"></category><category term="dev"></category><category term="game_engine"></category></entry></feed>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - dev</title><link href="http://www.accidentalrebel.com/" rel="alternate"></link><link href="http://www.accidentalrebel.com/feeds/dev.atom.xml" rel="self"></link><id>http://www.accidentalrebel.com/</id><updated>2020-06-16T05:58:00+08:00</updated><entry><title>Chicken-Scheme FFI Examples</title><link href="http://www.accidentalrebel.com/chicken-scheme-ffi-examples.html" rel="alternate"></link><published>2020-06-16T05:58:00+08:00</published><updated>2020-06-16T05:58:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2020-06-16:/chicken-scheme-ffi-examples.html</id><content type="html">&lt;p&gt;I'm currently working on refactoring the FFI implementation for &lt;a href="https://github.com/accidentalrebel/rebel-game-engine"&gt;the Rebel Game Engine&lt;/a&gt;. It was previously written using the &lt;a href="http://wiki.call-cc.org/eggref/5/bind"&gt;Bind chicken egg&lt;/a&gt; but I wanted to have more control over the implementation by using the low level foreign functions. &lt;/p&gt;
+&lt;p&gt;To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="foreign-lambda-example"&gt;foreign-lambda example&lt;/h2&gt;
+&lt;p&gt;Let's say we have a structure &lt;code&gt;Vec3&lt;/code&gt; and a function &lt;code&gt;Vec3Create&lt;/code&gt; that we want to access from chicken-scheme.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;typedef&lt;/span&gt; &lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="nc"&gt;Vec3&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt; &lt;span class="n"&gt;Vec3&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="n"&gt;Vec3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="nf"&gt;Vec3Create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kt"&gt;float&lt;/span&gt; &lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;Vec3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Vec3&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="n"&gt;malloc&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;sizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Vec3&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+    &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We could use &lt;a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"&gt;&lt;code&gt;foreign-lambda&lt;/code&gt;&lt;/a&gt; to bind to the function:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;vec3_create&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;foreign-lambda&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;c-pointer&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;struct&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Vec3&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;   &lt;span class="c1"&gt;; Return type, a pointer to a struct object of Vec3&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;Vec3Create&amp;quot;&lt;/span&gt;                  &lt;span class="c1"&gt;; Name fo the function&lt;/span&gt;
+    &lt;span class="nv"&gt;float&lt;/span&gt; &lt;span class="nv"&gt;float&lt;/span&gt; &lt;span class="nv"&gt;float&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;           &lt;span class="c1"&gt;; The three parameters (x,y,z) to pass to the function&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This would allow us to call the &lt;code&gt;vec3_create&lt;/code&gt; function like so:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_create&lt;/span&gt; &lt;span class="mf"&gt;1.1&lt;/span&gt; &lt;span class="mf"&gt;2.2&lt;/span&gt; &lt;span class="mf"&gt;3.3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="foreign-lambda-example_1"&gt;foreign-lambda* example&lt;/h2&gt;
+&lt;p&gt;Let's bind another C function &lt;code&gt;Vec3Print&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;Vec3Print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;Vec3&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Vec3 to print: (%f, %f, %f)&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;y&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;z&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We could also use &lt;a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"&gt;&lt;code&gt;foreign-lambda*&lt;/code&gt;&lt;/a&gt; (Notice the asterisk). This is similar to &lt;code&gt;foreign-lambda&lt;/code&gt; but accepts C code as a string.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;vec3_print&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;foreign-lambda*&lt;/span&gt;
+    &lt;span class="nv"&gt;void&lt;/span&gt;                          &lt;span class="c1"&gt;; The return type&lt;/span&gt;
+    &lt;span class="p"&gt;(((&lt;/span&gt;&lt;span class="nf"&gt;c-pointer&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;struct&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Vec3&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="nv"&gt;a0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;; The parameter to pass, a pointer to a Vec3 object&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;Vec3Print(*a0);&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;           &lt;span class="c1"&gt;; The C code in string from&lt;/span&gt;
+                                  &lt;span class="c1"&gt;; Vec3Print accepts a non pointer, we dereference it&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_print&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_create&lt;/span&gt; &lt;span class="mf"&gt;1.1&lt;/span&gt; &lt;span class="mf"&gt;2.2&lt;/span&gt; &lt;span class="mf"&gt;3.3&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;   &lt;span class="c1"&gt;; Creates a vec3 and prints it&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="inline-c-code-in-foreign-lambda"&gt;Inline C code in foreign-lambda*&lt;/h2&gt;
+&lt;p&gt;Here's another example using &lt;code&gt;foreign-lambda*&lt;/code&gt;. This time there is no predefined C function, but instead we define the code inside the lisp function's body.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;vec3_zero&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;foreign-lambda*&lt;/span&gt;
+    &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;c-pointer&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;struct&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Vec3&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="p"&gt;()&lt;/span&gt;                            &lt;span class="c1"&gt;; Empty variables&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;Vec3* v = (Vec3*)Vec3Create(0.0f, 0.0f, 0.0f); &lt;/span&gt;
+&lt;span class="s"&gt;    C_return(v);&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;               &lt;span class="c1"&gt;; Instead of &amp;quot;return&amp;quot;, we use &amp;quot;C_return&amp;quot;.&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_print&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_zero&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;          &lt;span class="c1"&gt;; Calls vec3_zero and prints the returned Vec3&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Note that due to obscure technical reasons &lt;code&gt;C_return&lt;/code&gt; must be used instead of &lt;code&gt;return&lt;/code&gt; when returning a value. More info about this &lt;a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="free-ing-vec3-pointers"&gt;Free-ing Vec3 pointers&lt;/h2&gt;
+&lt;p&gt;Since &lt;code&gt;Vec3Create&lt;/code&gt; allocates memory for a Vec3 struct using &lt;code&gt;malloc&lt;/code&gt;, it's a good idea to free this when we are done using it. To do this we could bind a function to &lt;code&gt;free&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;free&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;foreign-lambda&lt;/span&gt; &lt;span class="nv"&gt;void&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;free&amp;quot;&lt;/span&gt; &lt;span class="nv"&gt;c-pointer&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;v&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_zero&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_print&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;free&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="setting-up-getters-and-setters"&gt;Setting up getters and setters&lt;/h2&gt;
+&lt;p&gt;If we want to have access to variables of a struct object. We could do something like this:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;define &lt;/span&gt;&lt;span class="nv"&gt;vec3_x&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;foreign-lambda*&lt;/span&gt;
+    &lt;span class="nv"&gt;float&lt;/span&gt;
+    &lt;span class="p"&gt;(((&lt;/span&gt;&lt;span class="nf"&gt;c-pointer&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;struct&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Vec3&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="nv"&gt;a0&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;quot;C_return(a0-&amp;gt;x);&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;display &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_x&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_create&lt;/span&gt; &lt;span class="mf"&gt;8.8&lt;/span&gt; &lt;span class="mf"&gt;8.8&lt;/span&gt; &lt;span class="mf"&gt;8.8&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now this is fine but it'll be a pain to specify an accessor for every variable. A better solution is to use the &lt;a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"&gt;&lt;code&gt;foreigners&lt;/code&gt;&lt;/a&gt; egg which allows the use of macros that will make our lives easier.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;import&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;chicken&lt;/span&gt; &lt;span class="nv"&gt;foreign&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;import&lt;/span&gt; &lt;span class="nv"&gt;foreigners&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;;; Set up the accessors for Vec3 struct&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;define-foreign-record-type&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3&lt;/span&gt; &lt;span class="nv"&gt;Vec3&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;float&lt;/span&gt; &lt;span class="nv"&gt;x&lt;/span&gt; &lt;span class="nv"&gt;vec3_x&lt;/span&gt; &lt;span class="nv"&gt;vec3_x!&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;   &lt;span class="c1"&gt;; vec3_x is a getter, vec3_x! is a setter&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;float&lt;/span&gt; &lt;span class="nv"&gt;y&lt;/span&gt; &lt;span class="nv"&gt;vec3_y&lt;/span&gt; &lt;span class="nv"&gt;vec3_y!&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;float&lt;/span&gt; &lt;span class="nv"&gt;z&lt;/span&gt; &lt;span class="nv"&gt;vec3_z&lt;/span&gt; &lt;span class="nv"&gt;vec3_z!&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;let &lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="nf"&gt;v&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_create&lt;/span&gt; &lt;span class="mf"&gt;4.4&lt;/span&gt; &lt;span class="mf"&gt;5.5&lt;/span&gt; &lt;span class="mf"&gt;6.6&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;display &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_x&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;; Display value of x&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;newline&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_x!&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt; &lt;span class="mf"&gt;7.7&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;      &lt;span class="c1"&gt;; Set x to 7.7&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;display &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;vec3_x&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt; &lt;span class="c1"&gt;; Display value of x&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;newline&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nf"&gt;free&lt;/span&gt; &lt;span class="nv"&gt;v&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="binding-enums"&gt;Binding enums&lt;/h2&gt;
+&lt;p&gt;The &lt;a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"&gt;&lt;code&gt;foreigners&lt;/code&gt;&lt;/a&gt; egg also allows for the binding of enums using &lt;a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"&gt;&lt;code&gt;define-foreign-enum-type&lt;/code&gt;&lt;/a&gt;. Say we have an enum declaration &lt;code&gt;Keys&lt;/code&gt;.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;enum&lt;/span&gt; &lt;span class="n"&gt;Keys&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;UP&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;RIGHT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;DOWN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;LEFT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;
+&lt;span class="p"&gt;};&lt;/span&gt;
+
+&lt;span class="o"&gt;:::&lt;/span&gt;&lt;span class="n"&gt;scheme&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;define&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;foreign&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="k"&gt;enum&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;type&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;up&lt;/span&gt; &lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;up&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;UP&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt; &lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;RIGHT&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;down&lt;/span&gt; &lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;down&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;DOWN&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="n"&gt;left&lt;/span&gt; &lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;left&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;LEFT&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;display&lt;/span&gt; &lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;right&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;display&lt;/span&gt; &lt;span class="n"&gt;keys&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;down&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;hr /&gt;
+&lt;p&gt;These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found &lt;a href="https://github.com/accidentalrebel/chicken-scheme-ffi-example"&gt;on Github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Also, check out &lt;a href="http://wiki.call-cc.org/eggref/5/bind"&gt;the chicken-bind egg&lt;/a&gt;, it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.&lt;/p&gt;</content><category term="dev"></category><category term="programming"></category><category term="dev"></category><category term="research"></category><category term="code"></category></entry><entry><title>#3 - Rebel Game Engine now works on different platforms</title><link href="http://www.accidentalrebel.com/rebel-game-engine-now-works-on-different-platforms.html" rel="alternate"></link><published>2020-05-10T07:08:00+08:00</published><updated>2020-05-10T07:08:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2020-05-10:/rebel-game-engine-now-works-on-different-platforms.html</id><content type="html">&lt;p&gt;After &lt;a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md"&gt;finishing the integration&lt;/a&gt; of Chicken-scheme scripting for &lt;a href="https://github.com/accidentalrebel/Rebel-Game-Engine"&gt;my custom game engine&lt;/a&gt; I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="rebel-game-engine-now-works-on-different-platforms-01" src="http://www.accidentalrebel.com/images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.&lt;/p&gt;
+&lt;p&gt;It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different package managers.&lt;/p&gt;
+&lt;p&gt;After a week of this I was finally able to get the engine working on all three platforms. To make sure others can be able to do the same, I also documented the steps which can now be read on &lt;a href="https://github.com/accidentalrebel/rebel-game-engine/wiki"&gt;the project's wiki&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;I was surprised that the hardest one to get working was for Windows. Because I didn't want to create a separate build system that uses Visual Studio solution files, I had to find a simple way to make it work and that involved the use of an excellent building platform for Windows called &lt;a href="https://www.msys2.org/"&gt;Msys2&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;I am quite happy that I was able to structure the whole system so that you only need one Makefile for all three platforms. I'm not sure if this wil change in the future, but I'll do my best for it to stay like this as long as it's possible.&lt;/p&gt;
+&lt;p&gt;If you are interested to try it out here's the project's &lt;a href="https://github.com/accidentalrebel/rebel-game-engine"&gt;Github page&lt;/a&gt;, depending on your platform here are the instructions on how to build for each one: &lt;a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Arch-Linux"&gt;Linux&lt;/a&gt;, &lt;a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-MacOSX"&gt;MacOSX&lt;/a&gt; and &lt;a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Windows-(using-Msys2)"&gt;Windows&lt;/a&gt;.&lt;/p&gt;</content><category term="dev"></category><category term="dev"></category><category term="game_engine"></category></entry><entry><title>Making Unity beep after scripts finish reloading</title><link href="http://www.accidentalrebel.com/making-unity-beep-after-scripts-finish-reloading.html" rel="alternate"></link><published>2020-05-01T17:07:00+08:00</published><updated>2020-05-01T17:07:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2020-05-01:/making-unity-beep-after-scripts-finish-reloading.html</id><content type="html">&lt;p&gt;Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! &lt;/p&gt;
+&lt;p&gt;Thankfully, I have managed to shorten this wait time through the use of &lt;a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/"&gt;assembly definitions&lt;/a&gt;. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).&lt;/p&gt;
+&lt;p&gt;However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="making-unity-beep-after-scripts-finish-reloading-02" src="http://www.accidentalrebel.com/images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /&gt;&lt;/p&gt;
+&lt;p&gt;I recently got the idea of having Unity inform me when a script has finished reloading. Instead of informing me visually, I decided that it would also be better for it to play an audible beep sound. With this, I could use the time to close my eyes, relax, or stretch. Once it beeps I'll just open my eyes and I'm back to working again. Once it beeps I'll just open my eyes and I'm back to working again. It's such a simple thing but I feel has a good impact on my health.&lt;/p&gt;
+&lt;p&gt;Here's the code that I use if you are interested. Note that this is an editor script so it should be placed inside any "Editor" folder for it to run.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="nn"&gt;System.Collections&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="nn"&gt;System.Collections.Generic&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="nn"&gt;UnityEngine&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="nn"&gt;UnityEditor&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="k"&gt;using&lt;/span&gt; &lt;span class="nn"&gt;System.Diagnostics&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+
+&lt;span class="k"&gt;public&lt;/span&gt; &lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;BuildManager&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;MonoBehaviour&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;span class="na"&gt;    [UnityEditor.Callbacks.DidReloadScripts]&lt;/span&gt;
+    &lt;span class="k"&gt;private&lt;/span&gt; &lt;span class="k"&gt;static&lt;/span&gt; &lt;span class="k"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;OnScriptsReloaded&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; 
+    &lt;span class="p"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;EditorApplication&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Beep&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+    &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The code above uses Unity's &lt;a href="https://docs.unity3d.com/ScriptReference/EditorApplication.Beep.html"&gt;EditorApplication.Beep()&lt;/a&gt; API so it should work on Windows and Mac. But since I'm using Linux to develop games on it does not seem to work for me. &lt;/p&gt;
+&lt;p&gt;Here's a different version that spawns a OS process and runs the &lt;code&gt;play&lt;/code&gt; command to generate a short sine wave beep. Be sure to have &lt;a href="http://sox.sourceforge.net/"&gt;sox&lt;/a&gt; installed on your Linux machine for this to work.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="n"&gt;ProcessStartInfo&lt;/span&gt; &lt;span class="n"&gt;proc&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="n"&gt;ProcessStartInfo&lt;/span&gt;&lt;span class="p"&gt;();&lt;/span&gt;
+&lt;span class="n"&gt;proc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;FileName&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;play&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;proc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Arguments&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;-q -n synth 0.1 sin 880 vol 0.2&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;proc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;WindowStyle&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ProcessWindowStyle&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Minimized&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;proc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;CreateNoWindow&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Start&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;proc&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Of course, this is not a solution to the compile time problem. I'd still have to wait for it to finish. But what I like about this is that it has turned a negative into a positive. And that is always great.&lt;/p&gt;</content><category term="dev"></category><category term="dev"></category><category term="unity"></category></entry></feed>

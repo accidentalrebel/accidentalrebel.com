@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>CovidScammers writeup (Defcon RTV CTF)</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="CovidScammers writeup (Defcon RTV CTF) August 13, 2020 in ctf,writeup,malware_analysis,defcon">
+
+  <link rel="canonical" href="./covidscammers-writeup--defcon-rtv-ctf.html">
+
+  <link href="./favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  
+<meta name="twitter:card" content="summary">
+<meta property="og:url" content="./covidscammers-writeup--defcon-rtv-ctf.html">
+<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
+<meta name="twitter:creator:id" content="accidentalrebel">
+<meta property="og:title" content="CovidScammers writeup (Defcon RTV CTF)">
+<meta property="og:description" content="I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <">
+<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png"> -->
+<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href=".">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="./theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+	<article>
+          <h1><a href="./covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a></h1>
+          <div class="meta">
+            <time datetime="2020-08-13T16:58:00+08:00">August 13, 2020</time>
+            in <span class="categories">
+              <a href="./tag/ctf.html">ctf</a>,              <a href="./tag/writeup.html">writeup</a>,              <a href="./tag/malware_analysis.html">malware_analysis</a>,              <a href="./tag/defcon.html">defcon</a>            </span>
+          </div>
+        <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
+<p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
+<h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
+<blockquote>
+<p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a sample of the malware found on the system has been pulled and given to you. Your task, should you choose to accept it, is to reverse-engineer the sample and locate, fuzz and exploit the C2 server, and then hack-back to learn about the malicious actor and recover the stolen documents.
+Look for the free flag. Get on the scoreboard!</p>
+</blockquote>
+<p>I admit that in a hurry to get points I did not properly read the description of the challenge. I understood that I'll be downloading and reverse-engineering something. But it did not register on my mind that it's actually malware.</p>
+<p>The download was a binary that doesn't do anything when run. My first instict was to use <code>strings</code> to look for the flag, which turned out to be correct.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-01" src="./images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-01.png" /></p>
+<p>The flag is: <code>TS{freeFlagLookAtMe}</code>.</p>
+<p>Unfortunately, this challenge was already solved by a team member so I did not get the free flag. The second one, is still open though.</p>
+<h2 id="syscalls-5-points">Syscalls [5 points]</h2>
+<blockquote>
+<p>What syscall is hindering your dynamic analysis? Flag is just the syscall, no brackets or anything.</p>
+</blockquote>
+<p>If we run the file from within gdb to debug it we get:</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-02" src="./images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-02.png" /></p>
+<blockquote>
+<p>can't debug this, na na na na...</p>
+</blockquote>
+<p>So from the description we are looking for a syscall that is hindering the debugging of the binary. If we want to find out what syscalls are called by a program, we could determine that using the <code>strace</code> command.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-03" src="./images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-03.png" /></p>
+<p>Just before the write syscall for the "na na na" message we see:</p>
+<blockquote>
+<p>ptrace(TRACE_TRACEME) = -1 EPERM (Operation not permitted)</p>
+</blockquote>
+<p>I'm unfamiliar with <code>ptrace</code> so I researched it and tried to understand how it could prevent debugging. I learned that <code>ptrace</code> can be used as an anti-debugging technique as can be seen <a href="https://www.aldeid.com/wiki/Ptrace-anti-debugging">here</a>.</p>
+<p>Sure, enough the flag is: <code>ptrace</code>. </p>
+<p>I got 5 points from this and I finally have a contribution to my team! Unfortunately, real life prevented me from continuing with the CTF and I had to bow out early.</p>
+<h3 id="sidenote-how-to-bypass-ptrace">Sidenote: How to bypass ptrace?</h3>
+<p>How does one bypass this anti-debugging feature? <a href="https://dev.to/denisnutiu/bypassing-ptrace-calls-with-ldpreload-on-linux-12jl">Here's one approach</a> that I tried which should work in theory but doesn't. My guess is that this particular binary has an additional way to prevent debugging, like it spawns a child process and it stays there even if you bypass ptrace. I'd have to look into this further in the future.</p>
+<h2 id="shared-secrets-150-points">Shared Secrets [150 points]</h2>
+<blockquote>
+<p>The malware creates a shared-memory object and stores a flag inside. Recover the flag. Flag has the TS{} format, you'll know when you get it.</p>
+</blockquote>
+<p>I was able to solve this challenge after the CTF preliminaries ended. By this time I was already well rested and have a clearer mind. It was also at this time that I realized that the file is actually a malware and has already infected my machine. Thankfully, I was running a virtual machine which meant I could just revert back to an old working restore point.</p>
+<p>Knowing that the file is a malware, the next step I did was to run <code>rkhunter</code> to look for rootkits and suspcious files. This gave me an interesting finding:</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-04" src="./images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-04.png" /></p>
+<p>Opening the suspicious file revealed this: </p>
+<blockquote>
+<p>KRJXW22FMVYES5CTMVBXERKUNNCWK4CJORJWCRTFFZGXERTSGBSE6IL5</p>
+</blockquote>
+<p>This is not the flag yet, it needs to be in the "TS{}" format as instructed in the challenge description.</p>
+<p>I initially had a hard time figuring out how to decode this. It wasn't <code>base64</code> nor any other popular encoding. Thankfully, there are tools like <a href="https://gchq.github.io/CyberChef/">CyberChef</a> to help with this kind of problem. After some experimentation, the "magic" recipe did the trick and revealed to me that it was actually a <code>base32</code> encoding.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-05" src="./images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-05.png" /></p>
+<p>This gave me the flag: <code>TS{kEepItSeCrETkEepItSaFe.MrFr0dO!}</code></p>
+<h2 id="license-and-registration-100-points">License and Registration [100 points]</h2>
+<blockquote>
+<p>The malware creates a UUID and stores it in a file, what is the name of this file. Provide the SHA1 hash of hte full path as the flag.</p>
+</blockquote>
+<p>So the description above says that a file is created by the malware and stores data inside of it. I figured that the easiest way to figure out what this created file is to: </p>
+<ul>
+<li>Restore to a previous restore point before I opened the malware</li>
+<li>Run the malware, and then;</li>
+<li>Inspect which other files were created at the time of execution. </li>
+</ul>
+<p>I found out which files were recently created during the last 2 minutes using the following command:</p>
+<div class="codehilite"><pre><span></span><code>$ find / -user kali -mmin <span class="m">2</span> -type f <span class="m">2</span>&gt; /dev/null
+</code></pre></div>
+
+<p>This showed me a lot of files, but after sifting through that I found one file that seesm promising.</p>
+<blockquote>
+<p>/tmp/.serverauth.tn6aUcM0uM</p>
+</blockquote>
+<p>To get the flag I did this:</p>
+<div class="codehilite"><pre><span></span><code>$ <span class="nb">echo</span> -n <span class="s2">&quot;/tmp/.serverauth.tn6aUcM0uM&quot;</span> <span class="p">|</span> sha1sum
+</code></pre></div>
+
+<p>Which resulted in this flag: <code>5b4e97047851682649a602ad62ba4af567e352a3</code></p>
+<h2 id="to-be-continued">To be continued?</h2>
+<p>So I wanted to try and work on the other challenges but it seems that <a href="https://ctf.threatsims.com">the ctf site</a> is currently down. The site redirected to a different non https site and it spooked me so I stopped trying. Good thing that I had NoScript on.</p>
+<p>If you want a longer and more pro writeup about the CovidScammers challenges do check out <a href="https://0xdf.gitlab.io/2020/05/04/covid-19-ctf-covidscammers.html">0xdf's writeup about it</a>.</p>
+        <!-- Disqus goes here -->
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
+	  <script>
+	    /**
+	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+	    /*
+	     var disqus_config = function () {
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.identifier = covidscammers-writeup--defcon-rtv-ctf.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	     };
+	    */
+	    (function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	    })();
+	  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </section>
+	</article>
+      </div>
+    </div>
+  </div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>

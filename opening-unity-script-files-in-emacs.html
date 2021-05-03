@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Opening Unity Script Files in Emacs</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Opening Unity Script Files in Emacs January 24, 2018 in emacs unity">
+
+  <link rel="canonical" href="./opening-unity-script-files-in-emacs.html">
+
+  <link href="./favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  
+<meta name="twitter:card" content="summary">
+<meta property="og:url" content="./opening-unity-script-files-in-emacs.html">
+<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
+<meta name="twitter:creator:id" content="accidentalrebel">
+<meta property="og:title" content="Opening Unity Script Files in Emacs">
+<meta property="og:description" content="I've recently embarked on a mission to fully integrate Emacs with my Unity game devel">
+<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png"> -->
+<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href=".">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="./theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+	<article>
+          <h1><a href="./opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a></h1>
+          <div class="meta">
+            <time datetime="2018-01-24T14:32:00+08:00">January 24, 2018</time>
+            in <span class="categories">
+              <a href="./tag/emacs-unity.html">emacs unity</a>            </span>
+          </div>
+        <p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
+<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
+<p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
+<p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
+<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text proxy</a> as a external editor and then having that application call Emacs with the correct line number. I was not able to make it work but the idea fascinated me. There was also one that involved using Mac OS X's Automator where you <a href="https://stackoverflow.com/a/1857220">wrap a shell script as an automator app</a> and you set that as the external editor. Didn't work either but it did teach me about Automator and it's future possible uses for my environment.</p>
+<p>Thankfully, there was one solution that worked and it involved creating a .cs file and setting up a function with OnOpenAssetAttribute callback attribute. This function is called when Unity receives a command to open an asset. From here we start a process that invokes emacsclient with the correct file and line numbers. </p>
+<p>Here is a short example:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[OnOpenAssetAttribute()]</span>
+<span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">OnOpenedAsset</span><span class="p">(</span><span class="kt">int</span> <span class="n">instanceID</span><span class="p">,</span> <span class="kt">int</span> <span class="n">line</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span> <span class="n">selected</span> <span class="p">=</span> <span class="n">EditorUtility</span><span class="p">.</span><span class="n">InstanceIDToObject</span><span class="p">(</span><span class="n">instanceID</span><span class="p">);</span>
+    <span class="kt">string</span> <span class="n">ProjectPath</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="n">GetDirectoryName</span><span class="p">(</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="n">dataPath</span><span class="p">);</span>
+    <span class="kt">string</span> <span class="n">completeFilepath</span> <span class="p">=</span> <span class="n">ProjectPath</span> <span class="p">+</span> <span class="n">Path</span><span class="p">.</span><span class="n">DirectorySeparatorChar</span> <span class="p">+</span> <span class="n">AssetDatabase</span><span class="p">.</span><span class="n">GetAssetPath</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span>
+
+    <span class="c1">// We check if this is the type of file we can open</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span> <span class="p">==</span> <span class="s">&quot;UnityEditor.MonoScript&quot;</span> <span class="p">||</span>
+        <span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span> <span class="p">==</span> <span class="s">&quot;UnityEngine.Shader&quot;</span> <span class="p">)</span> <span class="p">{</span>
+
+        <span class="kt">string</span> <span class="n">args</span> <span class="p">=</span> <span class="s">&quot;-n +&quot;</span> <span class="p">+</span> <span class="n">line</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">&quot; &quot;</span> <span class="p">+</span> <span class="n">completeFilepath</span><span class="p">;</span>
+
+        <span class="c1">// We start a process by passing the command &quot;emacsclient -n +linenumber filePath&quot;</span>
+        <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span> <span class="n">proc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
+        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;/Applications/Emacs.app/Contents/MacOS/bin/emacsclient&quot;</span><span class="p">;</span>
+        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="n">args</span><span class="p">;</span>
+        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">UseShellExecute</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">WindowStyle</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Hidden</span><span class="p">;</span>
+        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardOutput</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="n">proc</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</code></pre></div>
+
+<p>bo          // Tell unity we have handled the opening of the file.
+            return true;
+        }</p>
+<div class="codehilite"><pre><span></span><code>    <span class="o">//</span> <span class="nv">We</span> <span class="nv">were</span> <span class="nv">not</span> <span class="nv">able</span> <span class="nv">to</span> <span class="nv">open</span> <span class="nv">the</span> <span class="nv">file</span>. <span class="nv">Let</span> <span class="nv">unity</span> <span class="nv">handle</span> <span class="nv">the</span> <span class="nv">opening</span>.
+    <span class="k">return</span> <span class="nv">false</span><span class="c1">;</span>
+}
+</code></pre></div>
+
+<p><strong>Note:</strong> This file needs to be placed inside an "Editor" folder within Unity in order for it to work.</p>
+<p><a href="https://gist.github.com/accidentalrebel/69ac38f729e72c170a8d091b4daaec52">Go here</a> if you want to see a more complete and fully featured implementaition of the code above. Also, a hat tip to <a href="https://github.com/tbriley/Atom">this repository</a> for the solution which was largely inspired by the <a href="https://github.com/dotBunny/VSCode">VSCode project</a>.</p>
+        <!-- Disqus goes here -->
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
+	  <script>
+	    /**
+	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+	    /*
+	     var disqus_config = function () {
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.identifier = opening-unity-script-files-in-emacs.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	     };
+	    */
+	    (function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	    })();
+	  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </section>
+	</article>
+      </div>
+    </div>
+  </div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>

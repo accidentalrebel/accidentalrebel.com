@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AccidentalRebel.com - lisp category</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="canonical" href="..">
+
+  <link href="../favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href="..">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="../theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+<div class="container">
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a></h1>
+	<div class="meta">
+          <time datetime="2020-05-07T21:35:00+08:00">May 07, 2020</time>
+          in <span class="categories">
+            <a href="../tag/lisp.html">lisp</a>,            <a href="../tag/game_engine.html">game_engine</a>,            <a href="../tag/dev.html">dev</a>          </span>
+	</div>
+        <p><p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
+<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
+<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="../images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
+<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code after two implementations.</p>
+<p>And my code did change a lot. The biggest change is switching from an object oriented approach to functional style so that it would suit Lisp scripting. I also paid special attention in making sure that whatever change I made would make sense when the game engine is used without scripting. My guiding principle is that implementing a game on both C and Scheme should be structurally identical, aside from the difference in syntaxes, of course.</p>
+<p>Here's a simple program wher you could move a colored box using the keyboard:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">box-sprite</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define </span><span class="nv">box-pos</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">set! </span><span class="nv">box-sprite</span> <span class="p">(</span><span class="nf">sprite_create</span> <span class="nv">assets/textures</span> <span class="nv">tile</span><span class="o">.</span><span class="nv">png</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">set! </span><span class="nv">box-pos</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">400</span> <span class="mi">300</span> <span class="mi">0</span><span class="p">))</span>
+  <span class="no">#t</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">window_clear</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_O</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_E</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_A</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+
+  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">tint</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">sprite_draw</span> <span class="nv">box-sprite</span> <span class="nv">box-pos</span> <span class="mi">50</span> <span class="mi">50</span> <span class="nv">tint</span> <span class="no">#f</span><span class="p">))</span>
+
+  <span class="p">(</span><span class="nf">window_swap</span><span class="p">)</span>
+  <span class="no">#t</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Implementing Lisp, and coding with it has been very fun too. I've had the most fun when <a href="http://wiki.call-cc.org/eggref/5/bind">I implemented the FFI</a>. Every time I go through the wiki I find a better way of doing things so I'd go and re-implement them again. Each iteration I learn something new and it's such a joy exploring.</p>
+<p>Playing with the garbage collector has also made me think about memory management more. This resulted in having two ways to call certain API functions: one will return a pointer that will automatically get tracked by the GC. The other you'd have to free manually. I figured this is a good approach for situations when having control over memory and references is crucial.</p>
+<p>I've already spent a lot of time on this project and it was mostly spent on the scripting side of the engine. There are still more to do for it to be considered useful but I'm happy I was able to learn a lot.</p>
+<p>If you are curious about the engine you could check it out <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+</div>
+<div class="pagination">
+</div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>

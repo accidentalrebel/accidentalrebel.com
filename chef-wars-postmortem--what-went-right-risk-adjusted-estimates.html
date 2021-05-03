@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates December 10, 2017 in chefwars,gamedev,mindcake,postmortem">
+
+  <link rel="canonical" href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">
+
+  <link href="./favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  
+<meta name="twitter:card" content="summary">
+<meta property="og:url" content="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">
+<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
+<meta name="twitter:creator:id" content="accidentalrebel">
+<meta property="og:title" content="Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estim">
+<meta property="og:description" content="Note: This is from a series of articles that outlines the things I've learned while making <a href="http://mindcakegam">
+<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png"> -->
+<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href=".">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="./theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+	<article>
+          <h1><a href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
+          <div class="meta">
+            <time datetime="2017-12-10T23:33:00+08:00">December 10, 2017</time>
+            in <span class="categories">
+              <a href="./tag/chefwars.html">chefwars</a>,              <a href="./tag/gamedev.html">gamedev</a>,              <a href="./tag/mindcake.html">mindcake</a>,              <a href="./tag/postmortem.html">postmortem</a>            </span>
+          </div>
+        <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
+<p><strong>TL;DR</strong></p>
+<ul>
+<li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
+</ul>
+<hr />
+<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
+<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
+<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system in all my game development related projects and has helped us immensely in the development of our recent game, <a href="http://mindcakegames.com/">Chef Wars</a>.</p>
+<p>I'm sharing this in the hopes that it would help others too.</p>
+<h2 id="risk-adjusted-estimates">Risk Adjusted Estimates</h2>
+<p>The basic idea of this system is that for each task, an estimated time would be given along with a "confidence level". The lower the confidence the more padding is added automatically to the estimate for that task.</p>
+<p>It's a very simple system and is illustrated clearly in the image below:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th align="center">Estimate</th>
+<th align="center">Confidence</th>
+<th align="right">Risk-Adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task A</td>
+<td align="center">5</td>
+<td align="center">2</td>
+<td align="right">9.44</td>
+</tr>
+<tr>
+<td>Task B</td>
+<td align="center">8</td>
+<td align="center">6</td>
+<td align="right">11.56</td>
+</tr>
+<tr>
+<td>Task C</td>
+<td align="center">10</td>
+<td align="center">8</td>
+<td align="right">12.22</td>
+</tr>
+<tr>
+<td>Task D</td>
+<td align="center">10</td>
+<td align="center">10</td>
+<td align="right">10.00</td>
+</tr>
+</tbody>
+</table>
+<p>A legend (shown below) is used to help programmers determine what confidence level to specify based on their current situation.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th align="right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td align="right">No clue -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>2</td>
+<td align="right">Hardly a clue -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>3</td>
+<td align="right">Someone else has done this and I read about it; job not well defined -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>4</td>
+<td align="right">Someone else has done this and I think I understand this; job might not be well-defined -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>5</td>
+<td align="right">Done something similar to this before and this relates to that work -- this estimate has a variance of +/- 50 percent of estimate.</td>
+</tr>
+<tr>
+<td>6</td>
+<td align="right">I think I understand this fairly well and I understand the goal.</td>
+</tr>
+<tr>
+<td>7</td>
+<td align="right">The average case for programming when the requirements are understood.</td>
+</tr>
+<tr>
+<td>8</td>
+<td align="right">A confident case for programming. It's rare that something unexpected would happen.</td>
+</tr>
+<tr>
+<td>9</td>
+<td align="right">I've done this before and it's very similar. If something unexpected comes up, I know how to tackle it.</td>
+</tr>
+<tr>
+<td>10</td>
+<td align="right">No matter what, I'm only going to work on this for the specified period of time</td>
+</tr>
+</tbody>
+</table>
+<p>The formula for calculating the risk-adjusted time is also very straightforward:</p>
+<blockquote>
+<p>(estimated time * (10 - confidence level) / 9) + estimated time</p>
+</blockquote>
+<p>From hereon you can easily compute for the total time and make a comparison between the estimated time and the risk adjusted time.</p>
+<p>To see how all of this works you can check out our <a href="https://docs.google.com/spreadsheets/d/1KNTq88bw5qO6Ejbm71z31X-jraJDjB-9WET-2BZR2-s/edit?usp=sharing">Technical Estimate Template Sheet</a> at our Google Drive. Or if you are into Emacs, I also have a <a href="https://gist.github.com/accidentalrebel/0df9f9e024c7e3d433ef8a4f9fada2a9">template for that as well</a> using OrgMode.</p>
+<h2 id="how-effective-is-it">How effective is it?</h2>
+<p>The following is taken from the technical estimate I made for a recent module in Chef Wars. I've logged the actual time it took me to finish the task so the results can be compared.</p>
+<p><strong>Note:</strong> <em>Each estimate is in hours.</em></p>
+<table>
+<thead>
+<tr>
+<th align="center">Task</th>
+<th align="center">Estimate</th>
+<th align="center">Confidence</th>
+<th align="center">Risk Adjusted</th>
+<th align="center">Actual time</th>
+<th align="center">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">[Backend] Create PVP Player Collections</td>
+<td align="center">2</td>
+<td align="center">8</td>
+<td align="center">2.4444444</td>
+<td align="center">1</td>
+<td align="center">1.44</td>
+</tr>
+<tr>
+<td align="center">[Backend] Set Player PVP Collections</td>
+<td align="center">8</td>
+<td align="center">8</td>
+<td align="center">9.7777778</td>
+<td align="center">7</td>
+<td align="center">2.78</td>
+</tr>
+<tr>
+<td align="center">[Leaderboard] Fetch City Leaderboards</td>
+<td align="center">16</td>
+<td align="center">7</td>
+<td align="center">21.333333</td>
+<td align="center">18</td>
+<td align="center">3.33</td>
+</tr>
+<tr>
+<td align="center">[Leaderboard] Monthly Leaderboard Resetting</td>
+<td align="center">2</td>
+<td align="center">7</td>
+<td align="center">2.6666667</td>
+<td align="center">4</td>
+<td align="center">-1.33</td>
+</tr>
+<tr>
+<td align="center">[Logic] PVP Competition Setup</td>
+<td align="center">8</td>
+<td align="center">7</td>
+<td align="center">10.666667</td>
+<td align="center">9</td>
+<td align="center">1.67</td>
+</tr>
+<tr>
+<td align="center">[UI] Add the City Ranking button in Global/Friend Rankings</td>
+<td align="center">1</td>
+<td align="center">10</td>
+<td align="center">1</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">[UI] City Master Chefs UI</td>
+<td align="center">2</td>
+<td align="center">8</td>
+<td align="center">2.4444444</td>
+<td align="center">6</td>
+<td align="center">-3.56</td>
+</tr>
+<tr>
+<td align="center">[UI] City Arena UI</td>
+<td align="center">2</td>
+<td align="center">8</td>
+<td align="center">2.4444444</td>
+<td align="center">4</td>
+<td align="center">-1.56</td>
+</tr>
+<tr>
+<td align="center">[UI] Top Chef Awarding Pop Up</td>
+<td align="center">1</td>
+<td align="center">8</td>
+<td align="center">1.2222222</td>
+<td align="center">2</td>
+<td align="center">-0.78</td>
+</tr>
+<tr>
+<td align="center">Totals</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center">53.99</td>
+<td align="center">51</td>
+<td align="center">2.99</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see that the actual times are very close to the risk adjusted times. I overshot quite a bit during the UI related tasks but the time lost was offseted by the other tasks as seen in the totals. </p>
+<p>Take note that this is just a small sample and results will vary. There are times where totals still overshoot but mostly it is just in terms of a few hours, or at worst a full day. Regardless, our overall experience has been great as it has proven to be accurate enough that we could confidently commit to certain dates and schedules.</p>
+<h2 id="tips-on-using-this-system">Tips on using this system</h2>
+<ul>
+<li>This system works great if you know the tasks beforehand. You really need to sit down and think what the steps are and try not to miss anything and to avoid adjustments.</li>
+<li>The more granular the tasks, the easier it is to assign a time and confidence level to them.</li>
+<li>Being honest with the confidence levels helps produce more accurate estimates. It also brings to light any low-confidence tasks that are in need of reconsideration.</li>
+<li>Make the scope smaller and easier to digest by dividing your project into smaller parts (It can be by milestone or by module) and then make an estimate for each.</li>
+<li>Do this long enough and you'll get better with judging estimates and confidence levels.</li>
+<li>It helps to review and compare how long a task took against your estimates. It will give you insight why you overshot (In the example above, I learned that I am still bad at properly estimating UI related tasks. I should adjust my confidence levels for next time).</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>This simple system has helped us a lot and we plan to use it on all our future projects. It's not 100% accurate but it is accurate enough that we can schedule confidently with it. I would be the first to admit that it may not work for everyone but if you are always overshooting your estimates then this system might be worth a try.</p>
+<p><strong>[Check out our game which was released relatively on time over at <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://itunes.apple.com/us/app/chef-wars/id1254831133?mt=8">iOS</a>]</strong></p>
+        <!-- Disqus goes here -->
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
+	  <script>
+	    /**
+	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+	    /*
+	     var disqus_config = function () {
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.identifier = chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	     };
+	    */
+	    (function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	    })();
+	  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </section>
+	</article>
+      </div>
+    </div>
+  </div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>

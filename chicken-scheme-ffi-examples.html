@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Chicken-Scheme FFI Examples</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Chicken-Scheme FFI Examples June 16, 2020 in programming,dev,research,code">
+
+  <link rel="canonical" href="./chicken-scheme-ffi-examples.html">
+
+  <link href="./favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  
+<meta name="twitter:card" content="summary">
+<meta property="og:url" content="./chicken-scheme-ffi-examples.html">
+<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
+<meta name="twitter:creator:id" content="accidentalrebel">
+<meta property="og:title" content="Chicken-Scheme FFI Examples">
+<meta property="og:description" content="I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the <a href">
+<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png"> -->
+<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href=".">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="./theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+	<article>
+          <h1><a href="./chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a></h1>
+          <div class="meta">
+            <time datetime="2020-06-16T05:58:00+08:00">June 16, 2020</time>
+            in <span class="categories">
+              <a href="./tag/programming.html">programming</a>,              <a href="./tag/dev.html">dev</a>,              <a href="./tag/research.html">research</a>,              <a href="./tag/code.html">code</a>            </span>
+          </div>
+        <p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
+<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
+<hr />
+<h2 id="foreign-lambda-example">foreign-lambda example</h2>
+<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">Vec3</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">y</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">z</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Vec3</span><span class="p">;</span>
+
+<span class="n">Vec3</span><span class="o">*</span> <span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Vec3</span><span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
+    <span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+    <span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_create</span>
+  <span class="p">(</span><span class="nf">foreign-lambda</span>
+    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>   <span class="c1">; Return type, a pointer to a struct object of Vec3</span>
+    <span class="s">&quot;Vec3Create&quot;</span>                  <span class="c1">; Name fo the function</span>
+    <span class="nv">float</span> <span class="nv">float</span> <span class="nv">float</span><span class="p">))</span>           <span class="c1">; The three parameters (x,y,z) to pass to the function</span>
+</code></pre></div>
+
+<p>This would allow us to call the <code>vec3_create</code> function like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="foreign-lambda-example_1">foreign-lambda* example</h2>
+<p>Let's bind another C function <code>Vec3Print</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">Vec3Print</span><span class="p">(</span><span class="n">Vec3</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Vec3 to print: (%f, %f, %f)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>We could also use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda*</code></a> (Notice the asterisk). This is similar to <code>foreign-lambda</code> but accepts C code as a string.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_print</span>
+  <span class="p">(</span><span class="nf">foreign-lambda*</span>
+    <span class="nv">void</span>                          <span class="c1">; The return type</span>
+    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span> <span class="c1">; The parameter to pass, a pointer to a Vec3 object</span>
+    <span class="s">&quot;Vec3Print(*a0);&quot;</span><span class="p">))</span>           <span class="c1">; The C code in string from</span>
+                                  <span class="c1">; Vec3Print accepts a non pointer, we dereference it</span>
+
+<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">))</span>   <span class="c1">; Creates a vec3 and prints it</span>
+</code></pre></div>
+
+<hr />
+<h2 id="inline-c-code-in-foreign-lambda">Inline C code in foreign-lambda*</h2>
+<p>Here's another example using <code>foreign-lambda*</code>. This time there is no predefined C function, but instead we define the code inside the lisp function's body.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_zero</span>
+  <span class="p">(</span><span class="nf">foreign-lambda*</span>
+    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>
+    <span class="p">()</span>                            <span class="c1">; Empty variables</span>
+    <span class="s">&quot;Vec3* v = (Vec3*)Vec3Create(0.0f, 0.0f, 0.0f); </span>
+<span class="s">    C_return(v);&quot;</span><span class="p">))</span>               <span class="c1">; Instead of &quot;return&quot;, we use &quot;C_return&quot;.</span>
+
+<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">))</span>          <span class="c1">; Calls vec3_zero and prints the returned Vec3</span>
+</code></pre></div>
+
+<p>Note that due to obscure technical reasons <code>C_return</code> must be used instead of <code>return</code> when returning a value. More info about this <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda">here</a>.</p>
+<hr />
+<h2 id="free-ing-vec3-pointers">Free-ing Vec3 pointers</h2>
+<p>Since <code>Vec3Create</code> allocates memory for a Vec3 struct using <code>malloc</code>, it's a good idea to free this when we are done using it. To do this we could bind a function to <code>free</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">free</span> <span class="p">(</span><span class="nf">foreign-lambda</span> <span class="nv">void</span> <span class="s">&quot;free&quot;</span> <span class="nv">c-pointer</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">vec3_print</span> <span class="nv">v</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
+</code></pre></div>
+
+<hr />
+<h2 id="setting-up-getters-and-setters">Setting up getters and setters</h2>
+<p>If we want to have access to variables of a struct object. We could do something like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_x</span>
+  <span class="p">(</span><span class="nf">foreign-lambda*</span>
+    <span class="nv">float</span>
+    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span>
+    <span class="s">&quot;C_return(a0-&gt;x);&quot;</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">8.8</span> <span class="mf">8.8</span> <span class="mf">8.8</span><span class="p">)))</span>
+</code></pre></div>
+
+<p>Now this is fine but it'll be a pain to specify an accessor for every variable. A better solution is to use the <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg which allows the use of macros that will make our lives easier.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">import</span> <span class="p">(</span><span class="nf">chicken</span> <span class="nv">foreign</span><span class="p">))</span>
+<span class="p">(</span><span class="nf">import</span> <span class="nv">foreigners</span><span class="p">)</span>
+
+<span class="c1">;; Set up the accessors for Vec3 struct</span>
+<span class="p">(</span><span class="nf">define-foreign-record-type</span> <span class="p">(</span><span class="nf">vec3</span> <span class="nv">Vec3</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">float</span> <span class="nv">x</span> <span class="nv">vec3_x</span> <span class="nv">vec3_x!</span><span class="p">)</span>   <span class="c1">; vec3_x is a getter, vec3_x! is a setter</span>
+  <span class="p">(</span><span class="nf">float</span> <span class="nv">y</span> <span class="nv">vec3_y</span> <span class="nv">vec3_y!</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">float</span> <span class="nv">z</span> <span class="nv">vec3_z</span> <span class="nv">vec3_z!</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">4.4</span> <span class="mf">5.5</span> <span class="mf">6.6</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
+  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">vec3_x!</span> <span class="nv">v</span> <span class="mf">7.7</span><span class="p">)</span>      <span class="c1">; Set x to 7.7</span>
+  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
+  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
+</code></pre></div>
+
+<hr />
+<h2 id="binding-enums">Binding enums</h2>
+<p>The <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg also allows for the binding of enums using <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>define-foreign-enum-type</code></a>. Say we have an enum declaration <code>Keys</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="n">Keys</span> <span class="p">{</span>
+  <span class="n">UP</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">RIGHT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">LEFT</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
+
+<span class="o">:::</span><span class="n">scheme</span>
+<span class="p">(</span><span class="n">define</span><span class="o">-</span><span class="n">foreign</span><span class="o">-</span><span class="k">enum</span><span class="o">-</span><span class="n">type</span> <span class="p">(</span><span class="n">keys</span> <span class="kt">int</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">keys</span><span class="o">-&gt;</span><span class="kt">int</span> <span class="kt">int</span><span class="o">-&gt;</span><span class="n">keys</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">up</span> <span class="n">keys</span><span class="o">/</span><span class="n">up</span><span class="p">)</span> <span class="n">UP</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">right</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span> <span class="n">RIGHT</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">down</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span> <span class="n">DOWN</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">left</span> <span class="n">keys</span><span class="o">/</span><span class="n">left</span><span class="p">)</span> <span class="n">LEFT</span><span class="p">))</span>
+
+<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span>
+<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<p>These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found <a href="https://github.com/accidentalrebel/chicken-scheme-ffi-example">on Github</a>.</p>
+<p>Also, check out <a href="http://wiki.call-cc.org/eggref/5/bind">the chicken-bind egg</a>, it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.</p>
+        <!-- Disqus goes here -->
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
+	  <script>
+	    /**
+	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+	    /*
+	     var disqus_config = function () {
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.identifier = chicken-scheme-ffi-examples.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	     };
+	    */
+	    (function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	    })();
+	  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </section>
+	</article>
+      </div>
+    </div>
+  </div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>

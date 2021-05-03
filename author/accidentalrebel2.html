@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="canonical" href="..">
+
+  <link href="../favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href="..">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="../theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+<div class="container">
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a></h1>
+	<div class="meta">
+          <time datetime="2020-10-05T11:13:00+08:00">October 05, 2020</time>
+          in <span class="categories">
+            <a href="../tag/ctf.html">ctf</a>,            <a href="../tag/cybersecurity.html">cybersecurity</a>          </span>
+	</div>
+        <p><blockquote>
+<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
+</blockquote>
+<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
+<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="../covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
+<h2 id="the-preparation">The Preparation</h2>
+<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
+<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it but there were <a href="https://www.facebook.com/guidemtraining/photos/a.142012317191141/229536238438748/">some social media posts</a> that contained screenshots on how the challenge looked like. These gave me a lot of information on what to expect.</p>
+<p><img alt="hunt-the-kingdom-ctf-challenge-01" src="../images/hunt-the-kingdom-ctf-challenge-01.jpg" /></p>
+<div class="codehilite"><pre><span></span><code>It&#39;s OSINT in practice :P
+</code></pre></div>
+
+<p>For example, with the screenshot above I learned how the UI looked like, that there were categories that we could switch to, leaderboards, how a question is structured, and that "areas" on the map can get added, enabled, and disabled during the game. The last part is particularly important as it means that not all questions are available from the start and some can get disabled during the game.</p>
+<p>Thanks to the above research I felt confident that I could hit the ground running as soon as the game started. I picked my name (AccidentalRebel, of course) and my emblem and I was ready for the hunt.</p>
+<p><img alt="hunt-the-kingdom-ctf-challenge-02" src="../images/hunt-the-kingdom-ctf-challenge-02.png" /></p>
+<div class="codehilite"><pre><span></span><code>Yes, that&#39;s the blue tank from Advance Wars, because I&#39;m part of the &quot;blue team&quot;.
+</code></pre></div>
+
+<h2 id="the-hunt">The Hunt</h2>
+<p>When the hunt started my approach was to focus on the easy problems first. Getting them out of the way early would allow me to rack up points and just focus on the hard ones afterwards. This did the trick and I was able to maintain an early lead.</p>
+<p>During the mid-game my computer hanged from all the switching between VMs (There were 3 VMs that we needed to use to solve the problems). <em>Note to self: get a beefier PC</em>. I got a bit frustrated by this but decided that instead of waiting for Windows to boot I could use the time to take a break and got lunch. </p>
+<p><img alt="hunt-the-kingdom-ctf-challenge-03" src="../images/hunt-the-kingdom-ctf-challenge-03.53" /></p>
+<p>I came back to the game all full and refreshed, but sadly, I have already lost my lead. I felt a bit disappointed by this but I continued to push through. I removed the leaderboards to minimize distractions which helped. No need to pressure myself, I told myself. Although, I admit that I did peek from time to time.</p>
+<p>With the renewed focus I was able to keep my standing in the top 3. The leader of the pack during the end-game was <em>BoyHack3r</em>, a worthy opponent who was always a few points ahead of me. </p>
+<p>There was one question that has a lot of points that only has one solve. I knew that if I could get that it would give me enough points to snatch back 1st place. It wasn't an easy problem though so I changed my approach by slowing down which helped me understand the questions better. A few minutes later I was back at first place.</p>
+<p>I've never done a celebratory fist pump before, this was the first time.</p>
+<h2 id="the-final-minutes">The Final Minutes</h2>
+<p>I was able to maintain first place position by continuously answering questions until I was left with just four questions. These four are problems that no one has solved yet. The activity on the leaderboards have lessened which I took to mean that the others were stuck like me. I was at 13740 points, BoyHack3r at 13590, and Overwatch at 13460. If any of them managed to solve just one out of these four problems then they'll easily overtake me.</p>
+<p>I wasn't going to let that happen though. At 5 minutes left I continued solving the one that I had the most progress with. But it wasn't enough and I ran out of time. The others didn't get their lucky break either which finally cemented the scores on the boards.</p>
+<p><img alt="hunt-the-kingdom-ctf-challenge-04" src="../images/hunt-the-kingdom-ctf-challenge-04.PNG" /></p>
+<p>After 6 hours of back-breaking hunting I was finally able to breathe a sigh of relief. </p>
+<h2 id="the-end">The End</h2>
+<p>I rarely engage in any competitive activity so my competitive side rarely comes out. This CTF definitely brought it out and gave me the push to take the challenge seriously. I didn't do it for the prizes though. I did it because I wanted to prove to myself that I have what it takes, especially since I don't have a formal background in CyberSecurity. While a CTF is not an accurate qualification of being part of a blue team, it does show a participant's ability to work and solve problems under pressure.</p>
+<p>I want to give a shoutout to <a href="https://www.facebook.com/guidemtraining">GuideM</a> for guiding us throughout the course and for the extremely fun CTF challenge. Also to <em>BoyHack3r</em>, <em>Overwatch</em>, and <em>:]</em> for making me sweat bullets.</p>
+<p>This is another big step for me into the world of cybersecurity and I do hope I could learn more and improve. I look forward to the next CTF!</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../hunt-the-kingdom-ctf-challenge.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../my-experience-manufacturing-printed-circuit-boards.html">My experience with manufacturing printed circuit boards</a></h1>
+	<div class="meta">
+          <time datetime="2020-10-01T07:19:00+08:00">October 01, 2020</time>
+          in <span class="categories">
+            <a href="../tag/pcbs.html">pcbs</a>,            <a href="../tag/electronics.html">electronics</a>          </span>
+	</div>
+        <p><p>I've done a lot of electronics projects already, all of them were painstakingly hand-soldered on a perfboard. I actually like this approach for quick prototyping, and plus, I've also grown fond of how "raw" it looks like. In spite of this, I've always been curious and interested in having my own printed PCB. I remember designing one for my <a href="https://hackaday.io/project/164144-tiro-vibrating-watch/log/161430-current-state-and-next-steps">TIRO vibrating watch</a> but I never pushed through with it because I wasn't confident with what I've made.</p>
+<p><img alt="my-experience-manufacturing-printed-circuit-boards-01" src="../images/my-experience-manufacturing-printed-circuit-boards-01.jpg" /></p>
+<div class="codehilite"><pre><span></span><code>I really like the raw, almost electronic-punk look of my work
+</code></pre></div>
+
+<p>A couple of months ago I got an email from <a href="https://www.pcbway.com/">PCBWay</a> asking if I was interested in trying out their PCB manufacturing service. The email from PCBWay re-ignited this interest in having a PCB made. The problem is I didn't have a PCB design that I built myself that I knew was going to work. My best option was the "ESPBoy project".</p>
+<p>The <a href="https://hackaday.io/project/164830-espboy-the-ultimate-multi-gadget">ESPBoy</a> is a project by <a href="https://hackaday.io/ESPboy.edu">RomanS</a> that is touted to be the ultimate multi-gadget. RomanS sent me a kit a long time ago (Thank's again, RomanS). I have assembled and <a href="https://www.youtube.com/watch?v=GIrp5Vpr2Ns&amp;feature=emb_title">made a tutorial video</a> for it which means that I know that it works and have a very good idea of how it is laid out.</p>
+<p>With that decided, having the PCB made was a very easy and quick process. I just uploaded the gerber file on the PCBWay website, waited for the review of the PCB to be finished, and in a few hours I clicked the submit button and it was off to the printers.</p>
+<p>Fast forward a few weeks later and the package with the printed pcbs arrived.</p>
+<p><img alt="my-experience-manufacturing-printed-circuit-boards-02" src="../images/my-experience-manufacturing-printed-circuit-boards-02.jpg" /></p>
+<div class="codehilite"><pre><span></span><code>And yes, I changed the color to red just so they would look different.
+</code></pre></div>
+
+<p>I must say that I am very impressed with the quality of the PCBs. The material feels really solid and the lines so fine and accurate. I've seen and held PCB etchings before, and this is like lightyears ahead in terms of quality. The same can be said with my hand soldered perfboards, of course.</p>
+<p>Sadly, these PCBs have been sitting in storage because I haven't found the time due to the baby. Thankfully, my schedule is slowly opening up recently and I plan to build one ESPBoy in the next coming weeks. I plan to remove the parts from the old one and put it on this. This newer PCB design has new features like the ability to connect to an app store (yeah, seriously) and I'm really curious to try it out.</p>
+<p>I also might consider having another PCB made, but this time with my own design. I'm thinking I might go ahead and have my TIRO watch made, or maybe something even simpler. We'll see.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../my-experience-manufacturing-printed-circuit-boards.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a></h1>
+	<div class="meta">
+          <time datetime="2020-08-13T16:58:00+08:00">August 13, 2020</time>
+          in <span class="categories">
+            <a href="../tag/ctf.html">ctf</a>,            <a href="../tag/writeup.html">writeup</a>,            <a href="../tag/malware_analysis.html">malware_analysis</a>,            <a href="../tag/defcon.html">defcon</a>          </span>
+	</div>
+        <p><p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
+<p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
+<h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
+<blockquote>
+<p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a sample of the malware found on the system has been pulled and given to you. Your task, should you choose to accept it, is to reverse-engineer the sample and locate, fuzz and exploit the C2 server, and then hack-back to learn about the malicious actor and recover the stolen documents.
+Look for the free flag. Get on the scoreboard!</p>
+</blockquote>
+<p>I admit that in a hurry to get points I did not properly read the description of the challenge. I understood that I'll be downloading and reverse-engineering something. But it did not register on my mind that it's actually malware.</p>
+<p>The download was a binary that doesn't do anything when run. My first instict was to use <code>strings</code> to look for the flag, which turned out to be correct.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-01" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-01.png" /></p>
+<p>The flag is: <code>TS{freeFlagLookAtMe}</code>.</p>
+<p>Unfortunately, this challenge was already solved by a team member so I did not get the free flag. The second one, is still open though.</p>
+<h2 id="syscalls-5-points">Syscalls [5 points]</h2>
+<blockquote>
+<p>What syscall is hindering your dynamic analysis? Flag is just the syscall, no brackets or anything.</p>
+</blockquote>
+<p>If we run the file from within gdb to debug it we get:</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-02" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-02.png" /></p>
+<blockquote>
+<p>can't debug this, na na na na...</p>
+</blockquote>
+<p>So from the description we are looking for a syscall that is hindering the debugging of the binary. If we want to find out what syscalls are called by a program, we could determine that using the <code>strace</code> command.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-03" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-03.png" /></p>
+<p>Just before the write syscall for the "na na na" message we see:</p>
+<blockquote>
+<p>ptrace(TRACE_TRACEME) = -1 EPERM (Operation not permitted)</p>
+</blockquote>
+<p>I'm unfamiliar with <code>ptrace</code> so I researched it and tried to understand how it could prevent debugging. I learned that <code>ptrace</code> can be used as an anti-debugging technique as can be seen <a href="https://www.aldeid.com/wiki/Ptrace-anti-debugging">here</a>.</p>
+<p>Sure, enough the flag is: <code>ptrace</code>. </p>
+<p>I got 5 points from this and I finally have a contribution to my team! Unfortunately, real life prevented me from continuing with the CTF and I had to bow out early.</p>
+<h3 id="sidenote-how-to-bypass-ptrace">Sidenote: How to bypass ptrace?</h3>
+<p>How does one bypass this anti-debugging feature? <a href="https://dev.to/denisnutiu/bypassing-ptrace-calls-with-ldpreload-on-linux-12jl">Here's one approach</a> that I tried which should work in theory but doesn't. My guess is that this particular binary has an additional way to prevent debugging, like it spawns a child process and it stays there even if you bypass ptrace. I'd have to look into this further in the future.</p>
+<h2 id="shared-secrets-150-points">Shared Secrets [150 points]</h2>
+<blockquote>
+<p>The malware creates a shared-memory object and stores a flag inside. Recover the flag. Flag has the TS{} format, you'll know when you get it.</p>
+</blockquote>
+<p>I was able to solve this challenge after the CTF preliminaries ended. By this time I was already well rested and have a clearer mind. It was also at this time that I realized that the file is actually a malware and has already infected my machine. Thankfully, I was running a virtual machine which meant I could just revert back to an old working restore point.</p>
+<p>Knowing that the file is a malware, the next step I did was to run <code>rkhunter</code> to look for rootkits and suspcious files. This gave me an interesting finding:</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-04" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-04.png" /></p>
+<p>Opening the suspicious file revealed this: </p>
+<blockquote>
+<p>KRJXW22FMVYES5CTMVBXERKUNNCWK4CJORJWCRTFFZGXERTSGBSE6IL5</p>
+</blockquote>
+<p>This is not the flag yet, it needs to be in the "TS{}" format as instructed in the challenge description.</p>
+<p>I initially had a hard time figuring out how to decode this. It wasn't <code>base64</code> nor any other popular encoding. Thankfully, there are tools like <a href="https://gchq.github.io/CyberChef/">CyberChef</a> to help with this kind of problem. After some experimentation, the "magic" recipe did the trick and revealed to me that it was actually a <code>base32</code> encoding.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-05" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-05.png" /></p>
+<p>This gave me the flag: <code>TS{kEepItSeCrETkEepItSaFe.MrFr0dO!}</code></p>
+<h2 id="license-and-registration-100-points">License and Registration [100 points]</h2>
+<blockquote>
+<p>The malware creates a UUID and stores it in a file, what is the name of this file. Provide the SHA1 hash of hte full path as the flag.</p>
+</blockquote>
+<p>So the description above says that a file is created by the malware and stores data inside of it. I figured that the easiest way to figure out what this created file is to: </p>
+<ul>
+<li>Restore to a previous restore point before I opened the malware</li>
+<li>Run the malware, and then;</li>
+<li>Inspect which other files were created at the time of execution. </li>
+</ul>
+<p>I found out which files were recently created during the last 2 minutes using the following command:</p>
+<div class="codehilite"><pre><span></span><code>$ find / -user kali -mmin <span class="m">2</span> -type f <span class="m">2</span>&gt; /dev/null
+</code></pre></div>
+
+<p>This showed me a lot of files, but after sifting through that I found one file that seesm promising.</p>
+<blockquote>
+<p>/tmp/.serverauth.tn6aUcM0uM</p>
+</blockquote>
+<p>To get the flag I did this:</p>
+<div class="codehilite"><pre><span></span><code>$ <span class="nb">echo</span> -n <span class="s2">&quot;/tmp/.serverauth.tn6aUcM0uM&quot;</span> <span class="p">|</span> sha1sum
+</code></pre></div>
+
+<p>Which resulted in this flag: <code>5b4e97047851682649a602ad62ba4af567e352a3</code></p>
+<h2 id="to-be-continued">To be continued?</h2>
+<p>So I wanted to try and work on the other challenges but it seems that <a href="https://ctf.threatsims.com">the ctf site</a> is currently down. The site redirected to a different non https site and it spooked me so I stopped trying. Good thing that I had NoScript on.</p>
+<p>If you want a longer and more pro writeup about the CovidScammers challenges do check out <a href="https://0xdf.gitlab.io/2020/05/04/covid-19-ctf-covidscammers.html">0xdf's writeup about it</a>.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../covidscammers-writeup--defcon-rtv-ctf.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a></h1>
+	<div class="meta">
+          <time datetime="2020-08-01T11:07:00+08:00">August 01, 2020</time>
+          in <span class="categories">
+            <a href="../tag/spoofing.html">spoofing</a>,            <a href="../tag/cybersecurity.html">cybersecurity</a>          </span>
+	</div>
+        <p><div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
+</code></pre></div>
+
+<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
+<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
+<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
+<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
+<p>To view the current MAC address:</p>
+<div class="codehilite"><pre><span></span><code>$ ifconfig
+</code></pre></div>
+
+<p>The current MAC address is <code>08:00:27:59:fb:fa</code>:</p>
+<p><img alt="study-notes--mac-spoofing-01" src="../images/study-notes--mac-spoofing-01.png" /></p>
+<p>Let's say we want to change the MAC address of our interface (eth0) to <code>00:11:22:33:44:55</code>.</p>
+<p>First, deactivate the interface.</p>
+<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 down
+</code></pre></div>
+
+<p>Then we specify the mac address that we want to change to.</p>
+<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 hw ether <span class="m">00</span>:11:22:33:44:55
+</code></pre></div>
+
+<p>Reactive the interface:</p>
+<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 up
+</code></pre></div>
+
+<p>Run <code>ifconfig</code> again to see the changes.</p>
+<p><img alt="study-notes--mac-spoofing-02" src="../images/study-notes--mac-spoofing-02.png" /></p>
+<h3 id="note">NOTE:</h3>
+<p>These changes are not permanent. The MAC address will return to the original one when the system is restarted!</p>
+<h2 id="changing-the-mac-address-via-macchanger">Changing the MAC address via MACChanger</h2>
+<p>There are various tools that allows easy changing of MAC addresses. <a href="https://github.com/alobbs/macchanger">MACChanger</a> is one of them.</p>
+<p>First, deactivate the interface.</p>
+<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 down
+</code></pre></div>
+
+<p>The above below allows you specify the mac address you want to use:</p>
+<div class="codehilite"><pre><span></span><code>$ macchanger -m <span class="m">00</span>:11:22:33:44:55 eth0
+</code></pre></div>
+
+<p>The code below assigns a random MAC address.</p>
+<div class="codehilite"><pre><span></span><code>$ macchanger -r eth0
+</code></pre></div>
+
+<p>Reactive the interface:</p>
+<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 up
+</code></pre></div>
+
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/MAC_spoofing">MAC Spoofing on Wikipedia</a></li>
+<li><a href="https://www.giac.org/paper/gsec/3199/mac-spoofing-an-introduction/105315">MAC Spoofing - An introduction</a> </li>
+<li><a href="https://www.comparitech.com/net-admin/spoofing-attacks-guide/">A guide to spoofing attacks and how to prevent them</a></li>
+</ul>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../study-notes--mac-spoofing.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a></h1>
+	<div class="meta">
+          <time datetime="2020-06-16T05:58:00+08:00">June 16, 2020</time>
+          in <span class="categories">
+            <a href="../tag/programming.html">programming</a>,            <a href="../tag/dev.html">dev</a>,            <a href="../tag/research.html">research</a>,            <a href="../tag/code.html">code</a>          </span>
+	</div>
+        <p><p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
+<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
+<hr />
+<h2 id="foreign-lambda-example">foreign-lambda example</h2>
+<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">Vec3</span> <span class="p">{</span>
+    <span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">y</span><span class="p">;</span>
+    <span class="kt">float</span> <span class="n">z</span><span class="p">;</span>
+<span class="p">}</span> <span class="n">Vec3</span><span class="p">;</span>
+
+<span class="n">Vec3</span><span class="o">*</span> <span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Vec3</span><span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
+    <span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+    <span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_create</span>
+  <span class="p">(</span><span class="nf">foreign-lambda</span>
+    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>   <span class="c1">; Return type, a pointer to a struct object of Vec3</span>
+    <span class="s">&quot;Vec3Create&quot;</span>                  <span class="c1">; Name fo the function</span>
+    <span class="nv">float</span> <span class="nv">float</span> <span class="nv">float</span><span class="p">))</span>           <span class="c1">; The three parameters (x,y,z) to pass to the function</span>
+</code></pre></div>
+
+<p>This would allow us to call the <code>vec3_create</code> function like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<h2 id="foreign-lambda-example_1">foreign-lambda* example</h2>
+<p>Let's bind another C function <code>Vec3Print</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">Vec3Print</span><span class="p">(</span><span class="n">Vec3</span> <span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Vec3 to print: (%f, %f, %f)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>We could also use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda*</code></a> (Notice the asterisk). This is similar to <code>foreign-lambda</code> but accepts C code as a string.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_print</span>
+  <span class="p">(</span><span class="nf">foreign-lambda*</span>
+    <span class="nv">void</span>                          <span class="c1">; The return type</span>
+    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span> <span class="c1">; The parameter to pass, a pointer to a Vec3 object</span>
+    <span class="s">&quot;Vec3Print(*a0);&quot;</span><span class="p">))</span>           <span class="c1">; The C code in string from</span>
+                                  <span class="c1">; Vec3Print accepts a non pointer, we dereference it</span>
+
+<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">))</span>   <span class="c1">; Creates a vec3 and prints it</span>
+</code></pre></div>
+
+<hr />
+<h2 id="inline-c-code-in-foreign-lambda">Inline C code in foreign-lambda*</h2>
+<p>Here's another example using <code>foreign-lambda*</code>. This time there is no predefined C function, but instead we define the code inside the lisp function's body.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_zero</span>
+  <span class="p">(</span><span class="nf">foreign-lambda*</span>
+    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>
+    <span class="p">()</span>                            <span class="c1">; Empty variables</span>
+    <span class="s">&quot;Vec3* v = (Vec3*)Vec3Create(0.0f, 0.0f, 0.0f); </span>
+<span class="s">    C_return(v);&quot;</span><span class="p">))</span>               <span class="c1">; Instead of &quot;return&quot;, we use &quot;C_return&quot;.</span>
+
+<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">))</span>          <span class="c1">; Calls vec3_zero and prints the returned Vec3</span>
+</code></pre></div>
+
+<p>Note that due to obscure technical reasons <code>C_return</code> must be used instead of <code>return</code> when returning a value. More info about this <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda">here</a>.</p>
+<hr />
+<h2 id="free-ing-vec3-pointers">Free-ing Vec3 pointers</h2>
+<p>Since <code>Vec3Create</code> allocates memory for a Vec3 struct using <code>malloc</code>, it's a good idea to free this when we are done using it. To do this we could bind a function to <code>free</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">free</span> <span class="p">(</span><span class="nf">foreign-lambda</span> <span class="nv">void</span> <span class="s">&quot;free&quot;</span> <span class="nv">c-pointer</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">vec3_print</span> <span class="nv">v</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
+</code></pre></div>
+
+<hr />
+<h2 id="setting-up-getters-and-setters">Setting up getters and setters</h2>
+<p>If we want to have access to variables of a struct object. We could do something like this:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_x</span>
+  <span class="p">(</span><span class="nf">foreign-lambda*</span>
+    <span class="nv">float</span>
+    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span>
+    <span class="s">&quot;C_return(a0-&gt;x);&quot;</span><span class="p">))</span>
+
+<span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">8.8</span> <span class="mf">8.8</span> <span class="mf">8.8</span><span class="p">)))</span>
+</code></pre></div>
+
+<p>Now this is fine but it'll be a pain to specify an accessor for every variable. A better solution is to use the <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg which allows the use of macros that will make our lives easier.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">import</span> <span class="p">(</span><span class="nf">chicken</span> <span class="nv">foreign</span><span class="p">))</span>
+<span class="p">(</span><span class="nf">import</span> <span class="nv">foreigners</span><span class="p">)</span>
+
+<span class="c1">;; Set up the accessors for Vec3 struct</span>
+<span class="p">(</span><span class="nf">define-foreign-record-type</span> <span class="p">(</span><span class="nf">vec3</span> <span class="nv">Vec3</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">float</span> <span class="nv">x</span> <span class="nv">vec3_x</span> <span class="nv">vec3_x!</span><span class="p">)</span>   <span class="c1">; vec3_x is a getter, vec3_x! is a setter</span>
+  <span class="p">(</span><span class="nf">float</span> <span class="nv">y</span> <span class="nv">vec3_y</span> <span class="nv">vec3_y!</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">float</span> <span class="nv">z</span> <span class="nv">vec3_z</span> <span class="nv">vec3_z!</span><span class="p">))</span>
+
+<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">4.4</span> <span class="mf">5.5</span> <span class="mf">6.6</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
+  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">vec3_x!</span> <span class="nv">v</span> <span class="mf">7.7</span><span class="p">)</span>      <span class="c1">; Set x to 7.7</span>
+  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
+  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
+</code></pre></div>
+
+<hr />
+<h2 id="binding-enums">Binding enums</h2>
+<p>The <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg also allows for the binding of enums using <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>define-foreign-enum-type</code></a>. Say we have an enum declaration <code>Keys</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="n">Keys</span> <span class="p">{</span>
+  <span class="n">UP</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="n">RIGHT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+  <span class="n">LEFT</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="p">};</span>
+
+<span class="o">:::</span><span class="n">scheme</span>
+<span class="p">(</span><span class="n">define</span><span class="o">-</span><span class="n">foreign</span><span class="o">-</span><span class="k">enum</span><span class="o">-</span><span class="n">type</span> <span class="p">(</span><span class="n">keys</span> <span class="kt">int</span><span class="p">)</span>
+  <span class="p">(</span><span class="n">keys</span><span class="o">-&gt;</span><span class="kt">int</span> <span class="kt">int</span><span class="o">-&gt;</span><span class="n">keys</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">up</span> <span class="n">keys</span><span class="o">/</span><span class="n">up</span><span class="p">)</span> <span class="n">UP</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">right</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span> <span class="n">RIGHT</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">down</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span> <span class="n">DOWN</span><span class="p">)</span>
+  <span class="p">((</span><span class="n">left</span> <span class="n">keys</span><span class="o">/</span><span class="n">left</span><span class="p">)</span> <span class="n">LEFT</span><span class="p">))</span>
+
+<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span>
+<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span>
+</code></pre></div>
+
+<hr />
+<p>These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found <a href="https://github.com/accidentalrebel/chicken-scheme-ffi-example">on Github</a>.</p>
+<p>Also, check out <a href="http://wiki.call-cc.org/eggref/5/bind">the chicken-bind egg</a>, it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chicken-scheme-ffi-examples.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
+	<div class="meta">
+          <time datetime="2020-05-19T17:59:00+08:00">May 19, 2020</time>
+          in <span class="categories">
+            <a href="../tag/dev.html">dev</a>,            <a href="../tag/game_engine.html">game_engine</a>          </span>
+	</div>
+        <p><p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
+<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
+<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know it's not a solid reason but I figured it's better to act now while it is still early.</p>
+<p><img alt="switching-from-c-c---to-c-01" src="../images/switching-from-c-c---to-c-01.png" /></p>
+<p>For the most part, dropping C++ was easy. Most of the difficulty I encountered was making sure the changes worked on all three supported platforms. There was a situation when <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">I thought I was done</a> only to find it doesn't work on Mac and Windows. I had to <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">slowly re-apply</a> the changes just to see where exactly things went wrong.</p>
+<p>What's funny is that I learned that I was using a lot more C++ features than I thought. Namespaces and default arguments are some that really surprised me. I always assumed they were supported on both languages. This just proves to me that I still have a lot to learn with these languages.</p>
+<p>I also took the chance during the transition to switch from <a href="https://glm.g-truc.net/0.9.9/index.html">GLM</a>, an OpenGL Mathematics lirary using C++, to <a href="https://github.com/recp/cglm">CGLM</a> a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.</p>
+<p>While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.</p>
+<p>If you are interested to check out my still-under-construction game engine, you can do so <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../switching-from-c-c---to-c.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
+	<div class="meta">
+          <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
+          in <span class="categories">
+            <a href="../tag/dev.html">dev</a>,            <a href="../tag/game_engine.html">game_engine</a>          </span>
+	</div>
+        <p><p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
+<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
+<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
+<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function <em>is_key_down</em>. Changing it to <em>key_down?</em> looked weird at first but I liked how it made the function name shorter and the <em>?</em> prefix made it easy to spot and parse.</p>
+<p>Okay, cool! What's next?</p>
+<p>Adding a <em>!</em> indicates a function that mutates data. Most commonly used for setting a variable. I saw I had variables like <em>set_vec3_x</em>, to which I changed to <em>vec3_x!</em>.</p>
+<p>This went on as I continue to find improvements. Here's a list of all the naming convention changes that I've made:</p>
+<table>
+<thead>
+<tr>
+<th align="center"><strong>The change</strong></th>
+<th align="center"><strong>From</strong></th>
+<th align="center"><strong>To</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center"><em>:</em> infix for namespaces.</td>
+<td align="center">vec3_create</td>
+<td align="center">vec3:create</td>
+</tr>
+<tr>
+<td align="center"><em>?</em> postfix for boolean functions</td>
+<td align="center">key_down?</td>
+<td align="center">key:down?</td>
+</tr>
+<tr>
+<td align="center"><em>!</em> postfix for destructive functions</td>
+<td align="center">set_camera_position</td>
+<td align="center">camera:position!</td>
+</tr>
+<tr>
+<td align="center"><em>%</em> postfix for low level functions</td>
+<td align="center">free</td>
+<td align="center">free%</td>
+</tr>
+<tr>
+<td align="center"><em>%</em> prefix and postfix for low level variables</td>
+<td align="center">shader-pointer</td>
+<td align="center">%shader-pointer%</td>
+</tr>
+<tr>
+<td align="center"><em>*</em> prefix and postfix for global variables</td>
+<td align="center">cube-shader</td>
+<td align="center">*cube-shader*</td>
+</tr>
+</tbody>
+</table>
+<p>Again, these new changes felt weird at first but I quickly became accustomed the more of these functions I changed. The code became easier to scan as there are now key characters for my eyes to easily latch onto. Something to appreciate especially with multi-level nested expressions.</p>
+<p>Here's how the code now looks like with the new functions:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">MOVEMENT_SPEED</span> <span class="mf">0.001</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="nv">*cube*</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define </span><span class="nv">*cube-shader*</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define </span><span class="nv">*cube-positions*</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube*</span>
+    <span class="p">(</span><span class="nf">cube:create</span> <span class="s">&quot;assets/textures&quot;</span> <span class="s">&quot;awesomeface.png&quot;</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-shader*</span>
+    <span class="p">(</span><span class="nf">shader:create</span> <span class="s">&quot;shaders/simple-3d.vs&quot;</span> <span class="s">&quot;shaders/simple.fs&quot;</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-positions*</span>
+    <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nf">vec3:create</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
+          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">-1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">window:clear</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">main-camera</span> <span class="p">(</span><span class="nf">camera:main</span><span class="p">))</span>
+     <span class="p">(</span><span class="nf">current-projection</span> <span class="p">(</span><span class="nf">camera:projection</span> <span class="nv">main-camera</span><span class="p">))</span>
+     <span class="p">(</span><span class="nf">camera-pos</span> <span class="p">(</span><span class="nf">camera:position</span> <span class="nv">main-camera</span><span class="p">)))</span>
+
+    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:up?</span> <span class="nv">KEY_C</span><span class="p">)</span>
+      <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">current-projection</span> <span class="nv">PERSPECTIVE</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">ORTHOGRAPHIC</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">PERSPECTIVE</span><span class="p">)))</span>
+
+    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_A</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
+          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_E</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
+          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
+          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_O</span><span class="p">)</span>
+      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
+          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">))))</span>
+
+  <span class="p">(</span><span class="nf">for-each</span>
+   <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">position</span><span class="p">)</span>
+     <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">%tint%</span> <span class="p">(</span><span class="nf">vec3:create%</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
+       <span class="p">(</span><span class="nf">cube:draw</span> <span class="nv">*cube*</span> <span class="nv">position</span> <span class="mi">1</span> <span class="mi">1</span> <span class="nv">%tint%</span> <span class="nv">*cube-shader*</span><span class="p">)</span>
+       <span class="p">(</span><span class="nf">free%</span> <span class="nv">%tint%</span><span class="p">)))</span>
+   <span class="nv">*cube-positions*</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">window:swap</span><span class="p">))</span>
+</code></pre></div>
+
+<p>I also changed my C functions to reflect a <em>NamespaceVerb</em> convention. I could have used <em>namespace::Verb</em> but the <a href="http://wiki.call-cc.org/eggref/5/bind">FFI that I use</a> to communicate with C cannot parse C namespaces. So instead of <em>Shader::Create</em>, I am left with <em>ShaderCreate</em>. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, <a href="https://www.raylib.com/examples.html">Raylib also uses this convention</a> for their functions).</p>
+<p>I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../following-lispy-conventions.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a></h1>
+	<div class="meta">
+          <time datetime="2020-05-10T07:08:00+08:00">May 10, 2020</time>
+          in <span class="categories">
+            <a href="../tag/dev.html">dev</a>,            <a href="../tag/game_engine.html">game_engine</a>          </span>
+	</div>
+        <p><p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
+<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="../images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
+<p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
+<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different package managers.</p>
+<p>After a week of this I was finally able to get the engine working on all three platforms. To make sure others can be able to do the same, I also documented the steps which can now be read on <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki">the project's wiki</a>. </p>
+<p>I was surprised that the hardest one to get working was for Windows. Because I didn't want to create a separate build system that uses Visual Studio solution files, I had to find a simple way to make it work and that involved the use of an excellent building platform for Windows called <a href="https://www.msys2.org/">Msys2</a>. </p>
+<p>I am quite happy that I was able to structure the whole system so that you only need one Makefile for all three platforms. I'm not sure if this wil change in the future, but I'll do my best for it to stay like this as long as it's possible.</p>
+<p>If you are interested to try it out here's the project's <a href="https://github.com/accidentalrebel/rebel-game-engine">Github page</a>, depending on your platform here are the instructions on how to build for each one: <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Arch-Linux">Linux</a>, <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-MacOSX">MacOSX</a> and <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Windows-(using-Msys2)">Windows</a>.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../rebel-game-engine-now-works-on-different-platforms.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a></h1>
+	<div class="meta">
+          <time datetime="2020-05-07T21:35:00+08:00">May 07, 2020</time>
+          in <span class="categories">
+            <a href="../tag/lisp.html">lisp</a>,            <a href="../tag/game_engine.html">game_engine</a>,            <a href="../tag/dev.html">dev</a>          </span>
+	</div>
+        <p><p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
+<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
+<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="../images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
+<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code after two implementations.</p>
+<p>And my code did change a lot. The biggest change is switching from an object oriented approach to functional style so that it would suit Lisp scripting. I also paid special attention in making sure that whatever change I made would make sense when the game engine is used without scripting. My guiding principle is that implementing a game on both C and Scheme should be structurally identical, aside from the difference in syntaxes, of course.</p>
+<p>Here's a simple program wher you could move a colored box using the keyboard:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">box-sprite</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define </span><span class="nv">box-pos</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
+  <span class="p">(</span><span class="k">set! </span><span class="nv">box-sprite</span> <span class="p">(</span><span class="nf">sprite_create</span> <span class="nv">assets/textures</span> <span class="nv">tile</span><span class="o">.</span><span class="nv">png</span><span class="p">))</span>
+  <span class="p">(</span><span class="k">set! </span><span class="nv">box-pos</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">400</span> <span class="mi">300</span> <span class="mi">0</span><span class="p">))</span>
+  <span class="no">#t</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
+  <span class="p">(</span><span class="nf">window_clear</span><span class="p">)</span>
+
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_O</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_E</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_A</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
+
+  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">tint</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
+    <span class="p">(</span><span class="nf">sprite_draw</span> <span class="nv">box-sprite</span> <span class="nv">box-pos</span> <span class="mi">50</span> <span class="mi">50</span> <span class="nv">tint</span> <span class="no">#f</span><span class="p">))</span>
+
+  <span class="p">(</span><span class="nf">window_swap</span><span class="p">)</span>
+  <span class="no">#t</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Implementing Lisp, and coding with it has been very fun too. I've had the most fun when <a href="http://wiki.call-cc.org/eggref/5/bind">I implemented the FFI</a>. Every time I go through the wiki I find a better way of doing things so I'd go and re-implement them again. Each iteration I learn something new and it's such a joy exploring.</p>
+<p>Playing with the garbage collector has also made me think about memory management more. This resulted in having two ways to call certain API functions: one will return a pointer that will automatically get tracked by the GC. The other you'd have to free manually. I figured this is a good approach for situations when having control over memory and references is crucial.</p>
+<p>I've already spent a lot of time on this project and it was mostly spent on the scripting side of the engine. There are still more to do for it to be considered useful but I'm happy I was able to learn a lot.</p>
+<p>If you are curious about the engine you could check it out <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a></h1>
+	<div class="meta">
+          <time datetime="2020-05-03T11:19:00+08:00">May 03, 2020</time>
+          in <span class="categories">
+            <a href="../tag/dev.html">dev</a>,            <a href="../tag/lisp.html">lisp</a>,            <a href="../tag/engine.html">engine</a>          </span>
+	</div>
+        <p><p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
+<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
+<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="../images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
+<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay if no one would try it out as long as I get to learn from it.</p>
+<p>This morning I started implementing a simple implementation of Chibi. Thankfully, it's easy to setup. However, the more I implement it the more that I realize that I may need to change how my engine is structured to better suit Lisp's functional nature. This means less object oriented design similar to how <a href="https://www.raylib.com/index.html">Raylib</a> does things. </p>
+<p>I still need some time to think this through. I am open to do the changes needed if I am to include a scripting language. I just want to make sure if my engine would really need it. We'll see.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../thinking-of-adding-lisp-to-my-custom-game-engine.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+</div>
+<div class="pagination">
+<p class="paginator">
+        <a href="../author/accidentalrebel.html">&#8647;</a>
+        <a href="../author/accidentalrebel.html">&laquo;</a>
+    Page 2 / 3
+        <a href="../author/accidentalrebel3.html">&raquo;</a>
+        <a href="../author/accidentalrebel3.html">&#8649;</a>
+</p>
+</div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>

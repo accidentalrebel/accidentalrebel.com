@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Converting org-journal entry to org-page post</title>
+  <meta name="author" content="AccidentalRebel">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description" content="Converting org-journal entry to org-page post April 19, 2017 in emacs">
+
+  <link rel="canonical" href="./minifying-buffer-contents-in-emacs.html">
+
+  <link href="./favicon.png" rel="icon">
+
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+  
+<meta name="twitter:card" content="summary">
+<meta property="og:url" content="./minifying-buffer-contents-in-emacs.html">
+<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
+<meta name="twitter:creator:id" content="accidentalrebel">
+<meta property="og:title" content="Converting org-journal entry to org-page post">
+<meta property="og:description" content="I needed a way to minify JSON files from Emacs so I made the short function below. (defun <span cl">
+<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png"> -->
+<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
+
+
+</head>
+  <body>
+
+    <div class="container" id="site-title">
+      <div class="col-md-8 col-md-offset-2">
+	<h1>
+	  <a href=".">
+	    AccidentalRebel.com
+	  </a>
+	</h1>
+	<div id="profile">
+	  <div class="left">
+	    <img src="./theme/images/pic.png" />
+	  </div>
+	  <div class="right">
+	    Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel.
+	  </div>
+	  <div class="clear"></div>
+	</div>
+	<div id="nav">
+	  <ul>
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
+	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
+	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
+	  </ul>
+	</div>
+      </div>
+    </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+	<article>
+          <h1><a href="./minifying-buffer-contents-in-emacs.html">Converting org-journal entry to org-page post</a></h1>
+          <div class="meta">
+            <time datetime="2017-04-19T13:17:00+08:00">April 19, 2017</time>
+            in <span class="categories">
+              <a href="./tag/emacs.html">emacs</a>            </span>
+          </div>
+        <p>I needed a way to minify JSON files from Emacs so I made the short function below.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">arebel-minify-buffer-contents</span><span class="p">()</span>
+    <span class="s">&quot;Minifies the buffer contents by removing whitespaces.&quot;</span>
+    <span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+    <span class="p">(</span><span class="nv">delete-whitespace-rectangle</span> <span class="p">(</span><span class="nf">point-min</span><span class="p">)</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+    <span class="p">(</span><span class="nv">mark-whole-buffer</span><span class="p">)</span>
+    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-min</span><span class="p">))</span>
+    <span class="p">(</span><span class="k">while</span> <span class="p">(</span><span class="nf">search-forward</span> <span class="s">&quot;\n&quot;</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">replace-match</span> <span class="s">&quot;&quot;</span> <span class="no">nil</span> <span class="no">t</span><span class="p">)))</span>
+</code></pre></div>
+
+<p>The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline.</p>
+<p>This effectively turns this:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+    <span class="nt">&quot;glossary&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;example glossary&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span>
+            <span class="nt">&quot;GlossList&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="nt">&quot;ID&quot;</span><span class="p">:</span> <span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;SortAs&quot;</span><span class="p">:</span> <span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span> <span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;Acronym&quot;</span><span class="p">:</span> <span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
+                    <span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span> <span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span>
+<span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span> <span class="p">{</span>
+
+
+                          <span class="nt">&quot;para&quot;</span><span class="p">:</span> <span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span>
+                        <span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span> <span class="s2">&quot;XML&quot;</span><span class="p">]</span>
+                    <span class="p">},</span>
+                    <span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span> <span class="s2">&quot;markup&quot;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>To this:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span> <span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span> <span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span> <span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span> <span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span> <span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span> <span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span> <span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span> <span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span> <span class="s2">&quot;markup&quot;</span><span class="p">}}}}}</span>
+</code></pre></div>
+
+<p>It works for my current needs but have not fully tested it yet. It works for emacs lisp buffers too.</p>
+        <!-- Disqus goes here -->
+        <section>
+          <h1>Comments</h1>
+          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
+	  <script>
+	    /**
+	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+	    /*
+	     var disqus_config = function () {
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.identifier = minifying-buffer-contents-in-emacs.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+	     };
+	    */
+	    (function() { // DON'T EDIT BELOW THIS LINE
+		var d = document, s = d.createElement('script');
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.setAttribute('data-timestamp', +new Date());
+		(d.head || d.body).appendChild(s);
+	    })();
+	  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+        </section>
+	</article>
+      </div>
+    </div>
+  </div>
+    <footer id="footer" class="her-row">
+      <div class="container">
+        <div class="row">
+          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
+  </body>
+</html>
