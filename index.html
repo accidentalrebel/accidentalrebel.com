@@ -87,6 +87,7 @@
 <li><a href="https://github.com/vxunderground/WinAPI-Tricks">VXUnderground's WinAPI tricks</a> taught me that there are alternative ways to do certain things to avoid detection</li>
 </ul>
 <p>As for the name of the project, I decided on "RATwurst" after the german sausage, Bratwurst. Don't ask me why. I just thought it's funny that it had the letters RAT in it.</p>
+<p><img alt="making-a-rat-02" src="./images/making-a-rat-02.png" /></p>
 <h2 id="the-nitty-gratty-details">The nitty gRATty details</h2>
 <p>The client is written in ANSI C because it's the language I prefer. Since I am only targeting Windows I chose MSVC for the compiler. Which is great because it allows me to use Visual Studio for debugging.</p>
 <p>The server, on the other hand, is written in Python because I wanted another excuse to practice with it. Choosing Python has been a good choice though because of the excellent low level <a href="https://docs.python.org/3/library/socket.html">socket</a> and <a href="https://docs.python.org/3/library/cmd.html">cmd</a> libraries.</p>
@@ -94,6 +95,7 @@
 <p>When RATwurst is first executed. It does some anti-sandbox checks via process enumeration. It checks if there are more than 15 processe that are running and if there are virtualization tools present like <code>vmware.exe</code>. It will also setup an auto-run registry entry for persistence. And also move the executable to Windows' temp folder and re-run it from there.</p>
 <p>Anti-debbuging checks are littered throughout the code which checks the amount of time it takes to reach from one part of the code to the next. This is used to detect if someone is stepping through the code, increasing the delay between code execution.</p>
 <p>When no shenanigans is detected then it'll proceed to work as intended. </p>
+<p><img alt="making-a-rat-02" src="./images/making-a-rat-02.png" /></p>
 <h2 id="for-edurational-purposes-only">For eduRATional purposes only</h2>
 <p>I've made the source of my project <a href="https://github.com/accidentalrebel/ratwurst">available on Github</a>. The aim is to share what I've learned so that others can learn too.</p>
 <p>I am aware of news of RAT authors having been arrested because of their work. They actively sought to gain money from their creation, I, of course, have no such plans.</p>

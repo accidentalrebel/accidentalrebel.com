@@ -20,6 +20,7 @@
 &lt;li&gt;&lt;a href="https://github.com/vxunderground/WinAPI-Tricks"&gt;VXUnderground's WinAPI tricks&lt;/a&gt; taught me that there are alternative ways to do certain things to avoid detection&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;As for the name of the project, I decided on "RATwurst" after the german sausage, Bratwurst. Don't ask me why. I just thought it's funny that it had the letters RAT in it.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="making-a-rat-02" src="http://www.accidentalrebel.com/images/making-a-rat-02.png" /&gt;&lt;/p&gt;
 &lt;h2 id="the-nitty-gratty-details"&gt;The nitty gRATty details&lt;/h2&gt;
 &lt;p&gt;The client is written in ANSI C because it's the language I prefer. Since I am only targeting Windows I chose MSVC for the compiler. Which is great because it allows me to use Visual Studio for debugging.&lt;/p&gt;
 &lt;p&gt;The server, on the other hand, is written in Python because I wanted another excuse to practice with it. Choosing Python has been a good choice though because of the excellent low level &lt;a href="https://docs.python.org/3/library/socket.html"&gt;socket&lt;/a&gt; and &lt;a href="https://docs.python.org/3/library/cmd.html"&gt;cmd&lt;/a&gt; libraries.&lt;/p&gt;
@@ -27,6 +28,7 @@
 &lt;p&gt;When RATwurst is first executed. It does some anti-sandbox checks via process enumeration. It checks if there are more than 15 processe that are running and if there are virtualization tools present like &lt;code&gt;vmware.exe&lt;/code&gt;. It will also setup an auto-run registry entry for persistence. And also move the executable to Windows' temp folder and re-run it from there.&lt;/p&gt;
 &lt;p&gt;Anti-debbuging checks are littered throughout the code which checks the amount of time it takes to reach from one part of the code to the next. This is used to detect if someone is stepping through the code, increasing the delay between code execution.&lt;/p&gt;
 &lt;p&gt;When no shenanigans is detected then it'll proceed to work as intended. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="making-a-rat-02" src="http://www.accidentalrebel.com/images/making-a-rat-02.png" /&gt;&lt;/p&gt;
 &lt;h2 id="for-edurational-purposes-only"&gt;For eduRATional purposes only&lt;/h2&gt;
 &lt;p&gt;I've made the source of my project &lt;a href="https://github.com/accidentalrebel/ratwurst"&gt;available on Github&lt;/a&gt;. The aim is to share what I've learned so that others can learn too.&lt;/p&gt;
 &lt;p&gt;I am aware of news of RAT authors having been arrested because of their work. They actively sought to gain money from their creation, I, of course, have no such plans.&lt;/p&gt;
