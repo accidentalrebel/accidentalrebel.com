@@ -930,6 +930,16 @@ blockquote ul:last-child,
 blockquote ol:last-child {
   margin-bottom: 0;
 }
+
+.footnote {
+    padding: 0 10px 10px;
+    background-color: #22282b;
+}
+
+.footnote ol {
+    padding: 0 0 0 20px;
+}
+
 /* line 237, ../sass/base/bootstrap/_type.scss */
 blockquote footer,
 blockquote small,
