@@ -7,12 +7,14 @@
 &lt;h1 id="the-lab"&gt;The Lab&lt;/h1&gt;
 &lt;p&gt;The network diagram below shows the current implementation of my lab. I will be discussing each part to give an idea of their purpose (&lt;a href="http://www.accidentalrebel.com/images/building-my-virtual-cybersecurity-home-lab-00.png"&gt;Click here for a bigger version&lt;/a&gt;).&lt;/p&gt;
 &lt;p&gt;&lt;img alt="building-my-virtual-cybersecurity-home-lab-01" src="http://www.accidentalrebel.com/images/building-my-virtual-cybersecurity-home-lab-01.png" /&gt;&lt;/p&gt;
-&lt;p&gt;At the heart of the network is a firewall running &lt;a href="https://www.pfsense.org/"&gt;pfSense&lt;/a&gt;. Its purpose is to ensure that each sub-network is separated and protected, and also to protect my virtual host from any malware outbreaks. This machine also serves as a DHCP and NTP server to all the machines in the network. &lt;/p&gt;
+&lt;p&gt;At the heart of the network is a firewall running &lt;a href="https://www.pfsense.org/"&gt;pfSense&lt;/a&gt;. Its purpose is to ensure that each sub-network is separated and protected, and also to protect my virtual host from any malware outbreaks. This machine also serves as a DHCP and NTP server to all the machines in the network.&lt;/p&gt;
 &lt;h1 id="the-target-network"&gt;The Target Network&lt;/h1&gt;
 &lt;p&gt;On the right side of the diagram is the "Target" network where workstations and vulnerable servers reside. These are the machines that I use to attack with exploits and malware.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="building-my-virtual-cybersecurity-home-lab-02" src="http://www.accidentalrebel.com/images/building-my-virtual-cybersecurity-home-lab-02.png" /&gt;&lt;/p&gt;
+&lt;p&gt;I have Metasploitable 2 and Metasploitable 3 machines that have various services turned on to play around with. I can learn about specific attacks by exploiting this machine, but I can also don my defenders hat and learn about how to secure them.&lt;/p&gt;
+&lt;p&gt;The Windows and Linux machines will serve as typical workstations for various experiments.&lt;/p&gt;
 &lt;p&gt;One of the perks of my job is that I get to play with different cybersecurity solutions. I currently have access to a few that I am able to use on my lab for testing.&lt;/p&gt;
-&lt;p&gt;One solution that I am using right now is an EDR (Endpoint Detection and Response) (Sorry, I can't reveal which). Each machine has an EDR agent deployed which monitors for any malicious activities on the host.&lt;/p&gt;
+&lt;p&gt;One solution that I am using right now is an EDR (Endpoint Detection and Response) (Sorry, I can't reveal which). Each machine has an EDR agent deployed which monitors for any malicious activities on the host. &lt;/p&gt;
 &lt;p&gt;An IDS (intrusion Detection System) running &lt;a href="https://www.snort.org/"&gt;Snort&lt;/a&gt; monitors the traffic for any malicious activity. If it finds anything it then sends an alert to a SIEM (running &lt;a href="https://www.splunk.com/"&gt;Splunk&lt;/a&gt;) on the Management network.&lt;/p&gt;
 &lt;h1 id="the-management-network"&gt;The Management Network&lt;/h1&gt;
 &lt;p&gt;On the left side of the diagram is the Managemnet network. This is where the management part of the EDR, IDS, and the SIEM can be accessed from my virtual host.&lt;/p&gt;
