@@ -60,6 +60,64 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="../ioli-crackme-0x01.html">IOLI Crackme 0x01</a></h1>
+	<div class="meta">
+          <time datetime="2021-02-20T17:34:00+08:00">February 20, 2021</time>
+          in <span class="categories">
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
+	</div>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="../ioli-crackme-0x00.html">here</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>Of course, the first thing we do is run the program.</p>
+<p><img alt="ioli-crackme-0x01-01" src="../images/ioli-crackme-0x01-01.png" /></p>
+<p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
+<p><img alt="ioli-crackme-0x01-02" src="../images/ioli-crackme-0x01-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span> <span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span> <span class="mi">149</span><span class="no">Ah</span>
+<span class="nf">jz</span> <span class="no">short</span> <span class="no">loc_40137c</span>
+</code></pre></div>
+
+<p>This seems easy enough. </p>
+<p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span> <span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span> <span class="no">offset</span> <span class="no">aD</span> <span class="c1">; &quot;%d&quot;</span>
+<span class="nf">call</span> <span class="no">_scanf</span>
+</code></pre></div>
+
+<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274</code>, which is the correct password.</p>
+<p><img alt="ioli-crackme-0x01-03" src="../images/ioli-crackme-0x01-03.png" /></p>
+<h1 id="patching-the-executables">Patching the executables</h1>
+<p>Patching the executable is actually the same process as <a href="../ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
+<h1 id="passing-arguments-to-functions">Passing arguments to functions</h1>
+<p>Since the crackme was cracked relatively quickly I want to review and highlight how arguments are passed to functions. </p>
+<p>The format of the <code>scanf</code> function in C is like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span> <span class="nf">scanf</span> <span class="p">(</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">format</span><span class="p">,</span> <span class="p">...</span> <span class="p">);</span>
+</code></pre></div>
+
+<p>Here's an example of how it is used:</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+<span class="n">scanf</span> <span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span>
+</code></pre></div>
+
+<p>If we look at the 0x01 program we could see how the arguments are passed to the <em>_scanf</em> function by placing the data to send on top of the stack.</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">lea</span> <span class="no">eax</span><span class="p">,</span> <span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">]</span>
+<span class="nf">mov</span> <span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">var_14</span><span class="p">],</span> <span class="no">eax</span>
+<span class="nf">mov</span> <span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span> <span class="no">offset</span> <span class="no">aD</span><span class="c1">;  &quot;%d&quot;</span>
+<span class="nf">call</span> <span class="no">_scanf</span>
+</code></pre></div>
+
+<p><code>lea eax, [ebp+var_4]</code> gets the address of <em>var_4</em>, this is the memory location where scanf would put the inputted data. This is then added to the stack with <code>mov [esp+18h+var_14]</code>.</p>
+<p><code>offset aD</code> gets the address of <code>aD</code> which contains the string <em>"%d"</em>. This is the <em>format</em> parameter that <em>scanf</em> expects. This is then added to the stack with <code>mov [esp+18h+Format]</code>.</p>
+<p>With the two parameters added to the stack, it can now be used by the <em>scanf</em> function when <code>call _scanf</code> is executed.</p>
+<p>I'm not sure if I was able to explain that properly. At the very least, you should have been able to have a basic idea of how variables are passed to functions. Take note, however, that there are other calling conventions for functions which meants that the passing of arguments can also differ.</p>
+<h1 id="on-to-the-next-challenge">On to the next challenge...</h1>
+<p>This is the second challenge out of 10 in the IOLI series of challenges. So far the challenges are still very easy, which is fine because it's still good for practice. I look forward to the next one.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x01.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="../ioli-crackme-0x00.html">IOLI Crackme 0x00</a></h1>
 	<div class="meta">
           <time datetime="2021-02-16T21:55:00+08:00">February 16, 2021</time>
@@ -647,57 +705,6 @@ Look for the free flag. Get on the scoreboard!</p>
 <p>I am quite happy that I was able to structure the whole system so that you only need one Makefile for all three platforms. I'm not sure if this wil change in the future, but I'll do my best for it to stay like this as long as it's possible.</p>
 <p>If you are interested to try it out here's the project's <a href="https://github.com/accidentalrebel/rebel-game-engine">Github page</a>, depending on your platform here are the instructions on how to build for each one: <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Arch-Linux">Linux</a>, <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-MacOSX">MacOSX</a> and <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Windows-(using-Msys2)">Windows</a>.</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../rebel-game-engine-now-works-on-different-platforms.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-07T21:35:00+08:00">May 07, 2020</time>
-          in <span class="categories">
-            <a href="../tag/lisp.html">lisp</a>,            <a href="../tag/game_engine.html">game_engine</a>,            <a href="../tag/dev.html">dev</a>          </span>
-	</div>
-        <p><p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
-<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
-<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="../images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
-<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code after two implementations.</p>
-<p>And my code did change a lot. The biggest change is switching from an object oriented approach to functional style so that it would suit Lisp scripting. I also paid special attention in making sure that whatever change I made would make sense when the game engine is used without scripting. My guiding principle is that implementing a game on both C and Scheme should be structurally identical, aside from the difference in syntaxes, of course.</p>
-<p>Here's a simple program wher you could move a colored box using the keyboard:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">box-sprite</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">box-pos</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">box-sprite</span> <span class="p">(</span><span class="nf">sprite_create</span> <span class="nv">assets/textures</span> <span class="nv">tile</span><span class="o">.</span><span class="nv">png</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">box-pos</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">400</span> <span class="mi">300</span> <span class="mi">0</span><span class="p">))</span>
-  <span class="no">#t</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">window_clear</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_O</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_E</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_A</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-
-  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">tint</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">sprite_draw</span> <span class="nv">box-sprite</span> <span class="nv">box-pos</span> <span class="mi">50</span> <span class="mi">50</span> <span class="nv">tint</span> <span class="no">#f</span><span class="p">))</span>
-
-  <span class="p">(</span><span class="nf">window_swap</span><span class="p">)</span>
-  <span class="no">#t</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Implementing Lisp, and coding with it has been very fun too. I've had the most fun when <a href="http://wiki.call-cc.org/eggref/5/bind">I implemented the FFI</a>. Every time I go through the wiki I find a better way of doing things so I'd go and re-implement them again. Each iteration I learn something new and it's such a joy exploring.</p>
-<p>Playing with the garbage collector has also made me think about memory management more. This resulted in having two ways to call certain API functions: one will return a pointer that will automatically get tracked by the GC. The other you'd have to free manually. I figured this is a good approach for situations when having control over memory and references is crucial.</p>
-<p>I've already spent a lot of time on this project and it was mostly spent on the scripting side of the engine. There are still more to do for it to be considered useful but I'm happy I was able to learn a lot.</p>
-<p>If you are curious about the engine you could check it out <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">Read on →</a> -->
       </article>
     </div>
   </div>
