@@ -81,8 +81,8 @@
 <p>I have Metasploitable 2 and Metasploitable 3 machines that have various services turned on to play around with. I can learn about specific attacks by exploiting this machine, but I can also don my defenders hat and learn about how to secure them.</p>
 <p>The Windows and Linux machines will serve as typical workstations for various experiments.</p>
 <p>One of the perks of my job is that I get to play with different cybersecurity solutions. I currently have access to a few that I am able to use on my lab for testing.</p>
-<p>One solution that I am using right now is an EDR (Endpoint Detection and Response) (Sorry, I can't reveal which). Each machine has an EDR agent deployed which monitors for any malicious activities on the host. </p>
-<p>An IDS (intrusion Detection System) running <a href="https://www.snort.org/">Snort</a> monitors the traffic for any malicious activity. If it finds anything it then sends an alert to a SIEM (running <a href="https://www.splunk.com/">Splunk</a>) on the Management network.</p>
+<p>One solution that I am using right now is an EDR (Endpoint Detection and Response) (Sorry, I can't reveal which). Each machine has an EDR agent deployed which monitors for any malicious activities on the host. It has an anti-virus feature, anti-ransomware, and fileless attack monitoring. It's awesome stuff but I have yet to maximize this.</p>
+<p>An IDS (intrusion Detection System) running <a href="https://www.snort.org/">Snort</a> monitors the traffic for any malicious activity. Signatures are constantly updated to ensure that I can detect the latest types of attack. If it finds anything important, it then sends an alert to a SIEM (running <a href="https://www.splunk.com/">Splunk</a>) on the Management network.</p>
 <h1 id="the-management-network">The Management Network</h1>
 <p>On the left side of the diagram is the Managemnet network. This is where the management part of the EDR, IDS, and the SIEM can be accessed from my virtual host.</p>
 <p><img alt="building-my-virtual-cybersecurity-home-lab-03" src="../images/building-my-virtual-cybersecurity-home-lab-03.png" /></p>
