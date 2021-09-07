@@ -35,6 +35,8 @@ I've never made a RAT before but thankfully there are a lot of great resources o
 
 As for the name of the project, I decided on "RATwurst" after the german sausage, Bratwurst. Don't ask me why. I just thought it's funny that it had the letters RAT in it.
 
+![making-a-rat-02]({attach}/images/making-a-rat-02.png)
+
 ## The nitty gRATty details
 
 The client is written in ANSI C because it's the language I prefer. Since I am only targeting Windows I chose MSVC for the compiler. Which is great because it allows me to use Visual Studio for debugging.
@@ -48,6 +50,8 @@ When RATwurst is first executed. It does some anti-sandbox checks via process en
 Anti-debbuging checks are littered throughout the code which checks the amount of time it takes to reach from one part of the code to the next. This is used to detect if someone is stepping through the code, increasing the delay between code execution.
 
 When no shenanigans is detected then it'll proceed to work as intended. 
+
+![making-a-rat-02]({attach}/images/making-a-rat-02.png)
 
 ## For eduRATional purposes only
 

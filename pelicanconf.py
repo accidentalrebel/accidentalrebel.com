@@ -29,7 +29,7 @@ SOCIAL = (('Twitter', 'https://www.twitter.com/accidentalrebel'),
           ('Github','https://github.com/accidentalrebel'),
           ('YouTube', 'https://www.youtube.com/user/AccidentalRebelGames'))
 
-BLURB = "Cyber Security Engineer - Security tools developer - Malware analyst - Former co-founder and dev at @mindcakes - Maker of electronics and machines - Occasional woodworker - Accidental rebel."
+BLURB = "Juan Karlo Licudine is currently employed as a Cyber Security Engineer where he uses his programming and technical skills in helping companies protect themselves from cyber threats. In his free time, he works on cybersecurity-related programming projects like malware analysis tools and remote access tools. He jumps between the red or blue camps depending on which project currently interests him."
 
 DEFAULT_PAGINATION = 10
 
