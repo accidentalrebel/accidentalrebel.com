@@ -60,6 +60,45 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./ioli-crackme-0x02.html">IOLI Crackme 0x02</a></h1>
+	<div class="meta">
+          <time datetime="2021-03-06T10:34:00+08:00">March 06, 2021</time>
+          in <span class="categories">
+            <a href="./tag/re.html">re</a>,            <a href="./tag/crackme.html">crackme</a>          </span>
+	</div>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a> and <a href="./ioli-crackme-0x01.html">0x01</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>After the first two challenges I kinda know what to expect already so I skipped running the program and immediately loaded it in IDA.</p>
+<p><img alt="ioli-crackme-0x02-01" src="./images/ioli-crackme-0x02-01.png" /></p>
+<p>So the lines leading to the comparison command now looks more complicated than before. We could easily see that there are some computations that happens thanks to the presence of <code>add</code> and <code>imul</code>. Before those, we have two values (<code>5Ah</code> and <code>1ECh</code>) which we can easily guess are the values that will be worked on by these arithmetic functions.</p>
+<p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which results in a value of <code>246h</code>.</p>
+<p>After that we see the line <code>imul eax, [ebp+var_8]</code>, which if you follow the sequence closely effectively multiplies <code>246h</code> by itself, resulting in a value of <code>52B24h</code>.</p>
+<p>Convert <code>52B24h</code> to decimal equates to <code>338724</code>, which is unsprisingly the password that we need.</p>
+<p><img alt="ioli-crackme-0x02-02" src="./images/ioli-crackme-0x02-02.png" /></p>
+<h1 id="confirming-via-dynamic-analysis">Confirming via dynamic analysis</h1>
+<p>What we did above is that we used static analysis to inspect the program line by line to determine the final computed password value. Let's use dynamic analysis and step through the code to see how our data is manipulated in memory during this process.</p>
+<p>Let's set a breakpoint immediately after the initial two values are loaded into memory.</p>
+<p><img alt="ioli-crackme-0x02-03" src="./images/ioli-crackme-0x02-03.png" /></p>
+<p>If we look at the memory locations we would see the following:</p>
+<p><img alt="ioli-crackme-0x02-04" src="./images/ioli-crackme-0x02-04.png" /></p>
+<p><code>epb+var_8</code> points to <code>28FF40</code> which now contains <code>5Ah</code></p>
+<p><code>ebp+var_C</code> points to <code>28FF3C</code> which now contains <code>1ECh</code></p>
+<p>Stepping through the code and checking the memory location after <code>add [eax], edx</code> shows that the result <code>246h</code> is saved at memory location <code>28FF40</code>.</p>
+<p><img alt="ioli-crackme-0x02-05" src="./images/ioli-crackme-0x02-05.png" /></p>
+<p>Then after <code>imul eax, [ebp+var_8]</code> we see that eax now holds the value of <code>52B24h</code>, confirming the final computed value that we had from our static analysis.</p>
+<p><img alt="ioli-crackme-0x02-06" src="./images/ioli-crackme-0x02-06.png" /></p>
+<h1 id="patching-the-executables">Patching the executables</h1>
+<p>Patching the executable is actually the same process as <a href="./ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
+<h1 id="on-to-the-next-challenge">On to the next challenge...</h1>
+<p>While the challenge is still easy, we can see that the complexity is slowly ramping up from previous challenges. We also took the time to confirm the result of our static analysis by debugging and stepping through the code. This is a good practice for me to familiarize myself with IDA, which I hope I could use in future challenges.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x02.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./introducing-shcode2exe.html">Introducing shcode2exe</a></h1>
 	<div class="meta">
           <time datetime="2021-02-26T07:34:00+08:00">February 26, 2021</time>
@@ -631,123 +670,6 @@ Look for the free flag. Get on the scoreboard!</p>
 <p>While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.</p>
 <p>If you are interested to check out my still-under-construction game engine, you can do so <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./switching-from-c-c---to-c.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
-          in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/game_engine.html">game_engine</a>          </span>
-	</div>
-        <p><p><img alt="following-lispy-conventions-01" src="./images/following-lispy-conventions-01.png" /></p>
-<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
-<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function <em>is_key_down</em>. Changing it to <em>key_down?</em> looked weird at first but I liked how it made the function name shorter and the <em>?</em> prefix made it easy to spot and parse.</p>
-<p>Okay, cool! What's next?</p>
-<p>Adding a <em>!</em> indicates a function that mutates data. Most commonly used for setting a variable. I saw I had variables like <em>set_vec3_x</em>, to which I changed to <em>vec3_x!</em>.</p>
-<p>This went on as I continue to find improvements. Here's a list of all the naming convention changes that I've made:</p>
-<table>
-<thead>
-<tr>
-<th align="center"><strong>The change</strong></th>
-<th align="center"><strong>From</strong></th>
-<th align="center"><strong>To</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><em>:</em> infix for namespaces.</td>
-<td align="center">vec3_create</td>
-<td align="center">vec3:create</td>
-</tr>
-<tr>
-<td align="center"><em>?</em> postfix for boolean functions</td>
-<td align="center">key_down?</td>
-<td align="center">key:down?</td>
-</tr>
-<tr>
-<td align="center"><em>!</em> postfix for destructive functions</td>
-<td align="center">set_camera_position</td>
-<td align="center">camera:position!</td>
-</tr>
-<tr>
-<td align="center"><em>%</em> postfix for low level functions</td>
-<td align="center">free</td>
-<td align="center">free%</td>
-</tr>
-<tr>
-<td align="center"><em>%</em> prefix and postfix for low level variables</td>
-<td align="center">shader-pointer</td>
-<td align="center">%shader-pointer%</td>
-</tr>
-<tr>
-<td align="center"><em>*</em> prefix and postfix for global variables</td>
-<td align="center">cube-shader</td>
-<td align="center">*cube-shader*</td>
-</tr>
-</tbody>
-</table>
-<p>Again, these new changes felt weird at first but I quickly became accustomed the more of these functions I changed. The code became easier to scan as there are now key characters for my eyes to easily latch onto. Something to appreciate especially with multi-level nested expressions.</p>
-<p>Here's how the code now looks like with the new functions:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">MOVEMENT_SPEED</span> <span class="mf">0.001</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube-shader*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube-positions*</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube*</span>
-    <span class="p">(</span><span class="nf">cube:create</span> <span class="s">&quot;assets/textures&quot;</span> <span class="s">&quot;awesomeface.png&quot;</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-shader*</span>
-    <span class="p">(</span><span class="nf">shader:create</span> <span class="s">&quot;shaders/simple-3d.vs&quot;</span> <span class="s">&quot;shaders/simple.fs&quot;</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-positions*</span>
-    <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nf">vec3:create</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">-1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">))))</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">window:clear</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">main-camera</span> <span class="p">(</span><span class="nf">camera:main</span><span class="p">))</span>
-     <span class="p">(</span><span class="nf">current-projection</span> <span class="p">(</span><span class="nf">camera:projection</span> <span class="nv">main-camera</span><span class="p">))</span>
-     <span class="p">(</span><span class="nf">camera-pos</span> <span class="p">(</span><span class="nf">camera:position</span> <span class="nv">main-camera</span><span class="p">)))</span>
-
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:up?</span> <span class="nv">KEY_C</span><span class="p">)</span>
-      <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">current-projection</span> <span class="nv">PERSPECTIVE</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">ORTHOGRAPHIC</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">PERSPECTIVE</span><span class="p">)))</span>
-
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_A</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_E</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_O</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">))))</span>
-
-  <span class="p">(</span><span class="nf">for-each</span>
-   <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">position</span><span class="p">)</span>
-     <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">%tint%</span> <span class="p">(</span><span class="nf">vec3:create%</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
-       <span class="p">(</span><span class="nf">cube:draw</span> <span class="nv">*cube*</span> <span class="nv">position</span> <span class="mi">1</span> <span class="mi">1</span> <span class="nv">%tint%</span> <span class="nv">*cube-shader*</span><span class="p">)</span>
-       <span class="p">(</span><span class="nf">free%</span> <span class="nv">%tint%</span><span class="p">)))</span>
-   <span class="nv">*cube-positions*</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">window:swap</span><span class="p">))</span>
-</code></pre></div>
-
-<p>I also changed my C functions to reflect a <em>NamespaceVerb</em> convention. I could have used <em>namespace::Verb</em> but the <a href="http://wiki.call-cc.org/eggref/5/bind">FFI that I use</a> to communicate with C cannot parse C namespaces. So instead of <em>Shader::Create</em>, I am left with <em>ShaderCreate</em>. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, <a href="https://www.raylib.com/examples.html">Raylib also uses this convention</a> for their functions).</p>
-<p>I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./following-lispy-conventions.html">Read on →</a> -->
       </article>
     </div>
   </div>
