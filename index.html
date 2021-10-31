@@ -60,6 +60,132 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a></h1>
+	<div class="meta">
+          <time datetime="2021-10-30T12:00:00+08:00">October 30, 2021</time>
+          in <span class="categories">
+            <a href="./tag/threat-hunting.html">threat-hunting</a>,            <a href="./tag/cyberdefenders.html">cyberdefenders</a>          </span>
+	</div>
+        <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/labs/75">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience on threat hunting.</p>
+<p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
+<h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
+<blockquote>
+<p>Quesiton 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
+</blockquote>
+<p>So the question tells us that the attacker used WMI subscription to gain persistence in our network.</p>
+<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a> to better visualize the technique and it's related information.</p>
+<p><img alt="cyber-corp-case-2-writeup-01" src="./images/cyber-corp-case-2-writeup-01.png" /></p>
+<h2 id="testing-wmi-persistence-in-my-homelab">Testing WMI Persistence in my homelab</h2>
+<p>Now that I understand the concept I then checked <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md">the technique's entry</a> in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about Atomic Red Team is that they have easy-to-follow step-by-step instructions on how to emulate Mitre ATT&amp;CK techniques.</p>
+<p>I took the code on the page and ran it in <a href="{attach}/building-my-virtual-cybersecurity-home-lab.md">my homelab</a>. I then fired up Windows Event Viewer and looked for entries with event log ID "5681 (WMI activity)". The entry that I found contains the information below:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">Namespace</span> <span class="o">=</span> <span class="o">//</span><span class="p">.</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">subscription</span><span class="err">;</span> <span class="n">Eventfilter</span> <span class="o">=</span> <span class="n">AtomicRedTeam</span><span class="o">-</span><span class="n">WMIPersistence</span><span class="o">-</span><span class="n">Example</span> <span class="p">(</span><span class="n">refer</span> <span class="k">to</span> <span class="n">its</span> <span class="n">activate</span> <span class="n">eventid</span><span class="p">:</span><span class="mi">5859</span><span class="p">)</span><span class="err">;</span> <span class="n">Consumer</span> <span class="o">=</span> <span class="n">CommandLineEventConsumer</span><span class="o">=</span><span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span> <span class="n">PossibleCause</span> <span class="o">=</span> <span class="n">Binding</span> <span class="n">EventFilter</span><span class="p">:</span> 
+<span class="n">instance</span> <span class="k">of</span> <span class="n">__EventFilter</span>
+<span class="p">{</span>
+    <span class="n">CreatorSID</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">242</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">245</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span><span class="err">;</span>
+    <span class="n">EventNamespace</span> <span class="o">=</span> <span class="s">&quot;root\\CimV2&quot;</span><span class="err">;</span>
+    <span class="n">Name</span> <span class="o">=</span> <span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span>
+    <span class="n">Query</span> <span class="o">=</span> <span class="s">&quot;SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA &#39;Win32_PerfFormattedData_PerfOS_System&#39; AND TargetInstance.SystemUpTime &gt;= 240 AND TargetInstance.SystemUpTime &lt; 325&quot;</span><span class="err">;</span>
+    <span class="n">QueryLanguage</span> <span class="o">=</span> <span class="s">&quot;WQL&quot;</span><span class="err">;</span>
+<span class="p">}</span><span class="err">;</span>
+<span class="n">Perm</span><span class="p">.</span> <span class="n">Consumer</span><span class="p">:</span> 
+<span class="n">instance</span> <span class="k">of</span> <span class="n">CommandLineEventConsumer</span>
+<span class="p">{</span>
+    <span class="n">CommandLineTemplate</span> <span class="o">=</span> <span class="s">&quot;C:\\Windows\\System32\\notepad.exe&quot;</span><span class="err">;</span>
+    <span class="n">CreatorSID</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">96</span><span class="p">,</span> <span class="mi">158</span><span class="p">,</span> <span class="mi">195</span><span class="p">,</span> <span class="mi">131</span><span class="p">,</span> <span class="mi">63</span><span class="p">,</span> <span class="mi">242</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span> <span class="mi">137</span><span class="p">,</span> <span class="mi">245</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">134</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span><span class="err">;</span>
+    <span class="n">Name</span> <span class="o">=</span> <span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span>
+<span class="p">}</span><span class="err">;</span>
+</code></pre></div>
+
+<p>Since I have Sysmon logging enabled, I also double checked the logs using the Sysmon event ID's below:</p>
+<ul>
+<li>Event ID 19: WmiEvent (WmiEventFilter activity detected)</li>
+<li>Event ID 20: WmiEvent (WmiEventConsumer activity detected)</li>
+<li>Event ID 21: WmiEvent (WmiEventConsumerToFilter activity</li>
+</ul>
+<p><img alt="cyber-corp-case-2-writeup-02" src="./images/cyber-corp-case-2-writeup-02.png" /></p>
+<p>As we can see, Sysmon separates the WMIEvents into the different types of WmiEvent activities.</p>
+<h2 id="building-the-query-for-the-kibana-search">Building the Query for the Kibana search</h2>
+<p>Now that I know what the important IOCs are, I could now create the query to answer the first question of the challenge.</p>
+<ul>
+<li>5861</li>
+<li>("QueryLanguage = " AND "Consumer = ")</li>
+</ul>
+<p>When the above information are combined, I get the query <code>5861 OR ("QueryLanguage = " AND "Consumer = ")</code>. Putting this in the Kibana search shows us the one and only entry:</p>
+<p><img alt="cyber-corp-case-2-writeup-03" src="./images/cyber-corp-case-2-writeup-03.png" /></p>
+<p>From there we could easily see the name of the WMI Event Consumer.</p>
+<h2 id="looking-for-the-wmi-subscriber">Looking for the WMI subscriber</h2>
+<blockquote>
+<p>Question 2. In the previous step, you looked for traces of the attacker's persistence in the compromised system through a WMI subscription mechanism. Now find the process that installed the WMI subscription. Answer the question by specifying the PID of that process and the name of its executable file, separated by a comma without spaces.</p>
+</blockquote>
+<p>Reading the question above, I knew that I needed to look for a process that has happened prior to the WMI subscription. And so, I've set the date range to reflect this.</p>
+<p><img alt="cyber-corp-case-2-writeup-04" src="./images/cyber-corp-case-2-writeup-04.png" /></p>
+<p>I wasn't so sure what to look for next so I just looked out for anything suspicious. Thankfully there is the <code>enrich.ioa.*</code> set of fields where enrichment is done that indicate suspiciousness. I've set a filter to show entries that have <code>enrich.ioa.max_severity</code> to <code>exists</code>. This means it'll only show events that are either <code>high</code>, <code>medium</code>, or <code>low</code>.</p>
+<p>These showed some very interesting events:</p>
+<p><img alt="cyber-corp-case-2-writeup-05" src="./images/cyber-corp-case-2-writeup-05.png" /></p>
+<p>It seems like <code>winword.exe</code> is connecting to an external IP. Very suspicious. Searching the IP <code>188.135.15.49</code> on VirusTotal reveals that it is indeed malicious.</p>
+<p><img alt="cyber-corp-case-2-writeup-06" src="./images/cyber-corp-case-2-writeup-06.png" /></p>
+<p>If we look at more of the events we will find that there are a lot of malicious activity with the <code>proc_cmdline</code> that contains the value:</p>
+<blockquote>
+<p>"C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE" /n "C:!Work\Marketing\Docs\OPEC\OPEC crude oil production.docx" /o ""</p>
+</blockquote>
+<p>Having seen all of that we can now safely assume that this is the process that we are looking for. Entering the <code>proc_id</code> along with the proc's file name satisfies question number 2.</p>
+<h2 id="looking-for-the-extracted-archive">Looking for the extracted archive</h2>
+<blockquote>
+<p>Question 3. The process described in the previous question was used to open a file extracted from the archive that user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.</p>
+</blockquote>
+<p>The question said something about a file being opened, and so I added the filters <code>event_type: FileOpen</code> and <code>proc_file_path: C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE</code> to see what files were opened using Word.exe prior to the WMI subscription. This however showed a lot of files.</p>
+<p><img alt="cyber-corp-case-2-writeup-07" src="./images/cyber-corp-case-2-writeup-07.png" /></p>
+<p>The question also mentioned that the opened file was extracted from an archive received by email. So I added the query <code>*zip* OR *rar*</code> to find outif there are any "zip" or "rar" files that were processed.</p>
+<p>Sure enough, there was, and one particular really stood out. </p>
+<blockquote>
+<p>Process 'c:\program files (x86)\microsoft office\office16\outlook.exe' created file 'c:\users\john.goldberg\appdata\local\microsoft\windows\inetcache\content.outlook\dfn3sfep\report.zip'</p>
+</blockquote>
+<p>This tells us that the archive <code>report.zip</code> was opened via email using the program <code>outlook.exe</code>.</p>
+<p>But what was the generated file when the archive was opened? Looking through the results we could also see one entry that had the <code>enrich.chain</code> with the value of: </p>
+<blockquote>
+<p>'c:\windows\explorer.exe' ➔ 'c:\program files (x86)\microsoft office\office16\winword.exe' ➔ 'c:\users\john.goldberg\appdata\local\temp\temp1_report.zip\market forecast emea.docx'`. </p>
+</blockquote>
+<p>"Market forecaste emea.docx" was opened via "winword.exe" and we could also see that the temporary folder for it is <code>temp1_report.zip</code>. Entering the hash for this "docx" file was the correct answer for this question.</p>
+<h2 id="finding-the-actual-malicious-file">Finding the actual malicious file</h2>
+<blockquote>
+<p>Question 4. The file mentioned in question 3, is not malicious in and of itself, but when it is opened, another file is downloaded from the Internet that already contains the malicious code. Answer the question by specifying the address, from which this file was downloaded, and the SHA256 hash of the downloaded file, separated by commas without spaces.</p>
+</blockquote>
+<p>If we think about it, we can make the date range smaller by starting our range from when the Zip is extracted and from when the WMI subscription happened. </p>
+<p><img alt="cyber-corp-case-2-writeup-08" src="./images/cyber-corp-case-2-writeup-08.png" /></p>
+<p>There are three "action" keywords specified in the question that I knew I could filter for. This led me to using the query below:</p>
+<blockquote>
+<p>event_type:NetworkConnection OR event_type:FileOpen OR event_type:FileCreate</p>
+</blockquote>
+<p>What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signifies another file is downlaoded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.</p>
+<p>As you can see in the image below, we have a series of events that shows us the three events that we are looking for in the previous paragraph. But because their timestamps are the same, they are all jumbled.</p>
+<p><img alt="cyber-corp-case-2-writeup-09" src="./images/cyber-corp-case-2-writeup-09.png" /></p>
+<p>The way to see if the events happened in the order that we want (Network Connection &gt; FileCreate &gt; FileOpen), then what we can do is to view the surrounding documents on one of the events and see from there. From the image below, we see that the ordering of the events is indeed correct.</p>
+<p><img alt="cyber-corp-case-2-writeup-10" src="./images/cyber-corp-case-2-writeup-10.png" /></p>
+<p>The above tells us two of the answers that we need to answer the 4th question. The IP on the network connection and the hash of the file that was opened.</p>
+<h2 id="finding-the-tricky-technique">Finding the tricky technique</h2>
+<blockquote>
+<p>Question 5. The malicious code from the file, mentioned in question 4, directly installed a WMI subscription, which we started our hunting with, and also downloaded several files from the Internet to the compromised host. For file downloading, the attacker used a tricky technique that gave him the opportunity to hide the real process, which initiated the corresponding network activity. Specify the SHA256 hash of the operating system component whose functionality was used by the attacker to download files from the Internet.</p>
+</blockquote>
+<p>So the event that the question is looking for happened after the WMI subscription. I've updated the date range to reflect this.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-1-11" src="./images/cyber-corp-case-2-writeup-part-1-11.png" /></p>
+<p>Initially, I tried doing the same approach as I did before where I would pick up certain "action" keywords from the question. Something similar to the query below:</p>
+<blockquote>
+<p>(event_type:NetworkConnection OR event_type:FileCreate) AND enrich.ioa.max_severity:*</p>
+</blockquote>
+<p>Sadly, no matter where I looked it doesn't seem to be what the question is looking for.</p>
+<p>And so, I had to start my search from scratch but this time only focusing on any entries after the WMI subscription that have an existing value in <code>enrich.ioa.max_severity</code>. This approach worked and it showed me this very interesting entry marked as <code>win_unusual_ie_com_dll_host_process</code>.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-1-12" src="./images/cyber-corp-case-2-writeup-part-1-12.png" /></p>
+<p>So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it to use "iexplore.exe" in downloading several files from the internet. This technique is unfamiliar to me and researching about it only showed <a href="https://cyberpolygon.com/materials/hunting-for-advanced-tactics-techniques-and-procedures-ttps/">an article from Cyber Polygon</a>. I'll try to explore this in the future, but at least for now. I have the answer to the question.</p>
+<hr />
+<p>This is part 1 for my writeup for this challenge. Expect the next part which would have the answer to question that a lot of people have difficulty answering, which is #9. Until then!</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a></h1>
 	<div class="meta">
           <time datetime="2021-10-18T20:33:00+08:00">October 18, 2021</time>
@@ -454,259 +580,6 @@
 <p>I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it. Or maybe a video would be a much better format for these kinds of challenges?</p>
 <p>Anyway, I look forward to the next challenge. Hopefully, you are too!</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x03.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./maldoc101-writeup-part-1.html">Maldoc101 Writeup (Part 1)</a></h1>
-	<div class="meta">
-          <time datetime="2021-03-13T08:34:00+08:00">March 13, 2021</time>
-          in <span class="categories">
-            <a href="./tag/re.html">re</a>,            <a href="./tag/malware_analysis.html">malware_analysis</a>,            <a href="./tag/malware.html">malware</a>          </span>
-	</div>
-        <p><p>This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (<a href="https://twitter.com/jstrosch">@jstrosch</a>) and is currently playable at <a href="https://cyberdefenders.org/labs/51">Cyberdefenders.Org</a>. I've done some maldoc analysis before but this is the first time I'm writing about my approach.</p>
-<p>There is also an already existing writeup about this challenge <a href="https://github.com/jstrosch/malware-samples/blob/master/malware_analysis_exercises/2020/December/solution.md">from the creator himself</a>. You should check that out if you want a more detailed and focused writeup. This writeup is more from the perspective of someone relatively new to malware analysis. There's a lot more exploration and trial-and-error which, I hope, might give the reader a different view in how this kind of problem is approached.</p>
-<h2 id="the-challenge">The challenge</h2>
-<h3 id="name">Name</h3>
-<p><a href="https://cyberdefenders.org/labs/51">MalDoc101 - Malicious Document</a></p>
-<h3 id="description">Description</h3>
-<p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended to show how you can often times perform quick analysis to extract important IOCs. The focus of this exercise is on static techniques for analysis.</p>
-<h3 id="suggested-tools">Suggested Tools</h3>
-<ul>
-<li>REMnux Virtual Machine (remnux.org)</li>
-<li>Terminal/Command prompt w/ Python installed</li>
-<li>Oledump</li>
-<li>Text editor</li>
-</ul>
-<h2 id="the-easy-questions">The easy questions</h2>
-<p>The first question seems very easy. The <em>suggested tools</em> section above also gives us an idea how to approach this.</p>
-<blockquote>
-<p>What streams contain macros in this document? (comma-separated, ascending).</p>
-</blockquote>
-<p><a href="https://blog.didierstevens.com/programs/oledump-py/">oledump.py</a> is a tool made by <a href="https://blog.didierstevens.com/about/">Didier Stevens</a> that allows the analysis of data streams found in OLE files such as MS Office documetns. Running the command below would show us which streams have macros in it. These are denoted with the character <em>M</em>.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py sample.bin
-<span class="go">  1:       114 &#39;\x01CompObj&#39;</span>
-<span class="go">  2:      4096 &#39;\x05DocumentSummaryInformation&#39;</span>
-<span class="go">  3:      4096 &#39;\x05SummaryInformation&#39;</span>
-<span class="go">  4:      7119 &#39;1Table&#39;</span>
-<span class="go">  5:    101483 &#39;Data&#39;</span>
-<span class="go">  6:       581 &#39;Macros/PROJECT&#39;</span>
-<span class="go">  7:       119 &#39;Macros/PROJECTwm&#39;</span>
-<span class="go">  8:     12997 &#39;Macros/VBA/_VBA_PROJECT&#39;</span>
-<span class="go">  9:      2112 &#39;Macros/VBA/__SRP_0&#39;</span>
-<span class="go"> 10:       190 &#39;Macros/VBA/__SRP_1&#39;</span>
-<span class="go"> 11:       532 &#39;Macros/VBA/__SRP_2&#39;</span>
-<span class="go"> 12:       156 &#39;Macros/VBA/__SRP_3&#39;</span>
-<span class="go"> 13: M    1367 &#39;Macros/VBA/diakzouxchouz&#39;</span>
-<span class="go"> 14:       908 &#39;Macros/VBA/dir&#39;</span>
-<span class="go"> 15: M    5705 &#39;Macros/VBA/govwiahtoozfaid&#39;</span>
-<span class="go"> 16: m    1187 &#39;Macros/VBA/roubhaol&#39;</span>
-<span class="go"> 17:        97 &#39;Macros/roubhaol/\x01CompObj&#39;</span>
-<span class="go"> ...</span>
-</code></pre></div>
-
-<p>I later noticed that there is an upper-case and lower-case <em>M</em>. I learned that the upper-case <em>M</em> denotes a macro with a code. The lower-case denotes a user form. This is a distinction that will be important later in this challenge.</p>
-<hr />
-<blockquote>
-<p>What command-line argument with Oledump do you use to view the raw content of a stream? (Do not include the leading dash) </p>
-</blockquote>
-<p>The next question is another easy one which ran easily be solved through <code>oledump.py</code>'s <em>--help</em> parameter.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py --help
-<span class="go">Usage: oledump.py [options] [file]</span>
-<span class="go">Analyze OLE files (Compound Binary Files)</span>
-
-<span class="go">Options:</span>
-<span class="go">  --version             show program&#39;s version number and exit</span>
-<span class="go">  -h, --help            show this help message and exit</span>
-<span class="go">  -m, --man             Print manual</span>
-<span class="go">  -s SELECT, --select=SELECT</span>
-<span class="go">                        select item nr for dumping (a for all)</span>
-<span class="go">  -d, --dump            perform dump</span>
-<span class="go">  -x, --hexdump         perform hex dump</span>
-<span class="go">  -a, --asciidump       perform ascii dump</span>
-<span class="go">  -A, --asciidumprle    perform ascii dump with RLE</span>
-<span class="go">  -S, --strings         perform strings dump</span>
-<span class="go">  -T, --headtail        do head &amp; tail</span>
-<span class="go">  -v, --vbadecompress   VBA decompression</span>
-<span class="go">  ...</span>
-</code></pre></div>
-
-<p>The answer to question number two is easy to spot.</p>
-<hr />
-<blockquote>
-<p>What event is used to begin the execution of the macros?  </p>
-</blockquote>
-<p>I used a different tool for this particular question mostly because I knew that it already shows the information I need to answer the question. The tool is called <code>olevba</code> which is part of the <a href="https://github.com/decalage2/oletools">oletools</a> package of Python tools. <em>Olevba</em> is used for extracting and analyzing VBA macro source code for MS Office documents.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>olevba sample.bin
-<span class="go">+----------+--------------------+---------------------------------------------+</span>
-<span class="go">|Type      |Keyword             |Description                                  |</span>
-<span class="go">+----------+--------------------+---------------------------------------------+</span>
-<span class="go">|AutoExec  |Document_open       |Runs when the Word or Publisher document is  |</span>
-<span class="go">|          |                    |opened                                       |</span>
-<span class="go">|Suspicious|Create              |May execute file or a system command through |</span>
-<span class="go">|          |                    |WMI                                          |</span>
-<span class="go">|Suspicious|showwindow          |May hide the application                     |</span>
-<span class="go">|Suspicious|CreateObject        |May create an OLE object                     |</span>
-<span class="go">...</span>
-</code></pre></div>
-
-<h2 id="onto-the-main-event">Onto the main event</h2>
-<blockquote>
-<p>What malware family was this maldoc attempting to drop?</p>
-</blockquote>
-<p>I figured that the way for me to determine the answer for the question above is to start investigating the macro codes included in the document.</p>
-<p>I knew from the previous question that the entry point to begin the execution of the macros is with the function <code>Document_open()</code>. The next step is to look for this entry point and go through the code to understand what the macro is doing.</p>
-<p>To view the contents of a stream, I used the command below:</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py sample.bin -s <span class="m">13</span> -v
-<span class="go">Attribute VB_Name = &quot;diakzouxchouz&quot;</span>
-<span class="go">Attribute VB_Base = &quot;1Normal.ThisDocument&quot;</span>
-<span class="go">Attribute VB_GlobalNameSpace = False</span>
-<span class="go">Attribute VB_Creatable = False</span>
-<span class="go">Attribute VB_PredeclaredId = True</span>
-<span class="go">Attribute VB_Exposed = True</span>
-<span class="go">Attribute VB_TemplateDerived = True</span>
-<span class="go">Attribute VB_Customizable = True</span>
-<span class="go">Private Sub _</span>
-<span class="go">Document_open()</span>
-<span class="go">boaxvoebxiotqueb</span>
-<span class="go">End Sub</span>
-</code></pre></div>
-
-<p>In the above output, I saw that <code>Document_open()</code> contains a single line of code which is a call to function <code>boaxvoebxiotqueb'</code>. This function is included in stream <code>15</code> which can be viewed with the command:</p>
-<div class="codehilite"><pre><span></span><code>$ oledump.py sample.bin -s <span class="m">13</span> -v
-Attribute <span class="nv">VB_Name</span> <span class="o">=</span> <span class="s2">&quot;govwiahtoozfaid&quot;</span>
-Function boaxvoebxiotqueb<span class="o">()</span>
-<span class="nv">gooykadheoj</span> <span class="o">=</span> Chr<span class="o">(</span>roubhaol.Zoom + Int<span class="o">(</span><span class="m">5</span> * <span class="m">3</span><span class="o">))</span>
-Dim c7�ATOQe2�j As Integer
-c7�ATOQe2�j <span class="o">=</span> <span class="m">6</span>
-Do While c7�ATOQe2�j &lt; <span class="m">6</span> + <span class="m">2</span>
-c7�ATOQe2�j <span class="o">=</span> c7�ATOQe2�j + <span class="m">5</span>: DoEvents
-Loop
-<span class="nv">haothkoebtheil</span> <span class="o">=</span> <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot;</span> + gooykadheoj + <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot;</span> + roubhaol.joefwoefcheaw + <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;</span>
-...
-</code></pre></div>
-
-<p>The above output contains more lines of what looks like gibberish code. Upon further inspection I realized that it's actually obfuscated. I can see common coding patterns which tells me that I could make sense of the code if I step through it and organize it so it is easy to understand.</p>
-<p>The first line of the <code>boaxvoebxiotqueb</code> shows:</p>
-<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
-</code></pre></div>
-
-<p>What's <code>roubhaol</code>? Since this is the first line in the function, I know that it is not a locally defined variable. It must be declared somplace else.</p>
-<p>After looking around I learned that <code>roubhaol</code> is a the name of the user form at stream <em>16</em>.</p>
-<div class="codehilite"><pre><span></span><code><span class="go">16: m    1187 &#39;Macros/VBA/roubhaol&#39;</span>
-</code></pre></div>
-
-<p>So the next step is figuring out what <code>roubhaol.Zoom</code>'s value is. This value is not set anywhere in any of the macros by code. This means that the value is set in the form itself. To confirm, I opened up the Word document, pressed <code>Alt+F11</code> to open up the Visual Basic editor and then opened the <code>roubhaol</code> form. At the bottom we see that the value of <code>Zoom</code> is set to <code>100</code>.</p>
-<p><img alt="maldoc101-writeup-01" src="./images/maldoc101-writeup-01.png" /></p>
-<p>This means that by simulating the first line of code again we find that the variable <code>gooykadheoj</code> gets the character value of <code>s</code>.</p>
-<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
-gooykadheoj = Chr(100 + Int(5 * 3))
-gooykadheoj = Chr(115)
-gooykadheoj = Chr(115) # character &quot;s&quot;
-</code></pre></div>
-
-<p>I then proceeded to go through the next set of lines.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Dim</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="nv">As</span> <span class="nv">Integer</span>
-<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="k">Do</span> <span class="k">While</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">&lt;</span> <span class="mi">6</span> <span class="o">+</span> <span class="mi">2</span>
-<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">=</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">+</span> <span class="mi">5</span>: <span class="nv">DoEvents</span>
-<span class="k">Loop</span>
-</code></pre></div>
-
-<p>This one is easier to simulate. <code>c7�ATOQe2�j</code> is assigend 6. And then there's a loop that adds <code>5</code> that eventually results to the value of <code>16</code>.</p>
-<p>But wait, something is fishy here. The variable <code>c7�ATOQe2�j</code> is not found anywhere else after the block of code above. This tells us that this is just junk code that does not really do anything aside from waste an analyst's time! Sneaky sneaky.</p>
-<p>To save me the time I proceeded to remove all junk code. I did this by going through each variables and seeing if they are used somewhere useful. If not, then they are safe to remove.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Attribute</span> <span class="nv">VB_Name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">govwiahtoozfaid</span><span class="s2">&quot;</span>
-<span class="nv">Function</span> <span class="nv">boaxvoebxiotqueb</span><span class="ss">()</span>
-    <span class="nv">gooykadheoj</span> <span class="o">=</span> <span class="nv">Chr</span><span class="ss">(</span><span class="nv">roubhaol</span>.<span class="nv">Zoom</span> <span class="o">+</span> <span class="nv">Int</span><span class="ss">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">3</span><span class="ss">))</span>
-
-    <span class="nv">haothkoebtheil</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nv">gooykadheoj</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span>
-
-    <span class="nv">deulsaocthuul</span> <span class="o">=</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">haothkoebtheil</span><span class="ss">)</span>
-
-    <span class="nv">Set</span> <span class="nv">tiajriokchaoy</span> <span class="o">=</span> <span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">deulsaocthuul</span><span class="ss">)</span>
-
-    <span class="nv">deaknaugthein</span> <span class="o">=</span> <span class="nv">roubhaol</span>.<span class="nv">kaizseah</span>.<span class="nv">ControlTipText</span>
-    <span class="nv">giakfeiw</span> <span class="o">=</span> <span class="nv">deulsaocthuul</span> <span class="o">+</span> <span class="nv">gooykadheoj</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">paerwagyouqumeid</span>.<span class="nv">ControlTipText</span> <span class="o">+</span> <span class="nv">deaknaugthein</span>
-    <span class="nv">queegthaen</span> <span class="o">=</span> <span class="nv">giakfeiw</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span>
-
-    <span class="nv">Set</span> <span class="nv">deavjoajsear</span> <span class="o">=</span> <span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">queegthaen</span><span class="ss">)</span>
-
-    <span class="nv">xve</span> <span class="o">=</span> <span class="nv">Array</span> <span class="nv">_</span>
-        <span class="ss">(</span><span class="s2">&quot;</span><span class="s">1234444123</span><span class="s2">&quot;</span>, <span class="nv">tiajriokchaoy</span>. <span class="nv">_</span>
-        <span class="nv">Create</span><span class="ss">(</span><span class="nv">geulgelquuuj</span>, <span class="nv">kaenhaig</span>, <span class="nv">deavjoajsear</span><span class="ss">)</span>, <span class="s2">&quot;</span><span class="s">9938723</span><span class="s2">&quot;</span><span class="ss">)</span>
-<span class="k">End</span> <span class="nv">Function</span>
-
-<span class="nv">Function</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
-    <span class="nv">geutyoeytiestheug</span> <span class="o">=</span> <span class="nv">yiajthoavheiw</span>
-    <span class="nv">feaxgeip</span> <span class="o">=</span> <span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>, <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span><span class="ss">)</span>
-
-    <span class="nv">jaquhoiqu</span> <span class="o">=</span> <span class="nv">csqw</span> <span class="o">+</span> <span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>, <span class="nv">eihnx</span><span class="ss">)</span>
-    <span class="nv">juuvzouchmiopxeox</span> <span class="o">=</span> <span class="nv">jaquhoiqu</span>
-<span class="k">End</span> <span class="nv">Function</span>
-
-<span class="nv">Function</span> <span class="nv">geulgelquuuj</span><span class="ss">()</span>
-    <span class="nv">sjiqw</span> <span class="o">=</span> <span class="nv">roubhaol</span>.<span class="nv">gaoddaicsauktheb</span>.<span class="nv">Pages</span><span class="ss">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">10</span><span class="ss">)</span>.<span class="nv">ControlTipText</span>
-    <span class="nv">geulgelquuuj</span> <span class="o">=</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">sjiqw</span><span class="ss">)</span>
-<span class="k">End</span> <span class="nv">Function</span>
-
-<span class="nv">Function</span> <span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
-    <span class="nv">Set</span> <span class="nv">luumlaud</span> <span class="o">=</span> <span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
-    <span class="nv">Dim</span> <span class="nv">vPu</span> <span class="nv">As</span> <span class="nv">String</span>
-    <span class="nv">vPu</span> <span class="o">=</span> <span class="nv">Replace</span>$<span class="ss">(</span><span class="s2">&quot;</span><span class="s">BenqV1�igVwifwdQq</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">BenqV1�i</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">on5�</span><span class="s2">&quot;</span><span class="ss">)</span>
-        <span class="nv">luumlaud</span> <span class="nv">_</span>
-        . <span class="nv">_</span>
-        <span class="nv">showwindow</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">mujgoiy</span> <span class="o">+</span> <span class="nv">jioyseertioch</span><span class="ss">)</span> <span class="o">+</span> <span class="ss">(</span><span class="nv">neivberziok</span> <span class="o">+</span> <span class="nv">xuajroegquoudcaij</span><span class="ss">)</span>
-<span class="k">End</span> <span class="nv">Function</span>
-</code></pre></div>
-
-<p>As you can see above, the code is shorter. It's also a little easier to understand. Only a little though, we still need to step through the code carefully to have a better grasp of what it is doing.</p>
-<p>Let's take on the next line:</p>
-<div class="codehilite"><pre><span></span><code>haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot; + gooykadheoj + &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot; + roubhaol.joefwoefcheaw + &quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
-</code></pre></div>
-
-<p>If we look at the string carefully we would notice that a set of strings is concatenated with two variables. These variables are <code>gooykadheoj</code> and <code>roubhaol.joefwoefcheaw</code>. We already know the value of <code>gooykadheoj</code>. So what's the value of <code>roubhaol.joefwoefcheaw</code>?</p>
-<p>I got this value by going back to Visual Basic Editor and selelecting <code>joefwoefcheaw</code>. The value we need is listed under <code>Text</code>.</p>
-<p><img alt="maldoc101-writeup-02" src="./images/maldoc101-writeup-02.png" /></p>
-<p>Substituting the values <code>s</code> and <code>P</code> I got the following:</p>
-<div class="codehilite"><pre><span></span><code>haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fqP2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
-</code></pre></div>
-
-<p>It still doesn't clear up the gibberish, but at least it's now one big string. This same string is then passed as a parameter to function <code>juuvzouchmiopxeox</code>. </p>
-<div class="codehilite"><pre><span></span><code>deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
-</code></pre></div>
-
-<p>Let's look at the code inside <code>juuvzouchmiopxeox</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Function</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
-    <span class="nv">geutyoeytiestheug</span> <span class="o">=</span> <span class="nv">yiajthoavheiw</span>
-    <span class="nv">feaxgeip</span> <span class="o">=</span> <span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>, <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span><span class="ss">)</span>
-
-    <span class="nv">jaquhoiqu</span> <span class="o">=</span> <span class="nv">csqw</span> <span class="o">+</span> <span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>, <span class="nv">eihnx</span><span class="ss">)</span>
-    <span class="nv">juuvzouchmiopxeox</span> <span class="o">=</span> <span class="nv">jaquhoiqu</span>
-<span class="k">End</span> <span class="nv">Function</span>
-</code></pre></div>
-
-<p>Following the code we could see that the passed string is splitted using the call to the function <code>Split</code> with the substring <code>2342772g3&amp;*gs7712ffvs626fq</code>. This simply means that the substring is removed from the input string. The result of <code>Split</code> is then joined into one string using <code>Join</code>. There are the variables <code>csqw</code> and <code>eihnx</code>, they don't alter the string as these variables are empty. </p>
-<p>At the end of this function the value of the passed string is now:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">winmgmts</span><span class="o">:</span><span class="n">win32_Process</span>
-</code></pre></div>
-
-<p>Aha! Something that is not gibberish for a change!</p>
-<p>Going back to the caller function, the result of <code>juuvzouchmiopxeox</code> is saved to <code>deulsaocthuul</code>.</p>
-<div class="codehilite"><pre><span></span><code>    deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
-
-    Set tiajriokchaoy = CreateObject(deulsaocthuul)
-</code></pre></div>
-
-<p>After that an object is created out of <code>deaulsaocthuul</code>, which we know contains <code>winmgmts:win32_Process</code>. </p>
-<p>Looking at <a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-process">the microsoft docs</a> I find out that <code>The Win32_Process WMI class represents a process on an operating system.</code>. Interesting.</p>
-<h2 id="taking-a-step-back">Taking a step back</h2>
-<p>At this point there are already a number of questions that we could answer based on what we've done so far. Some are not yet answerable at the moment, however, so nothing left to do but to push forward. But that will be for the next part of this two part series.</p>
-<p>Until then, I'm taking a step back as I marvel at my progress. It wouldn't take long until all the pieces would fall into place.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./maldoc101-writeup-part-1.html">Read on →</a> -->
       </article>
     </div>
   </div>

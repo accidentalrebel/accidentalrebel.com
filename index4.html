@@ -60,6 +60,36 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux</a></h1>
+	<div class="meta">
+          <time datetime="2017-09-23T13:08:00+08:00">September 23, 2017</time>
+          in <span class="categories">
+            <a href="./tag/emacs-windows-linux.html">emacs windows linux</a>          </span>
+	</div>
+        <p><p>One of the problems I was having with my Emacs environment under WSL <em>(Windows Subsystem for Linux, aka. Bash On Windows)</em> is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.</p>
+<p>I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called <a href="https://github.com/rolandwalker/simpleclip">simpleclip</a> that worked but the results were not consistent.</p>
+<p>I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">arebel-set-clipboard-data</span> <span class="p">(</span><span class="nv">str-val</span><span class="p">)</span>
+  <span class="s">&quot;Puts text in Windows clipboard. Copying to Windows from WSL does </span>
+<span class="s">not work on my end so this one is a temporary solution.</span>
+
+<span class="s">This function is called from within the simpleclip package when copy </span>
+<span class="s">or bgcopy command is issued.&quot;</span>
+  <span class="p">(</span><span class="nf">start-process</span> <span class="s">&quot;cmd&quot;</span> <span class="no">nil</span> <span class="s">&quot;cmd.exe&quot;</span> <span class="s">&quot;/C&quot;</span> <span class="p">(</span><span class="nf">concat</span> <span class="s">&quot;echo &quot;</span> <span class="p">(</span><span class="nv">replace-regexp-in-string</span> <span class="s">&quot;\n&quot;</span> <span class="s">&quot;\r&quot;</span> <span class="nv">str-val</span><span class="p">)</span> <span class="s">&quot; | clip.exe&quot;</span><span class="p">)))</span>
+</code></pre></div>
+
+<p>It works quite nicely especially after integrating it with simpleclip. This would do for now until I find a better solution.</p>
+<blockquote>
+<p><strong>EDIT (2017-10-01):</strong> Turns out the original code could not copy a region with multiple lines due to the difference in carriage return characters. This is now fixed with <code>(replace-regexp-in-string "\n" "\r" str-val)</code>.</p>
+</blockquote>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./converting-org-journal-entry-to-org-page-post.html">Converting org-journal entry to org-page post</a></h1>
 	<div class="meta">
           <time datetime="2017-04-19T13:17:00+08:00">April 19, 2017</time>
