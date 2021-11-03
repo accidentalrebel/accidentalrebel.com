@@ -186,7 +186,7 @@ sub {
 /* line 180, ../sass/base/bootstrap/_normalize.scss */
 img {
     border: 0;
-    max-width: 600px;
+    max-width: 680px;
     width: 100%;
     margin: 0 auto;
     display: block;
@@ -923,6 +923,7 @@ blockquote {
   margin: 0 0 20px;
   font-size: 17.5px;
   border-left: 5px solid #eeeeee;
+  background-color: #222222;
 }
 /* line 230, ../sass/base/bootstrap/_type.scss */
 blockquote p:last-child,
@@ -7874,6 +7875,11 @@ ul {
 }
 
 /* line 77, ../sass/base/_layout.scss */
+article h1, article h2 {
+    color: #888;
+}
+
+
 article p, article li {
   color: #DDDDDD;
   font-weight: 300;

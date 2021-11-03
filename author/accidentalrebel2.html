@@ -39,7 +39,7 @@
 	    <img src="../theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    Juan Karlo Licudine is currently employed as a Cyber Security Engineer where he uses his programming and technical skills in helping companies protect themselves from cyber threats. In his free time, he works on cybersecurity-related programming projects like malware analysis tools and remote access tools. He jumps between the red or blue camps depending on which project currently interests him.
+	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
 	  </div>
 	  <div class="clear"></div>
 	</div>
@@ -56,6 +56,65 @@
     </div>
 
 <div class="container">
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../ioli-crackme-0x03.html">IOLI Crackme 0x03</a></h1>
+	<div class="meta">
+          <time datetime="2021-03-22T20:03:00+08:00">March 22, 2021</time>
+          in <span class="categories">
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
+	</div>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a>, <a href="../ioli-crackme-0x01.html">0x01</a>, and <a href="../ioli-crackme-0x02.html">0x02</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="../ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
+<p><img alt="ioli-crackme-0x03-01" src="../images/ioli-crackme-0x03-01.png" /></p>
+<p>Reading through the code I realized that the password for this challenge is exactly the same as the previous one!</p>
+<p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
+<p><img alt="ioli-crackme-0x03-02" src="../images/ioli-crackme-0x03-02.png" /></p>
+<h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
+<p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping back. It seems we have a <em>loop</em> here that we could investigate.</p>
+<p><img alt="ioli-crackme-0x03-03" src="../images/ioli-crackme-0x03-03.png" /></p>
+<p>If we look at the input that the function takes we will find out that the strings that are being passed from the <code>_test</code> function are <code>Lqydolg#Sdvvzrug$</code> and <code>Sdvvzrug#RN$$$#=,</code> for the <em>failure</em> and <em>success</em> messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.</p>
+<h1 id="discovering-the-cipher">Discovering the cipher</h1>
+<p>The best way to discover the cipher used is to step through the code. We can do it with both static or dynamic analysis, but the latter is way easier.</p>
+<p><img alt="ioli-crackme-0x03-04" src="../images/ioli-crackme-0x03-04.png" /></p>
+<p>The code above starts with <code>mov eax, [ebp+arg_0]</code> which copies the pointer to the string passed to our <code>_shift</code> function. We then copy that pointer to <code>[esp+98h+Str]</code> which is the memory location pointing to the top of the current stack. This is done so that it can be passed as an argument when we do <code>call _strlen</code>.</p>
+<p>After executing, <code>_strlen</code> returns the length of the specified string and is saved to register <code>eax</code>. This is then used in the line <code>cmp [ebp+var_7C], eax</code>. </p>
+<p>But what is the value of <code>var_7C</code>? If you scroll up at the start of the subroutine, <code>var_7C</code> is assigned a value of zero. If you know how loops work, you'll realize that this variable is going to be used to hold a counter value. It starts at a value of <code>0</code> and it will eventually be incremented after every loop, which is what is happening at <code>401348</code>.</p>
+<p>To make it easy for us to remember this, let's rename <code>var_7C</code> to a more memorable name like <code>var_counter</code>.</p>
+<p><img alt="ioli-crackme-0x03-05" src="../images/ioli-crackme-0x03-05.png" /></p>
+<p>So going back, to the comparison command <code>cmp [ebp+var_counter], eax</code>, which now translates to <code>cmp 0, 17</code>. <em>17</em> being the length of our failure string <code>Lqydolg#Sdvvzrug$</code>. Since this is not equal it now goes to this next block of code.</p>
+<p><img alt="ioli-crackme-0x03-06" src="../images/ioli-crackme-0x03-06.png" /></p>
+<p>Now this block is interesting. There's a lot that is happening but the gist of it is that the program gets one character from the input string, with <code>var_counter</code> as an offset. It then decrements that character value by 3, and added to a destination string. I'll be going through the code that I described step by step in the next section.</p>
+<h1 id="stepping-through">Stepping through</h1>
+<p>So to start, <code>lea eax, [ebp+var_78]</code> loads the address to <code>var_78</code> which in my case points to the address <code>28FE90</code>.</p>
+<p><code>mov edx, eax</code> copies that address to <code>edx</code> so we can use it on the next line.</p>
+<p><code>add edx, [ebp+var_counter]</code> adds to the address of <code>var_78</code>. Because <code>var_counter</code> is still <code>0</code>, the address remains at <code>28FE90</code>.</p>
+<p><code>add eax, [ebp+arg_0]</code> does the same thing as above but this time adding to <code>[arg_0]</code> which contains the address <code>28FF10</code>.</p>
+<p><code>movzx eax, byte ptr [eax]</code> copies the byte contained in <code>[eax]</code> or <code>28FF10</code>. In this case that byte contains the value <code>4Ch</code> or <code>L</code> in ASCII. This is the first letter in our failure string <code>Lqydolg#Sdvvzrug$</code>!</p>
+<p><code>sub al, 3</code> then substracts 3 to <code>4Ch</code> making it <code>49h</code> which is ASCII for <code>I</code>.</p>
+<p><code>mov [edx], al</code> saves the new character to the variable <code>var_78</code> which is the memory location <code>28FE90</code>. At this point in time the content is currently the character <code>I</code>. To make it easy for us to understand the code, let's rename <code>var_78</code> to <code>var_dest</code>. This name is apt because this will be the destination for our shifted ASCII characters.</p>
+<p><code>lea eax, [ebp+var_counter]</code> and then <code>inc dword ptr [eax]</code> now increments the value of <code>var_counter</code>, which now makes it an integer value of <code>1</code>.</p>
+<h1 id="looping-back">Looping back</h1>
+<p>Alright. Now we go back up again to <code>loc_401320</code>. I'm not going to step through each line again, but I will highlight the important parts now that we have looped back.</p>
+<p><code>cmp [ebp+var_counter]</code> now translates to <code>cmp 1, 17</code>, which is still not equal.</p>
+<p><code>add edx, [ebp+var_counter]</code> now adds 1 to our <code>var_dest</code> variable, turning <code>28FE90</code> to <code>28FE91</code>. The address for the <code>arg_0</code> variable is also added by 1 at <code>add eax, [ebp+arg_0]</code>.</p>
+<p>By the time <code>movzx eax, byte ptr [eax]</code> is executed it now gets the next character in our failure string which is <code>71h</code> or the letter <code>q</code>.</p>
+<p><code>sub al, 3</code> converts are letter <code>q</code> to the letter <code>n</code>. And is once again saved to our <code>var_dest</code> variable with the command <code>mov [edx], al</code>.</p>
+<h1 id="repeat-until">Repeat until...</h1>
+<p>If I haven't lost you, then you should now be able to follow what will happen in the next steps:</p>
+<p><code>var_counter</code> will get incremented again and again, which will point to the next characters in the string. For example, the next characters: <code>y</code> then <code>d</code> then <code>o</code> will get shifted to <code>v</code> then <code>a</code> then <code>l</code>, respectively. This shifting of each characters will continue until <code>cmp [ebp+var_counter</code> equates to <code>cmp 17, 17</code>. </p>
+<p>By the end, <code>var_dest</code> now contains the newly shifted string <code>Invalid Password!</code>. Finally! Applying the same code above to the success message, the garbled message would end with <code>Password OK!!! :)</code>.</p>
+<p>Wasn't that fun?</p>
+<h1 id="on-to-the-next-challenge">On to the next challenge</h1>
+<p>I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it. Or maybe a video would be a much better format for these kinds of challenges?</p>
+<p>Anyway, I look forward to the next challenge. Hopefully, you are too!</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x03.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
   <!-- CONTENT GOES HERE -->
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
@@ -751,155 +810,6 @@ Look for the free flag. Get on the scoreboard!</p>
 <li><a href="https://www.comparitech.com/net-admin/spoofing-attacks-guide/">A guide to spoofing attacks and how to prevent them</a></li>
 </ul>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../study-notes--mac-spoofing.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a></h1>
-	<div class="meta">
-          <time datetime="2020-06-16T05:58:00+08:00">June 16, 2020</time>
-          in <span class="categories">
-            <a href="../tag/programming.html">programming</a>,            <a href="../tag/dev.html">dev</a>,            <a href="../tag/research.html">research</a>,            <a href="../tag/code.html">code</a>          </span>
-	</div>
-        <p><p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
-<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
-<hr />
-<h2 id="foreign-lambda-example">foreign-lambda example</h2>
-<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">Vec3</span> <span class="p">{</span>
-    <span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">y</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">z</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">Vec3</span><span class="p">;</span>
-
-<span class="n">Vec3</span><span class="o">*</span> <span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">Vec3</span><span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_create</span>
-  <span class="p">(</span><span class="nf">foreign-lambda</span>
-    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>   <span class="c1">; Return type, a pointer to a struct object of Vec3</span>
-    <span class="s">&quot;Vec3Create&quot;</span>                  <span class="c1">; Name fo the function</span>
-    <span class="nv">float</span> <span class="nv">float</span> <span class="nv">float</span><span class="p">))</span>           <span class="c1">; The three parameters (x,y,z) to pass to the function</span>
-</code></pre></div>
-
-<p>This would allow us to call the <code>vec3_create</code> function like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">)</span>
-</code></pre></div>
-
-<hr />
-<h2 id="foreign-lambda-example_1">foreign-lambda* example</h2>
-<p>Let's bind another C function <code>Vec3Print</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">Vec3Print</span><span class="p">(</span><span class="n">Vec3</span> <span class="n">v</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Vec3 to print: (%f, %f, %f)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>We could also use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda*</code></a> (Notice the asterisk). This is similar to <code>foreign-lambda</code> but accepts C code as a string.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_print</span>
-  <span class="p">(</span><span class="nf">foreign-lambda*</span>
-    <span class="nv">void</span>                          <span class="c1">; The return type</span>
-    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span> <span class="c1">; The parameter to pass, a pointer to a Vec3 object</span>
-    <span class="s">&quot;Vec3Print(*a0);&quot;</span><span class="p">))</span>           <span class="c1">; The C code in string from</span>
-                                  <span class="c1">; Vec3Print accepts a non pointer, we dereference it</span>
-
-<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">))</span>   <span class="c1">; Creates a vec3 and prints it</span>
-</code></pre></div>
-
-<hr />
-<h2 id="inline-c-code-in-foreign-lambda">Inline C code in foreign-lambda*</h2>
-<p>Here's another example using <code>foreign-lambda*</code>. This time there is no predefined C function, but instead we define the code inside the lisp function's body.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_zero</span>
-  <span class="p">(</span><span class="nf">foreign-lambda*</span>
-    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>
-    <span class="p">()</span>                            <span class="c1">; Empty variables</span>
-    <span class="s">&quot;Vec3* v = (Vec3*)Vec3Create(0.0f, 0.0f, 0.0f); </span>
-<span class="s">    C_return(v);&quot;</span><span class="p">))</span>               <span class="c1">; Instead of &quot;return&quot;, we use &quot;C_return&quot;.</span>
-
-<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">))</span>          <span class="c1">; Calls vec3_zero and prints the returned Vec3</span>
-</code></pre></div>
-
-<p>Note that due to obscure technical reasons <code>C_return</code> must be used instead of <code>return</code> when returning a value. More info about this <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda">here</a>.</p>
-<hr />
-<h2 id="free-ing-vec3-pointers">Free-ing Vec3 pointers</h2>
-<p>Since <code>Vec3Create</code> allocates memory for a Vec3 struct using <code>malloc</code>, it's a good idea to free this when we are done using it. To do this we could bind a function to <code>free</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">free</span> <span class="p">(</span><span class="nf">foreign-lambda</span> <span class="nv">void</span> <span class="s">&quot;free&quot;</span> <span class="nv">c-pointer</span><span class="p">))</span>
-
-<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">vec3_print</span> <span class="nv">v</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
-</code></pre></div>
-
-<hr />
-<h2 id="setting-up-getters-and-setters">Setting up getters and setters</h2>
-<p>If we want to have access to variables of a struct object. We could do something like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_x</span>
-  <span class="p">(</span><span class="nf">foreign-lambda*</span>
-    <span class="nv">float</span>
-    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span>
-    <span class="s">&quot;C_return(a0-&gt;x);&quot;</span><span class="p">))</span>
-
-<span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">8.8</span> <span class="mf">8.8</span> <span class="mf">8.8</span><span class="p">)))</span>
-</code></pre></div>
-
-<p>Now this is fine but it'll be a pain to specify an accessor for every variable. A better solution is to use the <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg which allows the use of macros that will make our lives easier.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">import</span> <span class="p">(</span><span class="nf">chicken</span> <span class="nv">foreign</span><span class="p">))</span>
-<span class="p">(</span><span class="nf">import</span> <span class="nv">foreigners</span><span class="p">)</span>
-
-<span class="c1">;; Set up the accessors for Vec3 struct</span>
-<span class="p">(</span><span class="nf">define-foreign-record-type</span> <span class="p">(</span><span class="nf">vec3</span> <span class="nv">Vec3</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">float</span> <span class="nv">x</span> <span class="nv">vec3_x</span> <span class="nv">vec3_x!</span><span class="p">)</span>   <span class="c1">; vec3_x is a getter, vec3_x! is a setter</span>
-  <span class="p">(</span><span class="nf">float</span> <span class="nv">y</span> <span class="nv">vec3_y</span> <span class="nv">vec3_y!</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">float</span> <span class="nv">z</span> <span class="nv">vec3_z</span> <span class="nv">vec3_z!</span><span class="p">))</span>
-
-<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">4.4</span> <span class="mf">5.5</span> <span class="mf">6.6</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
-  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">vec3_x!</span> <span class="nv">v</span> <span class="mf">7.7</span><span class="p">)</span>      <span class="c1">; Set x to 7.7</span>
-  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
-  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
-</code></pre></div>
-
-<hr />
-<h2 id="binding-enums">Binding enums</h2>
-<p>The <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg also allows for the binding of enums using <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>define-foreign-enum-type</code></a>. Say we have an enum declaration <code>Keys</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="n">Keys</span> <span class="p">{</span>
-  <span class="n">UP</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="n">RIGHT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-  <span class="n">LEFT</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="p">};</span>
-
-<span class="o">:::</span><span class="n">scheme</span>
-<span class="p">(</span><span class="n">define</span><span class="o">-</span><span class="n">foreign</span><span class="o">-</span><span class="k">enum</span><span class="o">-</span><span class="n">type</span> <span class="p">(</span><span class="n">keys</span> <span class="kt">int</span><span class="p">)</span>
-  <span class="p">(</span><span class="n">keys</span><span class="o">-&gt;</span><span class="kt">int</span> <span class="kt">int</span><span class="o">-&gt;</span><span class="n">keys</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">up</span> <span class="n">keys</span><span class="o">/</span><span class="n">up</span><span class="p">)</span> <span class="n">UP</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">right</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span> <span class="n">RIGHT</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">down</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span> <span class="n">DOWN</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">left</span> <span class="n">keys</span><span class="o">/</span><span class="n">left</span><span class="p">)</span> <span class="n">LEFT</span><span class="p">))</span>
-
-<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span>
-<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span>
-</code></pre></div>
-
-<hr />
-<p>These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found <a href="https://github.com/accidentalrebel/chicken-scheme-ffi-example">on Github</a>.</p>
-<p>Also, check out <a href="http://wiki.call-cc.org/eggref/5/bind">the chicken-bind egg</a>, it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chicken-scheme-ffi-examples.html">Read on →</a> -->
       </article>
     </div>
   </div>

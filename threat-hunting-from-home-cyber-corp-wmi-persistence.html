@@ -51,7 +51,7 @@
 	    <img src="./theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    Juan Karlo Licudine is currently employed as a Cyber Security Engineer where he uses his programming and technical skills in helping companies protect themselves from cyber threats. In his free time, he works on cybersecurity-related programming projects like malware analysis tools and remote access tools. He jumps between the red or blue camps depending on which project currently interests him.
+	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
 	  </div>
 	  <div class="clear"></div>
 	</div>
@@ -79,6 +79,7 @@
           </div>
         <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience on threat hunting.</p>
 <p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> is now out.</p>
 <h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
 <blockquote>
 <p>Quesiton 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
@@ -189,6 +190,7 @@
 <p>So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it to use "iexplore.exe" in downloading several files from the internet. This technique is unfamiliar to me and researching about it only showed <a href="https://cyberpolygon.com/materials/hunting-for-advanced-tactics-techniques-and-procedures-ttps/">an article from Cyber Polygon</a>. I'll try to explore this in the future, but at least for now. I have the answer to the question.</p>
 <hr />
 <p>This is part 1 for my writeup for this challenge. Expect the next part which would have the answer to question that a lot of people have difficulty answering, which is #9. Until then!</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> is now out.</p>
         <!-- Disqus goes here -->
         <section>
           <h1>Comments</h1>

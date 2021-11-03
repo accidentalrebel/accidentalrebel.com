@@ -39,7 +39,7 @@
 	    <img src="./theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    Juan Karlo Licudine is currently employed as a Cyber Security Engineer where he uses his programming and technical skills in helping companies protect themselves from cyber threats. In his free time, he works on cybersecurity-related programming projects like malware analysis tools and remote access tools. He jumps between the red or blue camps depending on which project currently interests him.
+	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
 	  </div>
 	  <div class="clear"></div>
 	</div>
@@ -60,6 +60,170 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a></h1>
+	<div class="meta">
+          <time datetime="2021-10-30T12:00:00+08:00">October 30, 2021</time>
+          in <span class="categories">
+            <a href="./tag/threat-hunting.html">threat-hunting</a>,            <a href="./tag/cyberdefenders.html">cyberdefenders</a>          </span>
+	</div>
+        <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience on threat hunting.</p>
+<p>This writeup is part 2 out of multiple parts. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a>.</p>
+<h2 id="checking-dns-requests">Checking DNS Requests</h2>
+<blockquote>
+<p>Question 6. Specify the domain name of the resource from which the files mentioned in question 5 were supposedly downloaded as a result of malicious code execution.</p>
+</blockquote>
+<p>This one is easy. Using the same daterange from the previous question, I changed the query to <code>event_type:DNSReq</code> (where "DNSReq" is short for "DNS Requests").</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-01" src="./images/cyber-corp-case-2-writeup-part-2-01.png" /></p>
+<p>We could easily see a DNS record being queried, which is our answer to this question.</p>
+<h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
+<blockquote>
+<p>Question 7. The first file downloaded (as a result of executing the code in question 5) contained encoded executable code (PE), which after downloading was recorded in the registry. Specify an MD5 hash of the original representation of that code (PE).</p>
+</blockquote>
+<p>I changed the query to <code>registry</code> hoping to see what events it will give me. Surprisingly, the very first one seems to be what we need. </p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-02" src="./images/cyber-corp-case-2-writeup-part-2-02.png" /></p>
+<p>Looking at this log I saw that it has a base64 encoded data under <code>reg_value_data</code> which is partially listed below:</p>
+<blockquote>
+<p>H4sIAAAAAAAEAO1YX0wcRRz+7XEUCuWOkhCJGl3IRiGpV...</p>
+</blockquote>
+<p>I sent this data to <a href="https://gchq.github.io/CyberChef">CyberChef</a> for decoding. Thankfully the <code>rule_name</code> field also informed me that the data is "gzipped", this allowed me to pick the correct recipes for decoding. The output is a malicious executable based on the <code>MZ</code> "magic-number" at the beginning of the file.</p>
+<p>I downloaded the decoded data and then got the SHA256 hash of that file. This gave me the answer to the question.</p>
+<h2 id="side-quest-investigating-the-malware">Side Quest: Investigating the malware</h2>
+<p>I wanted to learn more about the malicious executable from the previous question so I decided to reverse engineer it, even though it was not part of the challenge.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-03" src="./images/cyber-corp-case-2-writeup-part-2-03.png" /></p>
+<p>Some interesting things about the file include the imported functions from kernel32 listed below:</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-04" src="./images/cyber-corp-case-2-writeup-part-2-04.png" /></p>
+<p>And also a string for <code>rundll32.exe</code>. Looking for the usage of this string from within the code reveals this code segment:</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-06" src="./images/cyber-corp-case-2-writeup-part-2-06.png" /></p>
+<p>Stepping through the code I was able to figure out that this executable is executing a process hollowing technique (<a href="https://attack.mitre.org/techniques/T1055/012/">T1055.012</a>). What it does is that it injects the code pointed to by <code>unk_180003000</code> into <code>rundll32.exe</code> and it would run that code instead of the original rundll32 code. You can find out more technical info about it <a href="https://airbus-cyber-security.com/following-process-hollowing-ollydbg/">here</a>. </p>
+<p>And of course, a screenshot of the technique using my visualization tool <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;Ck</a>.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-13" src="./images/cyber-corp-case-2-writeup-part-2-13.png" /></p>
+<h2 id="the-second-downloaded-file">The second downloaded file</h2>
+<blockquote>
+<p>Question 8. The second file downloaded (as a result of code execution, which we talked about in question 5) was a script, that was set up to autostart via WMI Subscription. Specify the SHA256 hash of this script.</p>
+</blockquote>
+<p>I already knew of the script that is set to start via WMI subscription from a previous question, and that is <code>C:\\Users\\john.goldberg\\AppData\\Roaming\\Microsoft\\Office\\MSO1033.ps1</code>. So I immediately crafted my query to the one below:</p>
+<blockquote>
+<p>"MSO1033.ps1" AND event_type:FileCreate</p>
+</blockquote>
+<p>While the above query shows events where the <code>MSO1033.ps1</code> was being created. There was no associated hash in the logs. This forced me to look elsewhere by updating the query to:</p>
+<blockquote>
+<p>"MSO1033.ps1" AND (event_type:FileCreate OR event_type:FileOpen)</p>
+</blockquote>
+<p>And from here it showed me an event associated with <code>MSO1033.ps1</code> that also has a sha256 hash.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-07" src="./images/cyber-corp-case-2-writeup-part-2-07.png" /></p>
+<h2 id="the-most-difficult-question">The most difficult question</h2>
+<blockquote>
+<p>Question 9. The script, mentioned in question 8, spawned one of the legitimate system processes and injected into its memory a malicious code that was read and decoded from the registry (this code was mentioned in question 7). This malicious code migrated through a chain of code injections to the address space of another legitimate process, where it continued to run without further migration.
+For this answer, provide the next data, separated by a comma without spaces:</p>
+<ul>
+<li>
+<p>PID of the initial legitimate system process, which was spawned by the script and where this script launched in-memory execution of malicious code;</p>
+</li>
+<li>
+<p>PID of the target process, to which malicious code migrated from the initial process and in the context of which attacker performed different post-exploitation activity</p>
+</li>
+</ul>
+</blockquote>
+<p>Out of all the questions in this challenge, this is the question that took me a long time to figure out. The question has a lot of threads of information that it is easy to fall into a trap of chasing a lead that doesn't go anywhere. </p>
+<p>When all of my ideas were exhausted, I decided to give in and look for a hint. Thankfully, Vikas from the CyberDefender's Discord group shared one.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-08" src="./images/cyber-corp-case-2-writeup-part-2-08.png" /></p>
+<p>Initially the line "if you happen to see the PS script there are mentions of PID spoofing" did not immediately register with me, but after thinking about it some more I realized that it meant that the "PID spoofing" is written inside the script itself! This script is <code>MSO1033.ps1</code> which was part of the previous questions.</p>
+<p>And so I updated my query with the one below:</p>
+<blockquote>
+<p>"MSO1033.ps1" AND event_type:ScriptExecution AND enrich.ioa.max_severity:*</p>
+</blockquote>
+<p>Which showed the following results:</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-09" src="./images/cyber-corp-case-2-writeup-part-2-09.png" /></p>
+<p>The reason why the following events are interesting is that they contain the script inside the <code>script_text</code> value. Since the script is too long the events are split of into 7 events as indicated by the <code>[1 of 7]</code> in the description. I then copied all the <code>script_text</code> entries and placed them into one file so I can easily review the code.</p>
+<p>The hint mentioned something about <code>pid spoofing</code> so I searched for the word <code>spoof</code> in the code and found this part right here.</p>
+<div class="codehilite"><pre><span></span><code><span class="no">[int]</span><span class="nv">$ppid</span> <span class="p">=</span> <span class="nb">Get-Process</span> <span class="n">-Name</span> <span class="s2">&quot;winlogon&quot;</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-expand</span> <span class="n">ID</span>
+<span class="nv">$spawnTo</span> <span class="p">=</span> <span class="s2">&quot;c:\Windows\System32\dwm.exe&quot;</span>
+<span class="nv">$currdir</span> <span class="p">=</span> <span class="s2">&quot;c:\Windows\System32&quot;</span>
+<span class="nv">$cmdline</span> <span class="p">=</span> <span class="s2">&quot;dwm.exe&quot;</span>
+<span class="nv">$sInfo</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">StartupInfo</span>
+<span class="nv">$sInfoEx</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">STARTUPINFOEX</span>
+<span class="nv">$pInfo</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">PROCESS_INFORMATION</span>
+<span class="nv">$SecAttr</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">SECURITY_ATTRIBUTES</span>
+<span class="nv">$SecAttr</span><span class="p">.</span><span class="n">nLength</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">SizeOf</span><span class="p">(</span><span class="nv">$SecAttr</span><span class="p">)</span>
+<span class="nv">$sInfo</span><span class="p">.</span><span class="n">cb</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">SizeOf</span><span class="p">(</span><span class="nv">$sInfoEx</span><span class="p">)</span>
+<span class="nv">$lpSize</span> <span class="p">=</span> <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span>
+<span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">StartupInfo</span> <span class="p">=</span> <span class="nv">$sInfo</span>
+<span class="nv">$hSpoofParent</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">OpenProcess</span><span class="p">(</span><span class="n">0x1fffff</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="nv">$ppid</span><span class="p">)</span>
+<span class="nv">$lpValue</span> <span class="p">=</span> <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span>
+<span class="nv">$lpValue</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">AllocHGlobal</span><span class="p">(</span><span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Size</span><span class="p">)</span>
+<span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">WriteIntPtr</span><span class="p">(</span><span class="nv">$lpValue</span><span class="p">,</span> <span class="nv">$hSpoofParent</span><span class="p">)</span>
+<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">InitializeProcThreadAttributeList</span><span class="p">(</span><span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">,</span> <span class="n">1</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="no">[ref]</span><span class="nv">$lpSize</span><span class="p">)</span>
+<span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">lpAttributeList</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">AllocHGlobal</span><span class="p">(</span><span class="nv">$lpSize</span><span class="p">)</span>
+<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">InitializeProcThreadAttributeList</span><span class="p">(</span><span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">lpAttributeList</span><span class="p">,</span> <span class="n">1</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="no">[ref]</span><span class="nv">$lpSize</span><span class="p">)</span>
+<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">UpdateProcThreadAttribute</span><span class="p">(</span><span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">lpAttributeList</span><span class="p">,</span> 
+                                                 <span class="n">0</span><span class="p">,</span> 
+                                                 <span class="n">0x00020000</span><span class="p">,</span>
+                                                 <span class="nv">$lpValue</span><span class="p">,</span> 
+                                                 <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Size</span><span class="p">,</span> 
+                                                 <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">,</span> 
+                                                 <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">)</span> 
+<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">CreateProcess</span><span class="p">(</span><span class="nv">$spawnTo</span><span class="p">,</span> 
+                                     <span class="nv">$cmdline</span><span class="p">,</span> 
+                                     <span class="no">[ref]</span><span class="nv">$SecAttr</span><span class="p">,</span> 
+                                     <span class="no">[ref]</span><span class="nv">$SecAttr</span><span class="p">,</span> 
+                                     <span class="n">0</span><span class="p">,</span>
+                                     <span class="n">0x08080004</span><span class="p">,</span>
+                                     <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">,</span> 
+                                     <span class="nv">$currdir</span><span class="p">,</span> 
+                                     <span class="no">[ref]</span> <span class="nv">$sInfoEx</span><span class="p">,</span> 
+                                     <span class="no">[ref]</span> <span class="nv">$pInfo</span><span class="p">)</span>
+</code></pre></div>
+
+<p>Reading the code we could see a couple of interesting things:</p>
+<ul>
+<li>A call to <code>CreateProcess</code> function with a reference to <code>$spawnTo</code></li>
+<li><code>$spawnTo</code> set to <code>c:\Windows\System32\dwm.exe</code></li>
+<li>The line with <code>$hSpoofParent</code> using the variable <code>$ppid</code></li>
+<li><code>$ppid</code> is set to a process with the name <code>winlogon</code></li>
+</ul>
+<p>My research on the above findings pointed me to the Parent PID Spoofing technique (<a href="https://attack.mitre.org/techniques/T1134/004/">T1134.004</a>). This is used for evading detection by spoofing the PID to a different process. What is happening in this case is that <code>dwm.exe</code> would now appear to be a child process of <code>winlogon.exe</code> instead of the powershell script. Brilliant!</p>
+<p>Also, not shown in snippet above, the registry key for <code>AppXs42fd12c3po92dynnq2r142fs12qhvsmvv</code> is also read and decoded. This means that our executable file that contains the <code>rundll32.exe</code> string is also involved in this. Later on it will be revealed what this is for.</p>
+<p>Now that we know what the script does, we can now search for any mention of <code>winlogon.exe</code> and <code>dwm.exe</code> using the query below:</p>
+<blockquote>
+<p>(winlogon.exe OR dwm.exe) AND enrich.ioa.max_severity:* AND event_type:ProcessCreate</p>
+</blockquote>
+<p>This, however, showed more than one result.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-10" src="./images/cyber-corp-case-2-writeup-part-2-10.png" /></p>
+<p>Which among these is the PID pair that the challenge author is looking for? </p>
+<p>Looking at all the multiple events, it seems that the script has been executed multiple times so it's hard to determine which is the correct event. All of them executed successfully, but I found that only one of them was able create the <code>rundll32.exe</code> process.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-12" src="./images/cyber-corp-case-2-writeup-part-2-12.png" /></p>
+<p>The process id of the <code>dwm.exe</code> in the screenshot above shows <code>8876</code>. Using this information, we can go back to the previous query and find exactly which PID pairs that we need to answer the question.</p>
+<h2 id="getting-the-malicious-ip">Getting the malicious IP</h2>
+<blockquote>
+<p>Question 10. The malicious code run by the script is a Reverse Shell. Identify the IP address and port number of its command center.</p>
+</blockquote>
+<p>Aha! So the malicious code that we inspected before, the one that does process hollowing, is now running inside <code>rundll32.exe</code> and is running as a reverse shell! </p>
+<p>I already knew the process ID of our malicious <code>rundll32.exe</code> so we include that in our query: </p>
+<blockquote>
+<p>8344 AND event_type:NetworkConnection</p>
+</blockquote>
+<p>This will reveal an event with the process chain of <code>dwm.exe</code> &gt; <code>rundll32.exe</code> which also establishes a connection to an external IP. This is our answer to this question.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-11" src="./images/cyber-corp-case-2-writeup-part-2-11.png" /></p>
+<h2 id="understanding-the-sequence-of-events">Understanding the sequence of events</h2>
+<p>For the benefit of everyone (including me), I have outlined the timeline of events below to serve as reference just in case you get confused and overwhelmed:</p>
+<ul>
+<li>Jun 22, 2021 @ 07:25:47.000 - WMI Subscription</li>
+<li>Jun 22, 2021 @ 07:41:15.000 - <code>MSO1033.ps1</code> (7324) was executed</li>
+<li>Jun 22, 2021 @ 07:41:55.000 - <code>winlogon.exe</code> (1160) is now the spoofed parent process of <code>dwm.exe</code> (8876) instead of <code>MSO1033.ps1</code></li>
+<li>Jun 22, 2021 @ 07:41:56.000 - <code>dwm.exe</code> (8876) creates the process <code>rundll32.exe</code> (8344), which is hollowed out and now runs as a reverse shell</li>
+<li>Jun 22, 2021 @ 07:41:56.000 - <code>rundll32.exe</code> (8344) establishes connection to malicious IP</li>
+</ul>
+<hr />
+<p>Hopefully, I was able to make everything clear. Expect the next part of this writeup very soon. </p>
+<p>The next couple of questions deals with lateral movement and interactions with the domain controller so it would be very interesting to go through my findings in detail.</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./cyber-corp-case-2-writeup-part-2.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a></h1>
 	<div class="meta">
           <time datetime="2021-10-30T12:00:00+08:00">October 30, 2021</time>
@@ -68,6 +232,7 @@
 	</div>
         <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience on threat hunting.</p>
 <p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> is now out.</p>
 <h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
 <blockquote>
 <p>Quesiton 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
@@ -178,6 +343,7 @@
 <p>So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it to use "iexplore.exe" in downloading several files from the internet. This technique is unfamiliar to me and researching about it only showed <a href="https://cyberpolygon.com/materials/hunting-for-advanced-tactics-techniques-and-procedures-ttps/">an article from Cyber Polygon</a>. I'll try to explore this in the future, but at least for now. I have the answer to the question.</p>
 <hr />
 <p>This is part 1 for my writeup for this challenge. Expect the next part which would have the answer to question that a lot of people have difficulty answering, which is #9. Until then!</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> is now out.</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Read on →</a> -->
       </article>
     </div>
@@ -521,65 +687,6 @@
 <p>Official write-up with hints coming soon.</p>
 <p>I would like to extend my thanks to the team behind CyberDefenders.org. They accepted my submission, reviewed it, and worked with me in improving it. And also to <a href="https://twitter.com/jstrosch">Josh Stroschein</a> for making Maldoc101 and being kind enough to entertain me with my questions related to making challenges.</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./the-emprisa-maldoc-challenge.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./ioli-crackme-0x03.html">IOLI Crackme 0x03</a></h1>
-	<div class="meta">
-          <time datetime="2021-03-22T20:03:00+08:00">March 22, 2021</time>
-          in <span class="categories">
-            <a href="./tag/re.html">re</a>,            <a href="./tag/crackme.html">crackme</a>          </span>
-	</div>
-        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, and <a href="./ioli-crackme-0x02.html">0x02</a>.</p>
-<h1 id="getting-the-password">Getting the password</h1>
-<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="./ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
-<p><img alt="ioli-crackme-0x03-01" src="./images/ioli-crackme-0x03-01.png" /></p>
-<p>Reading through the code I realized that the password for this challenge is exactly the same as the previous one!</p>
-<p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
-<p><img alt="ioli-crackme-0x03-02" src="./images/ioli-crackme-0x03-02.png" /></p>
-<h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
-<p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping back. It seems we have a <em>loop</em> here that we could investigate.</p>
-<p><img alt="ioli-crackme-0x03-03" src="./images/ioli-crackme-0x03-03.png" /></p>
-<p>If we look at the input that the function takes we will find out that the strings that are being passed from the <code>_test</code> function are <code>Lqydolg#Sdvvzrug$</code> and <code>Sdvvzrug#RN$$$#=,</code> for the <em>failure</em> and <em>success</em> messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.</p>
-<h1 id="discovering-the-cipher">Discovering the cipher</h1>
-<p>The best way to discover the cipher used is to step through the code. We can do it with both static or dynamic analysis, but the latter is way easier.</p>
-<p><img alt="ioli-crackme-0x03-04" src="./images/ioli-crackme-0x03-04.png" /></p>
-<p>The code above starts with <code>mov eax, [ebp+arg_0]</code> which copies the pointer to the string passed to our <code>_shift</code> function. We then copy that pointer to <code>[esp+98h+Str]</code> which is the memory location pointing to the top of the current stack. This is done so that it can be passed as an argument when we do <code>call _strlen</code>.</p>
-<p>After executing, <code>_strlen</code> returns the length of the specified string and is saved to register <code>eax</code>. This is then used in the line <code>cmp [ebp+var_7C], eax</code>. </p>
-<p>But what is the value of <code>var_7C</code>? If you scroll up at the start of the subroutine, <code>var_7C</code> is assigned a value of zero. If you know how loops work, you'll realize that this variable is going to be used to hold a counter value. It starts at a value of <code>0</code> and it will eventually be incremented after every loop, which is what is happening at <code>401348</code>.</p>
-<p>To make it easy for us to remember this, let's rename <code>var_7C</code> to a more memorable name like <code>var_counter</code>.</p>
-<p><img alt="ioli-crackme-0x03-05" src="./images/ioli-crackme-0x03-05.png" /></p>
-<p>So going back, to the comparison command <code>cmp [ebp+var_counter], eax</code>, which now translates to <code>cmp 0, 17</code>. <em>17</em> being the length of our failure string <code>Lqydolg#Sdvvzrug$</code>. Since this is not equal it now goes to this next block of code.</p>
-<p><img alt="ioli-crackme-0x03-06" src="./images/ioli-crackme-0x03-06.png" /></p>
-<p>Now this block is interesting. There's a lot that is happening but the gist of it is that the program gets one character from the input string, with <code>var_counter</code> as an offset. It then decrements that character value by 3, and added to a destination string. I'll be going through the code that I described step by step in the next section.</p>
-<h1 id="stepping-through">Stepping through</h1>
-<p>So to start, <code>lea eax, [ebp+var_78]</code> loads the address to <code>var_78</code> which in my case points to the address <code>28FE90</code>.</p>
-<p><code>mov edx, eax</code> copies that address to <code>edx</code> so we can use it on the next line.</p>
-<p><code>add edx, [ebp+var_counter]</code> adds to the address of <code>var_78</code>. Because <code>var_counter</code> is still <code>0</code>, the address remains at <code>28FE90</code>.</p>
-<p><code>add eax, [ebp+arg_0]</code> does the same thing as above but this time adding to <code>[arg_0]</code> which contains the address <code>28FF10</code>.</p>
-<p><code>movzx eax, byte ptr [eax]</code> copies the byte contained in <code>[eax]</code> or <code>28FF10</code>. In this case that byte contains the value <code>4Ch</code> or <code>L</code> in ASCII. This is the first letter in our failure string <code>Lqydolg#Sdvvzrug$</code>!</p>
-<p><code>sub al, 3</code> then substracts 3 to <code>4Ch</code> making it <code>49h</code> which is ASCII for <code>I</code>.</p>
-<p><code>mov [edx], al</code> saves the new character to the variable <code>var_78</code> which is the memory location <code>28FE90</code>. At this point in time the content is currently the character <code>I</code>. To make it easy for us to understand the code, let's rename <code>var_78</code> to <code>var_dest</code>. This name is apt because this will be the destination for our shifted ASCII characters.</p>
-<p><code>lea eax, [ebp+var_counter]</code> and then <code>inc dword ptr [eax]</code> now increments the value of <code>var_counter</code>, which now makes it an integer value of <code>1</code>.</p>
-<h1 id="looping-back">Looping back</h1>
-<p>Alright. Now we go back up again to <code>loc_401320</code>. I'm not going to step through each line again, but I will highlight the important parts now that we have looped back.</p>
-<p><code>cmp [ebp+var_counter]</code> now translates to <code>cmp 1, 17</code>, which is still not equal.</p>
-<p><code>add edx, [ebp+var_counter]</code> now adds 1 to our <code>var_dest</code> variable, turning <code>28FE90</code> to <code>28FE91</code>. The address for the <code>arg_0</code> variable is also added by 1 at <code>add eax, [ebp+arg_0]</code>.</p>
-<p>By the time <code>movzx eax, byte ptr [eax]</code> is executed it now gets the next character in our failure string which is <code>71h</code> or the letter <code>q</code>.</p>
-<p><code>sub al, 3</code> converts are letter <code>q</code> to the letter <code>n</code>. And is once again saved to our <code>var_dest</code> variable with the command <code>mov [edx], al</code>.</p>
-<h1 id="repeat-until">Repeat until...</h1>
-<p>If I haven't lost you, then you should now be able to follow what will happen in the next steps:</p>
-<p><code>var_counter</code> will get incremented again and again, which will point to the next characters in the string. For example, the next characters: <code>y</code> then <code>d</code> then <code>o</code> will get shifted to <code>v</code> then <code>a</code> then <code>l</code>, respectively. This shifting of each characters will continue until <code>cmp [ebp+var_counter</code> equates to <code>cmp 17, 17</code>. </p>
-<p>By the end, <code>var_dest</code> now contains the newly shifted string <code>Invalid Password!</code>. Finally! Applying the same code above to the success message, the garbled message would end with <code>Password OK!!! :)</code>.</p>
-<p>Wasn't that fun?</p>
-<h1 id="on-to-the-next-challenge">On to the next challenge</h1>
-<p>I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it. Or maybe a video would be a much better format for these kinds of challenges?</p>
-<p>Anyway, I look forward to the next challenge. Hopefully, you are too!</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x03.html">Read on →</a> -->
       </article>
     </div>
   </div>
