@@ -29,7 +29,7 @@ SOCIAL = (('Twitter', 'https://www.twitter.com/accidentalrebel'),
           ('Github','https://github.com/accidentalrebel'),
           ('YouTube', 'https://www.youtube.com/user/AccidentalRebelGames'))
 
-BLURB = "Juan Karlo Licudine is currently employed as a Cyber Security Engineer where he uses his programming and technical skills in helping companies protect themselves from cyber threats. In his free time, he works on cybersecurity-related programming projects like malware analysis tools and remote access tools. He jumps between the red or blue camps depending on which project currently interests him."
+BLURB = "My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools."
 
 DEFAULT_PAGINATION = 10
 

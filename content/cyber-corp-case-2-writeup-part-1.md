@@ -5,17 +5,19 @@ Tags: threat-hunting, cyberdefenders
 Category: threat-hunting
 Image: cyber-corp-case-2-writeup-01.png
 
-The [second case of the CyberCorp challenge](https://cyberdefenders.org/labs/75) on [CyberDefenders.org](https://cyberdefenders.org/) is all about threat hunting. Created by [@BlackMatter23](https://twitter.com/BlackMatter23) and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience on threat hunting.
+The [second case of the CyberCorp challenge](https://cyberdefenders.org/labs/75) on [CyberDefenders.org](https://cyberdefenders.org/) is all about threat hunting. Created by [@BlackMatter23](https://twitter.com/BlackMatter23) and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.
 
 This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.
 
+Edit: [Part 2](cyber-corp-case-2-writeup-part-2) and [Part 3](cyber-corp-case-2-writeup-part-3) is now out.
+
 ## Understanding WMI Persistence
 
-> Quesiton 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.
+> Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.
 
 So the question tells us that the attacker used WMI subscription to gain persistence in our network.
 
-The very first thing I did was to check the Mitre ATT&CK wiki for information about this attack. My search led me to the "[Event Triggered Execution: Windows Management Instrumentation Event Subscription](https://attack.mitre.org/techniques/T1546/003/)" with technique ID `T1546.003`. And, of course, I fired up [my vATT&CK tool](https://github.com/accidentalrebel/vATTACK) to better visualize the technique and it's related information.
+The very first thing I did was to check the Mitre ATT&CK wiki for information about this attack. My search led me to the "[Event Triggered Execution: Windows Management Instrumentation Event Subscription](https://attack.mitre.org/techniques/T1546/003/)" with technique ID `T1546.003`. And, of course, I fired up [my vATT&CK tool](https://github.com/accidentalrebel/vATTACK) to better visualize the technique and its related information.
 
 ![cyber-corp-case-2-writeup-01]({attach}/images/cyber-corp-case-2-writeup-01.png)
 
@@ -43,7 +45,7 @@ instance of CommandLineEventConsumer
 	Name = "AtomicRedTeam-WMIPersistence-Example";
 };
 ```
-Since I have Sysmon logging enabled, I also double checked the logs using the Sysmon event ID's below:
+Since I have Sysmon logging enabled, I also double-checked the logs using the Sysmon event IDs below:
 
 * Event ID 19: WmiEvent (WmiEventFilter activity detected)
 * Event ID 20: WmiEvent (WmiEventConsumer activity detected)
@@ -60,7 +62,7 @@ Now that I know what the important IOCs are, I could now create the query to ans
 * 5861
 * ("QueryLanguage = " AND "Consumer = ")
 
-When the above information are combined, I get the query `5861 OR ("QueryLanguage = " AND "Consumer = ")`. Putting this in the Kibana search shows us the one and only entry:
+When the above information is combined, I get the query `5861 OR ("QueryLanguage = " AND "Consumer = ")`. Putting this in the Kibana search shows us the one and only entry:
 
 ![cyber-corp-case-2-writeup-03]({attach}/images/cyber-corp-case-2-writeup-03.png)
 
@@ -92,13 +94,13 @@ Having seen all of that we can now safely assume that this is the process that w
 
 ## Looking for the extracted archive
 
-> Question 3. The process described in the previous question was used to open a file extracted from the archive that user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.
+> Question 3. The process described in the previous question was used to open a file extracted from the archive that the user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.
 
 The question said something about a file being opened, and so I added the filters `event_type: FileOpen` and `proc_file_path: C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE` to see what files were opened using Word.exe prior to the WMI subscription. This however showed a lot of files.
 
 ![cyber-corp-case-2-writeup-07]({attach}/images/cyber-corp-case-2-writeup-07.png)
 
-The question also mentioned that the opened file was extracted from an archive received by email. So I added the query `*zip* OR *rar*` to find outif there are any "zip" or "rar" files that were processed.
+The question also mentioned that the opened file was extracted from an archive received by email. So I added the query `*zip* OR *rar*` to find out if there are any "zip" or "rar" files that were processed.
 
 Sure enough, there was, and one particular really stood out. 
 
@@ -120,11 +122,11 @@ If we think about it, we can make the date range smaller by starting our range f
 
 ![cyber-corp-case-2-writeup-08]({attach}/images/cyber-corp-case-2-writeup-08.png)
 
-There are three "action" keywords specified in the question that I knew I could filter for. This led me to using the query below:
+There are three "action" keywords specified in the question that I knew I could filter for. This led me to use the query below:
 
 > event_type:NetworkConnection OR event_type:FileOpen OR event_type:FileCreate
 
-What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signifies another file is downlaoded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.
+What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signify another file is downloaded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.
 
 As you can see in the image below, we have a series of events that shows us the three events that we are looking for in the previous paragraph. But because their timestamps are the same, they are all jumbled.
 
@@ -158,6 +160,6 @@ So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it
 
 -------------------------------------------------------------------------------
 
-This is part 1 for my writeup for this challenge. Expect the next part which would have the answer to question that a lot of people have difficulty answering, which is #9. Until then!
+This is part 1 of my write-up for this challenge. Expect the next part which would have the answer to the question that a lot of people have difficulty answering, which is #9. Until then!
 
-
+Edit: [Part 2](cyber-corp-case-2-writeup-part-2) and [Part 3](cyber-corp-case-2-writeup-part-3) is now out.
