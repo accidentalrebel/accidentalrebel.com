@@ -13,21 +13,20 @@
 
   <meta name="description" content="Opening Unity Script Files in Emacs January 24, 2018 in emacs unity">
 
-  <link rel="canonical" href="./opening-unity-script-files-in-emacs.html">
+  <link rel="canonical" href="/opening-unity-script-files-in-emacs.html">
 
-  <link href="./favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="./opening-unity-script-files-in-emacs.html">
+<meta property="og:url" content="/opening-unity-script-files-in-emacs.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Opening Unity Script Files in Emacs">
@@ -42,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href=".">
+	  <a href="">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="./theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -57,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li><a href="">Home</a></li>
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -71,11 +70,11 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="./opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a></h1>
+          <h1><a href="/opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a></h1>
           <div class="meta">
             <time datetime="2018-01-24T14:32:00+08:00">January 24, 2018</time>
             in <span class="categories">
-              <a href="./tag/emacs-unity.html">emacs unity</a>            </span>
+              <a href="/tag/emacs-unity.html">emacs unity</a>            </span>
           </div>
         <p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
 <p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
@@ -84,28 +83,28 @@
 <p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text proxy</a> as a external editor and then having that application call Emacs with the correct line number. I was not able to make it work but the idea fascinated me. There was also one that involved using Mac OS X's Automator where you <a href="https://stackoverflow.com/a/1857220">wrap a shell script as an automator app</a> and you set that as the external editor. Didn't work either but it did teach me about Automator and it's future possible uses for my environment.</p>
 <p>Thankfully, there was one solution that worked and it involved creating a .cs file and setting up a function with OnOpenAssetAttribute callback attribute. This function is called when Unity receives a command to open an asset. From here we start a process that invokes emacsclient with the correct file and line numbers. </p>
 <p>Here is a short example:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">[OnOpenAssetAttribute()]</span>
-<span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">OnOpenedAsset</span><span class="p">(</span><span class="kt">int</span> <span class="n">instanceID</span><span class="p">,</span> <span class="kt">int</span> <span class="n">line</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span> <span class="n">selected</span> <span class="p">=</span> <span class="n">EditorUtility</span><span class="p">.</span><span class="n">InstanceIDToObject</span><span class="p">(</span><span class="n">instanceID</span><span class="p">);</span>
-    <span class="kt">string</span> <span class="n">ProjectPath</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="n">GetDirectoryName</span><span class="p">(</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="n">dataPath</span><span class="p">);</span>
-    <span class="kt">string</span> <span class="n">completeFilepath</span> <span class="p">=</span> <span class="n">ProjectPath</span> <span class="p">+</span> <span class="n">Path</span><span class="p">.</span><span class="n">DirectorySeparatorChar</span> <span class="p">+</span> <span class="n">AssetDatabase</span><span class="p">.</span><span class="n">GetAssetPath</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span>
+<div class="codehilite"><pre><span></span><code><span class="na">[OnOpenAssetAttribute()]</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">OnOpenedAsset</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">instanceID</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">line</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span><span class="w"> </span><span class="n">selected</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">EditorUtility</span><span class="p">.</span><span class="n">InstanceIDToObject</span><span class="p">(</span><span class="n">instanceID</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">ProjectPath</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="n">GetDirectoryName</span><span class="p">(</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="n">dataPath</span><span class="p">);</span><span class="w"></span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">completeFilepath</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ProjectPath</span><span class="w"> </span><span class="p">+</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="n">DirectorySeparatorChar</span><span class="w"> </span><span class="p">+</span><span class="w"> </span><span class="n">AssetDatabase</span><span class="p">.</span><span class="n">GetAssetPath</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span><span class="w"></span>
 
-    <span class="c1">// We check if this is the type of file we can open</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span> <span class="p">==</span> <span class="s">&quot;UnityEditor.MonoScript&quot;</span> <span class="p">||</span>
-        <span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span> <span class="p">==</span> <span class="s">&quot;UnityEngine.Shader&quot;</span> <span class="p">)</span> <span class="p">{</span>
+<span class="w">    </span><span class="c1">// We check if this is the type of file we can open</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">==</span><span class="w"> </span><span class="s">&quot;UnityEditor.MonoScript&quot;</span><span class="w"> </span><span class="p">||</span><span class="w"></span>
+<span class="w">        </span><span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">==</span><span class="w"> </span><span class="s">&quot;UnityEngine.Shader&quot;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
 
-        <span class="kt">string</span> <span class="n">args</span> <span class="p">=</span> <span class="s">&quot;-n +&quot;</span> <span class="p">+</span> <span class="n">line</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">&quot; &quot;</span> <span class="p">+</span> <span class="n">completeFilepath</span><span class="p">;</span>
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;-n +&quot;</span><span class="w"> </span><span class="p">+</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="p">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="p">+</span><span class="w"> </span><span class="n">completeFilepath</span><span class="p">;</span><span class="w"></span>
 
-        <span class="c1">// We start a process by passing the command &quot;emacsclient -n +linenumber filePath&quot;</span>
-        <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span> <span class="n">proc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;/Applications/Emacs.app/Contents/MacOS/bin/emacsclient&quot;</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="n">args</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">UseShellExecute</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">WindowStyle</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Hidden</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardOutput</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+<span class="w">        </span><span class="c1">// We start a process by passing the command &quot;emacsclient -n +linenumber filePath&quot;</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span><span class="w"></span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;/Applications/Emacs.app/Contents/MacOS/bin/emacsclient&quot;</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">args</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">UseShellExecute</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">WindowStyle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Hidden</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">CreateNoWindow</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardOutput</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span><span class="w"></span>
 </code></pre></div>
 
 <p>bo          // Tell unity we have handled the opening of the file.
@@ -128,13 +127,13 @@
 	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 	    /*
 	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.url = ;  // Replace PAGE_URL with your page's canonical URL variable
 	     this.page.identifier = opening-unity-script-files-in-emacs.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	     };
 	    */
 	    (function() { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.src = '/embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	    })();
@@ -154,14 +153,5 @@
       </div>
     </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
-    </script>
   </body>
 </html>

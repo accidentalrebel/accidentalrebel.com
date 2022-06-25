@@ -13,21 +13,20 @@
 
   <meta name="description" content="#3 - Rebel Game Engine now works on different platforms May 10, 2020 in dev,game_engine">
 
-  <link rel="canonical" href="./rebel-game-engine-now-works-on-different-platforms.html">
+  <link rel="canonical" href="/rebel-game-engine-now-works-on-different-platforms.html">
 
-  <link href="./favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="./rebel-game-engine-now-works-on-different-platforms.html">
+<meta property="og:url" content="/rebel-game-engine-now-works-on-different-platforms.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="#3 - Rebel Game Engine now works on different platforms">
@@ -42,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href=".">
+	  <a href="">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="./theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -57,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li><a href="">Home</a></li>
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -71,14 +70,14 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="./rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a></h1>
+          <h1><a href="/rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a></h1>
           <div class="meta">
             <time datetime="2020-05-10T07:08:00+08:00">May 10, 2020</time>
             in <span class="categories">
-              <a href="./tag/dev.html">dev</a>,              <a href="./tag/game_engine.html">game_engine</a>            </span>
+              <a href="/tag/dev.html">dev</a>,              <a href="/tag/game_engine.html">game_engine</a>            </span>
           </div>
         <p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
-<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="./images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
+<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="/images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
 <p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
 <p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different package managers.</p>
 <p>After a week of this I was finally able to get the engine working on all three platforms. To make sure others can be able to do the same, I also documented the steps which can now be read on <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki">the project's wiki</a>. </p>
@@ -95,13 +94,13 @@
 	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 	    /*
 	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.url = ;  // Replace PAGE_URL with your page's canonical URL variable
 	     this.page.identifier = rebel-game-engine-now-works-on-different-platforms.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	     };
 	    */
 	    (function() { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.src = '/embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	    })();
@@ -121,14 +120,5 @@
       </div>
     </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
-    </script>
   </body>
 </html>

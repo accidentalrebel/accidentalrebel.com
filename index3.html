@@ -11,14 +11,13 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href=".">
+  <link rel="canonical" href="">
 
-  <link href="./favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -30,13 +29,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href=".">
+	  <a href="">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="./theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -45,8 +44,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li><a href="">Home</a></li>
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -60,67 +59,32 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a></h1>
+        <h1><a href="/covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a></h1>
+	<div class="meta">
+          <time datetime="2020-08-13T16:58:00+08:00">August 13, 2020</time>
+          in <span class="categories">
+            <a href="/tag/ctf.html">ctf</a>,            <a href="/tag/writeup.html">writeup</a>,            <a href="/tag/malware_analysis.html">malware_analysis</a>,            <a href="/tag/defcon.html">defcon</a>          </span>
+	</div>
+        <p><p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/covidscammers-writeup--defcon-rtv-ctf.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="/study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a></h1>
 	<div class="meta">
           <time datetime="2020-08-01T11:07:00+08:00">August 01, 2020</time>
           in <span class="categories">
-            <a href="./tag/spoofing.html">spoofing</a>,            <a href="./tag/cybersecurity.html">cybersecurity</a>          </span>
+            <a href="/tag/spoofing.html">spoofing</a>,            <a href="/tag/cybersecurity.html">cybersecurity</a>          </span>
 	</div>
         <p><div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
 </code></pre></div>
 
-<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
-<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
-<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
-<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
-<p>To view the current MAC address:</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig
-</code></pre></div>
-
-<p>The current MAC address is <code>08:00:27:59:fb:fa</code>:</p>
-<p><img alt="study-notes--mac-spoofing-01" src="./images/study-notes--mac-spoofing-01.png" /></p>
-<p>Let's say we want to change the MAC address of our interface (eth0) to <code>00:11:22:33:44:55</code>.</p>
-<p>First, deactivate the interface.</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 down
-</code></pre></div>
-
-<p>Then we specify the mac address that we want to change to.</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 hw ether <span class="m">00</span>:11:22:33:44:55
-</code></pre></div>
-
-<p>Reactive the interface:</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 up
-</code></pre></div>
-
-<p>Run <code>ifconfig</code> again to see the changes.</p>
-<p><img alt="study-notes--mac-spoofing-02" src="./images/study-notes--mac-spoofing-02.png" /></p>
-<h3 id="note">NOTE:</h3>
-<p>These changes are not permanent. The MAC address will return to the original one when the system is restarted!</p>
-<h2 id="changing-the-mac-address-via-macchanger">Changing the MAC address via MACChanger</h2>
-<p>There are various tools that allows easy changing of MAC addresses. <a href="https://github.com/alobbs/macchanger">MACChanger</a> is one of them.</p>
-<p>First, deactivate the interface.</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 down
-</code></pre></div>
-
-<p>The above below allows you specify the mac address you want to use:</p>
-<div class="codehilite"><pre><span></span><code>$ macchanger -m <span class="m">00</span>:11:22:33:44:55 eth0
-</code></pre></div>
-
-<p>The code below assigns a random MAC address.</p>
-<div class="codehilite"><pre><span></span><code>$ macchanger -r eth0
-</code></pre></div>
-
-<p>Reactive the interface:</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 up
-</code></pre></div>
-
-<h2 id="related-reading">Related reading</h2>
-<ul>
-<li><a href="https://en.wikipedia.org/wiki/MAC_spoofing">MAC Spoofing on Wikipedia</a></li>
-<li><a href="https://www.giac.org/paper/gsec/3199/mac-spoofing-an-introduction/105315">MAC Spoofing - An introduction</a> </li>
-<li><a href="https://www.comparitech.com/net-admin/spoofing-attacks-guide/">A guide to spoofing attacks and how to prevent them</a></li>
-</ul>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./study-notes--mac-spoofing.html">Read on →</a> -->
+<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/study-notes--mac-spoofing.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -128,148 +92,15 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a></h1>
+        <h1><a href="/chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a></h1>
 	<div class="meta">
           <time datetime="2020-06-16T05:58:00+08:00">June 16, 2020</time>
           in <span class="categories">
-            <a href="./tag/programming.html">programming</a>,            <a href="./tag/dev.html">dev</a>,            <a href="./tag/research.html">research</a>,            <a href="./tag/code.html">code</a>          </span>
+            <a href="/tag/programming.html">programming</a>,            <a href="/tag/dev.html">dev</a>,            <a href="/tag/research.html">research</a>,            <a href="/tag/code.html">code</a>          </span>
 	</div>
         <p><p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
-<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
-<hr />
-<h2 id="foreign-lambda-example">foreign-lambda example</h2>
-<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span> <span class="k">struct</span> <span class="nc">Vec3</span> <span class="p">{</span>
-    <span class="kt">float</span> <span class="n">x</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">y</span><span class="p">;</span>
-    <span class="kt">float</span> <span class="n">z</span><span class="p">;</span>
-<span class="p">}</span> <span class="n">Vec3</span><span class="p">;</span>
-
-<span class="n">Vec3</span><span class="o">*</span> <span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span> <span class="n">x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">y</span><span class="p">,</span> <span class="kt">float</span> <span class="n">z</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">Vec3</span><span class="o">*</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
-    <span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span> <span class="o">=</span> <span class="n">z</span><span class="p">;</span>
-    <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_create</span>
-  <span class="p">(</span><span class="nf">foreign-lambda</span>
-    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>   <span class="c1">; Return type, a pointer to a struct object of Vec3</span>
-    <span class="s">&quot;Vec3Create&quot;</span>                  <span class="c1">; Name fo the function</span>
-    <span class="nv">float</span> <span class="nv">float</span> <span class="nv">float</span><span class="p">))</span>           <span class="c1">; The three parameters (x,y,z) to pass to the function</span>
-</code></pre></div>
-
-<p>This would allow us to call the <code>vec3_create</code> function like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">)</span>
-</code></pre></div>
-
-<hr />
-<h2 id="foreign-lambda-example_1">foreign-lambda* example</h2>
-<p>Let's bind another C function <code>Vec3Print</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">void</span> <span class="nf">Vec3Print</span><span class="p">(</span><span class="n">Vec3</span> <span class="n">v</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Vec3 to print: (%f, %f, %f)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>We could also use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda*</code></a> (Notice the asterisk). This is similar to <code>foreign-lambda</code> but accepts C code as a string.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_print</span>
-  <span class="p">(</span><span class="nf">foreign-lambda*</span>
-    <span class="nv">void</span>                          <span class="c1">; The return type</span>
-    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span> <span class="c1">; The parameter to pass, a pointer to a Vec3 object</span>
-    <span class="s">&quot;Vec3Print(*a0);&quot;</span><span class="p">))</span>           <span class="c1">; The C code in string from</span>
-                                  <span class="c1">; Vec3Print accepts a non pointer, we dereference it</span>
-
-<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">1.1</span> <span class="mf">2.2</span> <span class="mf">3.3</span><span class="p">))</span>   <span class="c1">; Creates a vec3 and prints it</span>
-</code></pre></div>
-
-<hr />
-<h2 id="inline-c-code-in-foreign-lambda">Inline C code in foreign-lambda*</h2>
-<p>Here's another example using <code>foreign-lambda*</code>. This time there is no predefined C function, but instead we define the code inside the lisp function's body.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_zero</span>
-  <span class="p">(</span><span class="nf">foreign-lambda*</span>
-    <span class="p">(</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span>
-    <span class="p">()</span>                            <span class="c1">; Empty variables</span>
-    <span class="s">&quot;Vec3* v = (Vec3*)Vec3Create(0.0f, 0.0f, 0.0f); </span>
-<span class="s">    C_return(v);&quot;</span><span class="p">))</span>               <span class="c1">; Instead of &quot;return&quot;, we use &quot;C_return&quot;.</span>
-
-<span class="p">(</span><span class="nf">vec3_print</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">))</span>          <span class="c1">; Calls vec3_zero and prints the returned Vec3</span>
-</code></pre></div>
-
-<p>Note that due to obscure technical reasons <code>C_return</code> must be used instead of <code>return</code> when returning a value. More info about this <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda">here</a>.</p>
-<hr />
-<h2 id="free-ing-vec3-pointers">Free-ing Vec3 pointers</h2>
-<p>Since <code>Vec3Create</code> allocates memory for a Vec3 struct using <code>malloc</code>, it's a good idea to free this when we are done using it. To do this we could bind a function to <code>free</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">free</span> <span class="p">(</span><span class="nf">foreign-lambda</span> <span class="nv">void</span> <span class="s">&quot;free&quot;</span> <span class="nv">c-pointer</span><span class="p">))</span>
-
-<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_zero</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">vec3_print</span> <span class="nv">v</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
-</code></pre></div>
-
-<hr />
-<h2 id="setting-up-getters-and-setters">Setting up getters and setters</h2>
-<p>If we want to have access to variables of a struct object. We could do something like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">vec3_x</span>
-  <span class="p">(</span><span class="nf">foreign-lambda*</span>
-    <span class="nv">float</span>
-    <span class="p">(((</span><span class="nf">c-pointer</span> <span class="p">(</span><span class="nf">struct</span> <span class="s">&quot;Vec3&quot;</span><span class="p">))</span> <span class="nv">a0</span><span class="p">))</span>
-    <span class="s">&quot;C_return(a0-&gt;x);&quot;</span><span class="p">))</span>
-
-<span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">8.8</span> <span class="mf">8.8</span> <span class="mf">8.8</span><span class="p">)))</span>
-</code></pre></div>
-
-<p>Now this is fine but it'll be a pain to specify an accessor for every variable. A better solution is to use the <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg which allows the use of macros that will make our lives easier.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">import</span> <span class="p">(</span><span class="nf">chicken</span> <span class="nv">foreign</span><span class="p">))</span>
-<span class="p">(</span><span class="nf">import</span> <span class="nv">foreigners</span><span class="p">)</span>
-
-<span class="c1">;; Set up the accessors for Vec3 struct</span>
-<span class="p">(</span><span class="nf">define-foreign-record-type</span> <span class="p">(</span><span class="nf">vec3</span> <span class="nv">Vec3</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">float</span> <span class="nv">x</span> <span class="nv">vec3_x</span> <span class="nv">vec3_x!</span><span class="p">)</span>   <span class="c1">; vec3_x is a getter, vec3_x! is a setter</span>
-  <span class="p">(</span><span class="nf">float</span> <span class="nv">y</span> <span class="nv">vec3_y</span> <span class="nv">vec3_y!</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">float</span> <span class="nv">z</span> <span class="nv">vec3_z</span> <span class="nv">vec3_z!</span><span class="p">))</span>
-
-<span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">v</span> <span class="p">(</span><span class="nf">vec3_create</span> <span class="mf">4.4</span> <span class="mf">5.5</span> <span class="mf">6.6</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
-  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">vec3_x!</span> <span class="nv">v</span> <span class="mf">7.7</span><span class="p">)</span>      <span class="c1">; Set x to 7.7</span>
-  <span class="p">(</span><span class="nb">display </span><span class="p">(</span><span class="nf">vec3_x</span> <span class="nv">v</span><span class="p">))</span> <span class="c1">; Display value of x</span>
-  <span class="p">(</span><span class="nf">newline</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">free</span> <span class="nv">v</span><span class="p">))</span>
-</code></pre></div>
-
-<hr />
-<h2 id="binding-enums">Binding enums</h2>
-<p>The <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>foreigners</code></a> egg also allows for the binding of enums using <a href="http://wiki.call-cc.org/eggref/5/foreigners#define-foreign-enum-type"><code>define-foreign-enum-type</code></a>. Say we have an enum declaration <code>Keys</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">enum</span> <span class="n">Keys</span> <span class="p">{</span>
-  <span class="n">UP</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-  <span class="n">RIGHT</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-  <span class="n">DOWN</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-  <span class="n">LEFT</span> <span class="o">=</span> <span class="mi">3</span>
-<span class="p">};</span>
-
-<span class="o">:::</span><span class="n">scheme</span>
-<span class="p">(</span><span class="n">define</span><span class="o">-</span><span class="n">foreign</span><span class="o">-</span><span class="k">enum</span><span class="o">-</span><span class="n">type</span> <span class="p">(</span><span class="n">keys</span> <span class="kt">int</span><span class="p">)</span>
-  <span class="p">(</span><span class="n">keys</span><span class="o">-&gt;</span><span class="kt">int</span> <span class="kt">int</span><span class="o">-&gt;</span><span class="n">keys</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">up</span> <span class="n">keys</span><span class="o">/</span><span class="n">up</span><span class="p">)</span> <span class="n">UP</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">right</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span> <span class="n">RIGHT</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">down</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span> <span class="n">DOWN</span><span class="p">)</span>
-  <span class="p">((</span><span class="n">left</span> <span class="n">keys</span><span class="o">/</span><span class="n">left</span><span class="p">)</span> <span class="n">LEFT</span><span class="p">))</span>
-
-<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">right</span><span class="p">)</span>
-<span class="p">(</span><span class="n">display</span> <span class="n">keys</span><span class="o">/</span><span class="n">down</span><span class="p">)</span>
-</code></pre></div>
-
-<hr />
-<p>These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found <a href="https://github.com/accidentalrebel/chicken-scheme-ffi-example">on Github</a>.</p>
-<p>Also, check out <a href="http://wiki.call-cc.org/eggref/5/bind">the chicken-bind egg</a>, it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./chicken-scheme-ffi-examples.html">Read on →</a> -->
+<p>To help me better understand I made some examples that has …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/chicken-scheme-ffi-examples.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -277,22 +108,15 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
+        <h1><a href="/switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
 	<div class="meta">
           <time datetime="2020-05-19T17:59:00+08:00">May 19, 2020</time>
           in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/game_engine.html">game_engine</a>          </span>
+            <a href="/tag/dev.html">dev</a>,            <a href="/tag/game_engine.html">game_engine</a>          </span>
 	</div>
-        <p><p>After the recent changes to the <a href="./following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
-<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
-<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know it's not a solid reason but I figured it's better to act now while it is still early.</p>
-<p><img alt="switching-from-c-c---to-c-01" src="./images/switching-from-c-c---to-c-01.png" /></p>
-<p>For the most part, dropping C++ was easy. Most of the difficulty I encountered was making sure the changes worked on all three supported platforms. There was a situation when <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">I thought I was done</a> only to find it doesn't work on Mac and Windows. I had to <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">slowly re-apply</a> the changes just to see where exactly things went wrong.</p>
-<p>What's funny is that I learned that I was using a lot more C++ features than I thought. Namespaces and default arguments are some that really surprised me. I always assumed they were supported on both languages. This just proves to me that I still have a lot to learn with these languages.</p>
-<p>I also took the chance during the transition to switch from <a href="https://glm.g-truc.net/0.9.9/index.html">GLM</a>, an OpenGL Mathematics lirary using C++, to <a href="https://github.com/recp/cglm">CGLM</a> a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.</p>
-<p>While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.</p>
-<p>If you are interested to check out my still-under-construction game engine, you can do so <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./switching-from-c-c---to-c.html">Read on →</a> -->
+        <p><p>After the recent changes to the <a href="/following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
+<p>When I started my project, I initially intended for it to use …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/switching-from-c-c---to-c.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -300,116 +124,15 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
+        <h1><a href="/following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
 	<div class="meta">
           <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
           in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/game_engine.html">game_engine</a>          </span>
+            <a href="/tag/dev.html">dev</a>,            <a href="/tag/game_engine.html">game_engine</a>          </span>
 	</div>
-        <p><p><img alt="following-lispy-conventions-01" src="./images/following-lispy-conventions-01.png" /></p>
-<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
-<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function <em>is_key_down</em>. Changing it to <em>key_down?</em> looked weird at first but I liked how it made the function name shorter and the <em>?</em> prefix made it easy to spot and parse.</p>
-<p>Okay, cool! What's next?</p>
-<p>Adding a <em>!</em> indicates a function that mutates data. Most commonly used for setting a variable. I saw I had variables like <em>set_vec3_x</em>, to which I changed to <em>vec3_x!</em>.</p>
-<p>This went on as I continue to find improvements. Here's a list of all the naming convention changes that I've made:</p>
-<table>
-<thead>
-<tr>
-<th align="center"><strong>The change</strong></th>
-<th align="center"><strong>From</strong></th>
-<th align="center"><strong>To</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center"><em>:</em> infix for namespaces.</td>
-<td align="center">vec3_create</td>
-<td align="center">vec3:create</td>
-</tr>
-<tr>
-<td align="center"><em>?</em> postfix for boolean functions</td>
-<td align="center">key_down?</td>
-<td align="center">key:down?</td>
-</tr>
-<tr>
-<td align="center"><em>!</em> postfix for destructive functions</td>
-<td align="center">set_camera_position</td>
-<td align="center">camera:position!</td>
-</tr>
-<tr>
-<td align="center"><em>%</em> postfix for low level functions</td>
-<td align="center">free</td>
-<td align="center">free%</td>
-</tr>
-<tr>
-<td align="center"><em>%</em> prefix and postfix for low level variables</td>
-<td align="center">shader-pointer</td>
-<td align="center">%shader-pointer%</td>
-</tr>
-<tr>
-<td align="center"><em>*</em> prefix and postfix for global variables</td>
-<td align="center">cube-shader</td>
-<td align="center">*cube-shader*</td>
-</tr>
-</tbody>
-</table>
-<p>Again, these new changes felt weird at first but I quickly became accustomed the more of these functions I changed. The code became easier to scan as there are now key characters for my eyes to easily latch onto. Something to appreciate especially with multi-level nested expressions.</p>
-<p>Here's how the code now looks like with the new functions:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">MOVEMENT_SPEED</span> <span class="mf">0.001</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube-shader*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube-positions*</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube*</span>
-    <span class="p">(</span><span class="nf">cube:create</span> <span class="s">&quot;assets/textures&quot;</span> <span class="s">&quot;awesomeface.png&quot;</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-shader*</span>
-    <span class="p">(</span><span class="nf">shader:create</span> <span class="s">&quot;shaders/simple-3d.vs&quot;</span> <span class="s">&quot;shaders/simple.fs&quot;</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-positions*</span>
-    <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nf">vec3:create</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">-1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">))))</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">window:clear</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">main-camera</span> <span class="p">(</span><span class="nf">camera:main</span><span class="p">))</span>
-     <span class="p">(</span><span class="nf">current-projection</span> <span class="p">(</span><span class="nf">camera:projection</span> <span class="nv">main-camera</span><span class="p">))</span>
-     <span class="p">(</span><span class="nf">camera-pos</span> <span class="p">(</span><span class="nf">camera:position</span> <span class="nv">main-camera</span><span class="p">)))</span>
-
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:up?</span> <span class="nv">KEY_C</span><span class="p">)</span>
-      <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">current-projection</span> <span class="nv">PERSPECTIVE</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">ORTHOGRAPHIC</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">PERSPECTIVE</span><span class="p">)))</span>
-
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_A</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_E</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_O</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">))))</span>
-
-  <span class="p">(</span><span class="nf">for-each</span>
-   <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">position</span><span class="p">)</span>
-     <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">%tint%</span> <span class="p">(</span><span class="nf">vec3:create%</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
-       <span class="p">(</span><span class="nf">cube:draw</span> <span class="nv">*cube*</span> <span class="nv">position</span> <span class="mi">1</span> <span class="mi">1</span> <span class="nv">%tint%</span> <span class="nv">*cube-shader*</span><span class="p">)</span>
-       <span class="p">(</span><span class="nf">free%</span> <span class="nv">%tint%</span><span class="p">)))</span>
-   <span class="nv">*cube-positions*</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">window:swap</span><span class="p">))</span>
-</code></pre></div>
-
-<p>I also changed my C functions to reflect a <em>NamespaceVerb</em> convention. I could have used <em>namespace::Verb</em> but the <a href="http://wiki.call-cc.org/eggref/5/bind">FFI that I use</a> to communicate with C cannot parse C namespaces. So instead of <em>Shader::Create</em>, I am left with <em>ShaderCreate</em>. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, <a href="https://www.raylib.com/examples.html">Raylib also uses this convention</a> for their functions).</p>
-<p>I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./following-lispy-conventions.html">Read on →</a> -->
+        <p><p><img alt="following-lispy-conventions-01" src="/images/following-lispy-conventions-01.png" /></p>
+<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/following-lispy-conventions.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -417,21 +140,16 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a></h1>
+        <h1><a href="/rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a></h1>
 	<div class="meta">
           <time datetime="2020-05-10T07:08:00+08:00">May 10, 2020</time>
           in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/game_engine.html">game_engine</a>          </span>
+            <a href="/tag/dev.html">dev</a>,            <a href="/tag/game_engine.html">game_engine</a>          </span>
 	</div>
         <p><p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
-<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="./images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
-<p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
-<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different package managers.</p>
-<p>After a week of this I was finally able to get the engine working on all three platforms. To make sure others can be able to do the same, I also documented the steps which can now be read on <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki">the project's wiki</a>. </p>
-<p>I was surprised that the hardest one to get working was for Windows. Because I didn't want to create a separate build system that uses Visual Studio solution files, I had to find a simple way to make it work and that involved the use of an excellent building platform for Windows called <a href="https://www.msys2.org/">Msys2</a>. </p>
-<p>I am quite happy that I was able to structure the whole system so that you only need one Makefile for all three platforms. I'm not sure if this wil change in the future, but I'll do my best for it to stay like this as long as it's possible.</p>
-<p>If you are interested to try it out here's the project's <a href="https://github.com/accidentalrebel/rebel-game-engine">Github page</a>, depending on your platform here are the instructions on how to build for each one: <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Arch-Linux">Linux</a>, <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-MacOSX">MacOSX</a> and <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Windows-(using-Msys2)">Windows</a>.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./rebel-game-engine-now-works-on-different-platforms.html">Read on →</a> -->
+<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="/images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
+<p>It might seem silly to be working …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/rebel-game-engine-now-works-on-different-platforms.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -439,50 +157,14 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a></h1>
+        <h1><a href="/implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a></h1>
 	<div class="meta">
           <time datetime="2020-05-07T21:35:00+08:00">May 07, 2020</time>
           in <span class="categories">
-            <a href="./tag/lisp.html">lisp</a>,            <a href="./tag/game_engine.html">game_engine</a>,            <a href="./tag/dev.html">dev</a>          </span>
+            <a href="/tag/lisp.html">lisp</a>,            <a href="/tag/game_engine.html">game_engine</a>,            <a href="/tag/dev.html">dev</a>          </span>
 	</div>
-        <p><p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
-<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
-<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="./images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
-<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code after two implementations.</p>
-<p>And my code did change a lot. The biggest change is switching from an object oriented approach to functional style so that it would suit Lisp scripting. I also paid special attention in making sure that whatever change I made would make sense when the game engine is used without scripting. My guiding principle is that implementing a game on both C and Scheme should be structurally identical, aside from the difference in syntaxes, of course.</p>
-<p>Here's a simple program wher you could move a colored box using the keyboard:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">box-sprite</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">box-pos</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">box-sprite</span> <span class="p">(</span><span class="nf">sprite_create</span> <span class="nv">assets/textures</span> <span class="nv">tile</span><span class="o">.</span><span class="nv">png</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">box-pos</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">400</span> <span class="mi">300</span> <span class="mi">0</span><span class="p">))</span>
-  <span class="no">#t</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">window_clear</span><span class="p">)</span>
-
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_O</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_y</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_y</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_E</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-  <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">is_key_down</span> <span class="nv">KEY_A</span><span class="p">)</span>
-    <span class="p">(</span><span class="nf">set_vec3_x</span> <span class="nv">box-pos</span> <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">get_vec3_x</span> <span class="nv">box-pos</span><span class="p">)</span> <span class="mi">1</span><span class="p">)))</span>
-
-  <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">tint</span> <span class="p">(</span><span class="nf">make_vec3</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">sprite_draw</span> <span class="nv">box-sprite</span> <span class="nv">box-pos</span> <span class="mi">50</span> <span class="mi">50</span> <span class="nv">tint</span> <span class="no">#f</span><span class="p">))</span>
-
-  <span class="p">(</span><span class="nf">window_swap</span><span class="p">)</span>
-  <span class="no">#t</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Implementing Lisp, and coding with it has been very fun too. I've had the most fun when <a href="http://wiki.call-cc.org/eggref/5/bind">I implemented the FFI</a>. Every time I go through the wiki I find a better way of doing things so I'd go and re-implement them again. Each iteration I learn something new and it's such a joy exploring.</p>
-<p>Playing with the garbage collector has also made me think about memory management more. This resulted in having two ways to call certain API functions: one will return a pointer that will automatically get tracked by the GC. The other you'd have to free manually. I figured this is a good approach for situations when having control over memory and references is crucial.</p>
-<p>I've already spent a lot of time on this project and it was mostly spent on the scripting side of the engine. There are still more to do for it to be considered useful but I'm happy I was able to learn a lot.</p>
-<p>If you are curious about the engine you could check it out <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">Read on →</a> -->
+        <p><p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/implemented-basic-scheme-scripting-for-rebel-game-engine.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -490,19 +172,15 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a></h1>
+        <h1><a href="/thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a></h1>
 	<div class="meta">
           <time datetime="2020-05-03T11:19:00+08:00">May 03, 2020</time>
           in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/lisp.html">lisp</a>,            <a href="./tag/engine.html">engine</a>          </span>
+            <a href="/tag/dev.html">dev</a>,            <a href="/tag/lisp.html">lisp</a>,            <a href="/tag/engine.html">engine</a>          </span>
 	</div>
         <p><p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
-<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
-<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="./images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
-<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay if no one would try it out as long as I get to learn from it.</p>
-<p>This morning I started implementing a simple implementation of Chibi. Thankfully, it's easy to setup. However, the more I implement it the more that I realize that I may need to change how my engine is structured to better suit Lisp's functional nature. This means less object oriented design similar to how <a href="https://www.raylib.com/index.html">Raylib</a> does things. </p>
-<p>I still need some time to think this through. I am open to do the changes needed if I am to include a scripting language. I just want to make sure if my engine would really need it. We'll see.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./thinking-of-adding-lisp-to-my-custom-game-engine.html">Read on →</a> -->
+<p>I like Lisp. I …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/thinking-of-adding-lisp-to-my-custom-game-engine.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -510,46 +188,15 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./making-unity-beep-after-scripts-finish-reloading.html">Making Unity beep after scripts finish reloading</a></h1>
+        <h1><a href="/making-unity-beep-after-scripts-finish-reloading.html">Making Unity beep after scripts finish reloading</a></h1>
 	<div class="meta">
           <time datetime="2020-05-01T17:07:00+08:00">May 01, 2020</time>
           in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/unity.html">unity</a>          </span>
+            <a href="/tag/dev.html">dev</a>,            <a href="/tag/unity.html">unity</a>          </span>
 	</div>
         <p><p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
-<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
-<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
-<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="./images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
-<p>I recently got the idea of having Unity inform me when a script has finished reloading. Instead of informing me visually, I decided that it would also be better for it to play an audible beep sound. With this, I could use the time to close my eyes, relax, or stretch. Once it beeps I'll just open my eyes and I'm back to working again. Once it beeps I'll just open my eyes and I'm back to working again. It's such a simple thing but I feel has a good impact on my health.</p>
-<p>Here's the code that I use if you are interested. Note that this is an editor script so it should be placed inside any "Editor" folder for it to run.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span> <span class="nn">System.Collections</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">UnityEditor</span><span class="p">;</span>
-<span class="k">using</span> <span class="nn">System.Diagnostics</span><span class="p">;</span>
-
-<span class="k">public</span> <span class="k">class</span> <span class="nc">BuildManager</span> <span class="p">:</span> <span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="na">    [UnityEditor.Callbacks.DidReloadScripts]</span>
-    <span class="k">private</span> <span class="k">static</span> <span class="k">void</span> <span class="nf">OnScriptsReloaded</span><span class="p">()</span> 
-    <span class="p">{</span>
-        <span class="n">EditorApplication</span><span class="p">.</span><span class="n">Beep</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>The code above uses Unity's <a href="https://docs.unity3d.com/ScriptReference/EditorApplication.Beep.html">EditorApplication.Beep()</a> API so it should work on Windows and Mac. But since I'm using Linux to develop games on it does not seem to work for me. </p>
-<p>Here's a different version that spawns a OS process and runs the <code>play</code> command to generate a short sine wave beep. Be sure to have <a href="http://sox.sourceforge.net/">sox</a> installed on your Linux machine for this to work.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ProcessStartInfo</span> <span class="n">proc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ProcessStartInfo</span><span class="p">();</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;play&quot;</span><span class="p">;</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="s">&quot;-q -n synth 0.1 sin 880 vol 0.2&quot;</span><span class="p">;</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">WindowStyle</span> <span class="p">=</span> <span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Minimized</span><span class="p">;</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-<span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">proc</span><span class="p">);</span>
-</code></pre></div>
-
-<p>Of course, this is not a solution to the compile time problem. I'd still have to wait for it to finish. But what I like about this is that it has turned a negative into a positive. And that is always great.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./making-unity-beep-after-scripts-finish-reloading.html">Read on →</a> -->
+<p>Thankfully, I have managed to …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/making-unity-beep-after-scripts-finish-reloading.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -557,296 +204,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="./opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a></h1>
+        <h1><a href="/opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a></h1>
 	<div class="meta">
           <time datetime="2018-01-24T14:32:00+08:00">January 24, 2018</time>
           in <span class="categories">
-            <a href="./tag/emacs-unity.html">emacs unity</a>          </span>
+            <a href="/tag/emacs-unity.html">emacs unity</a>          </span>
 	</div>
         <p><p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
-<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
-<p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
-<p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
-<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text proxy</a> as a external editor and then having that application call Emacs with the correct line number. I was not able to make it work but the idea fascinated me. There was also one that involved using Mac OS X's Automator where you <a href="https://stackoverflow.com/a/1857220">wrap a shell script as an automator app</a> and you set that as the external editor. Didn't work either but it did teach me about Automator and it's future possible uses for my environment.</p>
-<p>Thankfully, there was one solution that worked and it involved creating a .cs file and setting up a function with OnOpenAssetAttribute callback attribute. This function is called when Unity receives a command to open an asset. From here we start a process that invokes emacsclient with the correct file and line numbers. </p>
-<p>Here is a short example:</p>
-<div class="codehilite"><pre><span></span><code><span class="na">[OnOpenAssetAttribute()]</span>
-<span class="k">public</span> <span class="k">static</span> <span class="kt">bool</span> <span class="nf">OnOpenedAsset</span><span class="p">(</span><span class="kt">int</span> <span class="n">instanceID</span><span class="p">,</span> <span class="kt">int</span> <span class="n">line</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span> <span class="n">selected</span> <span class="p">=</span> <span class="n">EditorUtility</span><span class="p">.</span><span class="n">InstanceIDToObject</span><span class="p">(</span><span class="n">instanceID</span><span class="p">);</span>
-    <span class="kt">string</span> <span class="n">ProjectPath</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="n">GetDirectoryName</span><span class="p">(</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="n">dataPath</span><span class="p">);</span>
-    <span class="kt">string</span> <span class="n">completeFilepath</span> <span class="p">=</span> <span class="n">ProjectPath</span> <span class="p">+</span> <span class="n">Path</span><span class="p">.</span><span class="n">DirectorySeparatorChar</span> <span class="p">+</span> <span class="n">AssetDatabase</span><span class="p">.</span><span class="n">GetAssetPath</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span>
-
-    <span class="c1">// We check if this is the type of file we can open</span>
-    <span class="k">if</span> <span class="p">(</span><span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span> <span class="p">==</span> <span class="s">&quot;UnityEditor.MonoScript&quot;</span> <span class="p">||</span>
-        <span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span> <span class="p">==</span> <span class="s">&quot;UnityEngine.Shader&quot;</span> <span class="p">)</span> <span class="p">{</span>
-
-        <span class="kt">string</span> <span class="n">args</span> <span class="p">=</span> <span class="s">&quot;-n +&quot;</span> <span class="p">+</span> <span class="n">line</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span> <span class="p">+</span> <span class="s">&quot; &quot;</span> <span class="p">+</span> <span class="n">completeFilepath</span><span class="p">;</span>
-
-        <span class="c1">// We start a process by passing the command &quot;emacsclient -n +linenumber filePath&quot;</span>
-        <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span> <span class="n">proc</span> <span class="p">=</span> <span class="k">new</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">FileName</span> <span class="p">=</span> <span class="s">&quot;/Applications/Emacs.app/Contents/MacOS/bin/emacsclient&quot;</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">Arguments</span> <span class="p">=</span> <span class="n">args</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">UseShellExecute</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">WindowStyle</span> <span class="p">=</span> <span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Hidden</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">CreateNoWindow</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardOutput</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
-        <span class="n">proc</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
-</code></pre></div>
-
-<p>bo          // Tell unity we have handled the opening of the file.
-            return true;
-        }</p>
-<div class="codehilite"><pre><span></span><code>    <span class="o">//</span> <span class="nv">We</span> <span class="nv">were</span> <span class="nv">not</span> <span class="nv">able</span> <span class="nv">to</span> <span class="nv">open</span> <span class="nv">the</span> <span class="nv">file</span>. <span class="nv">Let</span> <span class="nv">unity</span> <span class="nv">handle</span> <span class="nv">the</span> <span class="nv">opening</span>.
-    <span class="k">return</span> <span class="nv">false</span><span class="c1">;</span>
-}
-</code></pre></div>
-
-<p><strong>Note:</strong> This file needs to be placed inside an "Editor" folder within Unity in order for it to work.</p>
-<p><a href="https://gist.github.com/accidentalrebel/69ac38f729e72c170a8d091b4daaec52">Go here</a> if you want to see a more complete and fully featured implementaition of the code above. Also, a hat tip to <a href="https://github.com/tbriley/Atom">this repository</a> for the solution which was largely inspired by the <a href="https://github.com/dotBunny/VSCode">VSCode project</a>.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./opening-unity-script-files-in-emacs.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
-	<div class="meta">
-          <time datetime="2017-12-10T23:33:00+08:00">December 10, 2017</time>
-          in <span class="categories">
-            <a href="./tag/chefwars.html">chefwars</a>,            <a href="./tag/gamedev.html">gamedev</a>,            <a href="./tag/mindcake.html">mindcake</a>,            <a href="./tag/postmortem.html">postmortem</a>          </span>
-	</div>
-        <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TL;DR</strong></p>
-<ul>
-<li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
-</ul>
-<hr />
-<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
-<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
-<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system in all my game development related projects and has helped us immensely in the development of our recent game, <a href="http://mindcakegames.com/">Chef Wars</a>.</p>
-<p>I'm sharing this in the hopes that it would help others too.</p>
-<h2 id="risk-adjusted-estimates">Risk Adjusted Estimates</h2>
-<p>The basic idea of this system is that for each task, an estimated time would be given along with a "confidence level". The lower the confidence the more padding is added automatically to the estimate for that task.</p>
-<p>It's a very simple system and is illustrated clearly in the image below:</p>
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th align="center">Estimate</th>
-<th align="center">Confidence</th>
-<th align="right">Risk-Adjusted</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task A</td>
-<td align="center">5</td>
-<td align="center">2</td>
-<td align="right">9.44</td>
-</tr>
-<tr>
-<td>Task B</td>
-<td align="center">8</td>
-<td align="center">6</td>
-<td align="right">11.56</td>
-</tr>
-<tr>
-<td>Task C</td>
-<td align="center">10</td>
-<td align="center">8</td>
-<td align="right">12.22</td>
-</tr>
-<tr>
-<td>Task D</td>
-<td align="center">10</td>
-<td align="center">10</td>
-<td align="right">10.00</td>
-</tr>
-</tbody>
-</table>
-<p>A legend (shown below) is used to help programmers determine what confidence level to specify based on their current situation.</p>
-<table>
-<thead>
-<tr>
-<th>Level</th>
-<th align="right">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td align="right">No clue -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>2</td>
-<td align="right">Hardly a clue -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>3</td>
-<td align="right">Someone else has done this and I read about it; job not well defined -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>4</td>
-<td align="right">Someone else has done this and I think I understand this; job might not be well-defined -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>5</td>
-<td align="right">Done something similar to this before and this relates to that work -- this estimate has a variance of +/- 50 percent of estimate.</td>
-</tr>
-<tr>
-<td>6</td>
-<td align="right">I think I understand this fairly well and I understand the goal.</td>
-</tr>
-<tr>
-<td>7</td>
-<td align="right">The average case for programming when the requirements are understood.</td>
-</tr>
-<tr>
-<td>8</td>
-<td align="right">A confident case for programming. It's rare that something unexpected would happen.</td>
-</tr>
-<tr>
-<td>9</td>
-<td align="right">I've done this before and it's very similar. If something unexpected comes up, I know how to tackle it.</td>
-</tr>
-<tr>
-<td>10</td>
-<td align="right">No matter what, I'm only going to work on this for the specified period of time</td>
-</tr>
-</tbody>
-</table>
-<p>The formula for calculating the risk-adjusted time is also very straightforward:</p>
-<blockquote>
-<p>(estimated time * (10 - confidence level) / 9) + estimated time</p>
-</blockquote>
-<p>From hereon you can easily compute for the total time and make a comparison between the estimated time and the risk adjusted time.</p>
-<p>To see how all of this works you can check out our <a href="https://docs.google.com/spreadsheets/d/1KNTq88bw5qO6Ejbm71z31X-jraJDjB-9WET-2BZR2-s/edit?usp=sharing">Technical Estimate Template Sheet</a> at our Google Drive. Or if you are into Emacs, I also have a <a href="https://gist.github.com/accidentalrebel/0df9f9e024c7e3d433ef8a4f9fada2a9">template for that as well</a> using OrgMode.</p>
-<h2 id="how-effective-is-it">How effective is it?</h2>
-<p>The following is taken from the technical estimate I made for a recent module in Chef Wars. I've logged the actual time it took me to finish the task so the results can be compared.</p>
-<p><strong>Note:</strong> <em>Each estimate is in hours.</em></p>
-<table>
-<thead>
-<tr>
-<th align="center">Task</th>
-<th align="center">Estimate</th>
-<th align="center">Confidence</th>
-<th align="center">Risk Adjusted</th>
-<th align="center">Actual time</th>
-<th align="center">Difference</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">[Backend] Create PVP Player Collections</td>
-<td align="center">2</td>
-<td align="center">8</td>
-<td align="center">2.4444444</td>
-<td align="center">1</td>
-<td align="center">1.44</td>
-</tr>
-<tr>
-<td align="center">[Backend] Set Player PVP Collections</td>
-<td align="center">8</td>
-<td align="center">8</td>
-<td align="center">9.7777778</td>
-<td align="center">7</td>
-<td align="center">2.78</td>
-</tr>
-<tr>
-<td align="center">[Leaderboard] Fetch City Leaderboards</td>
-<td align="center">16</td>
-<td align="center">7</td>
-<td align="center">21.333333</td>
-<td align="center">18</td>
-<td align="center">3.33</td>
-</tr>
-<tr>
-<td align="center">[Leaderboard] Monthly Leaderboard Resetting</td>
-<td align="center">2</td>
-<td align="center">7</td>
-<td align="center">2.6666667</td>
-<td align="center">4</td>
-<td align="center">-1.33</td>
-</tr>
-<tr>
-<td align="center">[Logic] PVP Competition Setup</td>
-<td align="center">8</td>
-<td align="center">7</td>
-<td align="center">10.666667</td>
-<td align="center">9</td>
-<td align="center">1.67</td>
-</tr>
-<tr>
-<td align="center">[UI] Add the City Ranking button in Global/Friend Rankings</td>
-<td align="center">1</td>
-<td align="center">10</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">[UI] City Master Chefs UI</td>
-<td align="center">2</td>
-<td align="center">8</td>
-<td align="center">2.4444444</td>
-<td align="center">6</td>
-<td align="center">-3.56</td>
-</tr>
-<tr>
-<td align="center">[UI] City Arena UI</td>
-<td align="center">2</td>
-<td align="center">8</td>
-<td align="center">2.4444444</td>
-<td align="center">4</td>
-<td align="center">-1.56</td>
-</tr>
-<tr>
-<td align="center">[UI] Top Chef Awarding Pop Up</td>
-<td align="center">1</td>
-<td align="center">8</td>
-<td align="center">1.2222222</td>
-<td align="center">2</td>
-<td align="center">-0.78</td>
-</tr>
-<tr>
-<td align="center">Totals</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">53.99</td>
-<td align="center">51</td>
-<td align="center">2.99</td>
-</tr>
-</tbody>
-</table>
-<p>As you can see that the actual times are very close to the risk adjusted times. I overshot quite a bit during the UI related tasks but the time lost was offseted by the other tasks as seen in the totals. </p>
-<p>Take note that this is just a small sample and results will vary. There are times where totals still overshoot but mostly it is just in terms of a few hours, or at worst a full day. Regardless, our overall experience has been great as it has proven to be accurate enough that we could confidently commit to certain dates and schedules.</p>
-<h2 id="tips-on-using-this-system">Tips on using this system</h2>
-<ul>
-<li>This system works great if you know the tasks beforehand. You really need to sit down and think what the steps are and try not to miss anything and to avoid adjustments.</li>
-<li>The more granular the tasks, the easier it is to assign a time and confidence level to them.</li>
-<li>Being honest with the confidence levels helps produce more accurate estimates. It also brings to light any low-confidence tasks that are in need of reconsideration.</li>
-<li>Make the scope smaller and easier to digest by dividing your project into smaller parts (It can be by milestone or by module) and then make an estimate for each.</li>
-<li>Do this long enough and you'll get better with judging estimates and confidence levels.</li>
-<li>It helps to review and compare how long a task took against your estimates. It will give you insight why you overshot (In the example above, I learned that I am still bad at properly estimating UI related tasks. I should adjust my confidence levels for next time).</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>This simple system has helped us a lot and we plan to use it on all our future projects. It's not 100% accurate but it is accurate enough that we can schedule confidently with it. I would be the first to admit that it may not work for everyone but if you are always overshooting your estimates then this system might be worth a try.</p>
-<p><strong>[Check out our game which was released relatively on time over at <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://itunes.apple.com/us/app/chef-wars/id1254831133?mt=8">iOS</a>]</strong></p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Read on →</a> -->
+<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/opening-unity-script-files-in-emacs.html">Read on →</a> -->
       </article>
     </div>
   </div>
 </div>
 <div class="pagination">
 <p class="paginator">
-        <a href="./index.html">&#8647;</a>
-        <a href="./index2.html">&laquo;</a>
+        <a href="/index.html">&#8647;</a>
+        <a href="/index2.html">&laquo;</a>
     Page 3 / 4
-        <a href="./index4.html">&raquo;</a>
-        <a href="./index4.html">&#8649;</a>
+        <a href="/index4.html">&raquo;</a>
+        <a href="/index4.html">&#8649;</a>
 </p>
 </div>
     <footer id="footer" class="her-row">
@@ -857,14 +234,5 @@
       </div>
     </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
-    </script>
   </body>
 </html>

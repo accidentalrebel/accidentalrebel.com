@@ -11,14 +11,13 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="..">
+  <link rel="canonical" href="">
 
-  <link href="../favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -30,13 +29,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="..">
+	  <a href="">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="../theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -45,8 +44,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
+	    <li><a href="">Home</a></li>
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -60,11 +59,11 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
+        <h1><a href="/chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
 	<div class="meta">
           <time datetime="2017-12-10T23:33:00+08:00">December 10, 2017</time>
           in <span class="categories">
-            <a href="../tag/chefwars.html">chefwars</a>,            <a href="../tag/gamedev.html">gamedev</a>,            <a href="../tag/mindcake.html">mindcake</a>,            <a href="../tag/postmortem.html">postmortem</a>          </span>
+            <a href="/tag/chefwars.html">chefwars</a>,            <a href="/tag/gamedev.html">gamedev</a>,            <a href="/tag/mindcake.html">mindcake</a>,            <a href="/tag/postmortem.html">postmortem</a>          </span>
 	</div>
         <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TL;DR</strong></p>
@@ -72,218 +71,8 @@
 <li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
 </ul>
 <hr />
-<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
-<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
-<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system in all my game development related projects and has helped us immensely in the development of our recent game, <a href="http://mindcakegames.com/">Chef Wars</a>.</p>
-<p>I'm sharing this in the hopes that it would help others too.</p>
-<h2 id="risk-adjusted-estimates">Risk Adjusted Estimates</h2>
-<p>The basic idea of this system is that for each task, an estimated time would be given along with a "confidence level". The lower the confidence the more padding is added automatically to the estimate for that task.</p>
-<p>It's a very simple system and is illustrated clearly in the image below:</p>
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th align="center">Estimate</th>
-<th align="center">Confidence</th>
-<th align="right">Risk-Adjusted</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task A</td>
-<td align="center">5</td>
-<td align="center">2</td>
-<td align="right">9.44</td>
-</tr>
-<tr>
-<td>Task B</td>
-<td align="center">8</td>
-<td align="center">6</td>
-<td align="right">11.56</td>
-</tr>
-<tr>
-<td>Task C</td>
-<td align="center">10</td>
-<td align="center">8</td>
-<td align="right">12.22</td>
-</tr>
-<tr>
-<td>Task D</td>
-<td align="center">10</td>
-<td align="center">10</td>
-<td align="right">10.00</td>
-</tr>
-</tbody>
-</table>
-<p>A legend (shown below) is used to help programmers determine what confidence level to specify based on their current situation.</p>
-<table>
-<thead>
-<tr>
-<th>Level</th>
-<th align="right">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td align="right">No clue -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>2</td>
-<td align="right">Hardly a clue -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>3</td>
-<td align="right">Someone else has done this and I read about it; job not well defined -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>4</td>
-<td align="right">Someone else has done this and I think I understand this; job might not be well-defined -- don't make decisions on this. We need to talk more.</td>
-</tr>
-<tr>
-<td>5</td>
-<td align="right">Done something similar to this before and this relates to that work -- this estimate has a variance of +/- 50 percent of estimate.</td>
-</tr>
-<tr>
-<td>6</td>
-<td align="right">I think I understand this fairly well and I understand the goal.</td>
-</tr>
-<tr>
-<td>7</td>
-<td align="right">The average case for programming when the requirements are understood.</td>
-</tr>
-<tr>
-<td>8</td>
-<td align="right">A confident case for programming. It's rare that something unexpected would happen.</td>
-</tr>
-<tr>
-<td>9</td>
-<td align="right">I've done this before and it's very similar. If something unexpected comes up, I know how to tackle it.</td>
-</tr>
-<tr>
-<td>10</td>
-<td align="right">No matter what, I'm only going to work on this for the specified period of time</td>
-</tr>
-</tbody>
-</table>
-<p>The formula for calculating the risk-adjusted time is also very straightforward:</p>
-<blockquote>
-<p>(estimated time * (10 - confidence level) / 9) + estimated time</p>
-</blockquote>
-<p>From hereon you can easily compute for the total time and make a comparison between the estimated time and the risk adjusted time.</p>
-<p>To see how all of this works you can check out our <a href="https://docs.google.com/spreadsheets/d/1KNTq88bw5qO6Ejbm71z31X-jraJDjB-9WET-2BZR2-s/edit?usp=sharing">Technical Estimate Template Sheet</a> at our Google Drive. Or if you are into Emacs, I also have a <a href="https://gist.github.com/accidentalrebel/0df9f9e024c7e3d433ef8a4f9fada2a9">template for that as well</a> using OrgMode.</p>
-<h2 id="how-effective-is-it">How effective is it?</h2>
-<p>The following is taken from the technical estimate I made for a recent module in Chef Wars. I've logged the actual time it took me to finish the task so the results can be compared.</p>
-<p><strong>Note:</strong> <em>Each estimate is in hours.</em></p>
-<table>
-<thead>
-<tr>
-<th align="center">Task</th>
-<th align="center">Estimate</th>
-<th align="center">Confidence</th>
-<th align="center">Risk Adjusted</th>
-<th align="center">Actual time</th>
-<th align="center">Difference</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="center">[Backend] Create PVP Player Collections</td>
-<td align="center">2</td>
-<td align="center">8</td>
-<td align="center">2.4444444</td>
-<td align="center">1</td>
-<td align="center">1.44</td>
-</tr>
-<tr>
-<td align="center">[Backend] Set Player PVP Collections</td>
-<td align="center">8</td>
-<td align="center">8</td>
-<td align="center">9.7777778</td>
-<td align="center">7</td>
-<td align="center">2.78</td>
-</tr>
-<tr>
-<td align="center">[Leaderboard] Fetch City Leaderboards</td>
-<td align="center">16</td>
-<td align="center">7</td>
-<td align="center">21.333333</td>
-<td align="center">18</td>
-<td align="center">3.33</td>
-</tr>
-<tr>
-<td align="center">[Leaderboard] Monthly Leaderboard Resetting</td>
-<td align="center">2</td>
-<td align="center">7</td>
-<td align="center">2.6666667</td>
-<td align="center">4</td>
-<td align="center">-1.33</td>
-</tr>
-<tr>
-<td align="center">[Logic] PVP Competition Setup</td>
-<td align="center">8</td>
-<td align="center">7</td>
-<td align="center">10.666667</td>
-<td align="center">9</td>
-<td align="center">1.67</td>
-</tr>
-<tr>
-<td align="center">[UI] Add the City Ranking button in Global/Friend Rankings</td>
-<td align="center">1</td>
-<td align="center">10</td>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">[UI] City Master Chefs UI</td>
-<td align="center">2</td>
-<td align="center">8</td>
-<td align="center">2.4444444</td>
-<td align="center">6</td>
-<td align="center">-3.56</td>
-</tr>
-<tr>
-<td align="center">[UI] City Arena UI</td>
-<td align="center">2</td>
-<td align="center">8</td>
-<td align="center">2.4444444</td>
-<td align="center">4</td>
-<td align="center">-1.56</td>
-</tr>
-<tr>
-<td align="center">[UI] Top Chef Awarding Pop Up</td>
-<td align="center">1</td>
-<td align="center">8</td>
-<td align="center">1.2222222</td>
-<td align="center">2</td>
-<td align="center">-0.78</td>
-</tr>
-<tr>
-<td align="center">Totals</td>
-<td align="center"></td>
-<td align="center"></td>
-<td align="center">53.99</td>
-<td align="center">51</td>
-<td align="center">2.99</td>
-</tr>
-</tbody>
-</table>
-<p>As you can see that the actual times are very close to the risk adjusted times. I overshot quite a bit during the UI related tasks but the time lost was offseted by the other tasks as seen in the totals. </p>
-<p>Take note that this is just a small sample and results will vary. There are times where totals still overshoot but mostly it is just in terms of a few hours, or at worst a full day. Regardless, our overall experience has been great as it has proven to be accurate enough that we could confidently commit to certain dates and schedules.</p>
-<h2 id="tips-on-using-this-system">Tips on using this system</h2>
-<ul>
-<li>This system works great if you know the tasks beforehand. You really need to sit down and think what the steps are and try not to miss anything and to avoid adjustments.</li>
-<li>The more granular the tasks, the easier it is to assign a time and confidence level to them.</li>
-<li>Being honest with the confidence levels helps produce more accurate estimates. It also brings to light any low-confidence tasks that are in need of reconsideration.</li>
-<li>Make the scope smaller and easier to digest by dividing your project into smaller parts (It can be by milestone or by module) and then make an estimate for each.</li>
-<li>Do this long enough and you'll get better with judging estimates and confidence levels.</li>
-<li>It helps to review and compare how long a task took against your estimates. It will give you insight why you overshot (In the example above, I learned that I am still bad at properly estimating UI related tasks. I should adjust my confidence levels for next time).</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>This simple system has helped us a lot and we plan to use it on all our future projects. It's not 100% accurate but it is accurate enough that we can schedule confidently with it. I would be the first to admit that it may not work for everyone but if you are always overshooting your estimates then this system might be worth a try.</p>
-<p><strong>[Check out our game which was released relatively on time over at <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://itunes.apple.com/us/app/chef-wars/id1254831133?mt=8">iOS</a>]</strong></p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Read on →</a> -->
+<p>I usually dreaded being asked how long a programming task …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -291,57 +80,18 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a></h1>
+        <h1><a href="/chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a></h1>
 	<div class="meta">
           <time datetime="2017-12-06T00:02:00+08:00">December 06, 2017</time>
           in <span class="categories">
-            <a href="../tag/chefwars.html">chefwars</a>,            <a href="../tag/gamedev.html">gamedev</a>,            <a href="../tag/mindcake.html">mindcake</a>,            <a href="../tag/postmortem.html">postmortem</a>          </span>
+            <a href="/tag/chefwars.html">chefwars</a>,            <a href="/tag/gamedev.html">gamedev</a>,            <a href="/tag/mindcake.html">mindcake</a>,            <a href="/tag/postmortem.html">postmortem</a>          </span>
 	</div>
         <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TLDR</strong></p>
 <ul>
 <li>There is more to the saying that "premature optimization is the root of all evil".</li>
-<li>Instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize.</li>
-</ul>
-<hr />
-<p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
-<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built, but sadly progress was slow.</p>
-<p>I realized at this point that I was optimizing too prematurely. If I wanted to reach my milestones on time then I needed to change my approach. This means leaving the optimizations for later. When is later though? I figured that it makes sense to do it at the end when all the systems are in place.</p>
-<p>All went smoothly until we reached Open Beta. The game was reported to be sluggish and almost unplayable which signaled the need to start optimizing. While I was able to optimize some parts, there were some that I could not optimize properly without undergoing a major change to the code. Sadly, rewrites were not an option as we were running out of time.</p>
-<p><img alt="01" src="https://media.giphy.com/media/26n6T9MrKZ2Qo16Vy/giphy.gif" /></p>
-<div class="codehilite"><pre><span></span><code>The profiler has been really helpful in catching performance problems.
-</code></pre></div>
-
-<p>Looking back it is easy to pinpoint what went wrong. I was optimizing too early, later changed my approach only to find out that I was already too late to optimize certain critical parts. I, of course, want to prevent this from happening again. So the million dollar question is: How does one determine when to optimize? How does one know when is too early and too late?</p>
-<h2 id="the-complete-version">The complete version</h2>
-<p>I later learned that the famous adage actually has a longer version:</p>
-<blockquote>
-<p>Programmers waste enormous amounts of time thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered. We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%.</p>
-</blockquote>
-<p><img alt="02" src="https://i.imgur.com/dqPF0cK.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>From Donald Knuth&#39;s The Art of Computer Programming
-</code></pre></div>
-
-<p>Turns out there was more to the saying that completely changes the lesson to be learned. Breaking it down we can infer that the author is telling us that:</p>
-<ul>
-<li>Too much obsession over non-critical parts wastes time.</li>
-<li>Only focus on efficiencies that matter.</li>
-<li>Optimize whenever possible, but not at the expense of the previously mentioned points.</li>
-</ul>
-<p>So instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize. In other words, anytime there is a chance to evaluate if an optimization is needed, one needs to consider whether there really is something worthwhile to optimise, and if so, how to proceed in optimizing.</p>
-<h2 id="answering-the-what-and-how">Answering the WHAT and HOW</h2>
-<p>Knowing how to answer the WHAT and HOW is not easy and requires both experience and careful planning to get right. The internet is a bit divided about this as nobody really knows the best answer. In spite of this, I was able to gather some helpful nuggets of wisdom during my research that are worth considering:</p>
-<ul>
-<li>Be critical of what optimizations to use at each stage of the project. Determine how critical it is and if it can be done later.</li>
-<li>If setting aside optimizations for later, make sure to prepare the code so that it would be easy to do so when the time comes.</li>
-<li>Proper planning during the design stage can determine what to build and how to optimize in advance.</li>
-<li>Measuring/profiling optimizations would reveal which are the most effective to use in the future.</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>There is a certain sense of pride in producing optimized and stable code. Sadly, this kind of perfection comes at a cost of time. The solution is to always consider at all times when, what, and how to optimize.</p>
-<p>This may all seem overkill to worry about but after going through 2 years worth of development on Chef Wars, I know all of this is worth taking the extra effort to do right. I hope that what I've learned may also be of use to you.</p>
-<p><em>[Our game is running better now and you could play it by downloading it on on <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">iOS</a>. Also check out my <a href="http://www.accidentalrebel.com/blog/2017/12/05/chef-wars-postmortem--what-went-right-having-a-universe-file/">previous postmortem</a> where I talk about something that went right.]</em></p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Read on →</a> -->
+<li>Instead of asking WHEN to optimize, it is more important to ask WHAT …</li></ul>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -349,36 +99,19 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a></h1>
+        <h1><a href="/chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a></h1>
 	<div class="meta">
           <time datetime="2017-12-05T12:56:00+08:00">December 05, 2017</time>
           in <span class="categories">
-            <a href="../tag/chefwars.html">chefwars</a>,            <a href="../tag/gamedev.html">gamedev</a>,            <a href="../tag/mindcake.html">mindcake</a>,            <a href="../tag/postmortem.html">postmortem</a>          </span>
+            <a href="/tag/chefwars.html">chefwars</a>,            <a href="/tag/gamedev.html">gamedev</a>,            <a href="/tag/mindcake.html">mindcake</a>,            <a href="/tag/postmortem.html">postmortem</a>          </span>
 	</div>
         <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TLDR</strong></p>
 <ul>
 <li>All data in our game is contained in one excel file we call the "Universe".</li>
 <li>Prototypes can be done on the Universe excel file itself</li>
-<li>Iteration is easier as we only need to change one file.</li>
-<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
-</ul>
-<hr />
-<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
-<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
-<div class="codehilite"><pre><span></span><code>*This file definitely gives a hint on what type of guy Cliff is.*
-</code></pre></div>
-
-<p>Having a list of all the data that will be used in the game has helped us visualize the scope and the systems to be built, especially in making prototypes. One time Cliff made a simulation of the battle system using his Excel mastery. The universe data is fed into this simulation (i.e. competition level, recipe power) and the expected values are displayed (i.e. judging result, rewards amount). This mockup allowed us to see how the battles play out and made the whole thing easier for me to understand and implement in the engine.</p>
-<p>All the content of the universe file is then converted to the JSON format which is used directly by the game. Iterating on the game is easy because the file would just need to be converted again for the new changes to show up. The conversion process is done manually though using a CSV to JSON tool. I would have automated the process but didn't have the time to work on it.</p>
-<p><img alt="02" src="https://i.imgur.com/lE5zqDu.png" /></p>
-<div class="codehilite"><pre><span></span><code>*It&#39;s like the Matrix*
-</code></pre></div>
-
-<p>Initially, when we wanted to update some values, we would need to push a new build version that players need to download. We figured that this is too cumbersome especially if we really have some critical changes we want to get out as soon as possible. As a solution to this, we made a system where a master copy of the JSONs are saved on our servers. We can change the data from here and the game would automatically download the necessary files that we changed. This is a really great feature that has helped us push important changes without having the need for a new build. But it does require a lot of bandwidth especially if a lot of players request for the new data so we do it only when needed like on crash producing bugs.</p>
-<p>As you can see, we've spent a lot of time making sure that our game is data-centric as possible and it benefitted us immensely. This approach has been so useful that we plan to use it on our future projects. And hopefully, after reading this, we've convinced you to try it out too.</p>
-<p><em>[Check out how the universe has been transformed into a game by playing Chef Wars on <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">iOS</a>. Also, be sure to check out Cliff's postmortem where he talks about the <a href="http://mindcakegames.com/chef-wars-launch-post-mortem/">things we learned during our global launch</a>!]</em></p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
+<li>Iteration is easier …</li></ul>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -393,14 +126,5 @@
       </div>
     </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
-    </script>
   </body>
 </html>

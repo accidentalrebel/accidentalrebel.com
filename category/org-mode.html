@@ -11,14 +11,13 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="..">
+  <link rel="canonical" href="">
 
-  <link href="../favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -30,13 +29,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="..">
+	  <a href="">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="../theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -45,8 +44,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
+	    <li><a href="">Home</a></li>
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -60,35 +59,14 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="../converting-org-journal-entry-to-org-page-post.html">Converting org-journal entry to org-page post</a></h1>
+        <h1><a href="/converting-org-journal-entry-to-org-page-post.html">Converting org-journal entry to org-page post</a></h1>
 	<div class="meta">
           <time datetime="2017-04-19T13:17:00+08:00">April 19, 2017</time>
           in <span class="categories">
-            <a href="../tag/emacs-org-mode.html">emacs org-mode</a>          </span>
+            <a href="/tag/emacs-org-mode.html">emacs org-mode</a>          </span>
 	</div>
-        <p><p>Since my recent switch from Wordpress to <a href="https://github.com/kelvinh/org-page">org-page</a> I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span> <span class="nv">arebel-org-journal-entry-to-org-page-post</span> <span class="p">()</span>
-  <span class="s">&quot;Copy the org-journal entry at point and then convert it to a org-page new post buffer.&quot;</span>
-  <span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nf">eq</span> <span class="ss">&#39;org-journal-mode</span> <span class="nv">major-mode</span><span class="p">)</span>
-      <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">headline-text</span> <span class="p">(</span><span class="nf">nth</span> <span class="mi">4</span> <span class="p">(</span><span class="nv">org-heading-components</span><span class="p">)))</span>
-        <span class="p">(</span><span class="nv">entry-text</span> <span class="p">(</span><span class="nv">org-get-entry</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">funcall-interactively</span> <span class="ss">&#39;op/new-post</span> <span class="s">&quot;blog&quot;</span> <span class="p">(</span><span class="nf">concat</span> <span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span> <span class="s">&quot;-&quot;</span> <span class="nv">headline-text</span><span class="p">))</span>
-    <span class="p">(</span><span class="nf">goto-char</span> <span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-    <span class="p">(</span><span class="nf">insert</span> <span class="nv">entry-text</span><span class="p">))</span>
-    <span class="p">(</span><span class="nf">message</span> <span class="s">&quot;This function can only be called inside org-journal-mode.&quot;</span><span class="p">))</span> <span class="p">)</span>
-</code></pre></div>
-
-<p>The function is simple and uses functions from org-mode and org-page.</p>
-<ul>
-<li>First, it checks if the current buffer is in org-journal-mode</li>
-<li>Then it gets the headline text and entry texts</li>
-<li>It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to populate the template. (Also notice that it takes the org-journal buffer name plus time as the blog post's org file name. This way I don't have to specify it.)</li>
-<li>It then inserts the entry-text at the end of the buffer.</li>
-</ul>
-<p>From here I am free to edit, commit, then publish.</p>
-<p>It's working great. As proof this post you are reading right now has been made with the code above.</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../converting-org-journal-entry-to-org-page-post.html">Read on →</a> -->
+        <p><p>Since my recent switch from Wordpress to <a href="https://github.com/kelvinh/org-page">org-page</a> I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="/converting-org-journal-entry-to-org-page-post.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -103,14 +81,5 @@
       </div>
     </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
-    </script>
   </body>
 </html>

