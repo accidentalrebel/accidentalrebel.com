@@ -13,24 +13,24 @@
 
   <meta name="description" content="#5 - Switching from C/C++ to C May 19, 2020 in dev,game_engine">
 
-  <link rel="canonical" href="/switching-from-c-c---to-c.html">
+  <link rel="canonical" href="https://www.accidentalrebel.com/switching-from-c-c---to-c.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="https://www.accidentalrebel.com/favicon.png" rel="icon">
 
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/switching-from-c-c---to-c.html">
+<meta property="og:url" content="https://www.accidentalrebel.com/switching-from-c-c---to-c.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="#5 - Switching from C/C++ to C">
-<meta property="og:description" content="After the recent changes to the lisp side of my engine, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's">
+<meta property="og:description" content="After the recent changes to the lisp side of my engine, I took some time to review the C/C++ side. You'll notice that">
 <meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png">
 <meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
 
@@ -41,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="">
+	  <a href="https://www.accidentalrebel.com">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="https://www.accidentalrebel.com/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -56,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
+	    <!-- <li><a href="https://www.accidentalrebel.com/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,16 +70,16 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
+          <h1><a href="https://www.accidentalrebel.com/switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
           <div class="meta">
             <time datetime="2020-05-19T17:59:00+08:00">May 19, 2020</time>
             in <span class="categories">
-              <a href="/tag/dev.html">dev</a>,              <a href="/tag/game_engine.html">game_engine</a>            </span>
+              <a href="https://www.accidentalrebel.com/tag/dev.html">dev</a>,              <a href="https://www.accidentalrebel.com/tag/game_engine.html">game_engine</a>            </span>
           </div>
-        <p>After the recent changes to the <a href="/following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
+        <p>After the recent changes to the <a href="https://www.accidentalrebel.com/following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
 <p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
 <p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know it's not a solid reason but I figured it's better to act now while it is still early.</p>
-<p><img alt="switching-from-c-c---to-c-01" src="/images/switching-from-c-c---to-c-01.png" /></p>
+<p><img alt="switching-from-c-c---to-c-01" src="https://www.accidentalrebel.com/images/switching-from-c-c---to-c-01.png" /></p>
 <p>For the most part, dropping C++ was easy. Most of the difficulty I encountered was making sure the changes worked on all three supported platforms. There was a situation when <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">I thought I was done</a> only to find it doesn't work on Mac and Windows. I had to <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">slowly re-apply</a> the changes just to see where exactly things went wrong.</p>
 <p>What's funny is that I learned that I was using a lot more C++ features than I thought. Namespaces and default arguments are some that really surprised me. I always assumed they were supported on both languages. This just proves to me that I still have a lot to learn with these languages.</p>
 <p>I also took the chance during the transition to switch from <a href="https://glm.g-truc.net/0.9.9/index.html">GLM</a>, an OpenGL Mathematics lirary using C++, to <a href="https://github.com/recp/cglm">CGLM</a> a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.</p>

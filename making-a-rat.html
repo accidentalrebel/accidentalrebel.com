@@ -13,20 +13,20 @@
 
   <meta name="description" content="Making a RAT July 13, 2021 in malware,dev">
 
-  <link rel="canonical" href="/making-a-rat.html">
+  <link rel="canonical" href="https://www.accidentalrebel.com/making-a-rat.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="https://www.accidentalrebel.com/favicon.png" rel="icon">
 
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/making-a-rat.html">
+<meta property="og:url" content="https://www.accidentalrebel.com/making-a-rat.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Making a RAT">
@@ -41,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="">
+	  <a href="https://www.accidentalrebel.com">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="https://www.accidentalrebel.com/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -56,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
+	    <!-- <li><a href="https://www.accidentalrebel.com/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,17 +70,17 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/making-a-rat.html">Making a RAT</a></h1>
+          <h1><a href="https://www.accidentalrebel.com/making-a-rat.html">Making a RAT</a></h1>
           <div class="meta">
             <time datetime="2021-07-13T14:56:00+08:00">July 13, 2021</time>
             in <span class="categories">
-              <a href="/tag/malware.html">malware</a>,              <a href="/tag/dev.html">dev</a>            </span>
+              <a href="https://www.accidentalrebel.com/tag/malware.html">malware</a>,              <a href="https://www.accidentalrebel.com/tag/dev.html">dev</a>            </span>
           </div>
         <p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
 <p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
 <p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
 <p>Having learned how to do runtime DLL loading myself I decided to give it a try. And of course, a RAT is perfect for this.</p>
-<p><img alt="making-a-rat-01" src="/images/making-a-rat-01.png" /></p>
+<p><img alt="making-a-rat-01" src="https://www.accidentalrebel.com/images/making-a-rat-01.png" /></p>
 <h2 id="planning-the-ratchitecture">Planning the RATchitecture</h2>
 <p>A lot of famous RATs are packed with features like the ability to log keystrokes, take screenshots, and turn on a webcam. I just want mine to be simple and have basic functionality like:</p>
 <ul>
@@ -97,7 +97,7 @@
 <li><a href="https://github.com/vxunderground/WinAPI-Tricks">VXUnderground's WinAPI tricks</a> taught me that there are alternative ways to do certain things to avoid detection</li>
 </ul>
 <p>As for the name of the project, I decided on "RATwurst" after the german sausage, Bratwurst. Don't ask me why. I just thought it's funny that it had the letters RAT in it.</p>
-<p><img alt="making-a-rat-02" src="/images/making-a-rat-02.png" /></p>
+<p><img alt="making-a-rat-02" src="https://www.accidentalrebel.com/images/making-a-rat-02.png" /></p>
 <h2 id="the-nitty-gratty-details">The nitty gRATty details</h2>
 <p>The client is written in ANSI C because it's the language I prefer. Since I am only targeting Windows I chose MSVC for the compiler. Which is great because it allows me to use Visual Studio for debugging.</p>
 <p>The server, on the other hand, is written in Python because I wanted another excuse to practice with it. Choosing Python has been a good choice though because of the excellent low level <a href="https://docs.python.org/3/library/socket.html">socket</a> and <a href="https://docs.python.org/3/library/cmd.html">cmd</a> libraries.</p>
@@ -105,7 +105,7 @@
 <p>When RATwurst is first executed. It does some anti-sandbox checks via process enumeration. It checks if there are more than 15 processe that are running and if there are virtualization tools present like <code>vmware.exe</code>. It will also setup an auto-run registry entry for persistence. And also move the executable to Windows' temp folder and re-run it from there.</p>
 <p>Anti-debbuging checks are littered throughout the code which checks the amount of time it takes to reach from one part of the code to the next. This is used to detect if someone is stepping through the code, increasing the delay between code execution.</p>
 <p>When no shenanigans is detected then it'll proceed to work as intended. </p>
-<p><img alt="making-a-rat-02" src="/images/making-a-rat-02.png" /></p>
+<p><img alt="making-a-rat-02" src="https://www.accidentalrebel.com/images/making-a-rat-02.png" /></p>
 <h2 id="for-edurational-purposes-only">For eduRATional purposes only</h2>
 <p>I've made the source of my project <a href="https://github.com/accidentalrebel/ratwurst">available on Github</a>. The aim is to share what I've learned so that others can learn too.</p>
 <p>I am aware of news of RAT authors having been arrested because of their work. They actively sought to gain money from their creation, I, of course, have no such plans.</p>

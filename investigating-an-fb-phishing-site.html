@@ -13,20 +13,20 @@
 
   <meta name="description" content="Investigating an FB phishing site April 24, 2021 in phishing">
 
-  <link rel="canonical" href="/investigating-an-fb-phishing-site.html">
+  <link rel="canonical" href="https://www.accidentalrebel.com/investigating-an-fb-phishing-site.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="https://www.accidentalrebel.com/favicon.png" rel="icon">
 
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/investigating-an-fb-phishing-site.html">
+<meta property="og:url" content="https://www.accidentalrebel.com/investigating-an-fb-phishing-site.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Investigating an FB phishing site">
@@ -41,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="">
+	  <a href="https://www.accidentalrebel.com">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="https://www.accidentalrebel.com/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -56,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
+	    <!-- <li><a href="https://www.accidentalrebel.com/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,36 +70,36 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a></h1>
+          <h1><a href="https://www.accidentalrebel.com/investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a></h1>
           <div class="meta">
             <time datetime="2021-04-24T05:58:00+08:00">April 24, 2021</time>
             in <span class="categories">
-              <a href="/tag/phishing.html">phishing</a>            </span>
+              <a href="https://www.accidentalrebel.com/tag/phishing.html">phishing</a>            </span>
           </div>
         <p>Last April 21, people were posting warnings about a suspicious Facebook post where your account will supposedly get hacked when you click it. From the discussions, I gathered that it is a classic phishing site scam. A very effective one too, because as soon as an account gets compromised the attacker logs in and tags the friends in the account allowing it to spread further. The news of this got big that even the PH CERT issued <a href="https://www.facebook.com/Ncertgovph/posts/1879686332199270">a security advisory on it</a>.</p>
-<p><img alt="checking-the-fb-phishing-site-02" src="/images/checking-the-fb-phishing-site-02.jpg" /></p>
+<p><img alt="checking-the-fb-phishing-site-02" src="https://www.accidentalrebel.com/images/checking-the-fb-phishing-site-02.jpg" /></p>
 <h1 id="i-was-just-curious-i-swear">I was just curious, I swear!</h1>
 <p>I wanted to see the phishing site for myself but I was unlucky and did not get tagged by anyone. So I reached out to people who did and I eventually got to this page shown below:</p>
-<p><img alt="checking-the-fb-phishing-site-01" src="/images/checking-the-fb-phishing-site-01.png" /></p>
+<p><img alt="checking-the-fb-phishing-site-01" src="https://www.accidentalrebel.com/images/checking-the-fb-phishing-site-01.png" /></p>
 <p>To a trained eye, one could easily see the obvious red flags. But how can one notice them if there is a very attention-catching image in the middle beckoning to be clicked? It's a very simple tactic yet very effective. Clicking this link leads to an external website with an even more tantalizing image masquerading as a video. </p>
-<p><img alt="checking-the-fb-phishing-site-03" src="/images/checking-the-fb-phishing-site-03.png" /></p>
+<p><img alt="checking-the-fb-phishing-site-03" src="https://www.accidentalrebel.com/images/checking-the-fb-phishing-site-03.png" /></p>
 <p>Clicking play on that video would then lead to a fake Facebook login page. We all know what's next after that. </p>
-<p><img alt="checking-the-fb-phishing-site-06" src="/images/checking-the-fb-phishing-site-06.png" /></p>
+<p><img alt="checking-the-fb-phishing-site-06" src="https://www.accidentalrebel.com/images/checking-the-fb-phishing-site-06.png" /></p>
 <p>Of course, the very best course of action when a phishing site is discovered is to report it. I, however, was curious so I decided to poke around first.</p>
 <h1 id="the-poking-begins">The poking begins</h1>
 <p>Using my knowledge in OSINT (Open Source Intelligence) and pentesting, I poked around to see what I could learn from these set of pages.</p>
 <p>One thing that immediately became obvious was that these "set of pages" were hosted on separate domains. The page with the video points to one domain, and the login page to another (that is even protected by DDNS (Dynamic DNS) via No-IP). </p>
-<p><img alt="investigating-an-fb-phishing-site-08" src="/images/investigating-an-fb-phishing-site-08.png" /></p>
+<p><img alt="investigating-an-fb-phishing-site-08" src="https://www.accidentalrebel.com/images/investigating-an-fb-phishing-site-08.png" /></p>
 <p>I also noticed that the way that the two pages were built was different. The coding style is not the same, different frameworks were used, plus the robots.txt of the login page was more restrictive. </p>
 <p>Why are they in separate domains? Wouldn't it be cheaper to just have both pages on the same domain? </p>
 <p>My hunch is that maybe the two sites were made by different people. One guy made the landing page then a different one made the login page. Or maybe the login page is an out-of-the-box solution you pay for or rent if you want to set up your own phishing scam? A PhAAS (Phishing-as-a-Service)?</p>
-<p><img alt="investigating-an-fb-phishing-site-09" src="/images/investigating-an-fb-phishing-site-09.png" /></p>
+<p><img alt="investigating-an-fb-phishing-site-09" src="https://www.accidentalrebel.com/images/investigating-an-fb-phishing-site-09.png" /></p>
 <p>During my reconnaissance, I also noticed that the URLs for the login page were changed a few times over a few hours. It's possible that the pages were being taken down thanks to the reports and the malicious actors were just making new instances and redirecting to it to make sure that the operation continues.</p>
 <h1 id="ang-nhap-hoac-ang">Đăng nhập hoặc đăng</h1>
 <p>Another thing I noticed is references to various Vietnamese terms and websites. Both pages have directories using the word "homnay", Vietnamese for the word "today". The source code also has a link to the news website "tuoitre.vn". </p>
-<p><img alt="checking-the-fb-phishing-site-04" src="/images/checking-the-fb-phishing-site-04.png" /></p>
+<p><img alt="checking-the-fb-phishing-site-04" src="https://www.accidentalrebel.com/images/checking-the-fb-phishing-site-04.png" /></p>
 <p>The Google Analytics ID used can also be found in previously tagged but now-defunct Phishing websites with references to Vietnam. It's entirely possible that these phishing sites initially targeted Vietnamese users but eventually got to Philippine users via the tagging spreading mechanism.</p>
-<p><img alt="checking-the-fb-phishing-site-05" src="/images/checking-the-fb-phishing-site-05.png" /></p>
+<p><img alt="checking-the-fb-phishing-site-05" src="https://www.accidentalrebel.com/images/checking-the-fb-phishing-site-05.png" /></p>
 <p>Or maybe it's a deliberate ploy to make it seem that the origin of the phish is Vietnamese. Just to throw off those of us snooping around.</p>
 <h1 id="and-then-it-was-gone">And then it was gone</h1>
 <p>I was tempted to make a dummy Facebook account and send the login details to the phishing site. The idea was to see how long before an account gets accessed after submitting the credentials and if the tagging of friends is automated or done manually. But sadly I ran out of free time and by the time I came back to it the login page was already completely offline. The landing page is still up though.</p>

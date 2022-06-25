@@ -13,20 +13,20 @@
 
   <meta name="description" content="Cyber Corp Case 2 Writeup - Part 2 November 03, 2021 in threat-hunting,cyberdefenders">
 
-  <link rel="canonical" href="/cyber-corp-case-2-writeup-part-2.html">
+  <link rel="canonical" href="https://www.accidentalrebel.com/cyber-corp-case-2-writeup-part-2.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="https://www.accidentalrebel.com/favicon.png" rel="icon">
 
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/cyber-corp-case-2-writeup-part-2.html">
+<meta property="og:url" content="https://www.accidentalrebel.com/cyber-corp-case-2-writeup-part-2.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Cyber Corp Case 2 Writeup - Part 2">
@@ -41,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="">
+	  <a href="https://www.accidentalrebel.com">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="https://www.accidentalrebel.com/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -56,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
+	    <!-- <li><a href="https://www.accidentalrebel.com/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,11 +70,11 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a></h1>
+          <h1><a href="https://www.accidentalrebel.com/cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a></h1>
           <div class="meta">
             <time datetime="2021-11-03T12:00:00+08:00">November 03, 2021</time>
             in <span class="categories">
-              <a href="/tag/threat-hunting.html">threat-hunting</a>,              <a href="/tag/cyberdefenders.html">cyberdefenders</a>            </span>
+              <a href="https://www.accidentalrebel.com/tag/threat-hunting.html">threat-hunting</a>,              <a href="https://www.accidentalrebel.com/tag/cyberdefenders.html">cyberdefenders</a>            </span>
           </div>
         <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
 <p>This writeup is part 2 out of multiple parts. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3 here</a>.</p>
@@ -83,14 +83,14 @@
 <p>Question 6. Specify the domain name of the resource from which the files mentioned in question 5 were supposedly downloaded as a result of malicious code execution.</p>
 </blockquote>
 <p>This one is easy. Using the same date range from the previous question, I changed the query to <code>event_type:DNSReq</code> (where "DNSReq" is short for "DNS Requests").</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-01" src="/images/cyber-corp-case-2-writeup-part-2-01.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-01" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-01.png" /></p>
 <p>We could easily see a DNS record being queried, which is our answer to this question.</p>
 <h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
 <blockquote>
 <p>Question 7. The first file downloaded (as a result of executing the code in question 5) contained encoded executable code (PE), which after downloading was recorded in the registry. Specify an MD5 hash of the original representation of that code (PE).</p>
 </blockquote>
 <p>I changed the query to <code>registry</code> hoping to see what events it will give me. Surprisingly, the very first one seems to be what we need. </p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-02" src="/images/cyber-corp-case-2-writeup-part-2-02.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-02" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-02.png" /></p>
 <p>Looking at this log I saw that it has a base64 encoded data under <code>reg_value_data</code> which is partially listed below:</p>
 <blockquote>
 <p>H4sIAAAAAAAEAO1YX0wcRRz+7XEUCuWOkhCJGl3IRiGpV...</p>
@@ -99,14 +99,14 @@
 <p>I downloaded the decoded data and then got the SHA256 hash of that file. This gave me the answer to the question.</p>
 <h2 id="side-quest-investigating-the-malware">Side Quest: Investigating the malware</h2>
 <p>I wanted to learn more about the malicious executable from the previous question so I decided to reverse engineer it, even though it was not part of the challenge.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-03" src="/images/cyber-corp-case-2-writeup-part-2-03.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-03" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-03.png" /></p>
 <p>Some interesting things about the file include the imported functions from kernel32 listed below:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-04" src="/images/cyber-corp-case-2-writeup-part-2-04.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-04" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-04.png" /></p>
 <p>And also a string for <code>rundll32.exe</code>. Looking for the usage of this string from within the code reveals this code segment:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-06" src="/images/cyber-corp-case-2-writeup-part-2-06.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-06" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-06.png" /></p>
 <p>Stepping through the code I was able to figure out that this executable is executing a process hollowing technique (<a href="https://attack.mitre.org/techniques/T1055/012/">T1055.012</a>). What it does is that it injects the code pointed to by <code>unk_180003000</code> into <code>rundll32.exe</code> and it would run that code instead of the original rundll32 code. You can find out more technical info about it <a href="https://airbus-cyber-security.com/following-process-hollowing-ollydbg/">here</a>. </p>
 <p>And of course, a screenshot of the technique using my visualization tool <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;Ck</a>.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-13" src="/images/cyber-corp-case-2-writeup-part-2-13.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-13" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-13.png" /></p>
 <h2 id="the-second-downloaded-file">The second downloaded file</h2>
 <blockquote>
 <p>Question 8. The second file downloaded (as a result of code execution, which we talked about in question 5) was a script, that was set up to autostart via WMI Subscription. Specify the SHA256 hash of this script.</p>
@@ -120,7 +120,7 @@
 <p>"MSO1033.ps1" AND (event_type:FileCreate OR event_type:FileOpen)</p>
 </blockquote>
 <p>And from here it showed me an event associated with <code>MSO1033.ps1</code> that also has a sha256 hash.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-07" src="/images/cyber-corp-case-2-writeup-part-2-07.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-07" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-07.png" /></p>
 <h2 id="the-most-difficult-question">The most difficult question</h2>
 <blockquote>
 <p>Question 9. The script, mentioned in question 8, spawned one of the legitimate system processes and injected into its memory a malicious code that was read and decoded from the registry (this code was mentioned in question 7). This malicious code migrated through a chain of code injections to the address space of another legitimate process, where it continued to run without further migration.
@@ -136,14 +136,14 @@ For this answer, provide the next data, separated by a comma without spaces:</p>
 </blockquote>
 <p>Out of all the questions in this challenge, this is the question that took me a long time to figure out. The question has a lot of threads of information that it is easy to fall into a trap of chasing a lead that doesn't go anywhere. </p>
 <p>When all of my ideas were exhausted, I decided to give in and look for a hint. Thankfully, Vikas from the CyberDefender's Discord group shared one.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-08" src="/images/cyber-corp-case-2-writeup-part-2-08.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-08" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-08.png" /></p>
 <p>Initially the line "if you happen to see the PS script there are mentions of PID spoofing" did not immediately register with me, but after thinking about it some more I realized that it meant that the "PID spoofing" is written inside the script itself! This script is <code>MSO1033.ps1</code> which was part of the previous questions.</p>
 <p>And so I updated my query with the one below:</p>
 <blockquote>
 <p>"MSO1033.ps1" AND event_type:ScriptExecution AND enrich.ioa.max_severity:*</p>
 </blockquote>
 <p>Which showed the following results:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-09" src="/images/cyber-corp-case-2-writeup-part-2-09.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-09" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-09.png" /></p>
 <p>The reason why the following events are interesting is that they contain the script inside the <code>script_text</code> value. Since the script is too long the events are split into 7 events as indicated by the <code>[1 of 7]</code> in the description. I then copied all the <code>script_text</code> entries and placed them into one file so I can easily review the code.</p>
 <p>The hint mentioned something about <code>pid spoofing</code> so I searched for the word <code>spoof</code> in the code and found this part right here.</p>
 <div class="codehilite"><pre><span></span><code><span class="no">[int]</span><span class="nv">$ppid</span> <span class="p">=</span> <span class="nb">Get-Process</span> <span class="n">-Name</span> <span class="s2">&quot;winlogon&quot;</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-expand</span> <span class="n">ID</span>
@@ -198,10 +198,10 @@ For this answer, provide the next data, separated by a comma without spaces:</p>
 <p>(winlogon.exe OR dwm.exe) AND enrich.ioa.max_severity:* AND event_type:ProcessCreate</p>
 </blockquote>
 <p>This, however, showed more than one result.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-10" src="/images/cyber-corp-case-2-writeup-part-2-10.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-10" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-10.png" /></p>
 <p>Which among these is the PID pair that the challenge author is looking for? </p>
 <p>Looking at all the multiple events, it seems that the script has been executed multiple times so it's hard to determine which is the correct event. All of them were executed successfully, but I found that only one of them was able to create the <code>rundll32.exe</code> process.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-12" src="/images/cyber-corp-case-2-writeup-part-2-12.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-12" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-12.png" /></p>
 <p>The process id of the <code>dwm.exe</code> in the screenshot above shows <code>8876</code>. Using this information, we can go back to the previous query and find exactly which PID pairs that we need to answer the question.</p>
 <h2 id="getting-the-malicious-ip">Getting the malicious IP</h2>
 <blockquote>
@@ -213,7 +213,7 @@ For this answer, provide the next data, separated by a comma without spaces:</p>
 <p>8344 AND event_type:NetworkConnection</p>
 </blockquote>
 <p>This will reveal an event with the process chain of <code>dwm.exe</code> &gt; <code>rundll32.exe</code> which also establishes a connection to an external IP. This is our answer to this question.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-11" src="/images/cyber-corp-case-2-writeup-part-2-11.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-11" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-2-11.png" /></p>
 <h2 id="understanding-the-sequence-of-events">Understanding the sequence of events</h2>
 <p>For the benefit of everyone (including me), I have outlined the timeline of events below to serve as a reference just in case you get confused and overwhelmed:</p>
 <ul>

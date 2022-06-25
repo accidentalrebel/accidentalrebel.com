@@ -13,20 +13,20 @@
 
   <meta name="description" content="IOLI Crackme 0x01 February 20, 2021 in re,crackme">
 
-  <link rel="canonical" href="/ioli-crackme-0x01.html">
+  <link rel="canonical" href="https://www.accidentalrebel.com/ioli-crackme-0x01.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="https://www.accidentalrebel.com/favicon.png" rel="icon">
 
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="https://www.accidentalrebel.com/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/ioli-crackme-0x01.html">
+<meta property="og:url" content="https://www.accidentalrebel.com/ioli-crackme-0x01.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="IOLI Crackme 0x01">
@@ -41,13 +41,13 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="">
+	  <a href="https://www.accidentalrebel.com">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="https://www.accidentalrebel.com/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -56,8 +56,8 @@
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
+	    <!-- <li><a href="https://www.accidentalrebel.com/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,18 +70,18 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/ioli-crackme-0x01.html">IOLI Crackme 0x01</a></h1>
+          <h1><a href="https://www.accidentalrebel.com/ioli-crackme-0x01.html">IOLI Crackme 0x01</a></h1>
           <div class="meta">
             <time datetime="2021-02-20T17:34:00+08:00">February 20, 2021</time>
             in <span class="categories">
-              <a href="/tag/re.html">re</a>,              <a href="/tag/crackme.html">crackme</a>            </span>
+              <a href="https://www.accidentalrebel.com/tag/re.html">re</a>,              <a href="https://www.accidentalrebel.com/tag/crackme.html">crackme</a>            </span>
           </div>
-        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="/ioli-crackme-0x00.html">here</a>.</p>
+        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="https://www.accidentalrebel.com/ioli-crackme-0x00.html">here</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
 <p>Of course, the first thing we do is run the program.</p>
-<p><img alt="ioli-crackme-0x01-01" src="/images/ioli-crackme-0x01-01.png" /></p>
+<p><img alt="ioli-crackme-0x01-01" src="https://www.accidentalrebel.com/images/ioli-crackme-0x01-01.png" /></p>
 <p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
-<p><img alt="ioli-crackme-0x01-02" src="/images/ioli-crackme-0x01-02.png" /></p>
+<p><img alt="ioli-crackme-0x01-02" src="https://www.accidentalrebel.com/images/ioli-crackme-0x01-02.png" /></p>
 <div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span><span class="w"></span>
 <span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span><span class="w"></span>
 </code></pre></div>
@@ -93,9 +93,9 @@
 </code></pre></div>
 
 <p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274</code>, which is the correct password.</p>
-<p><img alt="ioli-crackme-0x01-03" src="/images/ioli-crackme-0x01-03.png" /></p>
+<p><img alt="ioli-crackme-0x01-03" src="https://www.accidentalrebel.com/images/ioli-crackme-0x01-03.png" /></p>
 <h1 id="patching-the-executables">Patching the executables</h1>
-<p>Patching the executable is actually the same process as <a href="/ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
+<p>Patching the executable is actually the same process as <a href="https://www.accidentalrebel.com/ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
 <h1 id="passing-arguments-to-functions">Passing arguments to functions</h1>
 <p>Since the crackme was cracked relatively quickly I want to review and highlight how arguments are passed to functions. </p>
 <p>The format of the <code>scanf</code> function in C is like so:</p>
