@@ -13,20 +13,20 @@
 
   <meta name="description" content="Emprisa Maldoc Writeup April 30, 2021 in writeup">
 
-  <link rel="canonical" href="https://www.accidentalrebel.com/emprisa-maldoc-writeup..html">
+  <link rel="canonical" href="/emprisa-maldoc-writeup..html">
 
-  <link href="https://www.accidentalrebel.com/favicon.png" rel="icon">
+  <link href="/favicon.png" rel="icon">
 
 
-  <link href="https://www.accidentalrebel.com/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="https://www.accidentalrebel.com/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="https://www.accidentalrebel.com/emprisa-maldoc-writeup..html">
+<meta property="og:url" content="/emprisa-maldoc-writeup..html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Emprisa Maldoc Writeup">
@@ -47,7 +47,7 @@
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="https://www.accidentalrebel.com/theme/images/pic.png" />
+	    <img src="/theme/images/pic.png" />
 	  </div>
 	  <div class="right">
 	    My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools.
@@ -57,7 +57,7 @@
 	<div id="nav">
 	  <ul>
 	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="https://www.accidentalrebel.com/pages/made.html">My Works</a></li> -->
+	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,11 +70,11 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="https://www.accidentalrebel.com/emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a></h1>
+          <h1><a href="/emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a></h1>
           <div class="meta">
             <time datetime="2021-04-30T05:58:00+08:00">April 30, 2021</time>
             in <span class="categories">
-              <a href="https://www.accidentalrebel.com/tag/writeup.html">writeup</a>            </span>
+              <a href="/tag/writeup.html">writeup</a>            </span>
           </div>
         <blockquote>
 <p>This is a writeup for <a href="the-emprisa-maldoc-challenge">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
@@ -83,16 +83,16 @@
 <p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
 <p>The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled.</p>
 <p>This new environment is where the document would trigger once double-clicked. After a bit of loading, a pop-up would later appear greeting the analyst with congratulations (this is a stand-in for a malicious payload for this challenge), but of course, it is clear that we are not done yet.</p>
-<p><img alt="emprisa-maldoc-writeup-01" src="https://www.accidentalrebel.com/images/emprisa-maldoc-writeup-01.png" /></p>
+<p><img alt="emprisa-maldoc-writeup-01" src="/images/emprisa-maldoc-writeup-01.png" /></p>
 <p>Tools such as <a href="https://processhacker.sourceforge.io/">Process Hacker</a> will reveal a new process named <code>EQNEDT32.EXE</code> getting spawned right after opening the document. Those who have read through the CVE details would know that this is the expected behavior, as the vulnerability uses this process to run malicious code. In this case, the exploit downloads a file from the internet and automatically runs it.</p>
 <p>Another tool such as <a href="https://sourceforge.net/projects/regshot/">Regshot</a> would reveal newly created files. It can determine these by taking a snapshot before the malicious document is opened, then taking another one after the downloaded payload gets triggered, and finally comparing the two snapshots and listing the differences. It's an invaluable tool to have.</p>
-<p><img alt="emprisa-maldoc-writeup-02" src="https://www.accidentalrebel.com/images/emprisa-maldoc-writeup-02.png" /></p>
+<p><img alt="emprisa-maldoc-writeup-02" src="/images/emprisa-maldoc-writeup-02.png" /></p>
 <p>Running <a href="https://github.com/DidierStevens/DidierStevensSuite/blob/master/rtfdump.py">rtfdump.py</a> would then reveal some telling details about our maldoc, like for example, magic signatures and object streams.</p>
 <p>Upon close inspection of the hexdump of the largest object stream (still via rtfdump), one would see a sequence of NOPs (aka a NOPsled) in certain parts. A NOPsled such as this usually indicates the possible start of shellcode. Carving this part of the shellcode and running it on an emulator such as <a href="https://github.com/fireeye/speakeasy">speakeasy</a> or <a href="http://sandsprite.com/blogs/index.php?uid=7&amp;pid=152">scdbg</a> won't work properly, however.</p>
-<p><img alt="emprisa-maldoc-writeup-03" src="https://www.accidentalrebel.com/images/emprisa-maldoc-writeup-03.png" /></p>
+<p><img alt="emprisa-maldoc-writeup-03" src="/images/emprisa-maldoc-writeup-03.png" /></p>
 <p>The output shows the first line to be <code>LoadLibrary</code>, and then there's an error after that. This indicates that maybe there's a problem with the shellcode. </p>
 <p>On further inspection, a little more further down there is another set of seemingly readable strings. This could indicate another shellcode. Or, maybe, a continuation of the first one? In between these supposed two shellcodes is a readable string that seems out of place in between the gibberish. Carving the two shellcodes and then combining them would now work when run on an emulator.</p>
-<p><img alt="emprisa-maldoc-writeup-04" src="https://www.accidentalrebel.com/images/emprisa-maldoc-writeup-04.png" /></p>
+<p><img alt="emprisa-maldoc-writeup-04" src="/images/emprisa-maldoc-writeup-04.png" /></p>
 <p>If the previous solution was not immediately clear to you then there is another approach to the above. And that is to step through the <code>EQNEDT32</code> process as soon as it runs. However, attaching to this process is tricky as it triggers only for a split second and then exits. To debug this, a debugger should be automatically connected as soon as the process starts. Check out <a href="https://pentestlab.blog/2020/01/13/persistence-image-file-execution-options-injection/">this post</a> for details on how to do this.</p>
 <p>Once attached, the painstaking process of debugging begins. Thankfully, we have an idea of what code is being loaded into memory. And this is the shellcode that has a NOPSled during our analysis with rtfdump.py above. Looking for this sequence and then putting a breakpoint where the memory location is accessed would stop the program just before the shellcode is run. Once the breakpoint triggered, we could step through the shellcode and find out what exactly the shellcode does and which Libraries are being called.</p>
 <p>From here, we could also backtrack from where the shellcode is called to figure out how the exploit is triggered via a buffer overflow. This requires a bit of knowledge in reverse engineering. An alternative is to <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">check out the CVE details</a> in search for the tool that was likely used to make the exploit, and then examining the code.</p>
