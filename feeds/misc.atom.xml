@@ -415,7 +415,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;As mentioned before, I did my best to match the structure of the C code to the assembly code to make it easy to compare how one section was translated to the other. There are other parts like the &lt;code&gt;jz ifrvzero&lt;/code&gt; conditonal jump that I didn't discuss, but those can be easily be understood if you know the basics in assembly.&lt;/p&gt;
-&lt;p&gt;I've also uploaded the code on it's own repository here. Updates and fixes to the code will be pushed there.&lt;/p&gt;
+&lt;p&gt;I've also uploaded the code on it's own repository &lt;a href="https://github.com/accidentalrebel/malware-dropper-x64-win-assembly"&gt;here&lt;/a&gt;. Updates and fixes to the code will be pushed there.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;A lot of the concepts I've described in this post were the lessons I learned while working on this project. Most of these can be researched but I'm hoping that collecting them in one location would benefit the next bloke who is crazy like me to do the same.&lt;/p&gt;
 &lt;p&gt;Feel free to reach out to me on &lt;a href="https://twitter.com/accidentalrebel"&gt;Twitter&lt;/a&gt; or &lt;a href="https://www.linkedin.com/in/juan-karlo-licudine/"&gt;LinkedIn&lt;/a&gt; for any questions or comments.&lt;/p&gt;</content><category term="misc"></category><category term="malware"></category><category term="assembly"></category><category term="reverse-engineering"></category></entry></feed>
