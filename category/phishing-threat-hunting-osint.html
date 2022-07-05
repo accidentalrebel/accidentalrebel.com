@@ -11,13 +11,14 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="">
+  <link rel="canonical" href="..">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="../favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -29,23 +30,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href="..">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="../theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -59,14 +60,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a></h1>
+        <h1><a href="../finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a></h1>
 	<div class="meta">
           <time datetime="2021-05-01T20:56:00+08:00">May 01, 2021</time>
           in <span class="categories">
-            <a href="/tag/phishing.html">phishing</a>          </span>
+            <a href="../tag/phishing.html">phishing</a>          </span>
 	</div>
-        <p><p>Since my last post about <a href="investigating-an-fb-phishing-site">my investigations of a Facebook phishing site</a>, I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/finding-phished-passwords-on-a-scam-site.html">Read on →</a> -->
+        <p><p>Since my last post about <a href="investigating-an-fb-phishing-site">my investigations of a Facebook phishing site</a>, I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.</p>
+<p><img alt="finding-phished-passwords-from-a-scam-site-01" src="../images/finding-phished-passwords-from-a-scam-site-01.png" /></p>
+<p>This particular phishing site conducts its operations like this:</p>
+<ul>
+<li>An ad is shown on Facebook, promising free coupons for famous fast food restaurants</li>
+<li>Clicking on the ad takes the user to a fake Facebook login page hosted on <em>blogger.com</em></li>
+<li>Login page then sends phished username and passwords to a PHP file hosted on <em>000webhost</em></li>
+</ul>
+<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's not that hard to find as long as you know where to look.</p>
+<p>What's scary is that the size of this text file kept on getting bigger. I knew I had to act quickly.</p>
+<h2 id="stopping-the-scammers">Stopping the scammers</h2>
+<p>Unfortunately, with phishing sites like these, there's not much we could do but report it to the relevant hosting providers. The problem is that sometimes it may take some time before the site gets reviewed, which is excruciating because the longer the wait, the more people fall victim. Some might even just ignore your report altogether!</p>
+<p>I reported the fake login page to …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../finding-phished-passwords-on-a-scam-site.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -74,14 +87,25 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a></h1>
+        <h1><a href="../investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a></h1>
 	<div class="meta">
           <time datetime="2021-04-24T05:58:00+08:00">April 24, 2021</time>
           in <span class="categories">
-            <a href="/tag/phishing.html">phishing</a>          </span>
+            <a href="../tag/phishing.html">phishing</a>          </span>
 	</div>
-        <p><p>Last April 21, people were posting warnings about a suspicious Facebook post where your account will supposedly get hacked when you click it. From the discussions, I gathered that it is a classic phishing site scam. A very effective one too, because as soon as an account gets compromised the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/investigating-an-fb-phishing-site.html">Read on →</a> -->
+        <p><p>Last April 21, people were posting warnings about a suspicious Facebook post where your account will supposedly get hacked when you click it. From the discussions, I gathered that it is a classic phishing site scam. A very effective one too, because as soon as an account gets compromised the attacker logs in and tags the friends in the account allowing it to spread further. The news of this got big that even the PH CERT issued <a href="https://www.facebook.com/Ncertgovph/posts/1879686332199270">a security advisory on it</a>.</p>
+<p><img alt="checking-the-fb-phishing-site-02" src="../images/checking-the-fb-phishing-site-02.jpg" /></p>
+<h1 id="i-was-just-curious-i-swear">I was just curious, I swear!</h1>
+<p>I wanted to see the phishing site for myself but I was unlucky and did not get tagged by anyone. So I reached out to people who did and I eventually got to this page shown below:</p>
+<p><img alt="checking-the-fb-phishing-site-01" src="../images/checking-the-fb-phishing-site-01.png" /></p>
+<p>To a trained eye, one could easily see the obvious red flags. But how can one notice them if there is a very attention-catching image in the middle beckoning to be clicked? It's a very simple tactic yet very effective. Clicking this link leads to an external website with an even more tantalizing image masquerading as a video. </p>
+<p><img alt="checking-the-fb-phishing-site-03" src="../images/checking-the-fb-phishing-site-03.png" /></p>
+<p>Clicking play on that video would then lead to a fake Facebook login page. We all know what's next after that. </p>
+<p><img alt="checking-the-fb-phishing-site-06" src="../images/checking-the-fb-phishing-site-06.png" /></p>
+<p>Of course, the very best course of action when a phishing site is discovered is to report it. I, however, was curious so I decided to poke around first.</p>
+<h1 id="the-poking-begins">The poking begins</h1>
+<p>Using my knowledge in OSINT (Open Source Intelligence) and pentesting, I poked around to …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../investigating-an-fb-phishing-site.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -96,5 +120,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

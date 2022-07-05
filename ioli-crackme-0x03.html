@@ -13,20 +13,21 @@
 
   <meta name="description" content="IOLI Crackme 0x03 March 22, 2021 in re,crackme">
 
-  <link rel="canonical" href="/ioli-crackme-0x03.html">
+  <link rel="canonical" href="./ioli-crackme-0x03.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="./favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/ioli-crackme-0x03.html">
+<meta property="og:url" content="./ioli-crackme-0x03.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="IOLI Crackme 0x03">
@@ -41,23 +42,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href=".">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="./theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,33 +71,33 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/ioli-crackme-0x03.html">IOLI Crackme 0x03</a></h1>
+          <h1><a href="./ioli-crackme-0x03.html">IOLI Crackme 0x03</a></h1>
           <div class="meta">
             <time datetime="2021-03-22T20:03:00+08:00">March 22, 2021</time>
             in <span class="categories">
-              <a href="/tag/re.html">re</a>,              <a href="/tag/crackme.html">crackme</a>            </span>
+              <a href="./tag/re.html">re</a>,              <a href="./tag/crackme.html">crackme</a>            </span>
           </div>
-        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="/ioli-crackme-0x00.html">0x00</a>, <a href="/ioli-crackme-0x01.html">0x01</a>, and <a href="/ioli-crackme-0x02.html">0x02</a>.</p>
+        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, and <a href="./ioli-crackme-0x02.html">0x02</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
-<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="/ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
-<p><img alt="ioli-crackme-0x03-01" src="/images/ioli-crackme-0x03-01.png" /></p>
+<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="./ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
+<p><img alt="ioli-crackme-0x03-01" src="./images/ioli-crackme-0x03-01.png" /></p>
 <p>Reading through the code I realized that the password for this challenge is exactly the same as the previous one!</p>
 <p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
-<p><img alt="ioli-crackme-0x03-02" src="/images/ioli-crackme-0x03-02.png" /></p>
+<p><img alt="ioli-crackme-0x03-02" src="./images/ioli-crackme-0x03-02.png" /></p>
 <h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
 <p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping back. It seems we have a <em>loop</em> here that we could investigate.</p>
-<p><img alt="ioli-crackme-0x03-03" src="/images/ioli-crackme-0x03-03.png" /></p>
+<p><img alt="ioli-crackme-0x03-03" src="./images/ioli-crackme-0x03-03.png" /></p>
 <p>If we look at the input that the function takes we will find out that the strings that are being passed from the <code>_test</code> function are <code>Lqydolg#Sdvvzrug$</code> and <code>Sdvvzrug#RN$$$#=,</code> for the <em>failure</em> and <em>success</em> messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.</p>
 <h1 id="discovering-the-cipher">Discovering the cipher</h1>
 <p>The best way to discover the cipher used is to step through the code. We can do it with both static or dynamic analysis, but the latter is way easier.</p>
-<p><img alt="ioli-crackme-0x03-04" src="/images/ioli-crackme-0x03-04.png" /></p>
+<p><img alt="ioli-crackme-0x03-04" src="./images/ioli-crackme-0x03-04.png" /></p>
 <p>The code above starts with <code>mov eax, [ebp+arg_0]</code> which copies the pointer to the string passed to our <code>_shift</code> function. We then copy that pointer to <code>[esp+98h+Str]</code> which is the memory location pointing to the top of the current stack. This is done so that it can be passed as an argument when we do <code>call _strlen</code>.</p>
 <p>After executing, <code>_strlen</code> returns the length of the specified string and is saved to register <code>eax</code>. This is then used in the line <code>cmp [ebp+var_7C], eax</code>. </p>
 <p>But what is the value of <code>var_7C</code>? If you scroll up at the start of the subroutine, <code>var_7C</code> is assigned a value of zero. If you know how loops work, you'll realize that this variable is going to be used to hold a counter value. It starts at a value of <code>0</code> and it will eventually be incremented after every loop, which is what is happening at <code>401348</code>.</p>
 <p>To make it easy for us to remember this, let's rename <code>var_7C</code> to a more memorable name like <code>var_counter</code>.</p>
-<p><img alt="ioli-crackme-0x03-05" src="/images/ioli-crackme-0x03-05.png" /></p>
+<p><img alt="ioli-crackme-0x03-05" src="./images/ioli-crackme-0x03-05.png" /></p>
 <p>So going back, to the comparison command <code>cmp [ebp+var_counter], eax</code>, which now translates to <code>cmp 0, 17</code>. <em>17</em> being the length of our failure string <code>Lqydolg#Sdvvzrug$</code>. Since this is not equal it now goes to this next block of code.</p>
-<p><img alt="ioli-crackme-0x03-06" src="/images/ioli-crackme-0x03-06.png" /></p>
+<p><img alt="ioli-crackme-0x03-06" src="./images/ioli-crackme-0x03-06.png" /></p>
 <p>Now this block is interesting. There's a lot that is happening but the gist of it is that the program gets one character from the input string, with <code>var_counter</code> as an offset. It then decrements that character value by 3, and added to a destination string. I'll be going through the code that I described step by step in the next section.</p>
 <h1 id="stepping-through">Stepping through</h1>
 <p>So to start, <code>lea eax, [ebp+var_78]</code> loads the address to <code>var_78</code> which in my case points to the address <code>28FE90</code>.</p>
@@ -131,13 +132,13 @@
 	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 	    /*
 	     var disqus_config = function () {
-	     this.page.url = ;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
 	     this.page.identifier = ioli-crackme-0x03.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	     };
 	    */
 	    (function() { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-		s.src = '/embed.js';
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	    })();
@@ -157,5 +158,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

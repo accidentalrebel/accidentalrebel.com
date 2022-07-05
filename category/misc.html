@@ -11,13 +11,14 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="">
+  <link rel="canonical" href="..">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="../favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -29,23 +30,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href="..">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="../theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -59,15 +60,23 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/converting-a-malware-dropper-to-x64-assembly.html">Converting a malware dropper to x64 assembly</a></h1>
+        <h1><a href="../converting-a-malware-dropper-to-x64-assembly.html">Converting a malware dropper to x64 assembly</a></h1>
 	<div class="meta">
           <time datetime="2022-07-03T09:18:00+08:00">July 03, 2022</time>
           in <span class="categories">
-            <a href="/tag/malware.html">malware</a>,            <a href="/tag/assembly.html">assembly</a>,            <a href="/tag/reverse-engineering.html">reverse-engineering</a>          </span>
+            <a href="../tag/malware.html">malware</a>,            <a href="../tag/assembly.html">assembly</a>,            <a href="../tag/reverse-engineering.html">reverse-engineering</a>          </span>
 	</div>
         <p><p>In this post I'll be listing down lessons I learned while converting a simple malware dropper written in C to x64 assembly. </p>
-<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/converting-a-malware-dropper-to-x64-assembly.html">Read on →</a> -->
+<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
+<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better job of doing that. And as for the assembler, I'll be using <a href="https://www.nasm.us/">nasm</a> because this is the one I'm most familiar with.</p>
+<blockquote>
+<p><strong>Disclaimer:</strong> I am not an expert in any of these topics. I'm just someone who learned things and wish to share it to others. If I'm wrong about anything feel free to point it out. </p>
+</blockquote>
+<h2 id="credits">Credits</h2>
+<p>The malware dropper that we'll be converting is made by <a href="https://twitter.com/sektor7net">@reenz0h</a>. I found it in <a href="https://github.com/kymb0/Malware_learns">kymb0's repository</a> and I learned that it's a part of the <a href="https://institute.sektor7.net/">Red Team Operator course by Sektor7</a>. I've read good things about the course and I plan …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../converting-a-malware-dropper-to-x64-assembly.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -82,5 +91,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

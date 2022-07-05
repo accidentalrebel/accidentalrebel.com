@@ -11,13 +11,14 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="">
+  <link rel="canonical" href="..">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="../favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -29,23 +30,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href="..">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="../theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -59,16 +60,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/the-password-supplied-to-the-desired-state-configuration-resource-msft_xaddomain-is-not-valid.html">The password supplied to the Desired State Configuration resource MSFT_xADDomain is not valid</a></h1>
+        <h1><a href="../the-password-supplied-to-the-desired-state-configuration-resource-msft_xaddomain-is-not-valid.html">The password supplied to the Desired State Configuration resource MSFT_xADDomain is not valid</a></h1>
 	<div class="meta">
           <time datetime="2022-06-25T17:16:00+08:00">June 25, 2022</time>
           in <span class="categories">
-            <a href="/tag/azure.html">azure</a>,            <a href="/tag/error.html">error</a>,            <a href="/tag/troubleshooting.html">troubleshooting</a>          </span>
+            <a href="../tag/azure.html">azure</a>,            <a href="../tag/error.html">error</a>,            <a href="../tag/troubleshooting.html">troubleshooting</a>          </span>
 	</div>
         <p><p>I wanted to quickly setup an Azure AD environment so I tried using this <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/active-directory/active-directory-new-domain">Azure quickstart template</a>.</p>
 <p>The resources were being created properly until I reached the part where the AD Forest was being created. The error that popped up was this:</p>
-<div class="codehilite"><pre><span></span><code>{<span class="s2">&quot;</span><span class="s">code</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">DeploymentFailed</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">message</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">At least one resource deployment …</span></code></pre></div>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/the-password-supplied-to-the-desired-state-configuration-resource-msft_xaddomain-is-not-valid.html">Read on →</a> -->
+<div class="codehilite"><pre><span></span><code>{<span class="s2">&quot;</span><span class="s">code</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">DeploymentFailed</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">message</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">details</span><span class="s2">&quot;</span>:[{<span class="s2">&quot;</span><span class="s">code</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">VMExtensionProvisioningError</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">message</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">VM has reported a failure when processing extension &#39;CreateADForest&#39;. Error message: \</span><span class="s2">&quot;</span><span class="nv">DSC</span> <span class="nv">Configuration</span> <span class="s1">&#39;</span><span class="s">CreateADPDCf</span><span class="s1">&#39;</span> <span class="nv">completed</span> <span class="nv">with</span> <span class="nv">error</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>. <span class="nv">Following</span> <span class="nv">are</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">few</span>: <span class="nv">The</span> <span class="nv">password</span> <span class="nv">supplied</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">Desired</span> <span class="nv">State</span> <span class="nv">Configuration</span> <span class="nv">resource</span> <span class="nv">MSFT_xADDomain</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">valid</span>. <span class="nv">The</span> <span class="nv">password</span> <span class="nv">cannot</span> <span class="nv">be</span> <span class="nv">null</span> <span class="nv">or</span> <span class="nv">empty</span>. <span class="nv">The</span> <span class="nv">SendConfigurationApply</span> <span class="nv">function</span> <span class="nv">did</span> <span class="nv">not</span> <span class="nv">succeed</span>.\<span class="s2">&quot;</span><span class="s">\r</span><span class="se">\n</span><span class="s">\r</span><span class="se">\n</span><span class="s">More information on troubleshooting is available at https://aka.ms/VMExtensionDSCWindowsTroubleshoot </span><span class="s2">&quot;</span>}]}
+</code></pre></div>
+
+<p>Searching around for a solution I chanced upon <a href="https://github.com/Azure/azure-quickstart-templates/issues/12538">this Github issue</a> from the same repository.</p>
+<p>A user commented that:</p>
+<blockquote>
+<p>"This issue seems to be caused by a security update on Windows and affects templates which use the Azure DSC extension to pass credentials (so probably many)."</p>
+<p>"As a quick workaround, I hardcode a previous version of the Windows Server images which do not cause this issue (instead of using latest)."</p>
+</blockquote>
+<p>I looked at the fixes that the user did. It wasn't exactly for the error I am experiencing, but it was worth trying out.</p>
+<p>What I had to do was to look for an old version of the VM image for WindowsServer that is …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../the-password-supplied-to-the-desired-state-configuration-resource-msft_xaddomain-is-not-valid.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -83,5 +94,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

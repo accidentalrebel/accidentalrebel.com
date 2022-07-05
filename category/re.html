@@ -11,13 +11,14 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="">
+  <link rel="canonical" href="..">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="../favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -29,23 +30,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href="..">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="../theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -59,16 +60,32 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/ioli-crackme-0x04.html">IOLI Crackme 0x04</a></h1>
+        <h1><a href="../ioli-crackme-0x04.html">IOLI Crackme 0x04</a></h1>
 	<div class="meta">
           <time datetime="2021-09-29T10:34:00+08:00">September 29, 2021</time>
           in <span class="categories">
-            <a href="/tag/re.html">re</a>,            <a href="/tag/crackme.html">crackme</a>          </span>
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
 	</div>
-        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="/ioli-crackme-0x00.html">0x00</a>, <a href="/ioli-crackme-0x01.html">0x01</a>, <a href="/ioli-crackme-0x02.html">0x02</a>, and <a href="/ioli-crackme-0x03.html">0x03</a>.</p>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a>, <a href="../ioli-crackme-0x01.html">0x01</a>, <a href="../ioli-crackme-0x02.html">0x02</a>, and <a href="../ioli-crackme-0x03.html">0x03</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
-<p>Loading the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/ioli-crackme-0x04.html">Read on →</a> -->
+<p>Loading the program in IDA revealed something new. There is now a <code>_check</code> function that when opened looks more complicated than the previous challenges.</p>
+<p><img alt="ioli-crackme-0x04-01" src="../images/ioli-crackme-0x04-01.png" /></p>
+<p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
+<p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
+<p><img alt="ioli-crackme-0x04-02" src="../images/ioli-crackme-0x04-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span><span class="w"></span>
+<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w"></span>
+<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
+</code></pre></div>
+
+<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the length of the entered string. If you think about it, this means that it doesn't matter how long the string that the user inputs. What's important is the content.</p>
+<p>To find out what the correct content the program expects, we need to look at the other block of code.</p>
+<p><img alt="ioli-crackme-0x04-03" src="../images/ioli-crackme-0x04-03.png" /></p>
+<p>The code uses the same approach as the previous challenge where <code>var_counter</code> is used to loop through individual characters in the input string.</p>
+<p>The part that is new is the use of the <code>_sscanf</code> function which is defined as:</p>
+<blockquote>
+<p>"sscanf reads data from s and stores …</p></blockquote>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x04.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -76,16 +93,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/ioli-crackme-0x03.html">IOLI Crackme 0x03</a></h1>
+        <h1><a href="../ioli-crackme-0x03.html">IOLI Crackme 0x03</a></h1>
 	<div class="meta">
           <time datetime="2021-03-22T20:03:00+08:00">March 22, 2021</time>
           in <span class="categories">
-            <a href="/tag/re.html">re</a>,            <a href="/tag/crackme.html">crackme</a>          </span>
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
 	</div>
-        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="/ioli-crackme-0x00.html">0x00</a>, <a href="/ioli-crackme-0x01.html">0x01</a>, and <a href="/ioli-crackme-0x02.html">0x02</a>.</p>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a>, <a href="../ioli-crackme-0x01.html">0x01</a>, and <a href="../ioli-crackme-0x02.html">0x02</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
-<p>After opening the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/ioli-crackme-0x03.html">Read on →</a> -->
+<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="../ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
+<p><img alt="ioli-crackme-0x03-01" src="../images/ioli-crackme-0x03-01.png" /></p>
+<p>Reading through the code I realized that the password for this challenge is exactly the same as the previous one!</p>
+<p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
+<p><img alt="ioli-crackme-0x03-02" src="../images/ioli-crackme-0x03-02.png" /></p>
+<h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
+<p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping back. It seems we have a <em>loop</em> here that we could investigate.</p>
+<p><img alt="ioli-crackme-0x03-03" src="../images/ioli-crackme-0x03-03.png" /></p>
+<p>If we look at the input that the function takes we will find out that the strings that are being passed from the <code>_test</code> function are <code>Lqydolg#Sdvvzrug$</code> and <code>Sdvvzrug#RN$$$#=,</code> for the <em>failure</em> and <em>success</em> messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.</p>
+<h1 id="discovering-the-cipher">Discovering the cipher</h1>
+<p>The best way to discover the cipher used is to step through the code. We can do it with both static or dynamic …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x03.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -93,16 +120,25 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/ioli-crackme-0x02.html">IOLI Crackme 0x02</a></h1>
+        <h1><a href="../ioli-crackme-0x02.html">IOLI Crackme 0x02</a></h1>
 	<div class="meta">
           <time datetime="2021-03-06T10:34:00+08:00">March 06, 2021</time>
           in <span class="categories">
-            <a href="/tag/re.html">re</a>,            <a href="/tag/crackme.html">crackme</a>          </span>
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
 	</div>
-        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="/ioli-crackme-0x00.html">0x00</a> and <a href="/ioli-crackme-0x01.html">0x01</a>.</p>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a> and <a href="../ioli-crackme-0x01.html">0x01</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
-<p>After the first two …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/ioli-crackme-0x02.html">Read on →</a> -->
+<p>After the first two challenges I kinda know what to expect already so I skipped running the program and immediately loaded it in IDA.</p>
+<p><img alt="ioli-crackme-0x02-01" src="../images/ioli-crackme-0x02-01.png" /></p>
+<p>So the lines leading to the comparison command now looks more complicated than before. We could easily see that there are some computations that happens thanks to the presence of <code>add</code> and <code>imul</code>. Before those, we have two values (<code>5Ah</code> and <code>1ECh</code>) which we can easily guess are the values that will be worked on by these arithmetic functions.</p>
+<p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which results in a value of <code>246h</code>.</p>
+<p>After that we see the line <code>imul eax, [ebp+var_8]</code>, which if you follow the sequence closely effectively multiplies <code>246h</code> by itself, resulting in a value of <code>52B24h</code>.</p>
+<p>Convert <code>52B24h</code> to decimal equates to <code>338724</code>, which is unsprisingly the password that we need.</p>
+<p><img alt="ioli-crackme-0x02-02" src="../images/ioli-crackme-0x02-02.png" /></p>
+<h1 id="confirming-via-dynamic-analysis">Confirming via dynamic analysis</h1>
+<p>What we did above is that we used static analysis to inspect the program line by line to determine the final computed password value. Let's use dynamic analysis and step through the code to see how our data is manipulated in memory during this process.</p>
+<p>Let's …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x02.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -110,16 +146,45 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/ioli-crackme-0x01.html">IOLI Crackme 0x01</a></h1>
+        <h1><a href="../ioli-crackme-0x01.html">IOLI Crackme 0x01</a></h1>
 	<div class="meta">
           <time datetime="2021-02-20T17:34:00+08:00">February 20, 2021</time>
           in <span class="categories">
-            <a href="/tag/re.html">re</a>,            <a href="/tag/crackme.html">crackme</a>          </span>
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
 	</div>
-        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="/ioli-crackme-0x00.html">here</a>.</p>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="../ioli-crackme-0x00.html">here</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
-<p>Of course, the first thing …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/ioli-crackme-0x01.html">Read on →</a> -->
+<p>Of course, the first thing we do is run the program.</p>
+<p><img alt="ioli-crackme-0x01-01" src="../images/ioli-crackme-0x01-01.png" /></p>
+<p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
+<p><img alt="ioli-crackme-0x01-02" src="../images/ioli-crackme-0x01-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span><span class="w"></span>
+<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span><span class="w"></span>
+</code></pre></div>
+
+<p>This seems easy enough. </p>
+<p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span><span class="w"></span>
+</code></pre></div>
+
+<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274</code>, which is the correct password.</p>
+<p><img alt="ioli-crackme-0x01-03" src="../images/ioli-crackme-0x01-03.png" /></p>
+<h1 id="patching-the-executables">Patching the executables</h1>
+<p>Patching the executable is actually the same process as <a href="../ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
+<h1 id="passing-arguments-to-functions">Passing arguments to functions</h1>
+<p>Since the crackme was cracked relatively quickly I want to review and highlight how arguments are passed to functions. </p>
+<p>The format of the <code>scanf</code> function in C is like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">scanf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+
+<p>Here's an example of how it is used:</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
+<span class="n">scanf</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+
+<p>If we look at the 0x01 program we could see how the arguments are passed to the <em>_scanf</em> function by placing the data to send …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x01.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -127,14 +192,36 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/ioli-crackme-0x00.html">IOLI Crackme 0x00</a></h1>
+        <h1><a href="../ioli-crackme-0x00.html">IOLI Crackme 0x00</a></h1>
 	<div class="meta">
           <time datetime="2021-02-16T21:55:00+08:00">February 16, 2021</time>
           in <span class="categories">
-            <a href="/tag/re.html">re</a>,            <a href="/tag/crackme.html">crackme</a>          </span>
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
 	</div>
-        <p><p>I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/ioli-crackme-0x00.html">Read on →</a> -->
+        <p><p>I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.</p>
+<h2 id="getting-the-password">Getting the password</h2>
+<p>Running the program shows a password prompt. </p>
+<p><img alt="ioli-crackme-0x00-03" src="../images/ioli-crackme-0x00-03.png" /></p>
+<p>Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code.</p>
+<p>I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this:</p>
+<p><img alt="ioli-crackme-0x00-02" src="../images/ioli-crackme-0x00-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
+<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span><span class="w"></span>
+</code></pre></div>
+
+<p>And just from these few lines alone I already knew what the password is. IDA Pro was helpful enough to add a comment that <code>offset Str2</code> equates to <code>250382</code>. Surely enough, this number was the password.</p>
+<p><img alt="ioli-crackme-0x00-04" src="../images/ioli-crackme-0x00-04.png" /></p>
+<h2 id="patching-the-executable">Patching the executable</h2>
+<p>The next part of the challenge is to patch the executable so that it can accept any input and would still allow us through.</p>
+<p>Looking at the graph view, we want the program to always go to the node on the right which has the "Password OK" message. </p>
+<p><img alt="ioli-crackme-0x00-05" src="../images/ioli-crackme-0x00-05.png" /></p>
+<p>The line that we could change to allow us to do this would be this one:</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40138A</span><span class="w"></span>
+</code></pre></div>
+
+<p>The <code>jz</code> can be changed to a …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x00.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -149,5 +236,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

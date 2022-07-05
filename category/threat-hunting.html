@@ -11,13 +11,14 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="">
+  <link rel="canonical" href="..">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="../favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -29,23 +30,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href="..">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="../theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -59,15 +60,25 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a></h1>
+        <h1><a href="../cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a></h1>
 	<div class="meta">
           <time datetime="2021-11-06T11:10:00+08:00">November 06, 2021</time>
           in <span class="categories">
-            <a href="/tag/threat-hunting.html">threat-hunting</a>,            <a href="/tag/cyberdefenders.html">cyberdefenders</a>          </span>
+            <a href="../tag/threat-hunting.html">threat-hunting</a>,            <a href="../tag/cyberdefenders.html">cyberdefenders</a>          </span>
 	</div>
         <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This write-up is the third and final part of this …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/cyber-corp-case-2-writeup-part-3.html">Read on →</a> -->
+<p>This write-up is the third and final part of this walkthrough. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-2">Part 2 here</a>.</p>
+<h2 id="finding-the-post-reverse-shell-activity">Finding the post-reverse shell activity</h2>
+<blockquote>
+<p>Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host.</p>
+</blockquote>
+<p>So from the question, I knew that the download happened after the reverse-shell was run. And so I changed the start date timestamp to <code>Jun 22, 2021 @ 07:41:56.000</code>. I also knew that because there was a downloaded file, there would definitely be "NetworkConnection" and "FileCreate" events that would happen afterward. And so, the query I've created is this:</p>
+<blockquote>
+<p>event_type:FileCreate OR event_type:NetworkConnection</p>
+</blockquote>
+<p><img alt="cyber-corp-case-2-writeup-part-3-01" src="../images/cyber-corp-case-2-writeup-part-3-01.png" /></p>
+<p>The result shows <code>cmd.exe</code> creating a <code>certutil.exe</code> process. And the reason why this is suspicious is that <code>certutil.exe</code> can be used as an alternative way of downloading files from an external source. You can …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../cyber-corp-case-2-writeup-part-3.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -75,15 +86,33 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a></h1>
+        <h1><a href="../cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a></h1>
 	<div class="meta">
           <time datetime="2021-11-03T12:00:00+08:00">November 03, 2021</time>
           in <span class="categories">
-            <a href="/tag/threat-hunting.html">threat-hunting</a>,            <a href="/tag/cyberdefenders.html">cyberdefenders</a>          </span>
+            <a href="../tag/threat-hunting.html">threat-hunting</a>,            <a href="../tag/cyberdefenders.html">cyberdefenders</a>          </span>
 	</div>
         <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This writeup is part 2 out of multiple parts. You …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/cyber-corp-case-2-writeup-part-2.html">Read on →</a> -->
+<p>This writeup is part 2 out of multiple parts. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3 here</a>.</p>
+<h2 id="checking-dns-requests">Checking DNS Requests</h2>
+<blockquote>
+<p>Question 6. Specify the domain name of the resource from which the files mentioned in question 5 were supposedly downloaded as a result of malicious code execution.</p>
+</blockquote>
+<p>This one is easy. Using the same date range from the previous question, I changed the query to <code>event_type:DNSReq</code> (where "DNSReq" is short for "DNS Requests").</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-01" src="../images/cyber-corp-case-2-writeup-part-2-01.png" /></p>
+<p>We could easily see a DNS record being queried, which is our answer to this question.</p>
+<h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
+<blockquote>
+<p>Question 7. The first file downloaded (as a result of executing the code in question 5) contained encoded executable code (PE), which after downloading was recorded in the registry. Specify an MD5 hash of the original representation of that code (PE).</p>
+</blockquote>
+<p>I changed the query to <code>registry</code> hoping to see what events it will give me. Surprisingly, the very first one seems to be what we need. </p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-02" src="../images/cyber-corp-case-2-writeup-part-2-02.png" /></p>
+<p>Looking at this log I saw that it has a base64 encoded data under <code>reg_value_data</code> which is partially listed below:</p>
+<blockquote>
+<p>H4sIAAAAAAAEAO1YX0wcRRz+7XEUCuWOkhCJGl3IRiGpV...</p>
+</blockquote>
+<p>I sent this data to <a href="https://gchq.github.io/CyberChef">CyberChef</a> for decoding. Thankfully the <code>rule_name</code> field also informed me that the data is "gzipped …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../cyber-corp-case-2-writeup-part-2.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -91,15 +120,25 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a></h1>
+        <h1><a href="../threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a></h1>
 	<div class="meta">
           <time datetime="2021-10-30T12:00:00+08:00">October 30, 2021</time>
           in <span class="categories">
-            <a href="/tag/threat-hunting.html">threat-hunting</a>,            <a href="/tag/cyberdefenders.html">cyberdefenders</a>          </span>
+            <a href="../tag/threat-hunting.html">threat-hunting</a>,            <a href="../tag/cyberdefenders.html">cyberdefenders</a>          </span>
 	</div>
         <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This writeup is part one out of multiple parts as …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/threat-hunting-from-home-cyber-corp-wmi-persistence.html">Read on →</a> -->
+<p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
+<h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
+<blockquote>
+<p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
+</blockquote>
+<p>So the question tells us that the attacker used WMI subscription to gain persistence in our network.</p>
+<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
+<p><img alt="cyber-corp-case-2-writeup-01" src="../images/cyber-corp-case-2-writeup-01.png" /></p>
+<h2 id="testing-wmi-persistence-in-my-homelab">Testing WMI Persistence in my homelab</h2>
+<p>Now that I understand the concept I then checked <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md">the technique's entry</a> in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../threat-hunting-from-home-cyber-corp-wmi-persistence.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -114,5 +153,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

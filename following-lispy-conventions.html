@@ -13,24 +13,25 @@
 
   <meta name="description" content="#4 - Following Lispy conventions May 15, 2020 in dev,game_engine">
 
-  <link rel="canonical" href="/following-lispy-conventions.html">
+  <link rel="canonical" href="./following-lispy-conventions.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="./favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/following-lispy-conventions.html">
+<meta property="og:url" content="./following-lispy-conventions.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="#4 - Following Lispy conventions">
-<meta property="og:description" content="I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">
+<meta property="og:description" content="I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engin">
 <meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png">
 <meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
 
@@ -41,23 +42,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href=".">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="./theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,13 +71,13 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
+          <h1><a href="./following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
           <div class="meta">
             <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
             in <span class="categories">
-              <a href="/tag/dev.html">dev</a>,              <a href="/tag/game_engine.html">game_engine</a>            </span>
+              <a href="./tag/dev.html">dev</a>,              <a href="./tag/game_engine.html">game_engine</a>            </span>
           </div>
-        <p><img alt="following-lispy-conventions-01" src="/images/following-lispy-conventions-01.png" /></p>
+        <p><img alt="following-lispy-conventions-01" src="./images/following-lispy-conventions-01.png" /></p>
 <p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
 <p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
 <p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function <em>is_key_down</em>. Changing it to <em>key_down?</em> looked weird at first but I liked how it made the function name shorter and the <em>?</em> prefix made it easy to spot and parse.</p>
@@ -189,13 +190,13 @@
 	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 	    /*
 	     var disqus_config = function () {
-	     this.page.url = ;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
 	     this.page.identifier = following-lispy-conventions.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	     };
 	    */
 	    (function() { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-		s.src = '/embed.js';
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	    })();
@@ -215,5 +216,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

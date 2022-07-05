@@ -11,13 +11,14 @@
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="">
+  <link rel="canonical" href="..">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="../favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
@@ -29,23 +30,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href="..">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="../theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href="..">Home</a></li>
+	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -59,11 +60,11 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
+        <h1><a href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
 	<div class="meta">
           <time datetime="2017-12-10T23:33:00+08:00">December 10, 2017</time>
           in <span class="categories">
-            <a href="/tag/chefwars.html">chefwars</a>,            <a href="/tag/gamedev.html">gamedev</a>,            <a href="/tag/mindcake.html">mindcake</a>,            <a href="/tag/postmortem.html">postmortem</a>          </span>
+            <a href="../tag/chefwars.html">chefwars</a>,            <a href="../tag/gamedev.html">gamedev</a>,            <a href="../tag/mindcake.html">mindcake</a>,            <a href="../tag/postmortem.html">postmortem</a>          </span>
 	</div>
         <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TL;DR</strong></p>
@@ -71,8 +72,33 @@
 <li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
 </ul>
 <hr />
-<p>I usually dreaded being asked how long a programming task …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Read on →</a> -->
+<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
+<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
+<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system in all my game development related projects and has helped us immensely in the development of our recent game, <a href="http://mindcakegames.com/">Chef Wars</a>.</p>
+<p>I'm sharing this in the hopes that it would help others too.</p>
+<h2 id="risk-adjusted-estimates">Risk Adjusted Estimates</h2>
+<p>The basic idea of this system is that for each task, an estimated time would be given along with a "confidence level". The lower the confidence the more padding is added automatically to the estimate for that task.</p>
+<p>It's a very simple system and is illustrated clearly in the image below:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th align="center">Estimate</th>
+<th align="center">Confidence</th>
+<th align="right">Risk-Adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task A</td>
+<td align="center">5</td>
+<td align="center">2</td>
+<td align="right">9.44</td>
+</tr>
+<tr>
+<td>Task B</td>
+<td align="center">8 …</td></tr></tbody></table>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -80,18 +106,24 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a></h1>
+        <h1><a href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a></h1>
 	<div class="meta">
           <time datetime="2017-12-06T00:02:00+08:00">December 06, 2017</time>
           in <span class="categories">
-            <a href="/tag/chefwars.html">chefwars</a>,            <a href="/tag/gamedev.html">gamedev</a>,            <a href="/tag/mindcake.html">mindcake</a>,            <a href="/tag/postmortem.html">postmortem</a>          </span>
+            <a href="../tag/chefwars.html">chefwars</a>,            <a href="../tag/gamedev.html">gamedev</a>,            <a href="../tag/mindcake.html">mindcake</a>,            <a href="../tag/postmortem.html">postmortem</a>          </span>
 	</div>
         <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TLDR</strong></p>
 <ul>
 <li>There is more to the saying that "premature optimization is the root of all evil".</li>
-<li>Instead of asking WHEN to optimize, it is more important to ask WHAT …</li></ul>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Read on →</a> -->
+<li>Instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize.</li>
+</ul>
+<hr />
+<p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
+<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built, but sadly progress was slow.</p>
+<p>I realized at this point that I was optimizing too prematurely. If I wanted to reach my milestones on time then I needed to change my approach. This means leaving the optimizations for later. When is later though? I figured that it makes sense to do it at the end when all the systems are in place.</p>
+<p>All went smoothly until we reached Open Beta. The game was reported to be sluggish and almost unplayable which signaled the need to start optimizing. While I was able to optimize some parts, there were some that I …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -99,19 +131,29 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="/chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a></h1>
+        <h1><a href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a></h1>
 	<div class="meta">
           <time datetime="2017-12-05T12:56:00+08:00">December 05, 2017</time>
           in <span class="categories">
-            <a href="/tag/chefwars.html">chefwars</a>,            <a href="/tag/gamedev.html">gamedev</a>,            <a href="/tag/mindcake.html">mindcake</a>,            <a href="/tag/postmortem.html">postmortem</a>          </span>
+            <a href="../tag/chefwars.html">chefwars</a>,            <a href="../tag/gamedev.html">gamedev</a>,            <a href="../tag/mindcake.html">mindcake</a>,            <a href="../tag/postmortem.html">postmortem</a>          </span>
 	</div>
         <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TLDR</strong></p>
 <ul>
 <li>All data in our game is contained in one excel file we call the "Universe".</li>
 <li>Prototypes can be done on the Universe excel file itself</li>
-<li>Iteration is easier …</li></ul>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="/chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
+<li>Iteration is easier as we only need to change one file.</li>
+<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
+</ul>
+<hr />
+<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
+<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
+<div class="codehilite"><pre><span></span><code>*This file definitely gives a hint on what type of guy Cliff is.*
+</code></pre></div>
+
+<p>Having a list of all the data that will be used in the game has helped us visualize the scope and the systems to be built, especially in making prototypes. One time Cliff made a simulation of the battle system using his Excel mastery. The universe data is fed into this simulation (i.e. competition level, recipe power) and the expected values are displayed (i.e. judging result, rewards amount). This mockup allowed us to see how the battles play out and made the whole thing easier for me to understand and implement in the engine.</p>
+<p>All the content of …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -126,5 +168,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>

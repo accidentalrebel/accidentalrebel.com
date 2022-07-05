@@ -13,20 +13,21 @@
 
   <meta name="description" content="Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates December 10, 2017 in chefwars,gamedev,mindcake,postmortem">
 
-  <link rel="canonical" href="/chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">
+  <link rel="canonical" href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">
 
-  <link href="/favicon.png" rel="icon">
+  <link href="./favicon.png" rel="icon">
 
+  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
-  <link href="/theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="/theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
+  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
 
   
 <meta name="twitter:card" content="summary">
-<meta property="og:url" content="/chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">
+<meta property="og:url" content="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">
 <meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estim">
@@ -41,23 +42,23 @@
     <div class="container" id="site-title">
       <div class="col-md-8 col-md-offset-2">
 	<h1>
-	  <a href="https://www.accidentalrebel.com">
+	  <a href=".">
 	    AccidentalRebel.com
 	  </a>
 	</h1>
 	<div id="profile">
 	  <div class="left">
-	    <img src="/theme/images/pic.png" />
+	    <img src="./theme/images/pic.png" />
 	  </div>
 	  <div class="right">
-	    My name is Karlo and I'm currently employed as a L2 SOC analyst. My current focus is on reverse-engineering and developing malware for research purposes.
+	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
 	  </div>
 	  <div class="clear"></div>
 	</div>
 	<div id="nav">
 	  <ul>
-	    <li><a href="https://www.accidentalrebel.com">Home</a></li>
-	    <!-- <li><a href="/pages/made.html">My Works</a></li> -->
+	    <li><a href=".">Home</a></li>
+	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
 	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
 	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
 	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
@@ -70,11 +71,11 @@
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
 	<article>
-          <h1><a href="/chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
+          <h1><a href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a></h1>
           <div class="meta">
             <time datetime="2017-12-10T23:33:00+08:00">December 10, 2017</time>
             in <span class="categories">
-              <a href="/tag/chefwars.html">chefwars</a>,              <a href="/tag/gamedev.html">gamedev</a>,              <a href="/tag/mindcake.html">mindcake</a>,              <a href="/tag/postmortem.html">postmortem</a>            </span>
+              <a href="./tag/chefwars.html">chefwars</a>,              <a href="./tag/gamedev.html">gamedev</a>,              <a href="./tag/mindcake.html">mindcake</a>,              <a href="./tag/postmortem.html">postmortem</a>            </span>
           </div>
         <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TL;DR</strong></p>
@@ -303,13 +304,13 @@
 	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
 	    /*
 	     var disqus_config = function () {
-	     this.page.url = ;  // Replace PAGE_URL with your page's canonical URL variable
+	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
 	     this.page.identifier = chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
 	     };
 	    */
 	    (function() { // DON'T EDIT BELOW THIS LINE
 		var d = document, s = d.createElement('script');
-		s.src = '/embed.js';
+		s.src = 'https://accidentalrebel.disqus.com//embed.js';
 		s.setAttribute('data-timestamp', +new Date());
 		(d.head || d.body).appendChild(s);
 	    })();
@@ -329,5 +330,14 @@
       </div>
     </footer>
 
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-55068085-2');
+    </script>
   </body>
 </html>
