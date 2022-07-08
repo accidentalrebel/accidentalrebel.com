@@ -15,7 +15,7 @@
 
   <link href="../favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
   <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
@@ -92,28 +92,7 @@
 <span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span><span class="w"></span>
 <span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span><span class="w"></span>
-<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The three parameters (x,y,z) to pass to the function</span><span class="w"></span>
-</code></pre></div>
-
-<p>This would allow us to call the <code>vec3_create</code> function like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nf">vec3_create</span><span class="w"> </span><span class="mf">1.1</span><span class="w"> </span><span class="mf">2.2</span><span class="w"> </span><span class="mf">3.3</span><span class="p">)</span><span class="w"></span>
-</code></pre></div>
-
-<hr />
-<h2 id="foreign-lambda-example_1">foreign-lambda* example</h2>
-<p>Let's bind another C function <code>Vec3Print</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">void</span><span class="w"> </span><span class="nf">Vec3Print</span><span class="p">(</span><span class="n">Vec3</span><span class="w"> </span><span class="n">v</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Vec3 to print: (%f, %f, %f)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">z</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
-</code></pre></div>
-
-<p>We could also use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda*</code></a> (Notice the asterisk). This is similar to <code>foreign-lambda</code> but accepts C code as a string.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_print</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda*</span><span class="w"></span>
-<span class="w">    </span><span class="nv">void</span><span class="w">                          </span><span class="c1">; The return type</span><span class="w"></span>
-<span class="w">    </span><span class="p">(((</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w"> </span><span class="nv">a0</span><span class="p">))</span><span class="w"> </span><span class="c1">; The parameter to pass, a pointer to a Vec3 object</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;Vec3Print …</span></code></pre></div>
+<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chicken-scheme-ffi-examples.html">Read on →</a> -->
       </article>
     </div>
@@ -131,10 +110,7 @@
         <p><p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
 <p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="../images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
 <p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
-<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different package managers.</p>
-<p>After a week of this I was finally able to get the engine working on all three platforms. To make sure others can be able to do the same, I also documented the steps which can now be read on <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki">the project's wiki</a>. </p>
-<p>I was surprised that the hardest one to get working was for Windows. Because I didn't want to create a separate build system that uses Visual Studio solution files, I had to find a simple way to make it work and that involved the use of an excellent building platform for Windows called <a href="https://www.msys2.org/">Msys2</a>. </p>
-<p>I …</p>
+<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../rebel-game-engine-now-works-on-different-platforms.html">Read on →</a> -->
       </article>
     </div>
@@ -153,8 +129,7 @@
 <p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
 <p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
 <p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="../images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
-<p>I recently got the idea of having Unity inform me when a script has finished reloading. Instead of informing me visually, I decided that it would also be better for it to play an audible beep sound. With this, I could use the time to close my eyes, relax, or stretch. Once it beeps I'll just open my eyes and I'm back to working again. Once it beeps I'll just open my eyes and I'm back to working again. It's such a simple thing but I feel has a good impact on my health.</p>
-<p>Here's the code that I use if you are interested. Note that this is an …</p>
+<p>I recently got the idea of having Unity inform …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../making-unity-beep-after-scripts-finish-reloading.html">Read on →</a> -->
       </article>
     </div>

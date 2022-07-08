@@ -15,7 +15,7 @@
 
   <link href="../favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
   <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
@@ -74,30 +74,7 @@
 <hr />
 <p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
 <p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
-<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system in all my game development related projects and has helped us immensely in the development of our recent game, <a href="http://mindcakegames.com/">Chef Wars</a>.</p>
-<p>I'm sharing this in the hopes that it would help others too.</p>
-<h2 id="risk-adjusted-estimates">Risk Adjusted Estimates</h2>
-<p>The basic idea of this system is that for each task, an estimated time would be given along with a "confidence level". The lower the confidence the more padding is added automatically to the estimate for that task.</p>
-<p>It's a very simple system and is illustrated clearly in the image below:</p>
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th align="center">Estimate</th>
-<th align="center">Confidence</th>
-<th align="right">Risk-Adjusted</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task A</td>
-<td align="center">5</td>
-<td align="center">2</td>
-<td align="right">9.44</td>
-</tr>
-<tr>
-<td>Task B</td>
-<td align="center">8 …</td></tr></tbody></table>
+<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Read on →</a> -->
       </article>
     </div>
@@ -120,9 +97,7 @@
 </ul>
 <hr />
 <p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
-<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built, but sadly progress was slow.</p>
-<p>I realized at this point that I was optimizing too prematurely. If I wanted to reach my milestones on time then I needed to change my approach. This means leaving the optimizations for later. When is later though? I figured that it makes sense to do it at the end when all the systems are in place.</p>
-<p>All went smoothly until we reached Open Beta. The game was reported to be sluggish and almost unplayable which signaled the need to start optimizing. While I was able to optimize some parts, there were some that I …</p>
+<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Read on →</a> -->
       </article>
     </div>
@@ -148,11 +123,7 @@
 <hr />
 <p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
 <p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
-<div class="codehilite"><pre><span></span><code>*This file definitely gives a hint on what type of guy Cliff is.*
-</code></pre></div>
-
-<p>Having a list of all the data that will be used in the game has helped us visualize the scope and the systems to be built, especially in making prototypes. One time Cliff made a simulation of the battle system using his Excel mastery. The universe data is fed into this simulation (i.e. competition level, recipe power) and the expected values are displayed (i.e. judging result, rewards amount). This mockup allowed us to see how the battles play out and made the whole thing easier for me to understand and implement in the engine.</p>
-<p>All the content of …</p>
+<div class="codehilite"><pre><span></span><code>*This file definitely gives a hint on what type of guy Cliff is …</code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
       </article>
     </div>

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - cybersecurity</title><link href="http://www.accidentalrebel.com/" rel="alternate"></link><link href="http://www.accidentalrebel.com/feeds/cybersecurity.atom.xml" rel="self"></link><id>http://www.accidentalrebel.com/</id><updated>2020-08-01T11:07:00+08:00</updated><entry><title>Study notes: MAC Spoofing</title><link href="http://www.accidentalrebel.com/study-notes--mac-spoofing.html" rel="alternate"></link><published>2020-08-01T11:07:00+08:00</published><updated>2020-08-01T11:07:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2020-08-01:/study-notes--mac-spoofing.html</id><summary type="html">&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Study notes are my personal research notes on certain topics that interests me.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - cybersecurity</title><link href="https://www.accidentalrebel.com/" rel="alternate"></link><link href="https://www.accidentalrebel.com/feeds/cybersecurity.atom.xml" rel="self"></link><id>https://www.accidentalrebel.com/</id><updated>2020-08-01T11:07:00+08:00</updated><entry><title>Study notes: MAC Spoofing</title><link href="https://www.accidentalrebel.com/study-notes--mac-spoofing.html" rel="alternate"></link><published>2020-08-01T11:07:00+08:00</published><updated>2020-08-01T11:07:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2020-08-01:/study-notes--mac-spoofing.html</id><summary type="html">&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Study notes are my personal research notes on certain topics that interests me.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.&lt;/p&gt;
+&lt;p&gt;There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.&lt;/p&gt;
+&lt;h2 id="changing-mac-address-via-ifconfig"&gt;Changing MAC Address via ifconfig&lt;/h2&gt;
+&lt;p&gt;In Linux we could use &lt;code&gt;ifconfig&lt;/code&gt; to change the MAC address.&lt;/p&gt;
+&lt;p&gt;To view the current MAC address:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The current MAC address is &lt;code&gt;08:00 …&lt;/code&gt;&lt;/p&gt;</summary><content type="html">&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Study notes are my personal research notes on certain topics that interests me.
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.&lt;/p&gt;
@@ -11,7 +22,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The current MAC address is &lt;code&gt;08:00:27:59:fb:fa&lt;/code&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="study-notes--mac-spoofing-01" src="http://www.accidentalrebel.com/images/study-notes--mac-spoofing-01.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="study-notes--mac-spoofing-01" src="https://www.accidentalrebel.com/images/study-notes--mac-spoofing-01.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Let's say we want to change the MAC address of our interface (eth0) to &lt;code&gt;00:11:22:33:44:55&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;First, deactivate the interface.&lt;/p&gt;
 &lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 down
@@ -26,38 +37,7 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Run &lt;code&gt;ifconfig&lt;/code&gt; again to see the changes.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="study-notes--mac-spoofing-02" src="http://www.accidentalrebel.com/images/study-notes--mac-spoofing-02.png" /&gt;&lt;/p&gt;
-&lt;h3 id="note"&gt;NOTE:&lt;/h3&gt;
-&lt;p&gt;These changes are not permanent. The MAC address will return to the original one when the system is restarted!&lt;/p&gt;
-&lt;h2 id="changing-the-mac-address-via-macchanger"&gt;Changing the MAC address via MACChanger&lt;/h2&gt;
-&lt;p&gt;There are various tools that allows easy changing …&lt;/p&gt;</summary><content type="html">&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Study notes are my personal research notes on certain topics that interests me.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.&lt;/p&gt;
-&lt;p&gt;There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.&lt;/p&gt;
-&lt;h2 id="changing-mac-address-via-ifconfig"&gt;Changing MAC Address via ifconfig&lt;/h2&gt;
-&lt;p&gt;In Linux we could use &lt;code&gt;ifconfig&lt;/code&gt; to change the MAC address.&lt;/p&gt;
-&lt;p&gt;To view the current MAC address:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;The current MAC address is &lt;code&gt;08:00:27:59:fb:fa&lt;/code&gt;:&lt;/p&gt;
-&lt;p&gt;&lt;img alt="study-notes--mac-spoofing-01" src="http://www.accidentalrebel.com/images/study-notes--mac-spoofing-01.png" /&gt;&lt;/p&gt;
-&lt;p&gt;Let's say we want to change the MAC address of our interface (eth0) to &lt;code&gt;00:11:22:33:44:55&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;First, deactivate the interface.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 down
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Then we specify the mac address that we want to change to.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 hw ether &lt;span class="m"&gt;00&lt;/span&gt;:11:22:33:44:55
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Reactive the interface:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 up
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-
-&lt;p&gt;Run &lt;code&gt;ifconfig&lt;/code&gt; again to see the changes.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="study-notes--mac-spoofing-02" src="http://www.accidentalrebel.com/images/study-notes--mac-spoofing-02.png" /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="study-notes--mac-spoofing-02" src="https://www.accidentalrebel.com/images/study-notes--mac-spoofing-02.png" /&gt;&lt;/p&gt;
 &lt;h3 id="note"&gt;NOTE:&lt;/h3&gt;
 &lt;p&gt;These changes are not permanent. The MAC address will return to the original one when the system is restarted!&lt;/p&gt;
 &lt;h2 id="changing-the-mac-address-via-macchanger"&gt;Changing the MAC address via MACChanger&lt;/h2&gt;

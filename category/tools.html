@@ -15,7 +15,7 @@
 
   <link href="../favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
   <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
@@ -82,8 +82,7 @@
 <li>Ability to click on nodes and then update the visual map</li>
 <li>Ability to search not just by technique, but also by other categories</li>
 </ul>
-<p>I also plan on releasing a live demo of the tool very soon in the hopes of getting feedback from the community. </p>
-<p>For now, if you are interested in the project, you could visit the <a href="https://github.com/accidentalrebel/vATTACK">tool's Github project page</a> or contact me for any comments or suggestions.</p>
+<p>I also plan on releasing a live demo of the tool very soon in the …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../new-tool-preview-vattack.html">Read on →</a> -->
       </article>
     </div>
@@ -103,20 +102,7 @@
 <p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
 <p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
 <h2 id="shcode2exe">shcode2exe</h2>
-<p>While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine along with other features as listed below:</p>
-<ul>
-<li>Can accept a shellcode blob or string (String format <code>\x5e\x31</code>)</li>
-<li>Can target both 32bit or 64bit Windows architecture. </li>
-<li>Cross platform. Works on Linux or Windows.</li>
-<li>No dependency on Wine when running on Linux</li>
-<li>Tested working with Python v3.3 and above</li>
-<li>Tested working on Windows 7 (Non SP1) and above</li>
-</ul>
-<h2 id="usage">Usage</h2>
-<p>Here's the help message for the tool:</p>
-<div class="codehilite"><pre><span></span><code><span class="go">usage: shcode2exe.py [-h] [-o OUTPUT] [-s] [-a {32,64}] input</span>
-
-<span class="go">Compile a binary shellcode …</span></code></pre></div>
+<p>While similar in …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../introducing-shcode2exe.html">Read on →</a> -->
       </article>
     </div>

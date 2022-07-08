@@ -15,7 +15,7 @@
 
   <link href="../favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
   <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
@@ -77,27 +77,7 @@
 <div class="codehilite"><pre><span></span><code>$ ifconfig
 </code></pre></div>
 
-<p>The current MAC address is <code>08:00:27:59:fb:fa</code>:</p>
-<p><img alt="study-notes--mac-spoofing-01" src="../images/study-notes--mac-spoofing-01.png" /></p>
-<p>Let's say we want to change the MAC address of our interface (eth0) to <code>00:11:22:33:44:55</code>.</p>
-<p>First, deactivate the interface.</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 down
-</code></pre></div>
-
-<p>Then we specify the mac address that we want to change to.</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 hw ether <span class="m">00</span>:11:22:33:44:55
-</code></pre></div>
-
-<p>Reactive the interface:</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig eth0 up
-</code></pre></div>
-
-<p>Run <code>ifconfig</code> again to see the changes.</p>
-<p><img alt="study-notes--mac-spoofing-02" src="../images/study-notes--mac-spoofing-02.png" /></p>
-<h3 id="note">NOTE:</h3>
-<p>These changes are not permanent. The MAC address will return to the original one when the system is restarted!</p>
-<h2 id="changing-the-mac-address-via-macchanger">Changing the MAC address via MACChanger</h2>
-<p>There are various tools that allows easy changing …</p>
+<p>The current MAC address is <code>08:00 …</code></p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../study-notes--mac-spoofing.html">Read on →</a> -->
       </article>
     </div>

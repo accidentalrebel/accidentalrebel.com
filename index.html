@@ -15,7 +15,7 @@
 
   <link href="./favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
   <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
@@ -60,6 +60,31 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a></h1>
+	<div class="meta">
+          <time datetime="2022-07-08T12:11:00+08:00">July 08, 2022</time>
+          in <span class="categories">
+            <a href="./tag/evasion.html">evasion</a>,            <a href="./tag/assembly.html">assembly</a>,            <a href="./tag/av.html">av</a>          </span>
+	</div>
+        <p><p>One of the features I implemented for my <a href="https://github.com/accidentalrebel/RATwurst">Remote Access Tool</a> was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. </p>
+<p>This was over a year ago. I decided to revisit this feature to try and understand it better and find out if it is actually effective.</p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>In this two-part blog post I will look into the following:</p>
+<ul>
+<li>Hiding argument strings</li>
+<li>Hiding API call strings</li>
+</ul>
+<p>THe one you reading now is about the first one. I will be explaining how it's done in C and later convert it to x64 Windows Assembly so we can better understand what's happening under the hood.</p>
+<h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
+<p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./string-av-evasion-in-x64-assembly-part-1.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./converting-a-malware-dropper-to-x64-assembly.html">Converting a malware dropper to x64 assembly</a></h1>
 	<div class="meta">
           <time datetime="2022-07-03T09:18:00+08:00">July 03, 2022</time>
@@ -70,40 +95,8 @@
 <p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
 <h2 id="what-to-expect">What to expect</h2>
 <p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
-<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better job of doing that. And as for the assembler, I'll be using <a href="https://www.nasm.us/">nasm</a> because this is the one I'm most familiar with.</p>
-<blockquote>
-<p><strong>Disclaimer:</strong> I am not an expert in any of these topics. I'm just someone who learned things and wish to share it to others. If I'm wrong about anything feel free to point it out. </p>
-</blockquote>
-<h2 id="credits">Credits</h2>
-<p>The malware dropper that we'll be converting is made by <a href="https://twitter.com/sektor7net">@reenz0h</a>. I found it in <a href="https://github.com/kymb0/Malware_learns">kymb0's repository</a> and I learned that it's a part of the <a href="https://institute.sektor7.net/">Red Team Operator course by Sektor7</a>. I've read good things about the course and I plan …</p>
+<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./converting-a-malware-dropper-to-x64-assembly.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./the-password-supplied-to-the-desired-state-configuration-resource-msft_xaddomain-is-not-valid.html">The password supplied to the Desired State Configuration resource MSFT_xADDomain is not valid</a></h1>
-	<div class="meta">
-          <time datetime="2022-06-25T17:16:00+08:00">June 25, 2022</time>
-          in <span class="categories">
-            <a href="./tag/azure.html">azure</a>,            <a href="./tag/error.html">error</a>,            <a href="./tag/troubleshooting.html">troubleshooting</a>          </span>
-	</div>
-        <p><p>I wanted to quickly setup an Azure AD environment so I tried using this <a href="https://github.com/Azure/azure-quickstart-templates/tree/master/application-workloads/active-directory/active-directory-new-domain">Azure quickstart template</a>.</p>
-<p>The resources were being created properly until I reached the part where the AD Forest was being created. The error that popped up was this:</p>
-<div class="codehilite"><pre><span></span><code>{<span class="s2">&quot;</span><span class="s">code</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">DeploymentFailed</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">message</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">At least one resource deployment operation failed. Please list deployment operations for details. Please see https://aka.ms/DeployOperations for usage details.</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">details</span><span class="s2">&quot;</span>:[{<span class="s2">&quot;</span><span class="s">code</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">VMExtensionProvisioningError</span><span class="s2">&quot;</span>,<span class="s2">&quot;</span><span class="s">message</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="s">VM has reported a failure when processing extension &#39;CreateADForest&#39;. Error message: \</span><span class="s2">&quot;</span><span class="nv">DSC</span> <span class="nv">Configuration</span> <span class="s1">&#39;</span><span class="s">CreateADPDCf</span><span class="s1">&#39;</span> <span class="nv">completed</span> <span class="nv">with</span> <span class="nv">error</span><span class="ss">(</span><span class="nv">s</span><span class="ss">)</span>. <span class="nv">Following</span> <span class="nv">are</span> <span class="nv">the</span> <span class="nv">first</span> <span class="nv">few</span>: <span class="nv">The</span> <span class="nv">password</span> <span class="nv">supplied</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">Desired</span> <span class="nv">State</span> <span class="nv">Configuration</span> <span class="nv">resource</span> <span class="nv">MSFT_xADDomain</span> <span class="nv">is</span> <span class="nv">not</span> <span class="nv">valid</span>. <span class="nv">The</span> <span class="nv">password</span> <span class="nv">cannot</span> <span class="nv">be</span> <span class="nv">null</span> <span class="nv">or</span> <span class="nv">empty</span>. <span class="nv">The</span> <span class="nv">SendConfigurationApply</span> <span class="nv">function</span> <span class="nv">did</span> <span class="nv">not</span> <span class="nv">succeed</span>.\<span class="s2">&quot;</span><span class="s">\r</span><span class="se">\n</span><span class="s">\r</span><span class="se">\n</span><span class="s">More information on troubleshooting is available at https://aka.ms/VMExtensionDSCWindowsTroubleshoot </span><span class="s2">&quot;</span>}]}
-</code></pre></div>
-
-<p>Searching around for a solution I chanced upon <a href="https://github.com/Azure/azure-quickstart-templates/issues/12538">this Github issue</a> from the same repository.</p>
-<p>A user commented that:</p>
-<blockquote>
-<p>"This issue seems to be caused by a security update on Windows and affects templates which use the Azure DSC extension to pass credentials (so probably many)."</p>
-<p>"As a quick workaround, I hardcode a previous version of the Windows Server images which do not cause this issue (instead of using latest)."</p>
-</blockquote>
-<p>I looked at the fixes that the user did. It wasn't exactly for the error I am experiencing, but it was worth trying out.</p>
-<p>What I had to do was to look for an old version of the VM image for WindowsServer that is …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./the-password-supplied-to-the-desired-state-configuration-resource-msft_xaddomain-is-not-valid.html">Read on →</a> -->
       </article>
     </div>
   </div>
@@ -123,12 +116,7 @@
 <blockquote>
 <p>Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host.</p>
 </blockquote>
-<p>So from the question, I knew that the download happened after the reverse-shell was run. And so I changed the start date timestamp to <code>Jun 22, 2021 @ 07:41:56.000</code>. I also knew that because there was a downloaded file, there would definitely be "NetworkConnection" and "FileCreate" events that would happen afterward. And so, the query I've created is this:</p>
-<blockquote>
-<p>event_type:FileCreate OR event_type:NetworkConnection</p>
-</blockquote>
-<p><img alt="cyber-corp-case-2-writeup-part-3-01" src="./images/cyber-corp-case-2-writeup-part-3-01.png" /></p>
-<p>The result shows <code>cmd.exe</code> creating a <code>certutil.exe</code> process. And the reason why this is suspicious is that <code>certutil.exe</code> can be used as an alternative way of downloading files from an external source. You can …</p>
+<p>So from the question, I …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./cyber-corp-case-2-writeup-part-3.html">Read on →</a> -->
       </article>
     </div>
@@ -154,15 +142,7 @@
 <p>We could easily see a DNS record being queried, which is our answer to this question.</p>
 <h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
 <blockquote>
-<p>Question 7. The first file downloaded (as a result of executing the code in question 5) contained encoded executable code (PE), which after downloading was recorded in the registry. Specify an MD5 hash of the original representation of that code (PE).</p>
-</blockquote>
-<p>I changed the query to <code>registry</code> hoping to see what events it will give me. Surprisingly, the very first one seems to be what we need. </p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-02" src="./images/cyber-corp-case-2-writeup-part-2-02.png" /></p>
-<p>Looking at this log I saw that it has a base64 encoded data under <code>reg_value_data</code> which is partially listed below:</p>
-<blockquote>
-<p>H4sIAAAAAAAEAO1YX0wcRRz+7XEUCuWOkhCJGl3IRiGpV...</p>
-</blockquote>
-<p>I sent this data to <a href="https://gchq.github.io/CyberChef">CyberChef</a> for decoding. Thankfully the <code>rule_name</code> field also informed me that the data is "gzipped …</p>
+<p>Question 7. The first file downloaded (as a result of executing the …</p></blockquote>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./cyber-corp-case-2-writeup-part-2.html">Read on →</a> -->
       </article>
     </div>
@@ -184,11 +164,7 @@
 <blockquote>
 <p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
 </blockquote>
-<p>So the question tells us that the attacker used WMI subscription to gain persistence in our network.</p>
-<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
-<p><img alt="cyber-corp-case-2-writeup-01" src="./images/cyber-corp-case-2-writeup-01.png" /></p>
-<h2 id="testing-wmi-persistence-in-my-homelab">Testing WMI Persistence in my homelab</h2>
-<p>Now that I understand the concept I then checked <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md">the technique's entry</a> in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about …</p>
+<p>So the question tells us that …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Read on →</a> -->
       </article>
     </div>
@@ -219,8 +195,7 @@
 <li>Ability to click on nodes and then update the visual map</li>
 <li>Ability to search not just by technique, but also by other categories</li>
 </ul>
-<p>I also plan on releasing a live demo of the tool very soon in the hopes of getting feedback from the community. </p>
-<p>For now, if you are interested in the project, you could visit the <a href="https://github.com/accidentalrebel/vATTACK">tool's Github project page</a> or contact me for any comments or suggestions.</p>
+<p>I also plan on releasing a live demo of the tool very soon in the …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./new-tool-preview-vattack.html">Read on →</a> -->
       </article>
     </div>
@@ -247,13 +222,7 @@
 <span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
 </code></pre></div>
 
-<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the length of the entered string. If you think about it, this means that it doesn't matter how long the string that the user inputs. What's important is the content.</p>
-<p>To find out what the correct content the program expects, we need to look at the other block of code.</p>
-<p><img alt="ioli-crackme-0x04-03" src="./images/ioli-crackme-0x04-03.png" /></p>
-<p>The code uses the same approach as the previous challenge where <code>var_counter</code> is used to loop through individual characters in the input string.</p>
-<p>The part that is new is the use of the <code>_sscanf</code> function which is defined as:</p>
-<blockquote>
-<p>"sscanf reads data from s and stores …</p></blockquote>
+<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x04.html">Read on →</a> -->
       </article>
     </div>
@@ -272,14 +241,7 @@
 <p>Now I know better.</p>
 <p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
 <p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
-<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity products.</p>
-<h1 id="the-lab">The Lab</h1>
-<p>The network diagram below shows the current implementation of my lab. I will be discussing each part to give an idea of their purpose (<a href="./images/building-my-virtual-cybersecurity-home-lab-00.png">Click here for a bigger version</a>).</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-01" src="./images/building-my-virtual-cybersecurity-home-lab-01.png" /></p>
-<p>At the heart of the network is a firewall running <a href="https://www.pfsense.org/">pfSense</a>. Its purpose is to ensure that each sub-network is separated and protected, and also to protect my virtual host from any malware outbreaks. This machine also serves as a DHCP and NTP server to all the machines in the network.</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-13" src="./images/building-my-virtual-cybersecurity-home-lab-13.png" /></p>
-<h1 id="the-target-network">The Target Network</h1>
-<p>On the right side of the diagram is the "Target" network where workstations …</p>
+<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./building-my-virtual-cybersecurity-home-lab.html">Read on →</a> -->
       </article>
     </div>
@@ -297,16 +259,7 @@
         <p><p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
 <p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
 <p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
-<p>Having learned how to do runtime DLL loading myself I decided to give it a try. And of course, a RAT is perfect for this.</p>
-<p><img alt="making-a-rat-01" src="./images/making-a-rat-01.png" /></p>
-<h2 id="planning-the-ratchitecture">Planning the RATchitecture</h2>
-<p>A lot of famous RATs are packed with features like the ability to log keystrokes, take screenshots, and turn on a webcam. I just want mine to be simple and have basic functionality like:</p>
-<ul>
-<li>Execute command line commands remotely</li>
-<li>Download a file to the client</li>
-<li>Exfiltrate data via file upload</li>
-</ul>
-<p>You can already do a lot of things even with the above basic functions. You can download a payload to the client, run it via remote command and then upload the results …</p>
+<p>Having learned how to do runtime DLL loading myself I …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./making-a-rat.html">Read on →</a> -->
       </article>
     </div>
@@ -329,11 +282,7 @@
 <li>Clicking on the ad takes the user to a fake Facebook login page hosted on <em>blogger.com</em></li>
 <li>Login page then sends phished username and passwords to a PHP file hosted on <em>000webhost</em></li>
 </ul>
-<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's not that hard to find as long as you know where to look.</p>
-<p>What's scary is that the size of this text file kept on getting bigger. I knew I had to act quickly.</p>
-<h2 id="stopping-the-scammers">Stopping the scammers</h2>
-<p>Unfortunately, with phishing sites like these, there's not much we could do but report it to the relevant hosting providers. The problem is that sometimes it may take some time before the site gets reviewed, which is excruciating because the longer the wait, the more people fall victim. Some might even just ignore your report altogether!</p>
-<p>I reported the fake login page to …</p>
+<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./finding-phished-passwords-on-a-scam-site.html">Read on →</a> -->
       </article>
     </div>

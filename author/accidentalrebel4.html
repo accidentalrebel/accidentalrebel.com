@@ -15,7 +15,7 @@
 
   <link href="../favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
   <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
@@ -70,8 +70,7 @@
 <p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
 <p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
 <p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
-<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text proxy</a> as a external editor and then having that application call Emacs with the correct line number. I was not able to make it work but the idea fascinated me. There was also one that involved using Mac OS X's Automator where you <a href="https://stackoverflow.com/a/1857220">wrap a shell script as an automator app</a> and you set that as the external editor. Didn't work either but it did teach me about Automator and it's future possible uses for my environment.</p>
-<p>Thankfully, there was one solution that worked and it involved creating a .cs file and setting up a function with OnOpenAssetAttribute callback attribute …</p>
+<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text …</a></p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../opening-unity-script-files-in-emacs.html">Read on →</a> -->
       </article>
     </div>
@@ -94,30 +93,7 @@
 <hr />
 <p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
 <p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
-<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system in all my game development related projects and has helped us immensely in the development of our recent game, <a href="http://mindcakegames.com/">Chef Wars</a>.</p>
-<p>I'm sharing this in the hopes that it would help others too.</p>
-<h2 id="risk-adjusted-estimates">Risk Adjusted Estimates</h2>
-<p>The basic idea of this system is that for each task, an estimated time would be given along with a "confidence level". The lower the confidence the more padding is added automatically to the estimate for that task.</p>
-<p>It's a very simple system and is illustrated clearly in the image below:</p>
-<table>
-<thead>
-<tr>
-<th>Task</th>
-<th align="center">Estimate</th>
-<th align="center">Confidence</th>
-<th align="right">Risk-Adjusted</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task A</td>
-<td align="center">5</td>
-<td align="center">2</td>
-<td align="right">9.44</td>
-</tr>
-<tr>
-<td>Task B</td>
-<td align="center">8 …</td></tr></tbody></table>
+<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Read on →</a> -->
       </article>
     </div>
@@ -140,9 +116,7 @@
 </ul>
 <hr />
 <p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
-<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built, but sadly progress was slow.</p>
-<p>I realized at this point that I was optimizing too prematurely. If I wanted to reach my milestones on time then I needed to change my approach. This means leaving the optimizations for later. When is later though? I figured that it makes sense to do it at the end when all the systems are in place.</p>
-<p>All went smoothly until we reached Open Beta. The game was reported to be sluggish and almost unplayable which signaled the need to start optimizing. While I was able to optimize some parts, there were some that I …</p>
+<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Read on →</a> -->
       </article>
     </div>
@@ -168,11 +142,7 @@
 <hr />
 <p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
 <p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
-<div class="codehilite"><pre><span></span><code>*This file definitely gives a hint on what type of guy Cliff is.*
-</code></pre></div>
-
-<p>Having a list of all the data that will be used in the game has helped us visualize the scope and the systems to be built, especially in making prototypes. One time Cliff made a simulation of the battle system using his Excel mastery. The universe data is fed into this simulation (i.e. competition level, recipe power) and the expected values are displayed (i.e. judging result, rewards amount). This mockup allowed us to see how the battles play out and made the whole thing easier for me to understand and implement in the engine.</p>
-<p>All the content of …</p>
+<div class="codehilite"><pre><span></span><code>*This file definitely gives a hint on what type of guy Cliff is …</code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
       </article>
     </div>
@@ -195,14 +165,7 @@
 <span class="s">not work on my end so this one is a temporary solution.</span>
 
 <span class="s">This function is called from within the simpleclip package when copy </span>
-<span class="s">or bgcopy command is issued.&quot;</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="nf">start-process</span><span class="w"> </span><span class="s">&quot;cmd&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="s">&quot;cmd.exe&quot;</span><span class="w"> </span><span class="s">&quot;/C&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;echo &quot;</span><span class="w"> </span><span class="p">(</span><span class="nv">replace-regexp-in-string</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="s">&quot;\r&quot;</span><span class="w"> </span><span class="nv">str-val</span><span class="p">)</span><span class="w"> </span><span class="s">&quot; | clip.exe&quot;</span><span class="p">)))</span><span class="w"></span>
-</code></pre></div>
-
-<p>It works quite nicely especially after integrating it with simpleclip. This would do for now until I find a better solution.</p>
-<blockquote>
-<p><strong>EDIT (2017-10-01):</strong> Turns out the original code could not copy a region with multiple lines due to the difference in carriage return characters. This is now fixed with <code>(replace-regexp-in-string "\n" "\r" str-val)</code>.</p>
-</blockquote>
+<span class="s">or bgcopy …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Read on →</a> -->
       </article>
     </div>
@@ -234,11 +197,7 @@
 <ul>
 <li>First, it checks if the current buffer is in org-journal-mode</li>
 <li>Then it gets the headline text and entry texts</li>
-<li>It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to populate the template. (Also notice that it takes the org-journal buffer name plus time as the blog post's org file name. This way I don't have to specify it.)</li>
-<li>It then inserts the entry-text at the end of the buffer.</li>
-</ul>
-<p>From here I am free to edit, commit, then publish.</p>
-<p>It's working great. As proof this post you are reading right now has been made with the code above.</p>
+<li>It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to …</li></ul>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../converting-org-journal-entry-to-org-page-post.html">Read on →</a> -->
       </article>
     </div>
@@ -292,10 +251,7 @@
 </code></pre></div>
 
 <p>To this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup&quot;</span><span class="p">}}}}}</span><span class="w"></span>
-</code></pre></div>
-
-<p>It works for my current needs but have not fully tested it yet. It works for emacs lisp buffers too.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../minifying-buffer-contents-in-emacs.html">Read on →</a> -->
       </article>
     </div>

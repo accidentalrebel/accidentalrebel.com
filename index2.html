@@ -15,7 +15,7 @@
 
   <link href="./favicon.png" rel="icon">
 
-  <link href="http://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
+  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
 
   <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
   <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
@@ -72,9 +72,7 @@
 <p>The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.</p>
 <p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
 <p>The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled.</p>
-<p>This new environment is where the document would trigger once double-clicked. After a bit of loading, a pop-up would later appear greeting the analyst with congratulations (this is a stand-in for a malicious payload for this challenge), but of course, it is clear that we are not done yet.</p>
-<p><img alt="emprisa-maldoc-writeup-01" src="./images/emprisa-maldoc-writeup-01.png" /></p>
-<p>Tools such as <a href="https://processhacker.sourceforge.io/">Process Hacker</a> will reveal a new process named <code>EQNEDT32.EXE</code> getting spawned right after opening the document. Those who have read through the CVE details would know that this is the expected behavior, as the vulnerability uses this process to run malicious code. In this case, the exploit downloads a file …</p>
+<p>This new environment …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./emprisa-maldoc-writeup..html">Read on →</a> -->
       </article>
     </div>
@@ -94,13 +92,7 @@
 <h1 id="i-was-just-curious-i-swear">I was just curious, I swear!</h1>
 <p>I wanted to see the phishing site for myself but I was unlucky and did not get tagged by anyone. So I reached out to people who did and I eventually got to this page shown below:</p>
 <p><img alt="checking-the-fb-phishing-site-01" src="./images/checking-the-fb-phishing-site-01.png" /></p>
-<p>To a trained eye, one could easily see the obvious red flags. But how can one notice them if there is a very attention-catching image in the middle beckoning to be clicked? It's a very simple tactic yet very effective. Clicking this link leads to an external website with an even more tantalizing image masquerading as a video. </p>
-<p><img alt="checking-the-fb-phishing-site-03" src="./images/checking-the-fb-phishing-site-03.png" /></p>
-<p>Clicking play on that video would then lead to a fake Facebook login page. We all know what's next after that. </p>
-<p><img alt="checking-the-fb-phishing-site-06" src="./images/checking-the-fb-phishing-site-06.png" /></p>
-<p>Of course, the very best course of action when a phishing site is discovered is to report it. I, however, was curious so I decided to poke around first.</p>
-<h1 id="the-poking-begins">The poking begins</h1>
-<p>Using my knowledge in OSINT (Open Source Intelligence) and pentesting, I poked around to …</p>
+<p>To a trained eye, one could easily see the obvious red flags. But how can one notice them if there is a very attention-catching image …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./investigating-an-fb-phishing-site.html">Read on →</a> -->
       </article>
     </div>
@@ -118,11 +110,7 @@
         <p><p>I was inspired to make my own CTF challenge after finishing <a href="{filename}/maldoc101-writeup-part-1">Maldoc101</a> found at <a href="https://cyberdefenders.org/">Cyberdefenders.org</a>. The challenge I made is called <a href="https://cyberdefenders.org/labs/56">Emprisa Maldoc</a> and it is now up on their website. </p>
 <p>Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge.</p>
 <p><img alt="the-emprisa-maldoc-challenge-01" src="./images/the-emprisa-maldoc-challenge-01.png" /></p>
-<p>The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open source intelligence, examining shellcodes, and debugging processes. </p>
-<p>I don't want to spoil too much but if you are for it, you can give it a go <a href="https://cyberdefenders.org/labs/51">here</a>. It was hella fun to make and I do hope that it is also as fun to solve!</p>
-<hr />
-<p>Official write-up with hints coming soon.</p>
-<p>I would like to extend my thanks to the team behind CyberDefenders.org. They accepted my submission, reviewed it, and worked with me in improving it. And also to <a href="https://twitter.com/jstrosch">Josh Stroschein</a> for making Maldoc101 and being kind enough to entertain me with my questions related to making challenges.</p>
+<p>The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./the-emprisa-maldoc-challenge.html">Read on →</a> -->
       </article>
     </div>
@@ -145,11 +133,7 @@
 <p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
 <p><img alt="ioli-crackme-0x03-02" src="./images/ioli-crackme-0x03-02.png" /></p>
 <h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
-<p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping back. It seems we have a <em>loop</em> here that we could investigate.</p>
-<p><img alt="ioli-crackme-0x03-03" src="./images/ioli-crackme-0x03-03.png" /></p>
-<p>If we look at the input that the function takes we will find out that the strings that are being passed from the <code>_test</code> function are <code>Lqydolg#Sdvvzrug$</code> and <code>Sdvvzrug#RN$$$#=,</code> for the <em>failure</em> and <em>success</em> messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.</p>
-<h1 id="discovering-the-cipher">Discovering the cipher</h1>
-<p>The best way to discover the cipher used is to step through the code. We can do it with both static or dynamic …</p>
+<p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x03.html">Read on →</a> -->
       </article>
     </div>
@@ -170,20 +154,7 @@
 <h3 id="name">Name</h3>
 <p><a href="https://cyberdefenders.org/labs/51">MalDoc101 - Malicious Document</a></p>
 <h3 id="description">Description</h3>
-<p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended to show how you can often times perform quick analysis to extract important IOCs. The focus of this exercise is on static techniques for analysis.</p>
-<h3 id="suggested-tools">Suggested Tools</h3>
-<ul>
-<li>REMnux Virtual Machine (remnux.org)</li>
-<li>Terminal/Command prompt w/ Python installed</li>
-<li>Oledump</li>
-<li>Text editor</li>
-</ul>
-<h2 id="the-easy-questions">The easy questions</h2>
-<p>The first question seems very easy. The <em>suggested tools</em> section above also gives us an idea how to approach this.</p>
-<blockquote>
-<p>What streams contain macros in this document? (comma-separated, ascending).</p>
-</blockquote>
-<p><a href="https://blog.didierstevens.com/programs/oledump-py/">oledump.py</a> is a tool made by <a href="https://blog.didierstevens.com/about/">Didier Stevens</a> that allows the analysis of data streams found in OLE files such as MS Office documetns. Running the …</p>
+<p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./maldoc101-writeup-part-1.html">Read on →</a> -->
       </article>
     </div>
@@ -203,13 +174,7 @@
 <p>After the first two challenges I kinda know what to expect already so I skipped running the program and immediately loaded it in IDA.</p>
 <p><img alt="ioli-crackme-0x02-01" src="./images/ioli-crackme-0x02-01.png" /></p>
 <p>So the lines leading to the comparison command now looks more complicated than before. We could easily see that there are some computations that happens thanks to the presence of <code>add</code> and <code>imul</code>. Before those, we have two values (<code>5Ah</code> and <code>1ECh</code>) which we can easily guess are the values that will be worked on by these arithmetic functions.</p>
-<p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which results in a value of <code>246h</code>.</p>
-<p>After that we see the line <code>imul eax, [ebp+var_8]</code>, which if you follow the sequence closely effectively multiplies <code>246h</code> by itself, resulting in a value of <code>52B24h</code>.</p>
-<p>Convert <code>52B24h</code> to decimal equates to <code>338724</code>, which is unsprisingly the password that we need.</p>
-<p><img alt="ioli-crackme-0x02-02" src="./images/ioli-crackme-0x02-02.png" /></p>
-<h1 id="confirming-via-dynamic-analysis">Confirming via dynamic analysis</h1>
-<p>What we did above is that we used static analysis to inspect the program line by line to determine the final computed password value. Let's use dynamic analysis and step through the code to see how our data is manipulated in memory during this process.</p>
-<p>Let's …</p>
+<p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x02.html">Read on →</a> -->
       </article>
     </div>
@@ -229,20 +194,7 @@
 <p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
 <p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
 <h2 id="shcode2exe">shcode2exe</h2>
-<p>While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine along with other features as listed below:</p>
-<ul>
-<li>Can accept a shellcode blob or string (String format <code>\x5e\x31</code>)</li>
-<li>Can target both 32bit or 64bit Windows architecture. </li>
-<li>Cross platform. Works on Linux or Windows.</li>
-<li>No dependency on Wine when running on Linux</li>
-<li>Tested working with Python v3.3 and above</li>
-<li>Tested working on Windows 7 (Non SP1) and above</li>
-</ul>
-<h2 id="usage">Usage</h2>
-<p>Here's the help message for the tool:</p>
-<div class="codehilite"><pre><span></span><code><span class="go">usage: shcode2exe.py [-h] [-o OUTPUT] [-s] [-a {32,64}] input</span>
-
-<span class="go">Compile a binary shellcode …</span></code></pre></div>
+<p>While similar in …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./introducing-shcode2exe.html">Read on →</a> -->
       </article>
     </div>
@@ -273,22 +225,7 @@
 <span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span><span class="w"></span>
 </code></pre></div>
 
-<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274</code>, which is the correct password.</p>
-<p><img alt="ioli-crackme-0x01-03" src="./images/ioli-crackme-0x01-03.png" /></p>
-<h1 id="patching-the-executables">Patching the executables</h1>
-<p>Patching the executable is actually the same process as <a href="./ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
-<h1 id="passing-arguments-to-functions">Passing arguments to functions</h1>
-<p>Since the crackme was cracked relatively quickly I want to review and highlight how arguments are passed to functions. </p>
-<p>The format of the <code>scanf</code> function in C is like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">scanf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
-</code></pre></div>
-
-<p>Here's an example of how it is used:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
-<span class="n">scanf</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
-</code></pre></div>
-
-<p>If we look at the 0x01 program we could see how the arguments are passed to the <em>_scanf</em> function by placing the data to send …</p>
+<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x01.html">Read on →</a> -->
       </article>
     </div>
@@ -315,17 +252,7 @@
 <span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span><span class="w"></span>
 </code></pre></div>
 
-<p>And just from these few lines alone I already knew what the password is. IDA Pro was helpful enough to add a comment that <code>offset Str2</code> equates to <code>250382</code>. Surely enough, this number was the password.</p>
-<p><img alt="ioli-crackme-0x00-04" src="./images/ioli-crackme-0x00-04.png" /></p>
-<h2 id="patching-the-executable">Patching the executable</h2>
-<p>The next part of the challenge is to patch the executable so that it can accept any input and would still allow us through.</p>
-<p>Looking at the graph view, we want the program to always go to the node on the right which has the "Password OK" message. </p>
-<p><img alt="ioli-crackme-0x00-05" src="./images/ioli-crackme-0x00-05.png" /></p>
-<p>The line that we could change to allow us to do this would be this one:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40138A</span><span class="w"></span>
-</code></pre></div>
-
-<p>The <code>jz</code> can be changed to a …</p>
+<p>And just from these few lines alone I already knew what the password is …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x00.html">Read on →</a> -->
       </article>
     </div>
@@ -347,12 +274,7 @@
 <p>I was looking forward to this CTF, especially after my awesome experience with the <a href="./covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
 <h2 id="the-preparation">The Preparation</h2>
 <p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
-<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it but there were <a href="https://www.facebook.com/guidemtraining/photos/a.142012317191141/229536238438748/">some social media posts</a> that contained screenshots on how the challenge looked like. These gave me a lot of information on what to expect.</p>
-<p><img alt="hunt-the-kingdom-ctf-challenge-01" src="./images/hunt-the-kingdom-ctf-challenge-01.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>It&#39;s OSINT in practice :P
-</code></pre></div>
-
-<p>For example, with the screenshot above I learned how the UI looked like, that there were categories that we could switch to, leaderboards, how a question is structured, and that "areas" on the map can get added, enabled, and disabled during the game. The last part is particularly important as it means that not all questions are available from the start and some can get disabled during …</p>
+<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./hunt-the-kingdom-ctf-challenge.html">Read on →</a> -->
       </article>
     </div>
