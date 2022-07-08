@@ -341,4 +341,4 @@ So there you have it, we were able to successfully hide strings by changing the 
 
 However, we've only seen it used against the `strings` command. Can it evade an actual anti-virus? The answer is probably no. In my next post I'll be talking about API call obfuscation that would help hide functions like `ShellExecute`.
 
-> This code has been uploaded to Github. Also, for any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/accidentalrebel) or [LinkedIn](https://www.linkedin.com/in/juan-karlo-licudine/).
+> This code has been uploaded [to Github](https://github.com/accidentalrebel/string-anti-virus-evasion-x64-assembly). Also, for any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/accidentalrebel) or [LinkedIn](https://www.linkedin.com/in/juan-karlo-licudine/).
