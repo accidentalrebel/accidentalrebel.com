@@ -12,7 +12,7 @@ sys.path.append(os.curdir)
 from pelicanconf import *
 
 # If your site is available via HTTPS, make sure SITEURL begins with https://
-SITEURL = 'http://www.accidentalrebel.com'
+SITEURL = 'https://www.accidentalrebel.com'
 RELATIVE_URLS = True
 
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
@@ -21,7 +21,7 @@ CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
 STATIC_PATHS = ['images', 'extras/CNAME']
 EXTRA_PATH_METADATA = {'extras/CNAME': {'path': 'CNAME'},}
 
-SUMMARY_MAX_LENGTH = None
+SUMMARY_MAX_LENGTH = 150
 DELETE_OUTPUT_DIRECTORY = True
 
 # Following items are often useful when publishing

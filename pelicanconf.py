@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'AccidentalRebel'
 SITENAME = 'AccidentalRebel.com'
 SITEURL = ''
-THEME = '/home/arebel/blog/arebel-themes/medium-rebel-fox'
+THEME = '../medium-rebel-fox'
 
 PATH = 'content'
 
@@ -29,7 +29,7 @@ SOCIAL = (('Twitter', 'https://www.twitter.com/accidentalrebel'),
           ('Github','https://github.com/accidentalrebel'),
           ('YouTube', 'https://www.youtube.com/user/AccidentalRebelGames'))
 
-BLURB = "My name is Karlo and I'm currently employed as a Cyber Security Engineer. I have an interest in threat hunting and malware analysis. I also work on cyber-security related programming projects like malware analysis tools and remote access tools."
+BLURB = "Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development."
 
 DEFAULT_PAGINATION = 10
 
@@ -49,8 +49,8 @@ MARKDOWN = {
         }
     }
 
-PLUGIN_PATHS = ['plugins', '/home/arebel/blog/plugins/twitter_card']
-PLUGINS = ['twitter_card',]
+PLUGIN_PATHS = ['plugins'] #, '../twitter_card/']
+# PLUGINS = ['twitter_card',]
 
 #=============
 # Twitter Card
