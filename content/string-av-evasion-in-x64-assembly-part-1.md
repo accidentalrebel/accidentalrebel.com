@@ -313,27 +313,25 @@ Writing the code above can get a little tedious especially if we want to pass a 
 
 What the macro does is that it loops through each character and places it into the correct position on the stack.
 
+> **Important note:** When reserving space on the stack, make sure it is in multiples of 16! This is because the stack has a 16-bit boundary for stack alignment! 
+
+> For example, if our string has 10 characters, we only need to reserve 16 bytes. If our character is 20 characters long, we'd have to reserve 32 bytes.
+
 This macro can then be called like this:
 
 ```asm
-	sub	rsp, 8
+	sub	rsp, 16        ; Reserve space for the string on the stack
 	addstr2stack "n", "o", "t", "e", "p", "a", "d", 0x0
 	lea	r8, [rsp]
-	add	rsp, 8
+	...
+	add	rsp, 16        ; After use, release the space
 ```
 
 Here is what the result of the macro looks like in the debugger:
 
 ![string-anti-virus-evasion-in-x64-assembly-part-1-05]({attach}/images/string-anti-virus-evasion-in-x64-assembly-part-1-05.png)
 
-Here is an example with a longer string:
-
-```asm
-	sub	rsp, 16       ; Reserve 16 bytes because string is longer!
-	addstr2stack "p", "o", "w", "e", "r", "s", "h", "e", "l", "l", 0x0
-	lea	r8, [rsp]
-	add	rsp, 16
-```
+For the full source code visit the repo [on Github](https://github.com/accidentalrebel/string-anti-virus-evasion-x64-assembly). Updates and fixes to the code will be pushed there.
 
 -------------------------------------------------------------------------------
 
@@ -341,4 +339,4 @@ So there you have it, we were able to successfully hide strings by changing the 
 
 However, we've only seen it used against the `strings` command. Can it evade an actual anti-virus? The answer is probably no. In my next post I'll be talking about API call obfuscation that would help hide functions like `ShellExecute`.
 
-> This code has been uploaded [to Github](https://github.com/accidentalrebel/string-anti-virus-evasion-x64-assembly). Also, for any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/accidentalrebel) or [LinkedIn](https://www.linkedin.com/in/juan-karlo-licudine/).
+> . Also, for any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/accidentalrebel) or [LinkedIn](https://www.linkedin.com/in/juan-karlo-licudine/).
