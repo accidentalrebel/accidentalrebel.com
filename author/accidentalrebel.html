@@ -60,6 +60,38 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="../string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a></h1>
+	<div class="meta">
+          <time datetime="2022-07-09T12:11:00+08:00">July 09, 2022</time>
+          in <span class="categories">
+            <a href="../tag/evasion.html">evasion</a>,            <a href="../tag/assembly.html">assembly</a>,            <a href="../tag/av.html">av</a>          </span>
+	</div>
+        <p><p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
+<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
+<h2 id="the-problem">The problem</h2>
+<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
+<span class="p">{</span><span class="w"></span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
+<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span><span class="w"></span>
+
+<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
+<span class="p">}</span><span class="w"></span>
+</code></pre></div>
+
+<p>Upon compiling …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../string-av-evasion-in-x64-assembly-part-2.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="../string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a></h1>
 	<div class="meta">
           <time datetime="2022-07-08T12:11:00+08:00">July 08, 2022</time>
@@ -142,7 +174,7 @@
 <p>We could easily see a DNS record being queried, which is our answer to this question.</p>
 <h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
 <blockquote>
-<p>Question 7. The first file downloaded (as a result of executing the …</p></blockquote>
+<p>Question 7. The first file downloaded (as a result of executing the code …</p></blockquote>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../cyber-corp-case-2-writeup-part-2.html">Read on →</a> -->
       </article>
     </div>
@@ -222,7 +254,7 @@
 <span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
 </code></pre></div>
 
-<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the …</p>
+<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x04.html">Read on →</a> -->
       </article>
     </div>
@@ -261,29 +293,6 @@
 <p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
 <p>Having learned how to do runtime DLL loading myself I …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../making-a-rat.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a></h1>
-	<div class="meta">
-          <time datetime="2021-05-01T20:56:00+08:00">May 01, 2021</time>
-          in <span class="categories">
-            <a href="../tag/phishing.html">phishing</a>          </span>
-	</div>
-        <p><p>Since my last post about <a href="investigating-an-fb-phishing-site">my investigations of a Facebook phishing site</a>, I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.</p>
-<p><img alt="finding-phished-passwords-from-a-scam-site-01" src="../images/finding-phished-passwords-from-a-scam-site-01.png" /></p>
-<p>This particular phishing site conducts its operations like this:</p>
-<ul>
-<li>An ad is shown on Facebook, promising free coupons for famous fast food restaurants</li>
-<li>Clicking on the ad takes the user to a fake Facebook login page hosted on <em>blogger.com</em></li>
-<li>Login page then sends phished username and passwords to a PHP file hosted on <em>000webhost</em></li>
-</ul>
-<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../finding-phished-passwords-on-a-scam-site.html">Read on →</a> -->
       </article>
     </div>
   </div>

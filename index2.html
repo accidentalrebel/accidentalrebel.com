@@ -60,6 +60,29 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a></h1>
+	<div class="meta">
+          <time datetime="2021-05-01T20:56:00+08:00">May 01, 2021</time>
+          in <span class="categories">
+            <a href="./tag/phishing.html">phishing</a>          </span>
+	</div>
+        <p><p>Since my last post about <a href="investigating-an-fb-phishing-site">my investigations of a Facebook phishing site</a>, I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.</p>
+<p><img alt="finding-phished-passwords-from-a-scam-site-01" src="./images/finding-phished-passwords-from-a-scam-site-01.png" /></p>
+<p>This particular phishing site conducts its operations like this:</p>
+<ul>
+<li>An ad is shown on Facebook, promising free coupons for famous fast food restaurants</li>
+<li>Clicking on the ad takes the user to a fake Facebook login page hosted on <em>blogger.com</em></li>
+<li>Login page then sends phished username and passwords to a PHP file hosted on <em>000webhost</em></li>
+</ul>
+<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./finding-phished-passwords-on-a-scam-site.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a></h1>
 	<div class="meta">
           <time datetime="2021-04-30T05:58:00+08:00">April 30, 2021</time>
@@ -225,7 +248,7 @@
 <span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span><span class="w"></span>
 </code></pre></div>
 
-<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results …</p>
+<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x01.html">Read on →</a> -->
       </article>
     </div>
@@ -254,28 +277,6 @@
 
 <p>And just from these few lines alone I already knew what the password is …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x00.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a></h1>
-	<div class="meta">
-          <time datetime="2020-10-05T11:13:00+08:00">October 05, 2020</time>
-          in <span class="categories">
-            <a href="./tag/ctf.html">ctf</a>,            <a href="./tag/cybersecurity.html">cybersecurity</a>          </span>
-	</div>
-        <p><blockquote>
-<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
-</blockquote>
-<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
-<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="./covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
-<h2 id="the-preparation">The Preparation</h2>
-<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
-<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./hunt-the-kingdom-ctf-challenge.html">Read on →</a> -->
       </article>
     </div>
   </div>

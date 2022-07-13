@@ -60,6 +60,28 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a></h1>
+	<div class="meta">
+          <time datetime="2020-10-05T11:13:00+08:00">October 05, 2020</time>
+          in <span class="categories">
+            <a href="./tag/ctf.html">ctf</a>,            <a href="./tag/cybersecurity.html">cybersecurity</a>          </span>
+	</div>
+        <p><blockquote>
+<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
+</blockquote>
+<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
+<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="./covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
+<h2 id="the-preparation">The Preparation</h2>
+<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
+<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./hunt-the-kingdom-ctf-challenge.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./my-experience-manufacturing-printed-circuit-boards.html">My experience with manufacturing printed circuit boards</a></h1>
 	<div class="meta">
           <time datetime="2020-10-01T07:19:00+08:00">October 01, 2020</time>
@@ -157,7 +179,7 @@
 <span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span><span class="w"></span>
 <span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span><span class="w"></span>
 <span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span><span class="w"></span>
-<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float …</span></code></pre></div>
+<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./chicken-scheme-ffi-examples.html">Read on →</a> -->
       </article>
     </div>
@@ -192,7 +214,7 @@
         <p><p><img alt="following-lispy-conventions-01" src="./images/following-lispy-conventions-01.png" /></p>
 <p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
 <p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the …</p>
+<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./following-lispy-conventions.html">Read on →</a> -->
       </article>
     </div>
@@ -248,25 +270,6 @@
 <p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="./images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
 <p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./thinking-of-adding-lisp-to-my-custom-game-engine.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./making-unity-beep-after-scripts-finish-reloading.html">Making Unity beep after scripts finish reloading</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-01T17:07:00+08:00">May 01, 2020</time>
-          in <span class="categories">
-            <a href="./tag/dev.html">dev</a>,            <a href="./tag/unity.html">unity</a>          </span>
-	</div>
-        <p><p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
-<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
-<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
-<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="./images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
-<p>I recently got the idea of having Unity inform …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./making-unity-beep-after-scripts-finish-reloading.html">Read on →</a> -->
       </article>
     </div>
   </div>

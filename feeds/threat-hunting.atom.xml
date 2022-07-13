@@ -167,7 +167,7 @@
 &lt;p&gt;We could easily see a DNS record being queried, which is our answer to this question.&lt;/p&gt;
 &lt;h2 id="finding-the-encoded-executable-code"&gt;Finding the encoded executable code&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;Question 7. The first file downloaded (as a result of executing the …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="https://cyberdefenders.org/labs/75"&gt;second case of the CyberCorp challenge&lt;/a&gt; on &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders.org&lt;/a&gt; is all about threat hunting. Created by &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.&lt;/p&gt;
+&lt;p&gt;Question 7. The first file downloaded (as a result of executing the code …&lt;/p&gt;&lt;/blockquote&gt;</summary><content type="html">&lt;p&gt;The &lt;a href="https://cyberdefenders.org/labs/75"&gt;second case of the CyberCorp challenge&lt;/a&gt; on &lt;a href="https://cyberdefenders.org/"&gt;CyberDefenders.org&lt;/a&gt; is all about threat hunting. Created by &lt;a href="https://twitter.com/BlackMatter23"&gt;@BlackMatter23&lt;/a&gt; and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.&lt;/p&gt;
 &lt;p&gt;This writeup is part 2 out of multiple parts. You could read &lt;a href="threat-hunting-from-home-cyber-corp-wmi-persistence"&gt;Part 1 here&lt;/a&gt; and &lt;a href="cyber-corp-case-2-writeup-part-3"&gt;Part 3 here&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id="checking-dns-requests"&gt;Checking DNS Requests&lt;/h2&gt;
 &lt;blockquote&gt;
