@@ -60,6 +60,24 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="../making-a-rat.html">Making a RAT</a></h1>
+	<div class="meta">
+          <time datetime="2021-07-13T14:56:00+08:00">July 13, 2021</time>
+          in <span class="categories">
+            <a href="../tag/malware.html">malware</a>,            <a href="../tag/dev.html">dev</a>          </span>
+	</div>
+        <p><p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
+<p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
+<p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
+<p>Having learned how to do runtime DLL loading myself I …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../making-a-rat.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="../finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a></h1>
 	<div class="meta">
           <time datetime="2021-05-01T20:56:00+08:00">May 01, 2021</time>
@@ -250,33 +268,6 @@
 
 <p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x01.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../ioli-crackme-0x00.html">IOLI Crackme 0x00</a></h1>
-	<div class="meta">
-          <time datetime="2021-02-16T21:55:00+08:00">February 16, 2021</time>
-          in <span class="categories">
-            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
-	</div>
-        <p><p>I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.</p>
-<h2 id="getting-the-password">Getting the password</h2>
-<p>Running the program shows a password prompt. </p>
-<p><img alt="ioli-crackme-0x00-03" src="../images/ioli-crackme-0x00-03.png" /></p>
-<p>Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code.</p>
-<p>I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this:</p>
-<p><img alt="ioli-crackme-0x00-02" src="../images/ioli-crackme-0x00-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
-<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span><span class="w"></span>
-</code></pre></div>
-
-<p>And just from these few lines alone I already knew what the password is …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x00.html">Read on →</a> -->
       </article>
     </div>
   </div>

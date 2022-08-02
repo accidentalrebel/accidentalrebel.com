@@ -60,6 +60,25 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a></h1>
+	<div class="meta">
+          <time datetime="2022-08-02T15:06:00+08:00">August 02, 2022</time>
+          in <span class="categories">
+            <a href="./tag/malware.html">malware</a>,            <a href="./tag/analysis.html">analysis</a>,            <a href="./tag/mitre.html">mitre</a>,            <a href="./tag/mbc.html">mbc</a>          </span>
+	</div>
+        <p><p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
+<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="./images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
+<h2 id="a-brief-overview">A brief overview</h2>
+<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
+<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./talking-about-mitres-malware-behavior-catalog.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a></h1>
 	<div class="meta">
           <time datetime="2022-07-09T12:11:00+08:00">July 09, 2022</time>
@@ -275,24 +294,6 @@
 <p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
 <p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./building-my-virtual-cybersecurity-home-lab.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./making-a-rat.html">Making a RAT</a></h1>
-	<div class="meta">
-          <time datetime="2021-07-13T14:56:00+08:00">July 13, 2021</time>
-          in <span class="categories">
-            <a href="./tag/malware.html">malware</a>,            <a href="./tag/dev.html">dev</a>          </span>
-	</div>
-        <p><p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
-<p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
-<p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
-<p>Having learned how to do runtime DLL loading myself I …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./making-a-rat.html">Read on →</a> -->
       </article>
     </div>
   </div>
