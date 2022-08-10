@@ -30,7 +30,7 @@
 &lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02.png" /&gt;&lt;/p&gt;
 &lt;p&gt;You'll immediately notice that the returned value is not exactly the same as the memory settings. I, too, wondered about this so I did a couple of tests. &lt;/p&gt;
 &lt;h2 id="investigating-the-results"&gt;Investigating the results&lt;/h2&gt;
-&lt;p&gt;What I found was that the values that are returned by the &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; in hex format always have the last 3 bytes set to zero. Here's a table of multiple VM settings and the values returned by the program:&lt;/p&gt;
+&lt;p&gt;What I found was that the values that are returned by the &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; in hex format always have the last 3 bytes set to zero. To test this I changed the VM settings and noted the values returned by the program. Here's a table of the results:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
@@ -67,7 +67,7 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;p&gt;And this is the same behavior with systems that are not on a VM:&lt;/p&gt;
+&lt;p&gt;Before you think that this is a VM thing, here is the same behavior with a Windows system that is not on a VM:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;
 &lt;tr&gt;
