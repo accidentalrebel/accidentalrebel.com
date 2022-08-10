@@ -1,5 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - misc</title><link href="https://www.accidentalrebel.com/" rel="alternate"></link><link href="https://www.accidentalrebel.com/feeds/misc.atom.xml" rel="self"></link><id>https://www.accidentalrebel.com/</id><updated>2022-07-09T12:11:00+08:00</updated><entry><title>String anti-virus evasion in x64 assembly (Part 2)</title><link href="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-2.html" rel="alternate"></link><published>2022-07-09T12:11:00+08:00</published><updated>2022-07-09T12:11:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2022-07-09:/string-av-evasion-in-x64-assembly-part-2.html</id><summary type="html">&lt;p&gt;In &lt;a href="string-av-evasion-in-x64-assembly-part-1"&gt;my last blog post&lt;/a&gt;, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - misc</title><link href="https://www.accidentalrebel.com/" rel="alternate"></link><link href="https://www.accidentalrebel.com/feeds/misc.atom.xml" rel="self"></link><id>https://www.accidentalrebel.com/</id><updated>2022-08-08T11:29:00+08:00</updated><entry><title>Malware sandbox evasion in x64 assembly by checking ram size - Part 1</title><link href="https://www.accidentalrebel.com/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html" rel="alternate"></link><published>2022-08-08T11:29:00+08:00</published><updated>2022-08-08T11:29:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2022-08-08:/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html</id><summary type="html">&lt;p&gt;During my malware sandbox evasion research, I stumbled upon the &lt;a href="https://unprotect.it/"&gt;Unprotect Project&lt;/a&gt; website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the &lt;a href="https://unprotect.it/technique/checking-memory-size/"&gt;Checking Memory Size technique&lt;/a&gt; doesn't have a example snippet yet so I figured this would be a good first contribution to the project.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /&gt;&lt;/p&gt;
+&lt;h2 id="what-to-expect"&gt;What to expect&lt;/h2&gt;
+&lt;p&gt;In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.&lt;/p&gt;
+&lt;h2 id="checking-the-memory"&gt;Checking the memory&lt;/h2&gt;
+&lt;p&gt;The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is a sandbox. While it's not exactly fool-proof, it can be used …&lt;/p&gt;</summary><content type="html">&lt;p&gt;During my malware sandbox evasion research, I stumbled upon the &lt;a href="https://unprotect.it/"&gt;Unprotect Project&lt;/a&gt; website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the &lt;a href="https://unprotect.it/technique/checking-memory-size/"&gt;Checking Memory Size technique&lt;/a&gt; doesn't have a example snippet yet so I figured this would be a good first contribution to the project.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /&gt;&lt;/p&gt;
+&lt;h2 id="what-to-expect"&gt;What to expect&lt;/h2&gt;
+&lt;p&gt;In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.&lt;/p&gt;
+&lt;h2 id="checking-the-memory"&gt;Checking the memory&lt;/h2&gt;
+&lt;p&gt;The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is a sandbox. While it's not exactly fool-proof, it can be used with other techniques to have a better idea of the machine.&lt;/p&gt;
+&lt;p&gt;There are two available APIs to get the memory size of a computer on Windows: &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; and &lt;code&gt;GlobalMemoryStatusEx&lt;/code&gt;. &lt;a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getphysicallyinstalledsystemmemory"&gt;The former&lt;/a&gt; lists the physically &lt;em&gt;installed&lt;/em&gt; RAM from the BIOS, while &lt;a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex"&gt;the latter&lt;/a&gt; lists the amount available for the operating system to use. Note that the values returned from these two functions will be different but from my tests the difference is only a few hundreds of bytes. Any of these two we can use for our purpose.&lt;/p&gt;
+&lt;h2 id="using-getphysicallyinstalledsystemmemory"&gt;Using GetPhysicallyInstalledSystemMemory&lt;/h2&gt;
+&lt;p&gt;Calling &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; in C is simple:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+&lt;span class="cp"&gt;#include&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="cpf"&gt;&amp;lt;windows.h&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;&lt;/span&gt;
+
+&lt;span class="kt"&gt;int&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="kt"&gt;unsigned&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;long&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kt"&gt;long&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;memory_size&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;GetPhysicallyInstalledSystemMemory&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;memory_size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Memory size: %lld&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="n"&gt;memory_size&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Running the above code shows the following result:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01.png" /&gt;&lt;/p&gt;
+&lt;p&gt;And this is what my memory settings is set to on VMWare:&lt;/p&gt;
+&lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02.png" /&gt;&lt;/p&gt;
+&lt;h2 id="investigating-the-results"&gt;Investigating the results&lt;/h2&gt;
+&lt;p&gt;You'll immediately notice that the returned value is not exactly the same as the memory settings. I, too, wondered about this so I did a couple of tests. &lt;/p&gt;
+&lt;p&gt;What I found was that the values that are returned by the &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; in hex format always have the last 3 bytes set to zero. Here's a table of multiple VM settings and the values returned by the program:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="center"&gt;VM Settings&lt;/th&gt;
+&lt;th align="center"&gt;Returned Value&lt;/th&gt;
+&lt;th align="center"&gt;In Hex&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;2000MB&lt;/td&gt;
+&lt;td align="center"&gt;2048000&lt;/td&gt;
+&lt;td align="center"&gt;0x1F4000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;3324MB&lt;/td&gt;
+&lt;td align="center"&gt;3403776&lt;/td&gt;
+&lt;td align="center"&gt;0x33F000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;4096MB&lt;/td&gt;
+&lt;td align="center"&gt;4194304&lt;/td&gt;
+&lt;td align="center"&gt;0x400000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;4338MB&lt;/td&gt;
+&lt;td align="center"&gt;4493312&lt;/td&gt;
+&lt;td align="center"&gt;0x449000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;5675MB&lt;/td&gt;
+&lt;td align="center"&gt;5816320&lt;/td&gt;
+&lt;td align="center"&gt;0x58C000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;And this is the same behavior with systems that are not on a VM:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th align="center"&gt;Installed RAM&lt;/th&gt;
+&lt;th align="center"&gt;Returned Value&lt;/th&gt;
+&lt;th align="center"&gt;In Hex&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td align="center"&gt;16384MB&lt;/td&gt;
+&lt;td align="center"&gt;16777216&lt;/td&gt;
+&lt;td align="center"&gt;0x1000000&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;According to the &lt;a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getphysicallyinstalledsystemmemory"&gt;MSDN docs&lt;/a&gt;, the value returned is taken from the SMBIOS firmware tables. I tried to dig further and found the &lt;a href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf"&gt;SMBIOS standard manual&lt;/a&gt; and saw that the value in the memory size field is returned in MB. This still doesn't explain why the last 3 digits are always zero though. I'm guessing that the API just truncates the last 3 values and saves the higher bytes?&lt;/p&gt;
+&lt;p&gt;Before we get hopelessly trapped in the rabbit hole that is OS internals, let's continue by converting our code above to x64 assembly.&lt;/p&gt;
+&lt;h2 id="converting-to-x64-assembly"&gt;Converting to x64 Assembly&lt;/h2&gt;
+&lt;p&gt;Before we can call the &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; function, we first need to reserve space on the stack that will serve as the &lt;code&gt;memory_size&lt;/code&gt; local variable. This is where the result of the function will be placed.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;xor&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;; Clear rax&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;push&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="c1"&gt;; Push rax to the stack&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;lea&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rcx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;; Argument 1; Load the memory location of memory_size to rcx&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We then call the &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; function making sure that we reserve and release the shadow space.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;sub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="c1"&gt;; Reserve shadow space&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;call&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="no"&gt;GetPhysicallyInstalledSystemMemory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;         &lt;/span&gt;&lt;span class="c1"&gt;; Release shadow space&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3 id="aside-shadow-space"&gt;Aside: Shadow space&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The concept of "Shadow Space" is important in x64 assembly. I've already discussed it briefly in a &lt;a href="https://www.accidentalrebel.com/converting-a-malware-dropper-to-x64-assembly.html"&gt;previous post&lt;/a&gt; but you can read up more about it &lt;a href="https://retroscience.net/x64-assembly.html"&gt;here&lt;/a&gt; and then &lt;a href="https://devblogs.microsoft.com/oldnewthing/20160623-00/?p=93735"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The result on whether &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; succeeded or not is placed in the &lt;code&gt;ax&lt;/code&gt; register. It's good practice to add code to handle if a failure occurs, but we won't be bothering with that for our example.&lt;/p&gt;
+&lt;p&gt;What we are interested in is the value placed in the memory location pointed to by &lt;code&gt;memory_size&lt;/code&gt;. We can confirm this by checking the value on the stack, as shown below where &lt;code&gt;58C000h&lt;/code&gt; converts to &lt;code&gt;5816320&lt;/code&gt; which is roughly near the &lt;code&gt;5.5 GB&lt;/code&gt; setting we have set in VMWare.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-04" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-04.png" /&gt;&lt;/p&gt;
+&lt;p&gt;A much easier way to confirm is that we can also use the &lt;code&gt;printf&lt;/code&gt; function to display the value of &lt;code&gt;memory_size&lt;/code&gt; on the console. But before we can do that we first need to declare the &lt;code&gt;format&lt;/code&gt; string so we can pass it later as the first argument.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nf"&gt;segment&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;.data&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;msg_memory_size&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;db&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="no"&gt;Memory&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;%lld&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0xd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0xa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;We then call &lt;code&gt;printf&lt;/code&gt; making sure we load the correct argument data to the respective registers.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;mov&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rdx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;             &lt;/span&gt;&lt;span class="c1"&gt;; Argument 2; Result of GetPhysicallyInstalledSystemMemory&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;lea&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rcx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;msg_memory_size&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="c1"&gt;; Argument 1; Format string&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;sub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;; Reserve shadow space&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;call&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="no"&gt;printf&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;                &lt;/span&gt;&lt;span class="c1"&gt;; Release shadow space&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Running that we can now display the value of the memory.&lt;/p&gt;
+&lt;p&gt;Here's the full assembly code:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;bits&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;64&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;default&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rel&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="nf"&gt;segment&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;.data&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;msg_memory_size&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;db&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="no"&gt;Memory&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;size&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;%lld&lt;/span&gt;&lt;span class="err"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0xd&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0xa&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="nf"&gt;segment&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;.text&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;global&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;main&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;ExitProcess&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;GetPhysicallyInstalledSystemMemory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;extern&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;printf&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="nl"&gt;main:&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;push&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="no"&gt;rbp&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;mov&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="no"&gt;rbp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;xor&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;; Clear rax&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;push&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="c1"&gt;; Push RAX to the stack&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;lea&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rcx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;; Argument 1; Load the memory location of memory_size to rcx&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;sub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="c1"&gt;; Reserve shadow space&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;call&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="no"&gt;GetPhysicallyInstalledSystemMemory&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="c1"&gt;; Release shadow space&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;mov&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rdx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;; Argument 2; Result of GetPhysicallyInstalledSystemMemory&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;lea&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rcx&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="no"&gt;msg_memory_size&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="c1"&gt;; Argument 1; Format string&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;sub&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="c1"&gt;; Reserve shadow space&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;call&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="no"&gt;printf&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;32&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="c1"&gt;; Release shadow space&lt;/span&gt;
+
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;add&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rsp&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="mi"&gt;0x8&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="c1"&gt;; Release the space of memory_size local variable&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;xor&lt;/span&gt;&lt;span class="w"&gt;     &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="no"&gt;rax&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nf"&gt;call&lt;/span&gt;&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="no"&gt;ExitProcess&lt;/span&gt;&lt;span class="w"&gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2 id="up-next"&gt;Up next&lt;/h2&gt;
+&lt;p&gt;In the next blog post I'll be showing how to get the size RAM size via an alternative method using &lt;code&gt;GlobalMemoryStatusEx&lt;/code&gt;. The code is also straightforward but we'll be exploring how it's values differ from &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; and also how to deal with C structures on the stack in x64 assembly.&lt;/p&gt;
+&lt;p&gt;For now, you can view the C and Assembly code along with the build scripts on the repository &lt;a href="https://github.com/accidentalrebel/sandbox-evasion-by-checking-ram-size"&gt;here&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Feel free to reach out to me on &lt;a href="https://twitter.com/accidentalrebel"&gt;Twitter&lt;/a&gt; or &lt;a href="https://www.linkedin.com/in/juan-karlo-licudine/"&gt;LinkedIn&lt;/a&gt; for any questions or comments.&lt;/p&gt;</content><category term="misc"></category><category term="malware"></category><category term="sandbox"></category><category term="evasion"></category><category term="x64"></category><category term="assembly"></category></entry><entry><title>String anti-virus evasion in x64 assembly (Part 2)</title><link href="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-2.html" rel="alternate"></link><published>2022-07-09T12:11:00+08:00</published><updated>2022-07-09T12:11:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2022-07-09:/string-av-evasion-in-x64-assembly-part-2.html</id><summary type="html">&lt;p&gt;In &lt;a href="string-av-evasion-in-x64-assembly-part-1"&gt;my last blog post&lt;/a&gt;, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /&gt;&lt;/p&gt;
 &lt;p&gt;In this post I'll be talking about the other technique from the same &lt;a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/"&gt;blog post&lt;/a&gt; we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.&lt;/p&gt;
 &lt;h2 id="the-problem"&gt;The problem&lt;/h2&gt;

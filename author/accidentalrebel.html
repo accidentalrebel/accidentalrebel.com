@@ -60,6 +60,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a></h1>
+	<div class="meta">
+          <time datetime="2022-08-08T11:29:00+08:00">August 08, 2022</time>
+          in <span class="categories">
+            <a href="../tag/malware.html">malware</a>,            <a href="../tag/sandbox.html">sandbox</a>,            <a href="../tag/evasion.html">evasion</a>,            <a href="../tag/x64.html">x64</a>,            <a href="../tag/assembly.html">assembly</a>          </span>
+	</div>
+        <p><p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
+<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
+<h2 id="checking-the-memory">Checking the memory</h2>
+<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is a sandbox. While it's not exactly fool-proof, it can be used …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="../talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a></h1>
 	<div class="meta">
           <time datetime="2022-08-02T15:06:00+08:00">August 02, 2022</time>
@@ -275,25 +295,6 @@
 
 <p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x04.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../building-my-virtual-cybersecurity-home-lab.html">Building my Virtual Cybersecurity Home Lab</a></h1>
-	<div class="meta">
-          <time datetime="2021-09-05T20:33:00+08:00">September 05, 2021</time>
-          in <span class="categories">
-            <a href="../tag/malware.html">malware</a>,            <a href="../tag/dev.html">dev</a>          </span>
-	</div>
-        <p><p>I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. </p>
-<p>Now I know better.</p>
-<p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
-<p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
-<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../building-my-virtual-cybersecurity-home-lab.html">Read on →</a> -->
       </article>
     </div>
   </div>
