@@ -28,7 +28,7 @@
 &lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01.png" /&gt;&lt;/p&gt;
 &lt;p&gt;And this is what my memory settings is set to on VMWare:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02" src="https://www.accidentalrebel.com/images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02.png" /&gt;&lt;/p&gt;
-&lt;p&gt;You'll immediately notice that the returned value is not exactly the same as the memory settings. I, too, wondered about this so I did a couple of tests. &lt;/p&gt;
+&lt;p&gt;You'll immediately notice that the returned value is not exactly the same as the memory settings. I, too, wondered about this so I did a couple of tests.&lt;/p&gt;
 &lt;h2 id="investigating-the-results"&gt;Investigating the results&lt;/h2&gt;
 &lt;p&gt;What I found was that the values that are returned by the &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; in hex format always have the last 3 bytes set to zero. To test this I changed the VM settings and noted the values returned by the program. Here's a table of the results:&lt;/p&gt;
 &lt;table&gt;
@@ -85,6 +85,9 @@
 &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;p&gt;According to the &lt;a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getphysicallyinstalledsystemmemory"&gt;MSDN docs&lt;/a&gt;, the value returned is taken from the SMBIOS firmware tables. I tried to dig further and found the &lt;a href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf"&gt;SMBIOS standard manual&lt;/a&gt; and saw that the value in the memory size field is returned in MB. This still doesn't explain why the last 3 digits are always zero though. I'm guessing that the API just truncates the last 3 values and saves the higher bytes?&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;EDIT(2022-08-15):&lt;/strong&gt; Twitter user &lt;a href="https://twitter.com/Endeavxor"&gt;@Endeavxor&lt;/a&gt; pointed out that the returned value of "GetPhysicallyInstalledSystemMemory" is expressed in kibibytes instead of kilobytes. This means the result &lt;code&gt;4194304&lt;/code&gt; when divided by &lt;code&gt;1024&lt;/code&gt; is &lt;code&gt;4096&lt;/code&gt; and is exactly the Memory value set in the VM settings. This means the value returned by the function is correct. It's so simple and I missed it!&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;p&gt;Before we get hopelessly trapped in the rabbit hole that is OS internals, let's continue by converting our code above to x64 assembly.&lt;/p&gt;
 &lt;h2 id="converting-to-x64-assembly"&gt;Converting to x64 Assembly&lt;/h2&gt;
 &lt;p&gt;Before we can call the &lt;code&gt;GetPhysicallyInstalledSystemMemory&lt;/code&gt; function, we first need to reserve space on the stack that will serve as the &lt;code&gt;memory_size&lt;/code&gt; local variable. This is where the result of the function will be placed.&lt;/p&gt;
