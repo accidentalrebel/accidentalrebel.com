@@ -60,6 +60,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a></h1>
+	<div class="meta">
+          <time datetime="2022-08-12T11:29:00+08:00">August 12, 2022</time>
+          in <span class="categories">
+            <a href="./tag/malware.html">malware</a>,            <a href="./tag/sandbox.html">sandbox</a>,            <a href="./tag/evasion.html">evasion</a>,            <a href="./tag/x64.html">x64</a>,            <a href="./tag/assembly.html">assembly</a>          </span>
+	</div>
+        <p><p>In the <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
+<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
+<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
+<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include …</span></code></pre></div>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a></h1>
 	<div class="meta">
           <time datetime="2022-08-08T11:29:00+08:00">August 08, 2022</time>
@@ -271,39 +291,12 @@
       </article>
     </div>
   </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./ioli-crackme-0x04.html">IOLI Crackme 0x04</a></h1>
-	<div class="meta">
-          <time datetime="2021-09-29T10:34:00+08:00">September 29, 2021</time>
-          in <span class="categories">
-            <a href="./tag/re.html">re</a>,            <a href="./tag/crackme.html">crackme</a>          </span>
-	</div>
-        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, <a href="./ioli-crackme-0x02.html">0x02</a>, and <a href="./ioli-crackme-0x03.html">0x03</a>.</p>
-<h1 id="getting-the-password">Getting the password</h1>
-<p>Loading the program in IDA revealed something new. There is now a <code>_check</code> function that when opened looks more complicated than the previous challenges.</p>
-<p><img alt="ioli-crackme-0x04-01" src="./images/ioli-crackme-0x04-01.png" /></p>
-<p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
-<p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
-<p><img alt="ioli-crackme-0x04-02" src="./images/ioli-crackme-0x04-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span><span class="w"></span>
-<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w"></span>
-<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
-</code></pre></div>
-
-<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x04.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
 </div>
 <div class="pagination">
 <p class="paginator">
-    Page 1 / 4
+    Page 1 / 5
         <a href="./index2.html">&raquo;</a>
-        <a href="./index4.html">&#8649;</a>
+        <a href="./index5.html">&#8649;</a>
 </p>
 </div>
     <footer id="footer" class="her-row">

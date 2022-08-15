@@ -60,6 +60,33 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./ioli-crackme-0x04.html">IOLI Crackme 0x04</a></h1>
+	<div class="meta">
+          <time datetime="2021-09-29T10:34:00+08:00">September 29, 2021</time>
+          in <span class="categories">
+            <a href="./tag/re.html">re</a>,            <a href="./tag/crackme.html">crackme</a>          </span>
+	</div>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, <a href="./ioli-crackme-0x02.html">0x02</a>, and <a href="./ioli-crackme-0x03.html">0x03</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>Loading the program in IDA revealed something new. There is now a <code>_check</code> function that when opened looks more complicated than the previous challenges.</p>
+<p><img alt="ioli-crackme-0x04-01" src="./images/ioli-crackme-0x04-01.png" /></p>
+<p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
+<p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
+<p><img alt="ioli-crackme-0x04-02" src="./images/ioli-crackme-0x04-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span><span class="w"></span>
+<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w"></span>
+<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
+</code></pre></div>
+
+<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./ioli-crackme-0x04.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./building-my-virtual-cybersecurity-home-lab.html">Building my Virtual Cybersecurity Home Lab</a></h1>
 	<div class="meta">
           <time datetime="2021-09-05T20:33:00+08:00">September 05, 2021</time>
@@ -239,34 +266,14 @@
       </article>
     </div>
   </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./introducing-shcode2exe.html">Introducing shcode2exe</a></h1>
-	<div class="meta">
-          <time datetime="2021-02-26T07:34:00+08:00">February 26, 2021</time>
-          in <span class="categories">
-            <a href="./tag/re.html">re</a>,            <a href="./tag/tools.html">tools</a>,            <a href="./tag/malware_analysis.html">malware_analysis</a>          </span>
-	</div>
-        <p><p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
-<p>I've been playing around with <a href="https://remnux.org/">Remnux</a> and encountered a problem trying to get one of the tools to run properly. The tool is <a href="https://github.com/repnz/shellcode2exe">shellcode2exe</a>, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.</p>
-<p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
-<p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
-<h2 id="shcode2exe">shcode2exe</h2>
-<p>While similar in …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./introducing-shcode2exe.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
 </div>
 <div class="pagination">
 <p class="paginator">
         <a href="./index.html">&#8647;</a>
         <a href="./index.html">&laquo;</a>
-    Page 2 / 4
+    Page 2 / 5
         <a href="./index3.html">&raquo;</a>
-        <a href="./index4.html">&#8649;</a>
+        <a href="./index5.html">&#8649;</a>
 </p>
 </div>
     <footer id="footer" class="her-row">

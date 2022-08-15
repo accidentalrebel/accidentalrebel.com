@@ -60,6 +60,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a></h1>
+	<div class="meta">
+          <time datetime="2022-08-12T11:29:00+08:00">August 12, 2022</time>
+          in <span class="categories">
+            <a href="../tag/malware.html">malware</a>,            <a href="../tag/sandbox.html">sandbox</a>,            <a href="../tag/evasion.html">evasion</a>,            <a href="../tag/x64.html">x64</a>,            <a href="../tag/assembly.html">assembly</a>          </span>
+	</div>
+        <p><p>In the <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
+<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
+<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
+<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<span class="cp">#include …</span></code></pre></div>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a></h1>
 	<div class="meta">
           <time datetime="2022-08-08T11:29:00+08:00">August 08, 2022</time>
