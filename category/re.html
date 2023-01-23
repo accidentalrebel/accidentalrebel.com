@@ -73,9 +73,9 @@
 <p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
 <p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
 <p><img alt="ioli-crackme-0x04-02" src="../images/ioli-crackme-0x04-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span><span class="w"></span>
-<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w"></span>
-<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span>
+<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span>
 </code></pre></div>
 
 <p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
@@ -142,14 +142,14 @@
 <p><img alt="ioli-crackme-0x01-01" src="../images/ioli-crackme-0x01-01.png" /></p>
 <p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
 <p><img alt="ioli-crackme-0x01-02" src="../images/ioli-crackme-0x01-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span><span class="w"></span>
-<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
+<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
 </code></pre></div>
 
 <p>This seems easy enough. </p>
 <p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
 <div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span><span class="w"></span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
 </code></pre></div>
 
 <p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
@@ -176,7 +176,7 @@
 <p><img alt="ioli-crackme-0x00-02" src="../images/ioli-crackme-0x00-02.png" /></p>
 <div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
 <span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span><span class="w"></span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span>
 </code></pre></div>
 
 <p>And just from these few lines alone I already knew what the password is …</p>

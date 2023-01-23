@@ -84,9 +84,9 @@
 <p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
 <p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
 <p><img alt="ioli-crackme-0x04-02" src="./images/ioli-crackme-0x04-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span><span class="w"></span>
-<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w"></span>
-<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span>
+<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span>
 </code></pre></div>
 
 <p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the length of the entered string. If you think about it, this means that it doesn't matter how long the string that the user inputs. What's important is the content.</p>

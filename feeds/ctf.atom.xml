@@ -112,7 +112,7 @@ Look for the free flag. Get on the scoreboard!&lt;/p&gt;
 &lt;li&gt;Inspect which other files were created at the time of execution. &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I found out which files were recently created during the last 2 minutes using the following command:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ find / -user kali -mmin &lt;span class="m"&gt;2&lt;/span&gt; -type f &lt;span class="m"&gt;2&lt;/span&gt;&amp;gt; /dev/null
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;find&lt;span class="w"&gt; &lt;/span&gt;/&lt;span class="w"&gt; &lt;/span&gt;-user&lt;span class="w"&gt; &lt;/span&gt;kali&lt;span class="w"&gt; &lt;/span&gt;-mmin&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-type&lt;span class="w"&gt; &lt;/span&gt;f&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2&lt;/span&gt;&amp;gt;&lt;span class="w"&gt; &lt;/span&gt;/dev/null
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;This showed me a lot of files, but after sifting through that I found one file that seesm promising.&lt;/p&gt;
@@ -120,7 +120,7 @@ Look for the free flag. Get on the scoreboard!&lt;/p&gt;
 &lt;p&gt;/tmp/.serverauth.tn6aUcM0uM&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;To get the flag I did this:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ &lt;span class="nb"&gt;echo&lt;/span&gt; -n &lt;span class="s2"&gt;&amp;quot;/tmp/.serverauth.tn6aUcM0uM&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sha1sum
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;-n&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/tmp/.serverauth.tn6aUcM0uM&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;sha1sum
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Which resulted in this flag: &lt;code&gt;5b4e97047851682649a602ad62ba4af567e352a3&lt;/code&gt;&lt;/p&gt;

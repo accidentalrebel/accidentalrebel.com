@@ -71,27 +71,27 @@
 <hr />
 <h2 id="foreign-lambda-example">foreign-lambda example</h2>
 <p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span>
 
-<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span>
+<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span>
 <span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chicken-scheme-ffi-examples.html">Read on →</a> -->
       </article>

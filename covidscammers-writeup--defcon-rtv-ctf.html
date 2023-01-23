@@ -135,7 +135,7 @@ Look for the free flag. Get on the scoreboard!</p>
 <li>Inspect which other files were created at the time of execution. </li>
 </ul>
 <p>I found out which files were recently created during the last 2 minutes using the following command:</p>
-<div class="codehilite"><pre><span></span><code>$ find / -user kali -mmin <span class="m">2</span> -type f <span class="m">2</span>&gt; /dev/null
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>find<span class="w"> </span>/<span class="w"> </span>-user<span class="w"> </span>kali<span class="w"> </span>-mmin<span class="w"> </span><span class="m">2</span><span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="m">2</span>&gt;<span class="w"> </span>/dev/null
 </code></pre></div>
 
 <p>This showed me a lot of files, but after sifting through that I found one file that seesm promising.</p>
@@ -143,7 +143,7 @@ Look for the free flag. Get on the scoreboard!</p>
 <p>/tmp/.serverauth.tn6aUcM0uM</p>
 </blockquote>
 <p>To get the flag I did this:</p>
-<div class="codehilite"><pre><span></span><code>$ <span class="nb">echo</span> -n <span class="s2">&quot;/tmp/.serverauth.tn6aUcM0uM&quot;</span> <span class="p">|</span> sha1sum
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;/tmp/.serverauth.tn6aUcM0uM&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sha1sum
 </code></pre></div>
 
 <p>Which resulted in this flag: <code>5b4e97047851682649a602ad62ba4af567e352a3</code></p>

@@ -148,18 +148,18 @@
 <p>There will be a lot of entries, but the one below would have information that we need:</p>
 <p><img alt="cyber-corp-case-2-writeup-part-3-07" src="./images/cyber-corp-case-2-writeup-part-3-07.png" /></p>
 <p>The event lists the group membership information for the user <code>inventory</code>. Within the field <code>usr_token_groups</code> we can see the following information:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c">%{S-1-5-21-3899523589-2416674273-2941457644-513}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-1-0}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-32-544}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-32-551}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-32-545}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-32-554}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-2}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-11}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-15}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-18-1}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-5-21-3899523589-2416674273-2941457644-1105}</span><span class="w"></span>
-<span class="w">    </span><span class="c">%{S-1-16-12288}</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c">%{S-1-5-21-3899523589-2416674273-2941457644-513}</span>
+<span class="w">    </span><span class="c">%{S-1-1-0}</span>
+<span class="w">    </span><span class="c">%{S-1-5-32-544}</span>
+<span class="w">    </span><span class="c">%{S-1-5-32-551}</span>
+<span class="w">    </span><span class="c">%{S-1-5-32-545}</span>
+<span class="w">    </span><span class="c">%{S-1-5-32-554}</span>
+<span class="w">    </span><span class="c">%{S-1-5-2}</span>
+<span class="w">    </span><span class="c">%{S-1-5-11}</span>
+<span class="w">    </span><span class="c">%{S-1-5-15}</span>
+<span class="w">    </span><span class="c">%{S-1-18-1}</span>
+<span class="w">    </span><span class="c">%{S-1-5-21-3899523589-2416674273-2941457644-1105}</span>
+<span class="w">    </span><span class="c">%{S-1-16-12288}</span>
 </code></pre></div>
 
 <p>Based on <a href="https://docs.microsoft.com/en-us/windows/win32/adschema/a-tokengroups">this</a> and <a href="https://morgantechspace.com/2015/08/active-directory-tokengroups-vs-memberof.html">this</a>, User Token Groups contains the list of security identifiers for groups and that it holds both direct group membership and recursive list of nested groups. This means that the answer to our question is included in that list.</p>

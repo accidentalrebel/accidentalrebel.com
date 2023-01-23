@@ -70,7 +70,7 @@
 <p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
 <h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
 <p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <span class="cp">#include …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Read on →</a> -->
       </article>
@@ -111,16 +111,16 @@
 <p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
 <h2 id="the-problem">The problem</h2>
 <p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span><span class="cp"></span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Upon compiling …</p>

@@ -84,30 +84,30 @@
 <p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="./images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
 <p>I recently got the idea of having Unity inform me when a script has finished reloading. Instead of informing me visually, I decided that it would also be better for it to play an audible beep sound. With this, I could use the time to close my eyes, relax, or stretch. Once it beeps I'll just open my eyes and I'm back to working again. Once it beeps I'll just open my eyes and I'm back to working again. It's such a simple thing but I feel has a good impact on my health.</p>
 <p>Here's the code that I use if you are interested. Note that this is an editor script so it should be placed inside any "Editor" folder for it to run.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span><span class="w"></span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span><span class="w"></span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span><span class="w"></span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEditor</span><span class="p">;</span><span class="w"></span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Diagnostics</span><span class="p">;</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEditor</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Diagnostics</span><span class="p">;</span>
 
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BuildManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="na">[UnityEditor.Callbacks.DidReloadScripts]</span><span class="w"></span>
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BuildManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[UnityEditor.Callbacks.DidReloadScripts]</span>
 <span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnScriptsReloaded</span><span class="p">()</span><span class="w"> </span>
-<span class="w">    </span><span class="p">{</span><span class="w"></span>
-<span class="w">        </span><span class="n">EditorApplication</span><span class="p">.</span><span class="n">Beep</span><span class="p">();</span><span class="w"></span>
-<span class="w">    </span><span class="p">}</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">EditorApplication</span><span class="p">.</span><span class="n">Beep</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>The code above uses Unity's <a href="https://docs.unity3d.com/ScriptReference/EditorApplication.Beep.html">EditorApplication.Beep()</a> API so it should work on Windows and Mac. But since I'm using Linux to develop games on it does not seem to work for me. </p>
 <p>Here's a different version that spawns a OS process and runs the <code>play</code> command to generate a short sine wave beep. Be sure to have <a href="http://sox.sourceforge.net/">sox</a> installed on your Linux machine for this to work.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ProcessStartInfo</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessStartInfo</span><span class="p">();</span><span class="w"></span>
-<span class="n">proc</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;play&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">proc</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="s">&quot;-q -n synth 0.1 sin 880 vol 0.2&quot;</span><span class="p">;</span><span class="w"></span>
-<span class="n">proc</span><span class="p">.</span><span class="n">WindowStyle</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Minimized</span><span class="p">;</span><span class="w"></span>
-<span class="n">proc</span><span class="p">.</span><span class="n">CreateNoWindow</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span><span class="w"></span>
-<span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">proc</span><span class="p">);</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="n">ProcessStartInfo</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessStartInfo</span><span class="p">();</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;play&quot;</span><span class="p">;</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;-q -n synth 0.1 sin 880 vol 0.2&quot;</span><span class="p">;</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">WindowStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Minimized</span><span class="p">;</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">CreateNoWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">proc</span><span class="p">);</span>
 </code></pre></div>
 
 <p>Of course, this is not a solution to the compile time problem. I'd still have to wait for it to finish. But what I like about this is that it has turned a negative into a positive. And that is always great.</p>

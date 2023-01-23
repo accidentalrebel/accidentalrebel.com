@@ -60,6 +60,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="./adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a></h1>
+	<div class="meta">
+          <time datetime="2023-01-23T21:02:00+08:00">January 23, 2023</time>
+          in <span class="categories">
+            <a href="./tag/malware.html">malware</a>,            <a href="./tag/re.html">re</a>,            <a href="./tag/jupyter.html">jupyter</a>          </span>
+	</div>
+        <p><p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
+<h1 id="what-are-jupyter-notebooks">What are Jupyter Notebooks?</h1>
+<p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
+<h1 id="my-additions-to-the-blue-jupyter">My Additions to the Blue-Jupyter</h1>
+<p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
+<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="./adding-automation-to-blue-jupyter-malware-notebook.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a></h1>
 	<div class="meta">
           <time datetime="2022-08-15T11:29:00+08:00">August 15, 2022</time>
@@ -70,7 +90,7 @@
 <p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
 <h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
 <p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp"></span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
 <span class="cp">#include …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Read on →</a> -->
       </article>
@@ -130,16 +150,16 @@
 <p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
 <h2 id="the-problem">The problem</h2>
 <p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span><span class="cp"></span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
 
-<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>Upon compiling …</p>
@@ -257,37 +277,6 @@
 </blockquote>
 <p>So the question tells us that …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a></h1>
-	<div class="meta">
-          <time datetime="2021-10-18T20:33:00+08:00">October 18, 2021</time>
-          in <span class="categories">
-            <a href="./tag/tools.html">tools</a>,            <a href="./tag/cybersecurity.html">cybersecurity</a>          </span>
-	</div>
-        <p><p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
-<p><img alt="new-tool-preview-vattack-01" src="./images/new-tool-preview-vattack-01.png" /></p>
-<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
-<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
-<ul>
-<li>Pink - Related subtechniques</li>
-<li>Orange - Malware that uses the searched technique</li>
-<li>Red - Groups that uses the searched technique</li>
-<li>Blue - Tools that use the searched technique</li>
-<li>Yellow - Mitigations</li>
-</ul>
-<p>This tool is still in development. I plan to add a number of improvements such as:</p>
-<ul>
-<li>Ability to click on nodes and then update the visual map</li>
-<li>Ability to search not just by technique, but also by other categories</li>
-</ul>
-<p>I also plan on releasing a live demo of the tool very soon in the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./new-tool-preview-vattack.html">Read on →</a> -->
       </article>
     </div>
   </div>

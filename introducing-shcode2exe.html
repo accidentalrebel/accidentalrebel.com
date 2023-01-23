@@ -110,18 +110,18 @@
 </code></pre></div>
 
 <p>Here's how to load a file with shellcode in the format of a string</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>cat test.txt
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>cat<span class="w"> </span>test.txt
 <span class="go">\x5e\x31\xc0\xb0\x24\xcd\x80\xb0\x24\xcd\x80\xb0\x58\xbb\xad\xde\xe1\xfe\xb9\x69\x19\x12\x28\xba\x67\x45\x23\x01\xcd\x80</span>
-<span class="gp">$ </span>./shcode2exe.py -s -o test-string.exe test.bin
+<span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>test-string.exe<span class="w"> </span>test.bin
 </code></pre></div>
 
 <p>Load a file with shellcode in the format of a blob</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py -o test-blob.exe test.bin
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-o<span class="w"> </span>test-blob.exe<span class="w"> </span>test.bin
 </code></pre></div>
 
 <p>Use 64 bit architecture for the output (32 bit is the default)</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py -o test-blob.exe -a <span class="m">64</span> test.bin
-<span class="gp">$ </span>file test-blob.exe
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-o<span class="w"> </span>test-blob.exe<span class="w"> </span>-a<span class="w"> </span><span class="m">64</span><span class="w"> </span>test.bin
+<span class="gp">$ </span>file<span class="w"> </span>test-blob.exe
 <span class="go">test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows</span>
 </code></pre></div>
 

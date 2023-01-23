@@ -60,6 +60,37 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a></h1>
+	<div class="meta">
+          <time datetime="2021-10-18T20:33:00+08:00">October 18, 2021</time>
+          in <span class="categories">
+            <a href="../tag/tools.html">tools</a>,            <a href="../tag/cybersecurity.html">cybersecurity</a>          </span>
+	</div>
+        <p><p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
+<p><img alt="new-tool-preview-vattack-01" src="../images/new-tool-preview-vattack-01.png" /></p>
+<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
+<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
+<ul>
+<li>Pink - Related subtechniques</li>
+<li>Orange - Malware that uses the searched technique</li>
+<li>Red - Groups that uses the searched technique</li>
+<li>Blue - Tools that use the searched technique</li>
+<li>Yellow - Mitigations</li>
+</ul>
+<p>This tool is still in development. I plan to add a number of improvements such as:</p>
+<ul>
+<li>Ability to click on nodes and then update the visual map</li>
+<li>Ability to search not just by technique, but also by other categories</li>
+</ul>
+<p>I also plan on releasing a live demo of the tool very soon in the …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../new-tool-preview-vattack.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="../ioli-crackme-0x04.html">IOLI Crackme 0x04</a></h1>
 	<div class="meta">
           <time datetime="2021-09-29T10:34:00+08:00">September 29, 2021</time>
@@ -73,9 +104,9 @@
 <p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
 <p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
 <p><img alt="ioli-crackme-0x04-02" src="../images/ioli-crackme-0x04-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span><span class="w"></span>
-<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w"></span>
-<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span>
+<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span>
 </code></pre></div>
 
 <p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
@@ -243,26 +274,6 @@
 <h3 id="description">Description</h3>
 <p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../maldoc101-writeup-part-1.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../ioli-crackme-0x02.html">IOLI Crackme 0x02</a></h1>
-	<div class="meta">
-          <time datetime="2021-03-06T10:34:00+08:00">March 06, 2021</time>
-          in <span class="categories">
-            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
-	</div>
-        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a> and <a href="../ioli-crackme-0x01.html">0x01</a>.</p>
-<h1 id="getting-the-password">Getting the password</h1>
-<p>After the first two challenges I kinda know what to expect already so I skipped running the program and immediately loaded it in IDA.</p>
-<p><img alt="ioli-crackme-0x02-01" src="../images/ioli-crackme-0x02-01.png" /></p>
-<p>So the lines leading to the comparison command now looks more complicated than before. We could easily see that there are some computations that happens thanks to the presence of <code>add</code> and <code>imul</code>. Before those, we have two values (<code>5Ah</code> and <code>1ECh</code>) which we can easily guess are the values that will be worked on by these arithmetic functions.</p>
-<p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x02.html">Read on →</a> -->
       </article>
     </div>
   </div>

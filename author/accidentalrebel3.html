@@ -60,6 +60,26 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
+        <h1><a href="../ioli-crackme-0x02.html">IOLI Crackme 0x02</a></h1>
+	<div class="meta">
+          <time datetime="2021-03-06T10:34:00+08:00">March 06, 2021</time>
+          in <span class="categories">
+            <a href="../tag/re.html">re</a>,            <a href="../tag/crackme.html">crackme</a>          </span>
+	</div>
+        <p><p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a> and <a href="../ioli-crackme-0x01.html">0x01</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>After the first two challenges I kinda know what to expect already so I skipped running the program and immediately loaded it in IDA.</p>
+<p><img alt="ioli-crackme-0x02-01" src="../images/ioli-crackme-0x02-01.png" /></p>
+<p>So the lines leading to the comparison command now looks more complicated than before. We could easily see that there are some computations that happens thanks to the presence of <code>add</code> and <code>imul</code>. Before those, we have two values (<code>5Ah</code> and <code>1ECh</code>) which we can easily guess are the values that will be worked on by these arithmetic functions.</p>
+<p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x02.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
         <h1><a href="../introducing-shcode2exe.html">Introducing shcode2exe</a></h1>
 	<div class="meta">
           <time datetime="2021-02-26T07:34:00+08:00">February 26, 2021</time>
@@ -92,14 +112,14 @@
 <p><img alt="ioli-crackme-0x01-01" src="../images/ioli-crackme-0x01-01.png" /></p>
 <p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
 <p><img alt="ioli-crackme-0x01-02" src="../images/ioli-crackme-0x01-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span><span class="w"></span>
-<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
+<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
 </code></pre></div>
 
 <p>This seems easy enough. </p>
 <p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
 <div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span><span class="w"></span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
 </code></pre></div>
 
 <p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
@@ -126,7 +146,7 @@
 <p><img alt="ioli-crackme-0x00-02" src="../images/ioli-crackme-0x00-02.png" /></p>
 <div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
 <span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span><span class="w"></span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span>
 </code></pre></div>
 
 <p>And just from these few lines alone I already knew what the password is …</p>
@@ -213,7 +233,7 @@
 <h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
 <p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
 <p>To view the current MAC address:</p>
-<div class="codehilite"><pre><span></span><code>$ ifconfig
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig
 </code></pre></div>
 
 <p>The current MAC address is <code>08:00 …</code></p>
@@ -236,27 +256,27 @@
 <hr />
 <h2 id="foreign-lambda-example">foreign-lambda example</h2>
 <p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span>
 
-<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span><span class="w"></span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span><span class="w"></span>
-<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span><span class="w"></span>
-<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span><span class="w"></span>
-<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span>
+<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span>
 <span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chicken-scheme-ffi-examples.html">Read on →</a> -->
       </article>
@@ -276,24 +296,6 @@
 <p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
 <p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../switching-from-c-c---to-c.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
-          in <span class="categories">
-            <a href="../tag/dev.html">dev</a>,            <a href="../tag/game_engine.html">game_engine</a>          </span>
-	</div>
-        <p><p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
-<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
-<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../following-lispy-conventions.html">Read on →</a> -->
       </article>
     </div>
   </div>

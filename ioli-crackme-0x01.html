@@ -83,14 +83,14 @@
 <p><img alt="ioli-crackme-0x01-01" src="./images/ioli-crackme-0x01-01.png" /></p>
 <p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
 <p><img alt="ioli-crackme-0x01-02" src="./images/ioli-crackme-0x01-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span><span class="w"></span>
-<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
+<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
 </code></pre></div>
 
 <p>This seems easy enough. </p>
 <p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
 <div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span><span class="w"></span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
 </code></pre></div>
 
 <p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274</code>, which is the correct password.</p>
@@ -100,19 +100,19 @@
 <h1 id="passing-arguments-to-functions">Passing arguments to functions</h1>
 <p>Since the crackme was cracked relatively quickly I want to review and highlight how arguments are passed to functions. </p>
 <p>The format of the <code>scanf</code> function in C is like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">scanf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">);</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">scanf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">);</span>
 </code></pre></div>
 
 <p>Here's an example of how it is used:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span><span class="w"></span>
-<span class="n">scanf</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="n">scanf</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span>
 </code></pre></div>
 
 <p>If we look at the 0x01 program we could see how the arguments are passed to the <em>_scanf</em> function by placing the data to send on top of the stack.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">lea</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">]</span><span class="w"></span>
-<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">var_14</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">lea</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">]</span>
+<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">var_14</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
 <span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="c1">;  &quot;%d&quot;</span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span><span class="w"></span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
 </code></pre></div>
 
 <p><code>lea eax, [ebp+var_4]</code> gets the address of <em>var_4</em>, this is the memory location where scanf would put the inputted data. This is then added to the stack with <code>mov [esp+18h+var_14]</code>.</p>

@@ -89,13 +89,13 @@
 <h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
 <p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an anti-virus detection capability is through checking for suspicious strings in an executable.</p>
 <p>For the purpose of this post, let's pretend that "notepad" is a suspicious string that we don't want be detected by the anti-virus.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span><span class="cp"></span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span><span class="cp"></span>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"></span>
-<span class="p">{</span><span class="w"></span>
-<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;notepad&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span><span class="w"></span>
-<span class="p">}</span><span class="w"></span>
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;notepad&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
+<span class="p">}</span>
 </code></pre></div>
 
 <blockquote>
@@ -108,8 +108,8 @@
 <p>To prevent detection, we need a way for the string to not be present in our compiled executable.</p>
 <h2 id="the-solution">The solution</h2>
 <p>The solution is to declare the string to be passed as the parameter like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
 </code></pre></div>
 
 <p>And when <code>strings</code> is run, we now see that the "notepad" string is not present anymore.</p>
@@ -119,26 +119,26 @@
 <p>To further understand how this happens, let's convert this C program into x64 assembly.</p>
 <h2 id="converting-to-x64-assembly">Converting to x64 assembly</h2>
 <p>First, we setup our boilerplate code with an entry point and a call to <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span><span class="w"></span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
+<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
 
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span><span class="w"></span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span><span class="w"></span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span><span class="w"></span>
+<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
+<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
+<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
 
-<span class="nl">main:</span><span class="w"></span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span><span class="w"></span>
+<span class="nl">main:</span>
+<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
 
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w"></span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span><span class="w"></span>
+<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
+<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
 </code></pre></div>
 
 <p>Before we can call <code>ShellExecute</code>, we first need to import the <code>ShellExecuteA</code> symbol using <code>extern</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.text</span><span class="w"></span>
-<span class="w">    </span><span class="na">...</span><span class="w"></span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span><span class="w"></span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
+<span class="w">    </span><span class="na">...</span>
+<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
+<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span>
 </code></pre></div>
 
 <hr />
@@ -158,7 +158,7 @@
 </blockquote>
 <hr />
 <p>Before we call the function in assembly, let's go back and take a look at how we did it in C.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;notepad&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;notepad&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
 </code></pre></div>
 
 <p>We have 5 paremeters to pass to the function. Here's how we can write this in assembly using the Microsoft <a href="https://docs.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170">x64 calling conventions</a>.</p>
@@ -171,66 +171,66 @@
 
 <span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span><span class="w">             </span><span class="c1">; hwnd</span>
 
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"></span>
+<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
 <span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span><span class="w">    </span><span class="c1">; Call function</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"></span>
+<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
 </code></pre></div>
 
 <p>We then initialize the strings by adding a data segment section:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span><span class="w"></span>
-<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">    </span><span class="nf">msg_notepad</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">notepad</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
+<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="nf">msg_notepad</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">notepad</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
 </code></pre></div>
 
 <p>For reference, here is our full code so far:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span><span class="w"></span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
+<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
 
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span><span class="w"></span>
-<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">    </span><span class="nf">msg_notepad</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">notepad</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
+<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="nf">msg_notepad</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">notepad</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
 
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span><span class="w"></span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span><span class="w"></span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span><span class="w"></span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span><span class="w"></span>
+<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
+<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
+<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
+<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span>
 
-<span class="nl">main:</span><span class="w"></span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span><span class="w"></span>
+<span class="nl">main:</span>
+<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
 
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span><span class="w"></span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span><span class="w"></span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span><span class="w"></span>
+<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span>
+<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span>
+<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
 
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_notepad</span><span class="p">]</span><span class="w"></span>
+<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_notepad</span><span class="p">]</span>
 <span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_open</span><span class="p">]</span><span class="w"> </span>
 <span class="w">    </span><span class="no">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span><span class="w">    </span>
 
-<span class="w">    </span><span class="no">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"></span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span><span class="w"></span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"></span>
+<span class="w">    </span><span class="no">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
+<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span>
+<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
 
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w"></span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span><span class="w"></span>
+<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
+<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
 </code></pre></div>
 
 <p>Take note that this version of the code is still the one where the "notepad" string is detectable.</p>
 <p>To hide this string we need to apply the same solution we did to our C code; which is to place the data on the stack so that it would not be placed in the <code>.data</code> segment.</p>
 <p>Here is how we did it in C:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span><span class="w"></span>
-<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
 </code></pre></div>
 
 <p>And here is how to do it in assembly:</p>
 <div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w">             </span><span class="c1">; Reserve space on stack for string</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span>
 <span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">7</span><span class="p">],</span><span class="w"> </span><span class="mi">0x0</span><span class="w">   </span>
 <span class="w">    </span><span class="no">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">          </span><span class="c1">; Load address of string to r8</span>
 <span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w">             </span><span class="c1">; Reclaim space</span>
@@ -252,84 +252,84 @@
 Take note, however that when reserving space we need to maintain the <em>stack alignment</em> so we add and subtract by multiples of 8.
 The "powershell" string has 11 characters so we use 16.</p>
 </blockquote>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">w</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">r</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">s</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">h</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">7</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">8</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">9</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">10</span><span class="p">],</span><span class="w"> </span><span class="mi">0x0</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">w</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">r</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">s</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">h</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">7</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">8</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">9</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">10</span><span class="p">],</span><span class="w"> </span><span class="mi">0x0</span>
 
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w"></span>
+<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
+<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span>
 </code></pre></div>
 
 <hr />
 <p>With this final version of the code, "notepad" will not be visible to <code>strings</code> anymore.</p>
 <p>Here is our final code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span><span class="w"></span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
+<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
 
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span><span class="w"></span>
-<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
+<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
+<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
 
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span><span class="w"></span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span><span class="w"></span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span><span class="w"></span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span><span class="w"></span>
+<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
+<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
+<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
+<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span>
 
-<span class="nl">main:</span><span class="w"></span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span><span class="w"></span>
+<span class="nl">main:</span>
+<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
 
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span><span class="w"></span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span><span class="w"></span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span><span class="w"></span>
+<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span>
+<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span>
+<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
 
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span><span class="w"></span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="w"></span>
+<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span>
+<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span>
 <span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">7</span><span class="p">],</span><span class="w"> </span><span class="mi">0x0</span><span class="w">   </span>
-<span class="w">    </span><span class="no">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w"></span>
+<span class="w">    </span><span class="no">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
+<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span>
 
 <span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_open</span><span class="p">]</span><span class="w"> </span>
 <span class="w">    </span><span class="no">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span><span class="w">    </span>
 
-<span class="w">    </span><span class="no">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"></span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span><span class="w"></span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"></span>
+<span class="w">    </span><span class="no">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
+<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span>
+<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
 
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w"></span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span><span class="w"></span>
+<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
+<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
 </code></pre></div>
 
 <h2 id="hiding-at-scale">Hiding at scale</h2>
 <p>Writing the code above can get a little tedious especially if we want to pass a really long string. Thankfully, we can use a macro like the one I've written below:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">%</span><span class="nf">macro</span><span class="w">  </span><span class="no">addstr2stack</span><span class="w">    </span><span class="mi">1</span><span class="p">-*</span><span class="w"></span>
-<span class="w">    </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">    </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">j</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">    </span><span class="err">%</span><span class="na">rep</span><span class="w">    </span><span class="err">%0</span><span class="w"></span>
-<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="no">i</span><span class="err">+</span><span class="mi">8</span><span class="p">*</span><span class="no">j</span><span class="p">],</span><span class="w"> </span><span class="err">%</span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="no">i</span><span class="err">+</span><span class="mi">1</span><span class="w"></span>
-<span class="w">        </span><span class="err">%</span><span class="nf">rotate</span><span class="w"> </span><span class="mi">1</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="err">%</span><span class="nf">macro</span><span class="w">  </span><span class="no">addstr2stack</span><span class="w">    </span><span class="mi">1</span><span class="p">-*</span>
+<span class="w">    </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">j</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="err">%</span><span class="na">rep</span><span class="w">    </span><span class="err">%0</span>
+<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="no">i</span><span class="err">+</span><span class="mi">8</span><span class="p">*</span><span class="no">j</span><span class="p">],</span><span class="w"> </span><span class="err">%</span><span class="mi">1</span>
+<span class="w">        </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="no">i</span><span class="err">+</span><span class="mi">1</span>
+<span class="w">        </span><span class="err">%</span><span class="nf">rotate</span><span class="w"> </span><span class="mi">1</span>
 
-<span class="w">        </span><span class="err">%</span><span class="nf">if</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="err">&gt;=</span><span class="w"> </span><span class="mi">8</span><span class="w"></span>
-<span class="w">            </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">j</span><span class="w"> </span><span class="no">j</span><span class="err">+</span><span class="mi">1</span><span class="w"></span>
-<span class="w">            </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="mi">0</span><span class="w"></span>
-<span class="w">        </span><span class="err">%</span><span class="nf">endif</span><span class="w"></span>
-<span class="w">    </span><span class="err">%</span><span class="nf">endrep</span><span class="w"></span>
-<span class="err">%</span><span class="nf">endmacro</span><span class="w"></span>
+<span class="w">        </span><span class="err">%</span><span class="nf">if</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="err">&gt;=</span><span class="w"> </span><span class="mi">8</span>
+<span class="w">            </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">j</span><span class="w"> </span><span class="no">j</span><span class="err">+</span><span class="mi">1</span>
+<span class="w">            </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">        </span><span class="err">%</span><span class="nf">endif</span>
+<span class="w">    </span><span class="err">%</span><span class="nf">endrep</span>
+<span class="err">%</span><span class="nf">endmacro</span>
 </code></pre></div>
 
 <p>What the macro does is that it loops through each character and places it into the correct position on the stack.</p>
@@ -339,9 +339,9 @@ The "powershell" string has 11 characters so we use 16.</p>
 </blockquote>
 <p>This macro can then be called like this:</p>
 <div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">        </span><span class="c1">; Reserve space for the string on the stack</span>
-<span class="w">    </span><span class="nf">addstr2stack</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0</span><span class="w"></span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w"></span>
-<span class="w">    </span><span class="na">...</span><span class="w"></span>
+<span class="w">    </span><span class="nf">addstr2stack</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0</span>
+<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
+<span class="w">    </span><span class="na">...</span>
 <span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">        </span><span class="c1">; After use, release the space</span>
 </code></pre></div>
 

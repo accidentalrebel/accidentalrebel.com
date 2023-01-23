@@ -97,7 +97,7 @@
 <p>What streams contain macros in this document? (comma-separated, ascending).</p>
 </blockquote>
 <p><a href="https://blog.didierstevens.com/programs/oledump-py/">oledump.py</a> is a tool made by <a href="https://blog.didierstevens.com/about/">Didier Stevens</a> that allows the analysis of data streams found in OLE files such as MS Office documetns. Running the command below would show us which streams have macros in it. These are denoted with the character <em>M</em>.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py sample.bin
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py<span class="w"> </span>sample.bin
 <span class="go">  1:       114 &#39;\x01CompObj&#39;</span>
 <span class="go">  2:      4096 &#39;\x05DocumentSummaryInformation&#39;</span>
 <span class="go">  3:      4096 &#39;\x05SummaryInformation&#39;</span>
@@ -124,7 +124,7 @@
 <p>What command-line argument with Oledump do you use to view the raw content of a stream? (Do not include the leading dash) </p>
 </blockquote>
 <p>The next question is another easy one which ran easily be solved through <code>oledump.py</code>'s <em>--help</em> parameter.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py --help
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py<span class="w"> </span>--help
 <span class="go">Usage: oledump.py [options] [file]</span>
 <span class="go">Analyze OLE files (Compound Binary Files)</span>
 
@@ -150,7 +150,7 @@
 <p>What event is used to begin the execution of the macros?  </p>
 </blockquote>
 <p>I used a different tool for this particular question mostly because I knew that it already shows the information I need to answer the question. The tool is called <code>olevba</code> which is part of the <a href="https://github.com/decalage2/oletools">oletools</a> package of Python tools. <em>Olevba</em> is used for extracting and analyzing VBA macro source code for MS Office documents.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>olevba sample.bin
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>olevba<span class="w"> </span>sample.bin
 <span class="go">+----------+--------------------+---------------------------------------------+</span>
 <span class="go">|Type      |Keyword             |Description                                  |</span>
 <span class="go">+----------+--------------------+---------------------------------------------+</span>
@@ -170,7 +170,7 @@
 <p>I figured that the way for me to determine the answer for the question above is to start investigating the macro codes included in the document.</p>
 <p>I knew from the previous question that the entry point to begin the execution of the macros is with the function <code>Document_open()</code>. The next step is to look for this entry point and go through the code to understand what the macro is doing.</p>
 <p>To view the contents of a stream, I used the command below:</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py sample.bin -s <span class="m">13</span> -v
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py<span class="w"> </span>sample.bin<span class="w"> </span>-s<span class="w"> </span><span class="m">13</span><span class="w"> </span>-v
 <span class="go">Attribute VB_Name = &quot;diakzouxchouz&quot;</span>
 <span class="go">Attribute VB_Base = &quot;1Normal.ThisDocument&quot;</span>
 <span class="go">Attribute VB_GlobalNameSpace = False</span>
@@ -186,16 +186,16 @@
 </code></pre></div>
 
 <p>In the above output, I saw that <code>Document_open()</code> contains a single line of code which is a call to function <code>boaxvoebxiotqueb'</code>. This function is included in stream <code>15</code> which can be viewed with the command:</p>
-<div class="codehilite"><pre><span></span><code>$ oledump.py sample.bin -s <span class="m">13</span> -v
-Attribute <span class="nv">VB_Name</span> <span class="o">=</span> <span class="s2">&quot;govwiahtoozfaid&quot;</span>
-Function boaxvoebxiotqueb<span class="o">()</span>
-<span class="nv">gooykadheoj</span> <span class="o">=</span> Chr<span class="o">(</span>roubhaol.Zoom + Int<span class="o">(</span><span class="m">5</span> * <span class="m">3</span><span class="o">))</span>
-Dim c7�ATOQe2�j As Integer
-c7�ATOQe2�j <span class="o">=</span> <span class="m">6</span>
-Do While c7�ATOQe2�j &lt; <span class="m">6</span> + <span class="m">2</span>
-c7�ATOQe2�j <span class="o">=</span> c7�ATOQe2�j + <span class="m">5</span>: DoEvents
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>oledump.py<span class="w"> </span>sample.bin<span class="w"> </span>-s<span class="w"> </span><span class="m">13</span><span class="w"> </span>-v
+Attribute<span class="w"> </span><span class="nv">VB_Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;govwiahtoozfaid&quot;</span>
+Function<span class="w"> </span>boaxvoebxiotqueb<span class="o">()</span>
+<span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Chr<span class="o">(</span>roubhaol.Zoom<span class="w"> </span>+<span class="w"> </span>Int<span class="o">(</span><span class="m">5</span><span class="w"> </span>*<span class="w"> </span><span class="m">3</span><span class="o">))</span>
+Dim<span class="w"> </span>c7�ATOQe2�j<span class="w"> </span>As<span class="w"> </span>Integer
+c7�ATOQe2�j<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span>
+Do<span class="w"> </span>While<span class="w"> </span>c7�ATOQe2�j<span class="w"> </span>&lt;<span class="w"> </span><span class="m">6</span><span class="w"> </span>+<span class="w"> </span><span class="m">2</span>
+c7�ATOQe2�j<span class="w"> </span><span class="o">=</span><span class="w"> </span>c7�ATOQe2�j<span class="w"> </span>+<span class="w"> </span><span class="m">5</span>:<span class="w"> </span>DoEvents
 Loop
-<span class="nv">haothkoebtheil</span> <span class="o">=</span> <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot;</span> + gooykadheoj + <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot;</span> + roubhaol.joefwoefcheaw + <span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;</span>
+<span class="nv">haothkoebtheil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span>+<span class="w"> </span>gooykadheoj<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span>+<span class="w"> </span>roubhaol.joefwoefcheaw<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;</span>
 ...
 </code></pre></div>
 
@@ -219,58 +219,58 @@ gooykadheoj = Chr(115) # character &quot;s&quot;
 </code></pre></div>
 
 <p>I then proceeded to go through the next set of lines.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Dim</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="nv">As</span> <span class="nv">Integer</span>
-<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="k">Do</span> <span class="k">While</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">&lt;</span> <span class="mi">6</span> <span class="o">+</span> <span class="mi">2</span>
-<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">=</span> <span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span> <span class="o">+</span> <span class="mi">5</span>: <span class="nv">DoEvents</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">Dim</span><span class="w"> </span><span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="nv">As</span><span class="w"> </span><span class="nv">Integer</span>
+<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span>
+<span class="k">Do</span><span class="w"> </span><span class="k">While</span><span class="w"> </span><span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span>
+<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span>:<span class="w"> </span><span class="nv">DoEvents</span>
 <span class="k">Loop</span>
 </code></pre></div>
 
 <p>This one is easier to simulate. <code>c7�ATOQe2�j</code> is assigend 6. And then there's a loop that adds <code>5</code> that eventually results to the value of <code>16</code>.</p>
 <p>But wait, something is fishy here. The variable <code>c7�ATOQe2�j</code> is not found anywhere else after the block of code above. This tells us that this is just junk code that does not really do anything aside from waste an analyst's time! Sneaky sneaky.</p>
 <p>To save me the time I proceeded to remove all junk code. I did this by going through each variables and seeing if they are used somewhere useful. If not, then they are safe to remove.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Attribute</span> <span class="nv">VB_Name</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">govwiahtoozfaid</span><span class="s2">&quot;</span>
-<span class="nv">Function</span> <span class="nv">boaxvoebxiotqueb</span><span class="ss">()</span>
-    <span class="nv">gooykadheoj</span> <span class="o">=</span> <span class="nv">Chr</span><span class="ss">(</span><span class="nv">roubhaol</span>.<span class="nv">Zoom</span> <span class="o">+</span> <span class="nv">Int</span><span class="ss">(</span><span class="mi">5</span> <span class="o">*</span> <span class="mi">3</span><span class="ss">))</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">Attribute</span><span class="w"> </span><span class="nv">VB_Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;govwiahtoozfaid&quot;</span>
+<span class="nv">Function</span><span class="w"> </span><span class="nv">boaxvoebxiotqueb</span><span class="ss">()</span>
+<span class="w">    </span><span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Chr</span><span class="ss">(</span><span class="nv">roubhaol</span>.<span class="nv">Zoom</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">Int</span><span class="ss">(</span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="ss">))</span>
 
-    <span class="nv">haothkoebtheil</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nv">gooykadheoj</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span>
+<span class="w">    </span><span class="nv">haothkoebtheil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;</span>
 
-    <span class="nv">deulsaocthuul</span> <span class="o">=</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">haothkoebtheil</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">deulsaocthuul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">haothkoebtheil</span><span class="ss">)</span>
 
-    <span class="nv">Set</span> <span class="nv">tiajriokchaoy</span> <span class="o">=</span> <span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">deulsaocthuul</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">Set</span><span class="w"> </span><span class="nv">tiajriokchaoy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">deulsaocthuul</span><span class="ss">)</span>
 
-    <span class="nv">deaknaugthein</span> <span class="o">=</span> <span class="nv">roubhaol</span>.<span class="nv">kaizseah</span>.<span class="nv">ControlTipText</span>
-    <span class="nv">giakfeiw</span> <span class="o">=</span> <span class="nv">deulsaocthuul</span> <span class="o">+</span> <span class="nv">gooykadheoj</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">paerwagyouqumeid</span>.<span class="nv">ControlTipText</span> <span class="o">+</span> <span class="nv">deaknaugthein</span>
-    <span class="nv">queegthaen</span> <span class="o">=</span> <span class="nv">giakfeiw</span> <span class="o">+</span> <span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span>
+<span class="w">    </span><span class="nv">deaknaugthein</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">kaizseah</span>.<span class="nv">ControlTipText</span>
+<span class="w">    </span><span class="nv">giakfeiw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">deulsaocthuul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">paerwagyouqumeid</span>.<span class="nv">ControlTipText</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">deaknaugthein</span>
+<span class="w">    </span><span class="nv">queegthaen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">giakfeiw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span>
 
-    <span class="nv">Set</span> <span class="nv">deavjoajsear</span> <span class="o">=</span> <span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">queegthaen</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">Set</span><span class="w"> </span><span class="nv">deavjoajsear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">queegthaen</span><span class="ss">)</span>
 
-    <span class="nv">xve</span> <span class="o">=</span> <span class="nv">Array</span> <span class="nv">_</span>
-        <span class="ss">(</span><span class="s2">&quot;</span><span class="s">1234444123</span><span class="s2">&quot;</span>, <span class="nv">tiajriokchaoy</span>. <span class="nv">_</span>
-        <span class="nv">Create</span><span class="ss">(</span><span class="nv">geulgelquuuj</span>, <span class="nv">kaenhaig</span>, <span class="nv">deavjoajsear</span><span class="ss">)</span>, <span class="s2">&quot;</span><span class="s">9938723</span><span class="s2">&quot;</span><span class="ss">)</span>
-<span class="k">End</span> <span class="nv">Function</span>
+<span class="w">    </span><span class="nv">xve</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Array</span><span class="w"> </span><span class="nv">_</span>
+<span class="w">        </span><span class="ss">(</span><span class="s2">&quot;1234444123&quot;</span>,<span class="w"> </span><span class="nv">tiajriokchaoy</span>.<span class="w"> </span><span class="nv">_</span>
+<span class="w">        </span><span class="nv">Create</span><span class="ss">(</span><span class="nv">geulgelquuuj</span>,<span class="w"> </span><span class="nv">kaenhaig</span>,<span class="w"> </span><span class="nv">deavjoajsear</span><span class="ss">)</span>,<span class="w"> </span><span class="s2">&quot;9938723&quot;</span><span class="ss">)</span>
+<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
 
-<span class="nv">Function</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
-    <span class="nv">geutyoeytiestheug</span> <span class="o">=</span> <span class="nv">yiajthoavheiw</span>
-    <span class="nv">feaxgeip</span> <span class="o">=</span> <span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>, <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span><span class="ss">)</span>
+<span class="nv">Function</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">geutyoeytiestheug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">yiajthoavheiw</span>
+<span class="w">    </span><span class="nv">feaxgeip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>,<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="ss">)</span>
 
-    <span class="nv">jaquhoiqu</span> <span class="o">=</span> <span class="nv">csqw</span> <span class="o">+</span> <span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>, <span class="nv">eihnx</span><span class="ss">)</span>
-    <span class="nv">juuvzouchmiopxeox</span> <span class="o">=</span> <span class="nv">jaquhoiqu</span>
-<span class="k">End</span> <span class="nv">Function</span>
+<span class="w">    </span><span class="nv">jaquhoiqu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">csqw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>,<span class="w"> </span><span class="nv">eihnx</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">juuvzouchmiopxeox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">jaquhoiqu</span>
+<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
 
-<span class="nv">Function</span> <span class="nv">geulgelquuuj</span><span class="ss">()</span>
-    <span class="nv">sjiqw</span> <span class="o">=</span> <span class="nv">roubhaol</span>.<span class="nv">gaoddaicsauktheb</span>.<span class="nv">Pages</span><span class="ss">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mi">10</span><span class="ss">)</span>.<span class="nv">ControlTipText</span>
-    <span class="nv">geulgelquuuj</span> <span class="o">=</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">sjiqw</span><span class="ss">)</span>
-<span class="k">End</span> <span class="nv">Function</span>
+<span class="nv">Function</span><span class="w"> </span><span class="nv">geulgelquuuj</span><span class="ss">()</span>
+<span class="w">    </span><span class="nv">sjiqw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">gaoddaicsauktheb</span>.<span class="nv">Pages</span><span class="ss">(</span><span class="mi">10</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10</span><span class="ss">)</span>.<span class="nv">ControlTipText</span>
+<span class="w">    </span><span class="nv">geulgelquuuj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">sjiqw</span><span class="ss">)</span>
+<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
 
-<span class="nv">Function</span> <span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
-    <span class="nv">Set</span> <span class="nv">luumlaud</span> <span class="o">=</span> <span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
-    <span class="nv">Dim</span> <span class="nv">vPu</span> <span class="nv">As</span> <span class="nv">String</span>
-    <span class="nv">vPu</span> <span class="o">=</span> <span class="nv">Replace</span>$<span class="ss">(</span><span class="s2">&quot;</span><span class="s">BenqV1�igVwifwdQq</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">BenqV1�i</span><span class="s2">&quot;</span>, <span class="s2">&quot;</span><span class="s">on5�</span><span class="s2">&quot;</span><span class="ss">)</span>
-        <span class="nv">luumlaud</span> <span class="nv">_</span>
-        . <span class="nv">_</span>
-        <span class="nv">showwindow</span> <span class="o">=</span> <span class="ss">(</span><span class="nv">mujgoiy</span> <span class="o">+</span> <span class="nv">jioyseertioch</span><span class="ss">)</span> <span class="o">+</span> <span class="ss">(</span><span class="nv">neivberziok</span> <span class="o">+</span> <span class="nv">xuajroegquoudcaij</span><span class="ss">)</span>
-<span class="k">End</span> <span class="nv">Function</span>
+<span class="nv">Function</span><span class="w"> </span><span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">Set</span><span class="w"> </span><span class="nv">luumlaud</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">Dim</span><span class="w"> </span><span class="nv">vPu</span><span class="w"> </span><span class="nv">As</span><span class="w"> </span><span class="nv">String</span>
+<span class="w">    </span><span class="nv">vPu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Replace</span>$<span class="ss">(</span><span class="s2">&quot;BenqV1�igVwifwdQq&quot;</span>,<span class="w"> </span><span class="s2">&quot;BenqV1�i&quot;</span>,<span class="w"> </span><span class="s2">&quot;on5�&quot;</span><span class="ss">)</span>
+<span class="w">        </span><span class="nv">luumlaud</span><span class="w"> </span><span class="nv">_</span>
+<span class="w">        </span>.<span class="w"> </span><span class="nv">_</span>
+<span class="w">        </span><span class="nv">showwindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">(</span><span class="nv">mujgoiy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">jioyseertioch</span><span class="ss">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="ss">(</span><span class="nv">neivberziok</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">xuajroegquoudcaij</span><span class="ss">)</span>
+<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
 </code></pre></div>
 
 <p>As you can see above, the code is shorter. It's also a little easier to understand. Only a little though, we still need to step through the code carefully to have a better grasp of what it is doing.</p>
@@ -290,18 +290,18 @@ gooykadheoj = Chr(115) # character &quot;s&quot;
 </code></pre></div>
 
 <p>Let's look at the code inside <code>juuvzouchmiopxeox</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Function</span> <span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
-    <span class="nv">geutyoeytiestheug</span> <span class="o">=</span> <span class="nv">yiajthoavheiw</span>
-    <span class="nv">feaxgeip</span> <span class="o">=</span> <span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>, <span class="s2">&quot;</span><span class="s">2342772g3&amp;*gs7712ffvs626fq</span><span class="s2">&quot;</span><span class="ss">)</span>
+<div class="codehilite"><pre><span></span><code><span class="nv">Function</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">geutyoeytiestheug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">yiajthoavheiw</span>
+<span class="w">    </span><span class="nv">feaxgeip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>,<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="ss">)</span>
 
-    <span class="nv">jaquhoiqu</span> <span class="o">=</span> <span class="nv">csqw</span> <span class="o">+</span> <span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>, <span class="nv">eihnx</span><span class="ss">)</span>
-    <span class="nv">juuvzouchmiopxeox</span> <span class="o">=</span> <span class="nv">jaquhoiqu</span>
-<span class="k">End</span> <span class="nv">Function</span>
+<span class="w">    </span><span class="nv">jaquhoiqu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">csqw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>,<span class="w"> </span><span class="nv">eihnx</span><span class="ss">)</span>
+<span class="w">    </span><span class="nv">juuvzouchmiopxeox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">jaquhoiqu</span>
+<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
 </code></pre></div>
 
 <p>Following the code we could see that the passed string is splitted using the call to the function <code>Split</code> with the substring <code>2342772g3&amp;*gs7712ffvs626fq</code>. This simply means that the substring is removed from the input string. The result of <code>Split</code> is then joined into one string using <code>Join</code>. There are the variables <code>csqw</code> and <code>eihnx</code>, they don't alter the string as these variables are empty. </p>
 <p>At the end of this function the value of the passed string is now:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">winmgmts</span><span class="o">:</span><span class="n">win32_Process</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="n">winmgmts</span><span class="o">:</span><span class="n">win32_Process</span>
 </code></pre></div>
 
 <p>Aha! Something that is not gibberish for a change!</p>

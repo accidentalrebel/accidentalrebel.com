@@ -70,18 +70,18 @@
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Here's how to load a file with shellcode in the format of a string&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;cat test.txt
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;cat&lt;span class="w"&gt; &lt;/span&gt;test.txt
 &lt;span class="go"&gt;\x5e\x31\xc0\xb0\x24\xcd\x80\xb0\x24\xcd\x80\xb0\x58\xbb\xad\xde\xe1\xfe\xb9\x69\x19\x12\x28\xba\x67\x45\x23\x01\xcd\x80&lt;/span&gt;
-&lt;span class="gp"&gt;$ &lt;/span&gt;./shcode2exe.py -s -o test-string.exe test.bin
+&lt;span class="gp"&gt;$ &lt;/span&gt;./shcode2exe.py&lt;span class="w"&gt; &lt;/span&gt;-s&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;test-string.exe&lt;span class="w"&gt; &lt;/span&gt;test.bin
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Load a file with shellcode in the format of a blob&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;./shcode2exe.py -o test-blob.exe test.bin
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;./shcode2exe.py&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;test-blob.exe&lt;span class="w"&gt; &lt;/span&gt;test.bin
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Use 64 bit architecture for the output (32 bit is the default)&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;./shcode2exe.py -o test-blob.exe -a &lt;span class="m"&gt;64&lt;/span&gt; test.bin
-&lt;span class="gp"&gt;$ &lt;/span&gt;file test-blob.exe
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="gp"&gt;$ &lt;/span&gt;./shcode2exe.py&lt;span class="w"&gt; &lt;/span&gt;-o&lt;span class="w"&gt; &lt;/span&gt;test-blob.exe&lt;span class="w"&gt; &lt;/span&gt;-a&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;64&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;test.bin
+&lt;span class="gp"&gt;$ &lt;/span&gt;file&lt;span class="w"&gt; &lt;/span&gt;test-blob.exe
 &lt;span class="go"&gt;test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 

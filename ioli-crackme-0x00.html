@@ -86,7 +86,7 @@
 <p><img alt="ioli-crackme-0x00-02" src="./images/ioli-crackme-0x00-02.png" /></p>
 <div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
 <span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span><span class="w"></span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span>
 </code></pre></div>
 
 <p>And just from these few lines alone I already knew what the password is. IDA Pro was helpful enough to add a comment that <code>offset Str2</code> equates to <code>250382</code>. Surely enough, this number was the password.</p>
@@ -96,12 +96,12 @@
 <p>Looking at the graph view, we want the program to always go to the node on the right which has the "Password OK" message. </p>
 <p><img alt="ioli-crackme-0x00-05" src="./images/ioli-crackme-0x00-05.png" /></p>
 <p>The line that we could change to allow us to do this would be this one:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40138A</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40138A</span>
 </code></pre></div>
 
 <p>The <code>jz</code> can be changed to a <code>jmp</code> command by changing the op code. Opening up the "Patch Bytes" window while the line is highlighted would show us this:</p>
 <p><img alt="ioli-crackme-0x00-06" src="./images/ioli-crackme-0x00-06.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="mf">74</span><span class="w"> </span><span class="mf">0</span><span class="n">E</span><span class="w"> </span><span class="n">C7</span><span class="w"> </span><span class="mf">04</span><span class="w"> </span><span class="mf">24</span><span class="w"> </span><span class="mf">2</span><span class="n">E</span><span class="w"> </span><span class="mf">40</span><span class="w"> </span><span class="mf">40</span><span class="w"> </span><span class="mf">00</span><span class="w"> </span><span class="n">E8</span><span class="w"> </span><span class="n">A8</span><span class="w"> </span><span class="mf">19</span><span class="w"> </span><span class="mf">00</span><span class="w"> </span><span class="mf">00</span><span class="w"> </span><span class="n">EB</span><span class="w"> </span><span class="mf">0</span><span class="n">C</span><span class="w"></span>
+<div class="codehilite"><pre><span></span><code><span class="mf">74</span><span class="w"> </span><span class="mf">0</span><span class="n">E</span><span class="w"> </span><span class="n">C7</span><span class="w"> </span><span class="mf">04</span><span class="w"> </span><span class="mf">24</span><span class="w"> </span><span class="mf">2</span><span class="n">E</span><span class="w"> </span><span class="mf">40</span><span class="w"> </span><span class="mf">40</span><span class="w"> </span><span class="mf">00</span><span class="w"> </span><span class="n">E8</span><span class="w"> </span><span class="n">A8</span><span class="w"> </span><span class="mf">19</span><span class="w"> </span><span class="mf">00</span><span class="w"> </span><span class="mf">00</span><span class="w"> </span><span class="n">EB</span><span class="w"> </span><span class="mf">0</span><span class="n">C</span>
 </code></pre></div>
 
 <p>The opcode related to <code>jz short loc_40138A</code> is the first two btyes <code>74 0E</code>. <code>74</code> is the "Jump short if equal" opcode and <code>0E</code> is the relative jump distance. Changing <code>74</code> to <code>EB</code> converts it to the "Jump" opcode effectively making the line <code>jmp short loc_40138A</code>.</p>

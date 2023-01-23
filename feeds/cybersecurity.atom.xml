@@ -7,7 +7,7 @@
 &lt;h2 id="changing-mac-address-via-ifconfig"&gt;Changing MAC Address via ifconfig&lt;/h2&gt;
 &lt;p&gt;In Linux we could use &lt;code&gt;ifconfig&lt;/code&gt; to change the MAC address.&lt;/p&gt;
 &lt;p&gt;To view the current MAC address:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ifconfig
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The current MAC address is &lt;code&gt;08:00 …&lt;/code&gt;&lt;/p&gt;</summary><content type="html">&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;Study notes are my personal research notes on certain topics that interests me.
@@ -18,22 +18,22 @@
 &lt;h2 id="changing-mac-address-via-ifconfig"&gt;Changing MAC Address via ifconfig&lt;/h2&gt;
 &lt;p&gt;In Linux we could use &lt;code&gt;ifconfig&lt;/code&gt; to change the MAC address.&lt;/p&gt;
 &lt;p&gt;To view the current MAC address:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ifconfig
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The current MAC address is &lt;code&gt;08:00:27:59:fb:fa&lt;/code&gt;:&lt;/p&gt;
 &lt;p&gt;&lt;img alt="study-notes--mac-spoofing-01" src="https://www.accidentalrebel.com/images/study-notes--mac-spoofing-01.png" /&gt;&lt;/p&gt;
 &lt;p&gt;Let's say we want to change the MAC address of our interface (eth0) to &lt;code&gt;00:11:22:33:44:55&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;First, deactivate the interface.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 down
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ifconfig&lt;span class="w"&gt; &lt;/span&gt;eth0&lt;span class="w"&gt; &lt;/span&gt;down
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Then we specify the mac address that we want to change to.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 hw ether &lt;span class="m"&gt;00&lt;/span&gt;:11:22:33:44:55
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ifconfig&lt;span class="w"&gt; &lt;/span&gt;eth0&lt;span class="w"&gt; &lt;/span&gt;hw&lt;span class="w"&gt; &lt;/span&gt;ether&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;00&lt;/span&gt;:11:22:33:44:55
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Reactive the interface:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 up
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ifconfig&lt;span class="w"&gt; &lt;/span&gt;eth0&lt;span class="w"&gt; &lt;/span&gt;up
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Run &lt;code&gt;ifconfig&lt;/code&gt; again to see the changes.&lt;/p&gt;
@@ -43,19 +43,19 @@
 &lt;h2 id="changing-the-mac-address-via-macchanger"&gt;Changing the MAC address via MACChanger&lt;/h2&gt;
 &lt;p&gt;There are various tools that allows easy changing of MAC addresses. &lt;a href="https://github.com/alobbs/macchanger"&gt;MACChanger&lt;/a&gt; is one of them.&lt;/p&gt;
 &lt;p&gt;First, deactivate the interface.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 down
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ifconfig&lt;span class="w"&gt; &lt;/span&gt;eth0&lt;span class="w"&gt; &lt;/span&gt;down
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The above below allows you specify the mac address you want to use:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ macchanger -m &lt;span class="m"&gt;00&lt;/span&gt;:11:22:33:44:55 eth0
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;macchanger&lt;span class="w"&gt; &lt;/span&gt;-m&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;00&lt;/span&gt;:11:22:33:44:55&lt;span class="w"&gt; &lt;/span&gt;eth0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;The code below assigns a random MAC address.&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ macchanger -r eth0
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;macchanger&lt;span class="w"&gt; &lt;/span&gt;-r&lt;span class="w"&gt; &lt;/span&gt;eth0
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;p&gt;Reactive the interface:&lt;/p&gt;
-&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ ifconfig eth0 up
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$&lt;span class="w"&gt; &lt;/span&gt;ifconfig&lt;span class="w"&gt; &lt;/span&gt;eth0&lt;span class="w"&gt; &lt;/span&gt;up
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
 &lt;h2 id="related-reading"&gt;Related reading&lt;/h2&gt;
