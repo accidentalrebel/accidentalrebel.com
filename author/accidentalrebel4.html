@@ -60,23 +60,6 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="../switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-19T17:59:00+08:00">May 19, 2020</time>
-          in <span class="categories">
-            <a href="../tag/dev.html">dev</a>,            <a href="../tag/game_engine.html">game_engine</a>          </span>
-	</div>
-        <p><p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
-<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
-<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../switching-from-c-c---to-c.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
         <h1><a href="../following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
 	<div class="meta">
           <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
@@ -252,6 +235,29 @@
 <p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
 <div class="codehilite"><pre><span></span><code>*This file definitely gives a hint on what type of guy Cliff is …</code></pre></div>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux</a></h1>
+	<div class="meta">
+          <time datetime="2017-09-23T13:08:00+08:00">September 23, 2017</time>
+          in <span class="categories">
+            <a href="../tag/emacs-windows-linux.html">emacs windows linux</a>          </span>
+	</div>
+        <p><p>One of the problems I was having with my Emacs environment under WSL <em>(Windows Subsystem for Linux, aka. Bash On Windows)</em> is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.</p>
+<p>I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called <a href="https://github.com/rolandwalker/simpleclip">simpleclip</a> that worked but the results were not consistent.</p>
+<p>I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-set-clipboard-data</span><span class="w"> </span><span class="p">(</span><span class="nv">str-val</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Puts text in Windows clipboard. Copying to Windows from WSL does </span>
+<span class="s">not work on my end so this one is a temporary solution.</span>
+
+<span class="s">This function is called from within the simpleclip package when copy </span>
+<span class="s">or bgcopy …</span></code></pre></div>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Read on →</a> -->
       </article>
     </div>
   </div>

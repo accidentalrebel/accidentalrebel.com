@@ -60,28 +60,6 @@
   <div class="row">
     <div class="col-md-8 col-md-offset-2">
       <article>
-        <h1><a href="../threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a></h1>
-	<div class="meta">
-          <time datetime="2021-10-30T12:00:00+08:00">October 30, 2021</time>
-          in <span class="categories">
-            <a href="../tag/threat-hunting.html">threat-hunting</a>,            <a href="../tag/cyberdefenders.html">cyberdefenders</a>          </span>
-	</div>
-        <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
-<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
-<h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
-<blockquote>
-<p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
-</blockquote>
-<p>So the question tells us that …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../threat-hunting-from-home-cyber-corp-wmi-persistence.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
         <h1><a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a></h1>
 	<div class="meta">
           <time datetime="2021-10-18T20:33:00+08:00">October 18, 2021</time>
@@ -275,6 +253,27 @@
 <h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
 <p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping …</p>
           <!-- <a class="full-article-link pull-right" rel="full-article" href="../ioli-crackme-0x03.html">Read on →</a> -->
+      </article>
+    </div>
+  </div>
+  <!-- CONTENT GOES HERE -->
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+      <article>
+        <h1><a href="../maldoc101-writeup-part-1.html">Maldoc101 Writeup (Part 1)</a></h1>
+	<div class="meta">
+          <time datetime="2021-03-13T08:34:00+08:00">March 13, 2021</time>
+          in <span class="categories">
+            <a href="../tag/re.html">re</a>,            <a href="../tag/malware_analysis.html">malware_analysis</a>,            <a href="../tag/malware.html">malware</a>          </span>
+	</div>
+        <p><p>This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (<a href="https://twitter.com/jstrosch">@jstrosch</a>) and is currently playable at <a href="https://cyberdefenders.org/labs/51">Cyberdefenders.Org</a>. I've done some maldoc analysis before but this is the first time I'm writing about my approach.</p>
+<p>There is also an already existing writeup about this challenge <a href="https://github.com/jstrosch/malware-samples/blob/master/malware_analysis_exercises/2020/December/solution.md">from the creator himself</a>. You should check that out if you want a more detailed and focused writeup. This writeup is more from the perspective of someone relatively new to malware analysis. There's a lot more exploration and trial-and-error which, I hope, might give the reader a different view in how this kind of problem is approached.</p>
+<h2 id="the-challenge">The challenge</h2>
+<h3 id="name">Name</h3>
+<p><a href="https://cyberdefenders.org/labs/51">MalDoc101 - Malicious Document</a></p>
+<h3 id="description">Description</h3>
+<p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended …</p>
+          <!-- <a class="full-article-link pull-right" rel="full-article" href="../maldoc101-writeup-part-1.html">Read on →</a> -->
       </article>
     </div>
   </div>
