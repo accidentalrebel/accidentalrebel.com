@@ -32,8 +32,8 @@
 <meta name="twitter:creator:id" content="accidentalrebel">
 <meta property="og:title" content="Classifying More With Less: New VGL4NT Update">
 <meta property="og:description" content="TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to train m">
-<meta property="og:image" content="https://www.accidentalrebel.com/images/classifying-more-with-less-new-vgl4nt-update-01.png">
-<meta name="twitter:image:src" content="https://www.accidentalrebel.com/images/classifying-more-with-less-new-vgl4nt-update-01.png">
+<meta property="og:image" content="https://www.accidentalrebel.com/images/adding-automation-to-blue-jupyter-malware-notebook-01.png">
+<meta name="twitter:image:src" content="https://www.accidentalrebel.com/images/adding-automation-to-blue-jupyter-malware-notebook-01.png">
 
 
 </head>
@@ -83,7 +83,7 @@
 <li>Solution was a customized version of model ensembling, which is to train multiple models and resolve their results</li>
 <li>It works with a slight caveat of more extended training and processing, which I could happily live with</li>
 </ul>
-<p>I recently presented <a href="https://packers.vgl4nt.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
+<p>I recently presented <a href="https://vgl4nt.accidentalrebel.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
 <h2 id="a-simple-solution">A Simple Solution</h2>
 <p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which involves training separate models for different categories and combining their predictions. This way, I could double the classification capacity without requiring additional hardware resources.</p>
 <p>This was implemented by creating multiple machine learning models, each specializing in recognizing a subset of packers. The real challenge, however, lies in combining the predictions from these models to form a unified output.</p>
