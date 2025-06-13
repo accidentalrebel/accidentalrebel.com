@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccidentalRebel - Clean Minimal Blog</title>
+    <style>
+        /* Reset and Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-text: #1a1a1a;
+            --color-text-muted: #666;
+            --color-bg: #ffffff;
+            --color-accent: #ff0040;
+            --color-accent-alt: #ff0040;
+            --color-border: #e5e5e5;
+            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", monospace;
+            --spacing-unit: 1rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-text: #e0e0e0;
+                --color-text-muted: #999;
+                --color-bg: #0a0a0a;
+                --color-accent: #ff0040;
+                --color-accent-alt: #ff0040;
+                --color-border: #2a2a2a;
+            }
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Container */
+        .container {
+            max-width: 42rem;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        /* Header */
+        header {
+            padding: calc(var(--spacing-unit) * 2) 0;
+            border-bottom: 1px solid var(--color-border);
+            margin-bottom: 0;
+        }
+
+        /* Comic strip divider */
+        .comic-strip {
+            height: 10px;
+            width: 100%;
+            background: linear-gradient(90deg, 
+                #ff0040 0%, #00ff41 25%, #0055cc 50%, #ff8c00 75%, #ff0040 100%);
+            background-size: 200px 10px;
+            animation: scroll-comic 10s linear infinite;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Hidden hex message */
+        .comic-strip::before {
+            content: 'WITHCODETHEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONEWITHTHECODEONE';
+            position: absolute;
+            top: 1px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-family: var(--font-mono);
+            font-size: 8px;
+            line-height: 8px;
+            font-weight: bold;
+            color: rgba(0, 0, 0, 1);
+            background: linear-gradient(90deg, 
+                transparent 0%, transparent 20%, 
+                rgba(0, 255, 65, 1) 22%, rgba(0, 255, 65, 1) 28%, rgba(50, 255, 100, 1) 30%,
+                transparent 32%, transparent 100%);
+            background-size: 200px 10px;
+            animation: scroll-comic 10s linear infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 2px rgba(0, 255, 65, 0.5);
+        }
+
+        .comic-strip::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent 0px,
+                rgba(255, 255, 255, 0.05) 1px,
+                rgba(255, 255, 255, 0.05) 2px,
+                transparent 3px,
+                transparent 8px
+            );
+        }
+
+        @keyframes scroll-comic {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        /* Comic strip container to match content width */
+        .comic-container {
+            max-width: 42rem;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--spacing-unit);
+        }
+
+        .site-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--color-text);
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Glitch effect on hover */
+        .site-title:hover {
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes glitch {
+            0% {
+                text-shadow: 0.05em 0 0 #ff0040, -0.05em -0.025em 0 #ff4040,
+                    0.025em 0.05em 0 #cc0033;
+            }
+            15% {
+                text-shadow: 0.05em 0 0 #ff0040, -0.05em -0.025em 0 #ff4040,
+                    0.025em 0.05em 0 #cc0033;
+            }
+            16% {
+                text-shadow: -0.05em -0.025em 0 #ff0040, 0.025em 0.025em 0 #ff4040,
+                    -0.05em -0.05em 0 #cc0033;
+            }
+            49% {
+                text-shadow: -0.05em -0.025em 0 #ff0040, 0.025em 0.025em 0 #ff4040,
+                    -0.05em -0.05em 0 #cc0033;
+            }
+            50% {
+                text-shadow: 0.025em 0.05em 0 #ff0040, 0.05em 0 0 #ff4040,
+                    0 -0.05em 0 #cc0033;
+            }
+            99% {
+                text-shadow: 0.025em 0.05em 0 #ff0040, 0.05em 0 0 #ff4040,
+                    0 -0.05em 0 #cc0033;
+            }
+            100% {
+                text-shadow: -0.025em 0 0 #ff0040, -0.025em -0.025em 0 #ff4040,
+                    -0.025em -0.05em 0 #cc0033;
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 1.5);
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Mobile menu toggle */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            color: var(--color-text);
+        }
+
+        /* Article */
+        article {
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .article-header {
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        h1 {
+            font-size: 2rem;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-unit);
+            font-weight: 700;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 1.5);
+            font-size: 0.9rem;
+            color: var(--color-text-muted);
+            flex-wrap: wrap;
+        }
+
+        .article-content {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .article-content p {
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            margin: calc(var(--spacing-unit) * 3) 0 var(--spacing-unit) 0;
+            font-weight: 600;
+        }
+
+        .article-content pre {
+            background-color: var(--color-border);
+            padding: var(--spacing-unit);
+            overflow-x: auto;
+            margin-bottom: calc(var(--spacing-unit) * 1.5);
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        /* Syntax highlighting */
+        .hljs {
+            background: var(--color-border) !important;
+            color: var(--color-text);
+        }
+
+        .hljs-comment,
+        .hljs-quote {
+            color: #6a737d;
+            font-style: italic;
+        }
+
+        .hljs-keyword,
+        .hljs-selector-tag,
+        .hljs-subst {
+            color: #d73a49;
+            font-weight: bold;
+        }
+
+        .hljs-number,
+        .hljs-literal,
+        .hljs-variable,
+        .hljs-template-variable,
+        .hljs-tag .hljs-attr {
+            color: #005cc5;
+        }
+
+        .hljs-string,
+        .hljs-doctag {
+            color: #032f62;
+        }
+
+        .hljs-title,
+        .hljs-section,
+        .hljs-selector-id {
+            color: #6f42c1;
+            font-weight: bold;
+        }
+
+        .hljs-type,
+        .hljs-class .hljs-title {
+            color: #d73a49;
+            font-weight: bold;
+        }
+
+        .hljs-tag,
+        .hljs-name,
+        .hljs-attribute {
+            color: #22863a;
+            font-weight: bold;
+        }
+
+        .hljs-regexp,
+        .hljs-link {
+            color: #032f62;
+        }
+
+        .hljs-symbol,
+        .hljs-bullet {
+            color: #e36209;
+        }
+
+        .hljs-built_in,
+        .hljs-builtin-name {
+            color: #005cc5;
+        }
+
+        .hljs-meta {
+            color: #6a737d;
+        }
+
+        .hljs-deletion {
+            background: #ffeef0;
+        }
+
+        .hljs-addition {
+            background: #e6ffed;
+        }
+
+        .hljs-emphasis {
+            font-style: italic;
+        }
+
+        .hljs-strong {
+            font-weight: bold;
+        }
+
+        /* Dark mode syntax highlighting */
+        @media (prefers-color-scheme: dark) {
+            .hljs {
+                background: var(--color-border) !important;
+                color: var(--color-text);
+            }
+
+            .hljs-comment,
+            .hljs-quote {
+                color: #8b949e;
+            }
+
+            .hljs-keyword,
+            .hljs-selector-tag,
+            .hljs-subst {
+                color: #ff7b72;
+            }
+
+            .hljs-number,
+            .hljs-literal,
+            .hljs-variable,
+            .hljs-template-variable,
+            .hljs-tag .hljs-attr {
+                color: #79c0ff;
+            }
+
+            .hljs-string,
+            .hljs-doctag {
+                color: #a5d6ff;
+            }
+
+            .hljs-title,
+            .hljs-section,
+            .hljs-selector-id {
+                color: #d2a8ff;
+            }
+
+            .hljs-type,
+            .hljs-class .hljs-title {
+                color: #ffa657;
+            }
+
+            .hljs-tag,
+            .hljs-name,
+            .hljs-attribute {
+                color: #7ee787;
+            }
+
+            .hljs-regexp,
+            .hljs-link {
+                color: #a5d6ff;
+            }
+
+            .hljs-symbol,
+            .hljs-bullet {
+                color: #ffa657;
+            }
+
+            .hljs-built_in,
+            .hljs-builtin-name {
+                color: #79c0ff;
+            }
+
+            .hljs-meta {
+                color: #8b949e;
+            }
+        }
+
+        .article-content code {
+            font-family: var(--font-mono);
+            font-size: 0.85em;
+            background-color: var(--color-border);
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+        }
+
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            margin: calc(var(--spacing-unit) * 2) 0;
+            border-radius: 4px;
+        }
+
+        .article-content a,
+        .article-meta a {
+            color: var(--color-accent);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 0.5);
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            font-size: 0.85rem;
+            padding: 0.25rem 0.75rem;
+            background-color: var(--color-border);
+            color: var(--color-text-muted);
+            text-decoration: none;
+            border-radius: 999px;
+            transition: all 0.2s;
+        }
+
+        .tag:hover {
+            background-color: var(--color-accent);
+            color: white;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 640px) {
+            body {
+                font-size: 16px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                width: 100%;
+                flex-direction: column;
+                gap: var(--spacing-unit);
+                padding-top: var(--spacing-unit);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .article-meta {
+                font-size: 0.85rem;
+            }
+        }
+
+        /* Reading progress indicator */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background-color: var(--color-accent);
+            z-index: 1000;
+            transition: width 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="/" class="site-title">AccidentalRebel</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="/archives">Archives</a></li>
+                    <li><a href="/categories">Categories</a></li>
+                    <li><a href="/tags">Tags</a></li>
+                    <li><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
+    </div>
+
+    <main>
+        <div class="container">
+            <article>
+                <header class="article-header">
+                    <h1>Adding Automation to Blue-Jupyter Malware Notebook</h1>
+                    <div class="article-meta">
+                        <time>January 23, 2023</time>
+                        <span>•</span>
+                        <span>5 min read</span>
+                        <span>•</span>
+                        <a href="/category/malware">malware</a>
+                    </div>
+                </header>
+
+                <div class="article-content">
+                    <p>I came across the Blue-Jupyter project on Github while researching Jupyter notebooks. This short demo video got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
+
+                    <h2>What are Jupyter Notebooks?</h2>
+                    <p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
+
+                    <h2>My Additions to the Blue-Jupyter</h2>
+                    <p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
+
+                    <p>One addition to the notebook is the automated downloading of samples from Malware Bazaar. This can download a maximum of 100 samples continuously. Additional information is listed to highlight some interesting points about the sample, like the malware signature.</p>
+
+                    <pre><code class="hljs python"># Example code block
+def download_samples(limit=100):
+    """Download malware samples from Malware Bazaar"""
+    samples = []
+    # Implementation details...
+    return samples</code></pre>
+
+                    <p>The second significant addition is the automated generation of Capa results for each downloaded sample. This makes it easy to see which malware has a particular capability so I can quickly see which ones are interesting enough to investigate further.</p>
+                </div>
+
+                <footer class="article-footer">
+                    <div class="tags">
+                        <a href="/tag/malware" class="tag">malware</a>
+                        <a href="/tag/re" class="tag">re</a>
+                        <a href="/tag/jupyter" class="tag">jupyter</a>
+                    </div>
+                </footer>
+            </article>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Reading progress indicator
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress').style.width = scrolled + '%';
+        });
+
+        // Simple syntax highlighting (basic implementation)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply syntax highlighting to code blocks
+            const codeBlocks = document.querySelectorAll('pre code');
+            codeBlocks.forEach(block => {
+                if (block.classList.contains('python')) {
+                    highlightPython(block);
+                }
+            });
+        });
+
+        function highlightPython(block) {
+            let code = block.textContent;
+            
+            // Keywords
+            code = code.replace(/\b(def|class|import|from|return|if|elif|else|for|while|try|except|finally|with|as|pass|break|continue|and|or|not|in|is|None|True|False)\b/g, 
+                '<span class="hljs-keyword">$1</span>');
+            
+            // Strings
+            code = code.replace(/(["'])((?:\\.|(?!\1)[^\\])*?)\1/g, 
+                '<span class="hljs-string">$1$2$1</span>');
+            
+            // Comments
+            code = code.replace(/(#.*$)/gm, 
+                '<span class="hljs-comment">$1</span>');
+            
+            // Function definitions
+            code = code.replace(/def\s+(\w+)/g, 
+                'def <span class="hljs-title">$1</span>');
+            
+            // Numbers
+            code = code.replace(/\b(\d+(?:\.\d+)?)\b/g, 
+                '<span class="hljs-number">$1</span>');
+            
+            block.innerHTML = code;
+        }
+    </script>
+</body>
+</html>

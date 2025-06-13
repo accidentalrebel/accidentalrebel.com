@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ SITENAME }}{% if SITESUBTITLE %} | {{ SITESUBTITLE }}{% endif %}{% endblock %}
+
+{% block content %}
+{% if articles %}
+    {% for article in articles_page.object_list %}
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
+                <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+                {% if article.readtime %}
+                <span>•</span>
+                <span>{{ article.readtime.minutes }} min read</span>
+                {% endif %}
+                {% if article.category %}
+                <span>•</span>
+                <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
+                {% endif %}
+            </div>
+        </header>
+
+        {% if article.summary %}
+        <div class="post-summary">
+            {{ article.summary }}
+        </div>
+        {% endif %}
+
+        {% if article.tags %}
+        <div class="tags">
+            {% for tag in article.tags[:3] %}
+            <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">{{ tag }}</a>
+            {% endfor %}
+            {% if article.tags|length > 3 %}
+            <span class="tag">+{{ article.tags|length - 3 }} more</span>
+            {% endif %}
+        </div>
+        {% endif %}
+    </article>
+    {% endfor %}
+{% else %}
+    <article>
+        <h1>No articles found</h1>
+        <p>It looks like there are no articles published yet.</p>
+    </article>
+{% endif %}
+
+{% include 'pagination.html' %}
+{% endblock %}

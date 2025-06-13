@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 AUTHOR = 'AccidentalRebel'
 SITENAME = 'AccidentalRebel.com'
 SITEURL = ''
-THEME = '../medium-rebel-fox'
+THEME = 'themes/rebel-minimal-theme'
 
 PATH = 'content'
 

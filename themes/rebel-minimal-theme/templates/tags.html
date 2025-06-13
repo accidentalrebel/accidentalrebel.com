@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Tags | {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<article>
+    <header class="article-header">
+        <h1>Tags</h1>
+    </header>
+
+    <div class="article-content">
+        <div class="tags" style="margin-bottom: 2rem;">
+            {% for tag, articles in tags|sort %}
+            <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">
+                {{ tag }} ({{ articles|count }})
+            </a>
+            {% endfor %}
+        </div>
+
+        <h2>Recent Tagged Posts</h2>
+        {% for tag, articles in tags|sort(attribute='1.0.date')|reverse %}
+        {% if loop.index <= 10 %}
+        <h3>
+            <a href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">({{ articles|count }})</span>
+        </h3>
+        <ul class="post-list">
+            {% for article in articles[:3] %}
+            <li class="post-item">
+                <h4 class="post-title">
+                    <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+                </h4>
+                <div class="article-meta">
+                    <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endfor %}
+    </div>
+</article>
+{% endblock %}

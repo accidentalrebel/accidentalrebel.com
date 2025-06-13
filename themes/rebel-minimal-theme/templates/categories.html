@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Categories | {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<article>
+    <header class="article-header">
+        <h1>Categories</h1>
+    </header>
+
+    <div class="article-content">
+        {% for category, articles in categories %}
+        <h2>
+            <a href="{{ SITEURL }}/{{ category.url }}">{{ category }}</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">({{ articles|count }})</span>
+        </h2>
+        <ul class="post-list">
+            {% for article in articles[:5] %}
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+                </div>
+            </li>
+            {% endfor %}
+            {% if articles|count > 5 %}
+            <li class="post-item">
+                <a href="{{ SITEURL }}/{{ category.url }}">View all {{ articles|count }} posts in {{ category }} &raquo;</a>
+            </li>
+            {% endif %}
+        </ul>
+        {% endfor %}
+    </div>
+</article>
+{% endblock %}

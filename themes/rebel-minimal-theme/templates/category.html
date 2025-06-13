@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category }} | {{ SITENAME }}{% endblock %}
+
+{% block content %}
+<article>
+    <header class="article-header">
+        <h1>Category: {{ category }}</h1>
+    </header>
+
+    <div class="article-content">
+        {% for article in articles %}
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
+                {% if article.readtime %}
+                <span>•</span>
+                <span>{{ article.readtime.minutes }} min read</span>
+                {% endif %}
+            </div>
+            {% if article.summary %}
+            <div class="post-summary">
+                {{ article.summary }}
+            </div>
+            {% endif %}
+            {% if article.tags %}
+            <div class="tags">
+                {% for tag in article.tags[:3] %}
+                <a href="{{ SITEURL }}/{{ tag.url }}" class="tag">{{ tag }}</a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</article>
+{% endblock %}
