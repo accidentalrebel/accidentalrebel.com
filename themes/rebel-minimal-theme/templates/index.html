@@ -23,11 +23,9 @@
             </div>
         </header>
 
-        {% if article.summary %}
-        <div class="post-summary">
-            {{ article.summary }}
+        <div class="article-content">
+            {{ article.content }}
         </div>
-        {% endif %}
 
         {% if article.tags %}
         <div class="tags">

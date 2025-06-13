@@ -31,7 +31,7 @@ SOCIAL = (('Twitter', 'https://www.twitter.com/accidentalrebel'),
 
 BLURB = "Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development."
 
-DEFAULT_PAGINATION = 10
+DEFAULT_PAGINATION = 3
 
 DISPLAY_CATEGORIES_ON_MENU = False
 

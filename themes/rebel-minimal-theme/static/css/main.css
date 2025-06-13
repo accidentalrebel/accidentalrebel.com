@@ -222,6 +222,14 @@ h1 {
     font-weight: 700;
 }
 
+/* Article page title styling to match front page */
+.article-header h1 {
+    font-size: 2.25rem;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+}
+
 h2 {
     font-size: 1.5rem;
     margin: calc(var(--spacing-unit) * 3) 0 var(--spacing-unit) 0;
@@ -248,6 +256,88 @@ h3 {
 
 .article-content p {
     margin-bottom: calc(var(--spacing-unit) * 1.5);
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+    margin-top: calc(var(--spacing-unit) * 2.5);
+    margin-bottom: var(--spacing-unit);
+    font-weight: 600;
+    line-height: 1.25;
+}
+
+.article-content h1 {
+    font-size: 1.875rem;
+    border-bottom: 2px solid var(--color-border);
+    padding-bottom: 0.5rem;
+}
+
+.article-content h2 {
+    font-size: 1.5rem;
+}
+
+.article-content h3 {
+    font-size: 1.25rem;
+}
+
+.article-content h4 {
+    font-size: 1.125rem;
+}
+
+.article-content h5,
+.article-content h6 {
+    font-size: 1rem;
+}
+
+.article-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: calc(var(--spacing-unit) * 1.5) 0;
+    border: 1px solid var(--color-border);
+}
+
+.article-content th,
+.article-content td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.article-content th {
+    background-color: var(--color-border);
+    font-weight: 600;
+}
+
+.article-content tr:nth-child(even) {
+    background-color: var(--color-border);
+    opacity: 0.3;
+}
+
+.article-content hr {
+    border: none;
+    border-top: 2px solid var(--color-border);
+    margin: calc(var(--spacing-unit) * 2) 0;
+}
+
+/* Table of contents */
+.article-content .toc {
+    background-color: var(--color-border);
+    padding: var(--spacing-unit);
+    border-radius: 4px;
+    margin: calc(var(--spacing-unit) * 1.5) 0;
+}
+
+.article-content .toc ul {
+    margin: 0;
+    padding-left: var(--spacing-unit);
+}
+
+.article-content .toc > ul {
+    padding-left: 0;
 }
 
 .article-content pre {
@@ -485,9 +575,9 @@ h3 {
 }
 
 .post-item {
-    margin-bottom: calc(var(--spacing-unit) * 2);
-    padding-bottom: calc(var(--spacing-unit) * 2);
-    border-bottom: 1px solid var(--color-border);
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    padding-bottom: calc(var(--spacing-unit) * 3);
+    border-bottom: 2px solid var(--color-border);
 }
 
 .post-item:last-child {
@@ -495,13 +585,16 @@ h3 {
 }
 
 .post-title {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
 }
 
 .post-title a {
     color: var(--color-text);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .post-title a:hover {
@@ -560,6 +653,10 @@ h3 {
     h1 {
         font-size: 1.75rem;
     }
+    
+    .article-header h1 {
+        font-size: 1.875rem;
+    }
 
     .menu-toggle {
         display: block;
@@ -582,7 +679,7 @@ h3 {
     }
     
     .post-title {
-        font-size: 1.3rem;
+        font-size: 1.875rem;
     }
 }
 
@@ -603,8 +700,12 @@ h3 {
         font-size: 1.5rem;
     }
     
+    .article-header h1 {
+        font-size: 1.5rem;
+    }
+    
     .post-title {
-        font-size: 1.2rem;
+        font-size: 1.5rem;
     }
     
     .article-content pre {
