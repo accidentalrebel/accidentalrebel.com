@@ -37,6 +37,80 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="./study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-08-01T11:07:00+08:00">Sat 01 August 2020</time>
+                <span>•</span>
+                <a href="./category/cybersecurity.html">cybersecurity</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
+</code></pre></div>
+
+<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
+<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
+<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
+<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
+<p>To view the current MAC address:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig
+</code></pre></div>
+
+<p>The current MAC address is <code>08:00:27:59:fb:fa</code>:</p>
+<p><img alt="study-notes--mac-spoofing-01" src="./images/study-notes--mac-spoofing-01.png" /></p>
+<p>Let's say we want to change the MAC address of our interface (eth0) to <code>00:11:22:33:44:55</code>.</p>
+<p>First, deactivate the interface.</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>down
+</code></pre></div>
+
+<p>Then we specify the mac address that we want to change to.</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>hw<span class="w"> </span>ether<span class="w"> </span><span class="m">00</span>:11:22:33:44:55
+</code></pre></div>
+
+<p>Reactive the interface:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>up
+</code></pre></div>
+
+<p>Run <code>ifconfig</code> again to see the changes.</p>
+<p><img alt="study-notes--mac-spoofing-02" src="./images/study-notes--mac-spoofing-02.png" /></p>
+<h3 id="note">NOTE:</h3>
+<p>These changes are not permanent. The MAC address will return to the original one when the system is restarted!</p>
+<h2 id="changing-the-mac-address-via-macchanger">Changing the MAC address via MACChanger</h2>
+<p>There are various tools that allows easy changing of MAC addresses. <a href="https://github.com/alobbs/macchanger">MACChanger</a> is one of them.</p>
+<p>First, deactivate the interface.</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>down
+</code></pre></div>
+
+<p>The above below allows you specify the mac address you want to use:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>macchanger<span class="w"> </span>-m<span class="w"> </span><span class="m">00</span>:11:22:33:44:55<span class="w"> </span>eth0
+</code></pre></div>
+
+<p>The code below assigns a random MAC address.</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>macchanger<span class="w"> </span>-r<span class="w"> </span>eth0
+</code></pre></div>
+
+<p>Reactive the interface:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig<span class="w"> </span>eth0<span class="w"> </span>up
+</code></pre></div>
+
+<h2 id="related-reading">Related reading</h2>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/MAC_spoofing">MAC Spoofing on Wikipedia</a></li>
+<li><a href="https://www.giac.org/paper/gsec/3199/mac-spoofing-an-introduction/105315">MAC Spoofing - An introduction</a> </li>
+<li><a href="https://www.comparitech.com/net-admin/spoofing-attacks-guide/">A guide to spoofing attacks and how to prevent them</a></li>
+</ul>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/spoofing.html" class="tag">spoofing</a>
+            <a href="./tag/cybersecurity.html" class="tag">cybersecurity</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="./chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a>
             </h2>
             <div class="article-meta">
@@ -213,129 +287,6 @@
 <p>I also took the chance during the transition to switch from <a href="https://glm.g-truc.net/0.9.9/index.html">GLM</a>, an OpenGL Mathematics lirary using C++, to <a href="https://github.com/recp/cglm">CGLM</a> a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.</p>
 <p>While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.</p>
 <p>If you are interested to check out my still-under-construction game engine, you can do so <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/dev.html" class="tag">dev</a>
-            <a href="./tag/game_engine.html" class="tag">game_engine</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./following-lispy-conventions.html">#4 - Following Lispy conventions</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-05-15T07:00:00+08:00">Fri 15 May 2020</time>
-                <span>•</span>
-                <a href="./category/game_engine.html">game_engine</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p><img alt="following-lispy-conventions-01" src="./images/following-lispy-conventions-01.png" /></p>
-<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
-<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function <em>is_key_down</em>. Changing it to <em>key_down?</em> looked weird at first but I liked how it made the function name shorter and the <em>?</em> prefix made it easy to spot and parse.</p>
-<p>Okay, cool! What's next?</p>
-<p>Adding a <em>!</em> indicates a function that mutates data. Most commonly used for setting a variable. I saw I had variables like <em>set_vec3_x</em>, to which I changed to <em>vec3_x!</em>.</p>
-<p>This went on as I continue to find improvements. Here's a list of all the naming convention changes that I've made:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;"><strong>The change</strong></th>
-<th style="text-align: center;"><strong>From</strong></th>
-<th style="text-align: center;"><strong>To</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;"><em>:</em> infix for namespaces.</td>
-<td style="text-align: center;">vec3_create</td>
-<td style="text-align: center;">vec3:create</td>
-</tr>
-<tr>
-<td style="text-align: center;"><em>?</em> postfix for boolean functions</td>
-<td style="text-align: center;">key_down?</td>
-<td style="text-align: center;">key:down?</td>
-</tr>
-<tr>
-<td style="text-align: center;"><em>!</em> postfix for destructive functions</td>
-<td style="text-align: center;">set_camera_position</td>
-<td style="text-align: center;">camera:position!</td>
-</tr>
-<tr>
-<td style="text-align: center;"><em>%</em> postfix for low level functions</td>
-<td style="text-align: center;">free</td>
-<td style="text-align: center;">free%</td>
-</tr>
-<tr>
-<td style="text-align: center;"><em>%</em> prefix and postfix for low level variables</td>
-<td style="text-align: center;">shader-pointer</td>
-<td style="text-align: center;">%shader-pointer%</td>
-</tr>
-<tr>
-<td style="text-align: center;"><em>*</em> prefix and postfix for global variables</td>
-<td style="text-align: center;">cube-shader</td>
-<td style="text-align: center;">*cube-shader*</td>
-</tr>
-</tbody>
-</table>
-<p>Again, these new changes felt weird at first but I quickly became accustomed the more of these functions I changed. The code became easier to scan as there are now key characters for my eyes to easily latch onto. Something to appreciate especially with multi-level nested expressions.</p>
-<p>Here's how the code now looks like with the new functions:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="w"> </span><span class="mf">0.001</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube-shader*</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube-positions*</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube*</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">cube:create</span><span class="w"> </span><span class="s">&quot;assets/textures&quot;</span><span class="w"> </span><span class="s">&quot;awesomeface.png&quot;</span><span class="p">))</span>
-<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube-shader*</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">shader:create</span><span class="w"> </span><span class="s">&quot;shaders/simple-3d.vs&quot;</span><span class="w"> </span><span class="s">&quot;shaders/simple.fs&quot;</span><span class="p">))</span>
-<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube-positions*</span>
-<span class="w">    </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="w">          </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mf">1.25</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
-<span class="w">          </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mf">-1.25</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">))))</span>
-
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="nf">window:clear</span><span class="p">)</span>
-
-<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nf">main-camera</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:main</span><span class="p">))</span>
-<span class="w">     </span><span class="p">(</span><span class="nf">current-projection</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:projection</span><span class="w"> </span><span class="nv">main-camera</span><span class="p">))</span>
-<span class="w">     </span><span class="p">(</span><span class="nf">camera-pos</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:position</span><span class="w"> </span><span class="nv">main-camera</span><span class="p">)))</span>
-
-<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:up?</span><span class="w"> </span><span class="nv">KEY_C</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="nv">current-projection</span><span class="w"> </span><span class="nv">PERSPECTIVE</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="nf">camera:projection!</span><span class="w"> </span><span class="nv">main-camera</span><span class="w"> </span><span class="nv">ORTHOGRAPHIC</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="nf">camera:projection!</span><span class="w"> </span><span class="nv">main-camera</span><span class="w"> </span><span class="nv">PERSPECTIVE</span><span class="p">)))</span>
-
-<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_A</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="nf">vec3:x!</span><span class="w"> </span><span class="nv">camera-pos</span>
-<span class="w">          </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:x</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_E</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="nf">vec3:x!</span><span class="w"> </span><span class="nv">camera-pos</span>
-<span class="w">          </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:x</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_COMMA</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="nf">vec3:z!</span><span class="w"> </span><span class="nv">camera-pos</span>
-<span class="w">          </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:z</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
-<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_O</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="nf">vec3:z!</span><span class="w"> </span><span class="nv">camera-pos</span>
-<span class="w">          </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:z</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">))))</span>
-
-<span class="w">  </span><span class="p">(</span><span class="nb">for-each</span>
-<span class="w">   </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nf">position</span><span class="p">)</span>
-<span class="w">     </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">%tint%</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:create%</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
-<span class="w">       </span><span class="p">(</span><span class="nf">cube:draw</span><span class="w"> </span><span class="nv">*cube*</span><span class="w"> </span><span class="nv">position</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">%tint%</span><span class="w"> </span><span class="nv">*cube-shader*</span><span class="p">)</span>
-<span class="w">       </span><span class="p">(</span><span class="nf">free%</span><span class="w"> </span><span class="nv">%tint%</span><span class="p">)))</span>
-<span class="w">   </span><span class="nv">*cube-positions*</span><span class="p">)</span>
-
-<span class="w">  </span><span class="p">(</span><span class="nf">window:swap</span><span class="p">))</span>
-</code></pre></div>
-
-<p>I also changed my C functions to reflect a <em>NamespaceVerb</em> convention. I could have used <em>namespace::Verb</em> but the <a href="http://wiki.call-cc.org/eggref/5/bind">FFI that I use</a> to communicate with C cannot parse C namespaces. So instead of <em>Shader::Create</em>, I am left with <em>ShaderCreate</em>. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, <a href="https://www.raylib.com/examples.html">Raylib also uses this convention</a> for their functions).</p>
-<p>I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.</p>
         </div>
 
         <div class="tags">

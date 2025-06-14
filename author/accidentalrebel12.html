@@ -37,6 +37,129 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../following-lispy-conventions.html">#4 - Following Lispy conventions</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-15T07:00:00+08:00">Fri 15 May 2020</time>
+                <span>•</span>
+                <a href="../category/game_engine.html">game_engine</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
+<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
+<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
+<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return a boolean value. I looked at my code and I had the function <em>is_key_down</em>. Changing it to <em>key_down?</em> looked weird at first but I liked how it made the function name shorter and the <em>?</em> prefix made it easy to spot and parse.</p>
+<p>Okay, cool! What's next?</p>
+<p>Adding a <em>!</em> indicates a function that mutates data. Most commonly used for setting a variable. I saw I had variables like <em>set_vec3_x</em>, to which I changed to <em>vec3_x!</em>.</p>
+<p>This went on as I continue to find improvements. Here's a list of all the naming convention changes that I've made:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>The change</strong></th>
+<th style="text-align: center;"><strong>From</strong></th>
+<th style="text-align: center;"><strong>To</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><em>:</em> infix for namespaces.</td>
+<td style="text-align: center;">vec3_create</td>
+<td style="text-align: center;">vec3:create</td>
+</tr>
+<tr>
+<td style="text-align: center;"><em>?</em> postfix for boolean functions</td>
+<td style="text-align: center;">key_down?</td>
+<td style="text-align: center;">key:down?</td>
+</tr>
+<tr>
+<td style="text-align: center;"><em>!</em> postfix for destructive functions</td>
+<td style="text-align: center;">set_camera_position</td>
+<td style="text-align: center;">camera:position!</td>
+</tr>
+<tr>
+<td style="text-align: center;"><em>%</em> postfix for low level functions</td>
+<td style="text-align: center;">free</td>
+<td style="text-align: center;">free%</td>
+</tr>
+<tr>
+<td style="text-align: center;"><em>%</em> prefix and postfix for low level variables</td>
+<td style="text-align: center;">shader-pointer</td>
+<td style="text-align: center;">%shader-pointer%</td>
+</tr>
+<tr>
+<td style="text-align: center;"><em>*</em> prefix and postfix for global variables</td>
+<td style="text-align: center;">cube-shader</td>
+<td style="text-align: center;">*cube-shader*</td>
+</tr>
+</tbody>
+</table>
+<p>Again, these new changes felt weird at first but I quickly became accustomed the more of these functions I changed. The code became easier to scan as there are now key characters for my eyes to easily latch onto. Something to appreciate especially with multi-level nested expressions.</p>
+<p>Here's how the code now looks like with the new functions:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="w"> </span><span class="mf">0.001</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube*</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube-shader*</span><span class="p">)</span>
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">*cube-positions*</span><span class="p">)</span>
+
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube*</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">cube:create</span><span class="w"> </span><span class="s">&quot;assets/textures&quot;</span><span class="w"> </span><span class="s">&quot;awesomeface.png&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube-shader*</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">shader:create</span><span class="w"> </span><span class="s">&quot;shaders/simple-3d.vs&quot;</span><span class="w"> </span><span class="s">&quot;shaders/simple.fs&quot;</span><span class="p">))</span>
+<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">*cube-positions*</span>
+<span class="w">    </span><span class="p">(</span><span class="nb">list</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">          </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mf">1.25</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">          </span><span class="p">(</span><span class="nf">vec3:create</span><span class="w"> </span><span class="mf">-1.25</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">0</span><span class="p">))))</span>
+
+<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">window:clear</span><span class="p">)</span>
+
+<span class="w">  </span><span class="p">(</span><span class="k">let*</span><span class="w"> </span><span class="p">((</span><span class="nf">main-camera</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:main</span><span class="p">))</span>
+<span class="w">     </span><span class="p">(</span><span class="nf">current-projection</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:projection</span><span class="w"> </span><span class="nv">main-camera</span><span class="p">))</span>
+<span class="w">     </span><span class="p">(</span><span class="nf">camera-pos</span><span class="w"> </span><span class="p">(</span><span class="nf">camera:position</span><span class="w"> </span><span class="nv">main-camera</span><span class="p">)))</span>
+
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:up?</span><span class="w"> </span><span class="nv">KEY_C</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">=</span><span class="w"> </span><span class="nv">current-projection</span><span class="w"> </span><span class="nv">PERSPECTIVE</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">camera:projection!</span><span class="w"> </span><span class="nv">main-camera</span><span class="w"> </span><span class="nv">ORTHOGRAPHIC</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">camera:projection!</span><span class="w"> </span><span class="nv">main-camera</span><span class="w"> </span><span class="nv">PERSPECTIVE</span><span class="p">)))</span>
+
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_A</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:x!</span><span class="w"> </span><span class="nv">camera-pos</span>
+<span class="w">          </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:x</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_E</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:x!</span><span class="w"> </span><span class="nv">camera-pos</span>
+<span class="w">          </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:x</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_COMMA</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:z!</span><span class="w"> </span><span class="nv">camera-pos</span>
+<span class="w">          </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:z</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">key:down?</span><span class="w"> </span><span class="nv">KEY_O</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="nf">vec3:z!</span><span class="w"> </span><span class="nv">camera-pos</span>
+<span class="w">          </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:z</span><span class="w"> </span><span class="nv">camera-pos</span><span class="p">)</span><span class="w"> </span><span class="nv">MOVEMENT_SPEED</span><span class="p">))))</span>
+
+<span class="w">  </span><span class="p">(</span><span class="nb">for-each</span>
+<span class="w">   </span><span class="p">(</span><span class="k">lambda</span><span class="w"> </span><span class="p">(</span><span class="nf">position</span><span class="p">)</span>
+<span class="w">     </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">%tint%</span><span class="w"> </span><span class="p">(</span><span class="nf">vec3:create%</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
+<span class="w">       </span><span class="p">(</span><span class="nf">cube:draw</span><span class="w"> </span><span class="nv">*cube*</span><span class="w"> </span><span class="nv">position</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="nv">%tint%</span><span class="w"> </span><span class="nv">*cube-shader*</span><span class="p">)</span>
+<span class="w">       </span><span class="p">(</span><span class="nf">free%</span><span class="w"> </span><span class="nv">%tint%</span><span class="p">)))</span>
+<span class="w">   </span><span class="nv">*cube-positions*</span><span class="p">)</span>
+
+<span class="w">  </span><span class="p">(</span><span class="nf">window:swap</span><span class="p">))</span>
+</code></pre></div>
+
+<p>I also changed my C functions to reflect a <em>NamespaceVerb</em> convention. I could have used <em>namespace::Verb</em> but the <a href="http://wiki.call-cc.org/eggref/5/bind">FFI that I use</a> to communicate with C cannot parse C namespaces. So instead of <em>Shader::Create</em>, I am left with <em>ShaderCreate</em>. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, <a href="https://www.raylib.com/examples.html">Raylib also uses this convention</a> for their functions).</p>
+<p>I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/game_engine.html" class="tag">game_engine</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a>
             </h2>
             <div class="article-meta">
@@ -118,33 +241,6 @@
             <a href="../tag/lisp.html" class="tag">lisp</a>
             <a href="../tag/game_engine.html" class="tag">game_engine</a>
             <a href="../tag/dev.html" class="tag">dev</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-05-03T11:19:00+08:00">Sun 03 May 2020</time>
-                <span>•</span>
-                <a href="../category/engine.html">engine</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
-<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
-<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="../images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
-<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay if no one would try it out as long as I get to learn from it.</p>
-<p>This morning I started implementing a simple implementation of Chibi. Thankfully, it's easy to setup. However, the more I implement it the more that I realize that I may need to change how my engine is structured to better suit Lisp's functional nature. This means less object oriented design similar to how <a href="https://www.raylib.com/index.html">Raylib</a> does things. </p>
-<p>I still need some time to think this through. I am open to do the changes needed if I am to include a scripting language. I just want to make sure if my engine would really need it. We'll see.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/dev.html" class="tag">dev</a>
-            <a href="../tag/lisp.html" class="tag">lisp</a>
-            <a href="../tag/engine.html" class="tag">engine</a>
         </div>
     </article>
 

@@ -37,6 +37,36 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../maldoc101-writeup-part-2.html">Maldoc101 Writeup (Part 2)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-03-14T08:34:00+08:00">Sun 14 March 2021</time>
+                <span>•</span>
+                <a href="../category/malware_analysis.html">malware_analysis</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>This is part 2 of my writeup for the Maldoc101 challenge. Check out <a href="../maldoc101-writeup-part-1.html">part 1</a> for the beginning of the analysis.</p>
+<p>The next couple of lines does the same concatenating technique similar to the previous steps. </p>
+<div class="codehilite"><pre><span></span><code>deaknaugthein = roubhaol.kaizseah.ControlTipText
+giakfeiw = deulsaocthuul + gooykadheoj + roubhaol.paerwagyouqumeid.ControlTipText + deaknaugthein
+queegthaen = giakfeiw + roubhaol.joefwoefcheaw
+</code></pre></div>
+
+<p>At the end of the code above <code>queegthaen</code> now contains the value <code>Win32_Process</code> + <code>s</code> + <code>tar</code> + <code>tu</code> + <code>P</code>. Or when combined creates the string <code>Win32_ProcessstartuP</code> which probably refers <a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-processstartup">to this WMI class</a> in the Microsoft docs.</p>
+<p><em>Note: This writeup appears to be incomplete. For the complete analysis, please refer to <a href="../maldoc101-writeup-part-1.html">part 1</a> of this series.</em></p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+            <a href="../tag/malware.html" class="tag">malware</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../maldoc101-writeup-part-1.html">Maldoc101 Writeup (Part 1)</a>
             </h2>
             <div class="article-meta">
@@ -337,78 +367,6 @@ End Function
         <div class="tags">
             <a href="../tag/re.html" class="tag">re</a>
             <a href="../tag/crackme.html" class="tag">crackme</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../introducing-shcode2exe.html">Introducing shcode2exe</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-02-26T07:34:00+08:00">Fri 26 February 2021</time>
-                <span>•</span>
-                <a href="../category/tools.html">tools</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
-<p>I've been playing around with <a href="https://remnux.org/">Remnux</a> and encountered a problem trying to get one of the tools to run properly. The tool is <a href="https://github.com/repnz/shellcode2exe">shellcode2exe</a>, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.</p>
-<p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
-<p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
-<h2 id="shcode2exe">shcode2exe</h2>
-<p>While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine along with other features as listed below:</p>
-<ul>
-<li>Can accept a shellcode blob or string (String format <code>\x5e\x31</code>)</li>
-<li>Can target both 32bit or 64bit Windows architecture. </li>
-<li>Cross platform. Works on Linux or Windows.</li>
-<li>No dependency on Wine when running on Linux</li>
-<li>Tested working with Python v3.3 and above</li>
-<li>Tested working on Windows 7 (Non SP1) and above</li>
-</ul>
-<h2 id="usage">Usage</h2>
-<p>Here's the help message for the tool:</p>
-<div class="codehilite"><pre><span></span><code><span class="go">usage: shcode2exe.py [-h] [-o OUTPUT] [-s] [-a {32,64}] input</span>
-
-<span class="go">Compile a binary shellcode blob into an exe file. Can target both 32bit or 64bit architecture.</span>
-
-<span class="go">positional arguments:</span>
-<span class="go">  input                 The input file containing the shellcode.</span>
-
-<span class="go">optional arguments:</span>
-<span class="go">  -h, --help            show this help message and exit</span>
-<span class="go">  -o OUTPUT, --output OUTPUT</span>
-<span class="go">                        Set output exe file.</span>
-<span class="go">  -s, --string          Set if input file contains shellcode in string format.</span>
-<span class="go">  -a {32,64}, --architecture {32,64}</span>
-<span class="go">                        The windows architecture to use</span>
-</code></pre></div>
-
-<p>Here's how to load a file with shellcode in the format of a string</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>cat<span class="w"> </span>test.txt
-<span class="go">\x5e\x31\xc0\xb0\x24\xcd\x80\xb0\x24\xcd\x80\xb0\x58\xbb\xad\xde\xe1\xfe\xb9\x69\x19\x12\x28\xba\x67\x45\x23\x01\xcd\x80</span>
-<span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>test-string.exe<span class="w"> </span>test.bin
-</code></pre></div>
-
-<p>Load a file with shellcode in the format of a blob</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-o<span class="w"> </span>test-blob.exe<span class="w"> </span>test.bin
-</code></pre></div>
-
-<p>Use 64 bit architecture for the output (32 bit is the default)</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-o<span class="w"> </span>test-blob.exe<span class="w"> </span>-a<span class="w"> </span><span class="m">64</span><span class="w"> </span>test.bin
-<span class="gp">$ </span>file<span class="w"> </span>test-blob.exe
-<span class="go">test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows</span>
-</code></pre></div>
-
-<h2 id="next-steps">Next steps</h2>
-<p>I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway. (Update 2021-02-07: It's now <a href="https://github.com/REMnux/salt-states/issues/169">under review</a>)</p>
-<p>For more information about the tool and it's code, go to <a href="https://github.com/accidentalrebel/shcode2exe">it's Github page</a>. If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at <a href="https://twitter.com/accidentalrebel">@accidentalrebel</a>.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/re.html" class="tag">re</a>
-            <a href="../tag/tools.html" class="tag">tools</a>
-            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
         </div>
     </article>
 

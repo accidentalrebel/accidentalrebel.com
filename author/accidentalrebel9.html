@@ -37,6 +37,78 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../introducing-shcode2exe.html">Introducing shcode2exe</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-26T07:34:00+08:00">Fri 26 February 2021</time>
+                <span>•</span>
+                <a href="../category/tools.html">tools</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
+<p>I've been playing around with <a href="https://remnux.org/">Remnux</a> and encountered a problem trying to get one of the tools to run properly. The tool is <a href="https://github.com/repnz/shellcode2exe">shellcode2exe</a>, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.</p>
+<p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
+<p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
+<h2 id="shcode2exe">shcode2exe</h2>
+<p>While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine along with other features as listed below:</p>
+<ul>
+<li>Can accept a shellcode blob or string (String format <code>\x5e\x31</code>)</li>
+<li>Can target both 32bit or 64bit Windows architecture. </li>
+<li>Cross platform. Works on Linux or Windows.</li>
+<li>No dependency on Wine when running on Linux</li>
+<li>Tested working with Python v3.3 and above</li>
+<li>Tested working on Windows 7 (Non SP1) and above</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>Here's the help message for the tool:</p>
+<div class="codehilite"><pre><span></span><code><span class="go">usage: shcode2exe.py [-h] [-o OUTPUT] [-s] [-a {32,64}] input</span>
+
+<span class="go">Compile a binary shellcode blob into an exe file. Can target both 32bit or 64bit architecture.</span>
+
+<span class="go">positional arguments:</span>
+<span class="go">  input                 The input file containing the shellcode.</span>
+
+<span class="go">optional arguments:</span>
+<span class="go">  -h, --help            show this help message and exit</span>
+<span class="go">  -o OUTPUT, --output OUTPUT</span>
+<span class="go">                        Set output exe file.</span>
+<span class="go">  -s, --string          Set if input file contains shellcode in string format.</span>
+<span class="go">  -a {32,64}, --architecture {32,64}</span>
+<span class="go">                        The windows architecture to use</span>
+</code></pre></div>
+
+<p>Here's how to load a file with shellcode in the format of a string</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>cat<span class="w"> </span>test.txt
+<span class="go">\x5e\x31\xc0\xb0\x24\xcd\x80\xb0\x24\xcd\x80\xb0\x58\xbb\xad\xde\xe1\xfe\xb9\x69\x19\x12\x28\xba\x67\x45\x23\x01\xcd\x80</span>
+<span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-s<span class="w"> </span>-o<span class="w"> </span>test-string.exe<span class="w"> </span>test.bin
+</code></pre></div>
+
+<p>Load a file with shellcode in the format of a blob</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-o<span class="w"> </span>test-blob.exe<span class="w"> </span>test.bin
+</code></pre></div>
+
+<p>Use 64 bit architecture for the output (32 bit is the default)</p>
+<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>./shcode2exe.py<span class="w"> </span>-o<span class="w"> </span>test-blob.exe<span class="w"> </span>-a<span class="w"> </span><span class="m">64</span><span class="w"> </span>test.bin
+<span class="gp">$ </span>file<span class="w"> </span>test-blob.exe
+<span class="go">test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows</span>
+</code></pre></div>
+
+<h2 id="next-steps">Next steps</h2>
+<p>I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway. (Update 2021-02-07: It's now <a href="https://github.com/REMnux/salt-states/issues/169">under review</a>)</p>
+<p>For more information about the tool and it's code, go to <a href="https://github.com/accidentalrebel/shcode2exe">it's Github page</a>. If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at <a href="https://twitter.com/accidentalrebel">@accidentalrebel</a>.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/tools.html" class="tag">tools</a>
+            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../ioli-crackme-0x01.html">IOLI Crackme 0x01</a>
             </h2>
             <div class="article-meta">
@@ -151,61 +223,6 @@
         <div class="tags">
             <a href="../tag/re.html" class="tag">re</a>
             <a href="../tag/crackme.html" class="tag">crackme</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-10-05T11:13:00+08:00">Mon 05 October 2020</time>
-                <span>•</span>
-                <a href="../category/ctf.html">ctf</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <blockquote>
-<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
-</blockquote>
-<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
-<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="../covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
-<h2 id="the-preparation">The Preparation</h2>
-<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
-<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it but there were <a href="https://www.facebook.com/guidemtraining/photos/a.142012317191141/229536238438748/">some social media posts</a> that contained screenshots on how the challenge looked like. These gave me a lot of information on what to expect.</p>
-<p><img alt="hunt-the-kingdom-ctf-challenge-01" src="../images/hunt-the-kingdom-ctf-challenge-01.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>It&#39;s OSINT in practice :P
-</code></pre></div>
-
-<p>For example, with the screenshot above I learned how the UI looked like, that there were categories that we could switch to, leaderboards, how a question is structured, and that "areas" on the map can get added, enabled, and disabled during the game. The last part is particularly important as it means that not all questions are available from the start and some can get disabled during the game.</p>
-<p>Thanks to the above research I felt confident that I could hit the ground running as soon as the game started. I picked my name (AccidentalRebel, of course) and my emblem and I was ready for the hunt.</p>
-<p><img alt="hunt-the-kingdom-ctf-challenge-02" src="../images/hunt-the-kingdom-ctf-challenge-02.png" /></p>
-<div class="codehilite"><pre><span></span><code>Yes, that&#39;s the blue tank from Advance Wars, because I&#39;m part of the &quot;blue team&quot;.
-</code></pre></div>
-
-<h2 id="the-hunt">The Hunt</h2>
-<p>When the hunt started my approach was to focus on the easy problems first. Getting them out of the way early would allow me to rack up points and just focus on the hard ones afterwards. This did the trick and I was able to maintain an early lead.</p>
-<p>During the mid-game my computer hanged from all the switching between VMs (There were 3 VMs that we needed to use to solve the problems). <em>Note to self: get a beefier PC</em>. I got a bit frustrated by this but decided that instead of waiting for Windows to boot I could use the time to take a break and got lunch. </p>
-<p><img alt="hunt-the-kingdom-ctf-challenge-03" src="../images/hunt-the-kingdom-ctf-challenge-03.53" /></p>
-<p>I came back to the game all full and refreshed, but sadly, I have already lost my lead. I felt a bit disappointed by this but I continued to push through. I removed the leaderboards to minimize distractions which helped. No need to pressure myself, I told myself. Although, I admit that I did peek from time to time.</p>
-<p>With the renewed focus I was able to keep my standing in the top 3. The leader of the pack during the end-game was <em>BoyHack3r</em>, a worthy opponent who was always a few points ahead of me. </p>
-<p>There was one question that has a lot of points that only has one solve. I knew that if I could get that it would give me enough points to snatch back 1st place. It wasn't an easy problem though so I changed my approach by slowing down which helped me understand the questions better. A few minutes later I was back at first place.</p>
-<p>I've never done a celebratory fist pump before, this was the first time.</p>
-<h2 id="the-final-minutes">The Final Minutes</h2>
-<p>I was able to maintain first place position by continuously answering questions until I was left with just four questions. These four are problems that no one has solved yet. The activity on the leaderboards have lessened which I took to mean that the others were stuck like me. I was at 13740 points, BoyHack3r at 13590, and Overwatch at 13460. If any of them managed to solve just one out of these four problems then they'll easily overtake me.</p>
-<p>I wasn't going to let that happen though. At 5 minutes left I continued solving the one that I had the most progress with. But it wasn't enough and I ran out of time. The others didn't get their lucky break either which finally cemented the scores on the boards.</p>
-<p><img alt="hunt-the-kingdom-ctf-challenge-04" src="../images/hunt-the-kingdom-ctf-challenge-04.PNG" /></p>
-<p>After 6 hours of back-breaking hunting I was finally able to breathe a sigh of relief. </p>
-<h2 id="the-end">The End</h2>
-<p>I rarely engage in any competitive activity so my competitive side rarely comes out. This CTF definitely brought it out and gave me the push to take the challenge seriously. I didn't do it for the prizes though. I did it because I wanted to prove to myself that I have what it takes, especially since I don't have a formal background in CyberSecurity. While a CTF is not an accurate qualification of being part of a blue team, it does show a participant's ability to work and solve problems under pressure.</p>
-<p>I want to give a shoutout to <a href="https://www.facebook.com/guidemtraining">GuideM</a> for guiding us throughout the course and for the extremely fun CTF challenge. Also to <em>BoyHack3r</em>, <em>Overwatch</em>, and <em>:]</em> for making me sweat bullets.</p>
-<p>This is another big step for me into the world of cybersecurity and I do hope I could learn more and improve. I look forward to the next CTF!</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/ctf.html" class="tag">ctf</a>
-            <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
         </div>
     </article>
 

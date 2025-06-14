@@ -37,6 +37,245 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-12-10T23:33:00+08:00">Sun 10 December 2017</time>
+                <span>•</span>
+                <a href="./category/postmortem.html">postmortem</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
+<p><strong>TL;DR</strong></p>
+<ul>
+<li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
+</ul>
+<hr />
+<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
+<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
+<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system in all my game development related projects and has helped us immensely in the development of our recent game, <a href="http://mindcakegames.com/">Chef Wars</a>.</p>
+<p>I'm sharing this in the hopes that it would help others too.</p>
+<h2 id="risk-adjusted-estimates">Risk Adjusted Estimates</h2>
+<p>The basic idea of this system is that for each task, an estimated time would be given along with a "confidence level". The lower the confidence the more padding is added automatically to the estimate for that task.</p>
+<p>It's a very simple system and is illustrated clearly in the image below:</p>
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th style="text-align: center;">Estimate</th>
+<th style="text-align: center;">Confidence</th>
+<th style="text-align: right;">Risk-Adjusted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task A</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: right;">9.44</td>
+</tr>
+<tr>
+<td>Task B</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: right;">11.56</td>
+</tr>
+<tr>
+<td>Task C</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: right;">12.22</td>
+</tr>
+<tr>
+<td>Task D</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: right;">10.00</td>
+</tr>
+</tbody>
+</table>
+<p>A legend (shown below) is used to help programmers determine what confidence level to specify based on their current situation.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th style="text-align: right;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="text-align: right;">No clue -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="text-align: right;">Hardly a clue -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="text-align: right;">Someone else has done this and I read about it; job not well defined -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="text-align: right;">Someone else has done this and I think I understand this; job might not be well-defined -- don't make decisions on this. We need to talk more.</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="text-align: right;">Done something similar to this before and this relates to that work -- this estimate has a variance of +/- 50 percent of estimate.</td>
+</tr>
+<tr>
+<td>6</td>
+<td style="text-align: right;">I think I understand this fairly well and I understand the goal.</td>
+</tr>
+<tr>
+<td>7</td>
+<td style="text-align: right;">The average case for programming when the requirements are understood.</td>
+</tr>
+<tr>
+<td>8</td>
+<td style="text-align: right;">A confident case for programming. It's rare that something unexpected would happen.</td>
+</tr>
+<tr>
+<td>9</td>
+<td style="text-align: right;">I've done this before and it's very similar. If something unexpected comes up, I know how to tackle it.</td>
+</tr>
+<tr>
+<td>10</td>
+<td style="text-align: right;">No matter what, I'm only going to work on this for the specified period of time</td>
+</tr>
+</tbody>
+</table>
+<p>The formula for calculating the risk-adjusted time is also very straightforward:</p>
+<blockquote>
+<p>(estimated time * (10 - confidence level) / 9) + estimated time</p>
+</blockquote>
+<p>From hereon you can easily compute for the total time and make a comparison between the estimated time and the risk adjusted time.</p>
+<p>To see how all of this works you can check out our <a href="https://docs.google.com/spreadsheets/d/1KNTq88bw5qO6Ejbm71z31X-jraJDjB-9WET-2BZR2-s/edit?usp=sharing">Technical Estimate Template Sheet</a> at our Google Drive. Or if you are into Emacs, I also have a <a href="https://gist.github.com/accidentalrebel/0df9f9e024c7e3d433ef8a4f9fada2a9">template for that as well</a> using OrgMode.</p>
+<h2 id="how-effective-is-it">How effective is it?</h2>
+<p>The following is taken from the technical estimate I made for a recent module in Chef Wars. I've logged the actual time it took me to finish the task so the results can be compared.</p>
+<p><strong>Note:</strong> <em>Each estimate is in hours.</em></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Task</th>
+<th style="text-align: center;">Estimate</th>
+<th style="text-align: center;">Confidence</th>
+<th style="text-align: center;">Risk Adjusted</th>
+<th style="text-align: center;">Actual time</th>
+<th style="text-align: center;">Difference</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">[Backend] Create PVP Player Collections</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">2.4444444</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1.44</td>
+</tr>
+<tr>
+<td style="text-align: center;">[Backend] Set Player PVP Collections</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">9.7777778</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">2.78</td>
+</tr>
+<tr>
+<td style="text-align: center;">[Leaderboard] Fetch City Leaderboards</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">21.333333</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">3.33</td>
+</tr>
+<tr>
+<td style="text-align: center;">[Leaderboard] Monthly Leaderboard Resetting</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">2.6666667</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">-1.33</td>
+</tr>
+<tr>
+<td style="text-align: center;">[Logic] PVP Competition Setup</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">10.666667</td>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">1.67</td>
+</tr>
+<tr>
+<td style="text-align: center;">[UI] Add the City Ranking button in Global/Friend Rankings</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr>
+<td style="text-align: center;">[UI] City Master Chefs UI</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">2.4444444</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">-3.56</td>
+</tr>
+<tr>
+<td style="text-align: center;">[UI] City Arena UI</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">2.4444444</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">-1.56</td>
+</tr>
+<tr>
+<td style="text-align: center;">[UI] Top Chef Awarding Pop Up</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">1.2222222</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">-0.78</td>
+</tr>
+<tr>
+<td style="text-align: center;">Totals</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">53.99</td>
+<td style="text-align: center;">51</td>
+<td style="text-align: center;">2.99</td>
+</tr>
+</tbody>
+</table>
+<p>As you can see that the actual times are very close to the risk adjusted times. I overshot quite a bit during the UI related tasks but the time lost was offseted by the other tasks as seen in the totals. </p>
+<p>Take note that this is just a small sample and results will vary. There are times where totals still overshoot but mostly it is just in terms of a few hours, or at worst a full day. Regardless, our overall experience has been great as it has proven to be accurate enough that we could confidently commit to certain dates and schedules.</p>
+<h2 id="tips-on-using-this-system">Tips on using this system</h2>
+<ul>
+<li>This system works great if you know the tasks beforehand. You really need to sit down and think what the steps are and try not to miss anything and to avoid adjustments.</li>
+<li>The more granular the tasks, the easier it is to assign a time and confidence level to them.</li>
+<li>Being honest with the confidence levels helps produce more accurate estimates. It also brings to light any low-confidence tasks that are in need of reconsideration.</li>
+<li>Make the scope smaller and easier to digest by dividing your project into smaller parts (It can be by milestone or by module) and then make an estimate for each.</li>
+<li>Do this long enough and you'll get better with judging estimates and confidence levels.</li>
+<li>It helps to review and compare how long a task took against your estimates. It will give you insight why you overshot (In the example above, I learned that I am still bad at properly estimating UI related tasks. I should adjust my confidence levels for next time).</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>This simple system has helped us a lot and we plan to use it on all our future projects. It's not 100% accurate but it is accurate enough that we can schedule confidently with it. I would be the first to admit that it may not work for everyone but if you are always overshooting your estimates then this system might be worth a try.</p>
+<p><strong>[Check out our game which was released relatively on time over at <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://itunes.apple.com/us/app/chef-wars/id1254831133?mt=8">iOS</a>]</strong></p>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/chefwars.html" class="tag">chefwars</a>
+            <a href="./tag/gamedev.html" class="tag">gamedev</a>
+            <a href="./tag/mindcake.html" class="tag">mindcake</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="./chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a>
             </h2>
             <div class="article-meta">
@@ -143,41 +382,6 @@
             <a href="./tag/gamedev.html" class="tag">gamedev</a>
             <a href="./tag/mindcake.html" class="tag">mindcake</a>
             <span class="tag">+1 more</span>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2017-09-23T13:08:00+08:00">Sat 23 September 2017</time>
-                <span>•</span>
-                <a href="./category/emacs.html">emacs</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>One of the problems I was having with my Emacs environment under WSL <em>(Windows Subsystem for Linux, aka. Bash On Windows)</em> is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.</p>
-<p>I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called <a href="https://github.com/rolandwalker/simpleclip">simpleclip</a> that worked but the results were not consistent.</p>
-<p>I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-set-clipboard-data</span><span class="w"> </span><span class="p">(</span><span class="nv">str-val</span><span class="p">)</span>
-<span class="w">  </span><span class="s">&quot;Puts text in Windows clipboard. Copying to Windows from WSL does </span>
-<span class="s">not work on my end so this one is a temporary solution.</span>
-
-<span class="s">This function is called from within the simpleclip package when copy </span>
-<span class="s">or bgcopy command is issued.&quot;</span>
-<span class="w">  </span><span class="p">(</span><span class="nf">start-process</span><span class="w"> </span><span class="s">&quot;cmd&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="s">&quot;cmd.exe&quot;</span><span class="w"> </span><span class="s">&quot;/C&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="s">&quot;echo &quot;</span><span class="w"> </span><span class="p">(</span><span class="nv">replace-regexp-in-string</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="s">&quot;\r&quot;</span><span class="w"> </span><span class="nv">str-val</span><span class="p">)</span><span class="w"> </span><span class="s">&quot; | clip.exe&quot;</span><span class="p">)))</span>
-</code></pre></div>
-
-<p>It works quite nicely especially after integrating it with simpleclip. This would do for now until I find a better solution.</p>
-<blockquote>
-<p><strong>EDIT (2017-10-01):</strong> Turns out the original code could not copy a region with multiple lines due to the difference in carriage return characters. This is now fixed with <code>(replace-regexp-in-string "\n" "\r" str-val)</code>.</p>
-</blockquote>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/emacs-windows-linux.html" class="tag">emacs windows linux</a>
         </div>
     </article>
 
