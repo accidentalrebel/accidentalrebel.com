@@ -1,82 +1,62 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>CovidScammers writeup (Defcon RTV CTF)</title>
-  <meta name="author" content="AccidentalRebel">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CovidScammers writeup (Defcon RTV CTF) | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="./theme/css/main.css">
+    
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="./covidscammers-writeup--defcon-rtv-ctf.html">
+    <meta property="og:title" content="CovidScammers writeup (Defcon RTV CTF)">
+    <meta property="og:description" content="I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like overthewire.org and vulnhub. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other. Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that. Free Flag (and binary) [1 point] You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …">
 
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="description" content="CovidScammers writeup (Defcon RTV CTF) August 13, 2020 in ctf,writeup,malware_analysis,defcon">
-
-  <link rel="canonical" href="./covidscammers-writeup--defcon-rtv-ctf.html">
-
-  <link href="./favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-  
-<meta name="twitter:card" content="summary">
-<meta property="og:url" content="./covidscammers-writeup--defcon-rtv-ctf.html">
-<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
-<meta name="twitter:creator:id" content="accidentalrebel">
-<meta property="og:title" content="CovidScammers writeup (Defcon RTV CTF)">
-<meta property="og:description" content="I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <">
-<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png">
-<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
-
-
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="./covidscammers-writeup--defcon-rtv-ctf.html">
+    <meta property="twitter:title" content="CovidScammers writeup (Defcon RTV CTF)">
+    <meta property="twitter:description" content="I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like overthewire.org and vulnhub. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other. Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that. Free Flag (and binary) [1 point] You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …">
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href=".">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="./theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-	<article>
-          <h1><a href="./covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a></h1>
-          <div class="meta">
-            <time datetime="2020-08-13T16:58:00+08:00">August 13, 2020</time>
-            in <span class="categories">
-              <a href="./tag/ctf.html">ctf</a>,              <a href="./tag/writeup.html">writeup</a>,              <a href="./tag/malware_analysis.html">malware_analysis</a>,              <a href="./tag/defcon.html">defcon</a>            </span>
-          </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>CovidScammers writeup (Defcon RTV CTF)</h1>
+        <div class="article-meta">
+            <time datetime="2020-08-13T16:58:00+08:00">Thu 13 August 2020</time>
+            <span>•</span>
+            <a href="./category/ctf.html">ctf</a>
+        </div>
+    </header>
+
+    <div class="article-content">
         <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
 <p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
 <h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
@@ -150,50 +130,47 @@ Look for the free flag. Get on the scoreboard!</p>
 <h2 id="to-be-continued">To be continued?</h2>
 <p>So I wanted to try and work on the other challenges but it seems that <a href="https://ctf.threatsims.com">the ctf site</a> is currently down. The site redirected to a different non https site and it spooked me so I stopped trying. Good thing that I had NoScript on.</p>
 <p>If you want a longer and more pro writeup about the CovidScammers challenges do check out <a href="https://0xdf.gitlab.io/2020/05/04/covid-19-ctf-covidscammers.html">0xdf's writeup about it</a>.</p>
-        <!-- Disqus goes here -->
-        <section>
-          <h1>Comments</h1>
-          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
-	  <script>
-	    /**
-	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-	    /*
-	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
-	     this.page.identifier = covidscammers-writeup--defcon-rtv-ctf.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	     };
-	    */
-	    (function() { // DON'T EDIT BELOW THIS LINE
-		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
-		s.setAttribute('data-timestamp', +new Date());
-		(d.head || d.body).appendChild(s);
-	    })();
-	  </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-        </section>
-	</article>
-      </div>
     </div>
-  </div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-        </div>
-      </div>
-    </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <footer class="article-footer">
+        <div class="tags">
+            <a href="./tag/ctf.html" class="tag">ctf</a>
+            <a href="./tag/writeup.html" class="tag">writeup</a>
+            <a href="./tag/malware_analysis.html" class="tag">malware_analysis</a>
+            <a href="./tag/defcon.html" class="tag">defcon</a>
+        </div>
+    </footer>
+</article>
+
+
+<section class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "./covidscammers-writeup--defcon-rtv-ctf.html";
+            this.page.identifier = "covidscammers-writeup--defcon-rtv-ctf";
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://AccidentalRebel.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+        </div>
+    </main>
+
+    <script src="./theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

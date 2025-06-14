@@ -1,112 +1,95 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Posts for sandbox</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="../tag/sandbox.html">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sandbox | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="all-posts">
-  <div class="container">
-    <div class="row">
-      <div class="list-title col-md-offset-3 col-md-6">
-        <h4>Posts in sandbox</h4>
-      </div>
-    </div>
-  </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Tag: sandbox</h1>
+    </header>
 
-  <div class="article-list">
-    <div class="container">
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a></h4>
-              <span class="meta">
-                <time datetime="2022-08-15T11:29:00+08:00">August 15, 2022</time>
-                in <span class="categories">
-                  <a href="../tag/malware.html">malware</a>,                  <a href="../tag/sandbox.html">sandbox</a>,                  <a href="../tag/evasion.html">evasion</a>,                  <a href="../tag/x64.html">x64</a>,                  <a href="../tag/assembly.html">assembly</a>              </span>
-            </article>
-          </div>
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-08-15T11:29:00+08:00">Mon 15 August 2022</time>
+                <span>•</span>
+                <a href="../category/misc.html">misc</a>
+            </div>
+            <div class="post-summary">
+                <p>In the <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
+<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
+<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
+<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include …</span></code></pre></div>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a></h4>
-              <span class="meta">
-                <time datetime="2022-08-08T11:29:00+08:00">August 08, 2022</time>
-                in <span class="categories">
-                  <a href="../tag/malware.html">malware</a>,                  <a href="../tag/sandbox.html">sandbox</a>,                  <a href="../tag/evasion.html">evasion</a>,                  <a href="../tag/x64.html">x64</a>,                  <a href="../tag/assembly.html">assembly</a>              </span>
-            </article>
-          </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-08-08T11:29:00+08:00">Mon 08 August 2022</time>
+                <span>•</span>
+                <a href="../category/misc.html">misc</a>
+            </div>
+            <div class="post-summary">
+                <p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
+<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
+<h2 id="checking-the-memory">Checking the memory</h2>
+<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is probably a sandbox (To save costs). While it's not exactly fool-proof …</p>
+            </div>
         </div>
     </div>
-  </div>
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</article>
         </div>
-      </div>
-    </footer>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

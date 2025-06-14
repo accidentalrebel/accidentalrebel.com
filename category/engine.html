@@ -1,98 +1,78 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AccidentalRebel.com - engine category</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="..">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>engine | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="container">
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-03T11:19:00+08:00">May 03, 2020</time>
-          in <span class="categories">
-            <a href="../tag/dev.html">dev</a>,            <a href="../tag/lisp.html">lisp</a>,            <a href="../tag/engine.html">engine</a>          </span>
-	</div>
-        <p><p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Category: engine</h1>
+    </header>
+
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-03T11:19:00+08:00">Sun 03 May 2020</time>
+            </div>
+            <div class="post-summary">
+                <p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
 <p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
 <p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="../images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
 <p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../thinking-of-adding-lisp-to-my-custom-game-engine.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-</div>
-<div class="pagination">
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+            </div>
+            <div class="tags">
+                <a href="../tag/dev.html" class="tag">dev</a>
+                <a href="../tag/lisp.html" class="tag">lisp</a>
+                <a href="../tag/engine.html" class="tag">engine</a>
+            </div>
         </div>
-      </div>
-    </footer>
+    </div>
+</article>
+        </div>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

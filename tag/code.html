@@ -1,101 +1,98 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Posts for code</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="../tag/code.html">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>code | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="all-posts">
-  <div class="container">
-    <div class="row">
-      <div class="list-title col-md-offset-3 col-md-6">
-        <h4>Posts in code</h4>
-      </div>
-    </div>
-  </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Tag: code</h1>
+    </header>
 
-  <div class="article-list">
-    <div class="container">
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a></h4>
-              <span class="meta">
-                <time datetime="2020-06-16T05:58:00+08:00">June 16, 2020</time>
-                in <span class="categories">
-                  <a href="../tag/programming.html">programming</a>,                  <a href="../tag/dev.html">dev</a>,                  <a href="../tag/research.html">research</a>,                  <a href="../tag/code.html">code</a>              </span>
-            </article>
-          </div>
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-06-16T05:58:00+08:00">Tue 16 June 2020</time>
+                <span>•</span>
+                <a href="../category/dev.html">dev</a>
+            </div>
+            <div class="post-summary">
+                <p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
+<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
+<hr />
+<h2 id="foreign-lambda-example">foreign-lambda example</h2>
+<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span>
+
+<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span>
+<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span>
+<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
+            </div>
         </div>
     </div>
-  </div>
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</article>
         </div>
-      </div>
-    </footer>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

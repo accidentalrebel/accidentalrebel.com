@@ -1,112 +1,112 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Posts for av</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="../tag/av.html">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>av | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="all-posts">
-  <div class="container">
-    <div class="row">
-      <div class="list-title col-md-offset-3 col-md-6">
-        <h4>Posts in av</h4>
-      </div>
-    </div>
-  </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Tag: av</h1>
+    </header>
 
-  <div class="article-list">
-    <div class="container">
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a></h4>
-              <span class="meta">
-                <time datetime="2022-07-09T12:11:00+08:00">July 09, 2022</time>
-                in <span class="categories">
-                  <a href="../tag/evasion.html">evasion</a>,                  <a href="../tag/assembly.html">assembly</a>,                  <a href="../tag/av.html">av</a>              </span>
-            </article>
-          </div>
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-07-09T12:11:00+08:00">Sat 09 July 2022</time>
+                <span>•</span>
+                <a href="../category/misc.html">misc</a>
+            </div>
+            <div class="post-summary">
+                <p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
+<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
+<h2 id="the-problem">The problem</h2>
+<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Upon compiling …</p>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a></h4>
-              <span class="meta">
-                <time datetime="2022-07-08T12:11:00+08:00">July 08, 2022</time>
-                in <span class="categories">
-                  <a href="../tag/evasion.html">evasion</a>,                  <a href="../tag/assembly.html">assembly</a>,                  <a href="../tag/av.html">av</a>              </span>
-            </article>
-          </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-07-08T12:11:00+08:00">Fri 08 July 2022</time>
+                <span>•</span>
+                <a href="../category/misc.html">misc</a>
+            </div>
+            <div class="post-summary">
+                <p>One of the features I implemented for my <a href="https://github.com/accidentalrebel/RATwurst">Remote Access Tool</a> was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. </p>
+<p>This was over a year ago. I decided to revisit this feature to try and understand it better and find out if it is actually effective.</p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>In this two-part blog post I will look into the following:</p>
+<ul>
+<li>Hiding argument strings</li>
+<li>Hiding API call strings</li>
+</ul>
+<p>THe one you reading now is about the first one. I will be explaining how it's done in C and later convert it to x64 Windows Assembly so we can better understand what's happening under the hood.</p>
+<h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
+<p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an …</p>
+            </div>
         </div>
     </div>
-  </div>
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</article>
         </div>
-      </div>
-    </footer>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

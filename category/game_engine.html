@@ -1,115 +1,94 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AccidentalRebel.com - game_engine category</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="..">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>game_engine | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="container">
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-19T17:59:00+08:00">May 19, 2020</time>
-          in <span class="categories">
-            <a href="../tag/dev.html">dev</a>,            <a href="../tag/game_engine.html">game_engine</a>          </span>
-	</div>
-        <p><p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Category: game_engine</h1>
+    </header>
+
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-19T17:59:00+08:00">Tue 19 May 2020</time>
+            </div>
+            <div class="post-summary">
+                <p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
 <p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
 <p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../switching-from-c-c---to-c.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../following-lispy-conventions.html">#4 - Following Lispy conventions</a></h1>
-	<div class="meta">
-          <time datetime="2020-05-15T07:00:00+08:00">May 15, 2020</time>
-          in <span class="categories">
-            <a href="../tag/dev.html">dev</a>,            <a href="../tag/game_engine.html">game_engine</a>          </span>
-	</div>
-        <p><p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
+            </div>
+            <div class="tags">
+                <a href="../tag/dev.html" class="tag">dev</a>
+                <a href="../tag/game_engine.html" class="tag">game_engine</a>
+            </div>
+        </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../following-lispy-conventions.html">#4 - Following Lispy conventions</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-15T07:00:00+08:00">Fri 15 May 2020</time>
+            </div>
+            <div class="post-summary">
+                <p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
 <p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
 <p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
 <p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../following-lispy-conventions.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-</div>
-<div class="pagination">
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+            </div>
+            <div class="tags">
+                <a href="../tag/dev.html" class="tag">dev</a>
+                <a href="../tag/game_engine.html" class="tag">game_engine</a>
+            </div>
         </div>
-      </div>
-    </footer>
+    </div>
+</article>
+        </div>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

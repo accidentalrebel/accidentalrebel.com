@@ -1,306 +1,228 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AccidentalRebel.com</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href=".">
-
-  <link href="./favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="./theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href=".">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="./theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="container">
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./classifying-more-with-less-new-vgl4nt-update.html">Classifying More With Less: New VGL4NT Update</a></h1>
-	<div class="meta">
-          <time datetime="2023-05-20T06:46:00+08:00">May 20, 2023</time>
-          in <span class="categories">
-            <a href="./tag/packers-malware-machine_learning-ml-update-vgl4nt.html">packers malware machine_learning ml update vgl4nt</a>          </span>
-	</div>
-        <p><h2 id="tldr">TLDR:</h2>
+    <main>
+        <div class="container">
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
+                <a href="./classifying-more-with-less-new-vgl4nt-update.html">Classifying More With Less: New VGL4NT Update</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-05-20T06:46:00+08:00">Sat 20 May 2023</time>
+                <span>•</span>
+                <a href="./category/misc.html">misc</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <h2 id="tldr">TLDR:</h2>
 <ul>
 <li>Packed malware machine learning classifier can only previously identify 10 packers</li>
 <li>Solution was a customized version of model ensembling, which is to train multiple models and resolve their results</li>
 <li>It works with a slight caveat of more extended training and processing, which I could happily live with</li>
 </ul>
-<p>I recently presented <a href="https://vgl4nt.accidentalrebel.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
+<p>I recently presented <a href="https://packers.vgl4nt.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
 <h2 id="a-simple-solution">A Simple Solution</h2>
-<p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./classifying-more-with-less-new-vgl4nt-update.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a></h1>
-	<div class="meta">
-          <time datetime="2023-04-22T08:44:00+08:00">April 22, 2023</time>
-          in <span class="categories">
-            <a href="./tag/artificial_intelligence.html">artificial_intelligence</a>,            <a href="./tag/machine_learning.html">machine_learning</a>          </span>
-	</div>
-        <p><p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
-<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://vgl4nt.accidentalrebel.com/).">https://vgl4nt.accidentalrebel.com/).</a>).</p>
+<p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which involves training separate models for different categories and combining their predictions. This way, I could double the classification capacity without requiring additional hardware resources.</p>
+<p>This was implemented by creating multiple machine learning models, each specializing in recognizing a subset of packers. The real challenge, however, lies in combining the predictions from these models to form a unified output.</p>
+<p><img alt="classifying-more-with-less-new-vgl4nt-update-01" src="./images/classifying-more-with-less-new-vgl4nt-update-01.png" /></p>
+<p>Here's how the process works:</p>
+<p>The packed malware file is fed into Model 1, which outputs probabilities for Packer 1, Packer 2, and Others. For example, it might produce:</p>
+<ul>
+<li>Packer 1: 10%</li>
+<li>Packer 2: 20%</li>
+<li>Others: 70%</li>
+</ul>
+<p>The same file is then fed into Model 2, which outputs probabilities for Packer 3, Packer 4, and Others. For instance:</p>
+<ul>
+<li>Packer 3: 60%</li>
+<li>Packer 4: 30%</li>
+<li>Others: 10%</li>
+</ul>
+<p>I then take the 'Others' category with the lowest probability. For our example, the final 'Others' probability would be 10% from Model 2.</p>
+<p>The final probabilities are:</p>
+<ul>
+<li>Packer 1: 10%</li>
+<li>Packer 2: 20%</li>
+<li>Packer 3: 60%</li>
+<li>Packer 4: 30%</li>
+<li>Others: 10%</li>
+</ul>
+<p>Packer 3 has the highest probability in this example, and the file is classified as such.</p>
+<p>This simple combination approach ensures I maintain a suitable probability distribution while leveraging each model's strengths. The beauty of this method is not only its efficiency but also its scalability. I can introduce more models, each specializing in different packers, to further increase the classification capabilities.</p>
+<p>Now you might wonder why I'd even write about this if the solution is this simple. The funny thing is I've explored multiple approaches to unifying the output. Before this, I fully implemented a complicated approach, only to later realize while writing this blog post that a much simpler approach works well enough for the tool's purpose.</p>
+<h2 id="downsides">Downsides</h2>
+<p>I am conscious that this may or may not be the most effective method to tackle this problem. But what is essential is that the current computation is simple and can maintain the appropriate prediction distribution based on the relative percentages. In essence, the category with the highest confidence score will always come out on top in the final output, primarily what users of my tool are interested in.</p>
+<p>Aside from this, I am concerned that increasing the number of categories also increases training and prediction time. I'm not too worried about the increase in training time because this happens behind the scenes and remains unseen to users of my tool. I'm slightly concerned about the longer prediction time, as all models need to process each submission to the tool. And as I plan to incorporate more packer tool categories, the prediction time will definitely rise.</p>
+<p>These downsides are not too much of a problem, however. They can easily be fixed if I find they are not meeting the tool's goals. For now, these will do.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>I am genuinely happy with my progress with the VGL4NT Malware Packer Classifier. There are other topics I want to tackle, but I'll save those for future blog posts.</p>
+<p>In the meantime, I invite you to check out the tool and see the changes yourself. Visit the <a href="https://packers.vgl4nt.com/">VGL4NT website</a> to get started. And for a more detailed walkthrough, you can also watch this <a href="https://www.youtube.com/watch?v=emIyy4Njw_g">YouTube video</a> I created</p>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/packers-malware-machine_learning-ml-update-vgl4nt.html" class="tag">packers malware machine_learning ml update vgl4nt</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
+                <a href="./classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
+                <span>•</span>
+                <a href="./category/misc.html">misc</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
+<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
 <p><img alt="classifying-malware-packers-using-machine-learning-01" src="./images/classifying-malware-packers-using-machine-learning-01.png" /></p>
 <p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
 <h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
-<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./classifying-malware-packers-using-machine-learning.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a></h1>
-	<div class="meta">
-          <time datetime="2023-01-23T21:02:00+08:00">January 23, 2023</time>
-          in <span class="categories">
-            <a href="./tag/malware.html">malware</a>,            <a href="./tag/re.html">re</a>,            <a href="./tag/jupyter.html">jupyter</a>          </span>
-	</div>
-        <p><p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
+<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the sequence of bytes or strings are altered.</p>
+<p>By using machine learning, the VGL4NT Malware Packer Classifier can be able to take into account minute differences and still be able to detect the packer used.</p>
+<h1 id="how-it-works">How it works</h1>
+<ul>
+<li>The uploaded executable file's bytes are converted into grayscale values, creating an image..</li>
+<li>The grayscale image is then fed into an image machine-learning model I trained from scratch.</li>
+<li>It returns a list of percentages on how similar it is to other Packers.</li>
+</ul>
+<p><img alt="classifying-malware-packers-using-machine-learning-01" src="./images/classifying-malware-packers-using-machine-learning-02.png" /></p>
+<p>The approach above is nothing new and is based on <a href="https://ieeexplore.ieee.org/abstract/document/8328749">this academic paper</a>. The difference is that the paper has a tool that classifies malware families, while mine classifies the packers used.</p>
+<p>Most of the magic happens in the model itself. I've trained it on several packed malware samples and measured its accuracy using multiple iterations. The latest version of this model has a 94% accuracy, which is calculated by comparing the model's predictions to the actual packer labels in a dataset that the model hasn't seen before (the test dataset).</p>
+<h1 id="current-limitations">Current limitations</h1>
+<p>The app works for the most part, but it has its limitations. For example, users can only upload executable files (EXE, Bin, ELF, DLLs, etc) with a maximum size limit of 10MB. </p>
+<p>Furthermore, due to costs of GPU resources during training, only the following packer tools can be classified:</p>
+<ul>
+<li>aspack</li>
+<li>alienyze</li>
+<li>amber</li>
+<li>mew</li>
+<li>mpress</li>
+<li>nspack</li>
+<li>pecompact</li>
+<li>petite</li>
+<li>themida</li>
+<li>upx</li>
+<li>others (Everything else)</li>
+</ul>
+<p>The list of packer tools above was chosen based on available real-world malware samples that I have encountered or studied.</p>
+<h1 id="future-plans-and-updates">Future Plans and Updates</h1>
+<p>If this project gains enough interest, then I plan to add more improvements, such as:</p>
+<ul>
+<li>Increase GPU resources to increase the model's capacity to classify more categories</li>
+<li>Improvements in the training method by handpicking the most important parts of the executable and then feeding that to the model</li>
+<li>Offer an API for integration with existing tools and processes.</li>
+</ul>
+<p>Of course, this project would improve a lot with the community's help. I encourage users to provide feedback, report issues, or request new features. Feel free to throw your thoughts to me through my email, karlo@accidentalrebel.com, or Twitter at @accidentalrebel.</p>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/artificial_intelligence.html" class="tag">artificial_intelligence</a>
+            <a href="./tag/machine_learning.html" class="tag">machine_learning</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
+                <a href="./adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-01-23T21:02:00+08:00">Mon 23 January 2023</time>
+                <span>•</span>
+                <a href="./category/malware.html">malware</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
 <h1 id="what-are-jupyter-notebooks">What are Jupyter Notebooks?</h1>
 <p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
 <h1 id="my-additions-to-the-blue-jupyter">My Additions to the Blue-Jupyter</h1>
 <p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
-<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./adding-automation-to-blue-jupyter-malware-notebook.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a></h1>
-	<div class="meta">
-          <time datetime="2022-08-15T11:29:00+08:00">August 15, 2022</time>
-          in <span class="categories">
-            <a href="./tag/malware.html">malware</a>,            <a href="./tag/sandbox.html">sandbox</a>,            <a href="./tag/evasion.html">evasion</a>,            <a href="./tag/x64.html">x64</a>,            <a href="./tag/assembly.html">assembly</a>          </span>
-	</div>
-        <p><p>In the <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
-<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
-<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
-<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include …</span></code></pre></div>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a></h1>
-	<div class="meta">
-          <time datetime="2022-08-08T11:29:00+08:00">August 08, 2022</time>
-          in <span class="categories">
-            <a href="./tag/malware.html">malware</a>,            <a href="./tag/sandbox.html">sandbox</a>,            <a href="./tag/evasion.html">evasion</a>,            <a href="./tag/x64.html">x64</a>,            <a href="./tag/assembly.html">assembly</a>          </span>
-	</div>
-        <p><p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
-<h2 id="checking-the-memory">Checking the memory</h2>
-<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is probably a sandbox (To save costs). While it's not exactly fool-proof …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a></h1>
-	<div class="meta">
-          <time datetime="2022-08-02T15:06:00+08:00">August 02, 2022</time>
-          in <span class="categories">
-            <a href="./tag/malware.html">malware</a>,            <a href="./tag/analysis.html">analysis</a>,            <a href="./tag/mitre.html">mitre</a>,            <a href="./tag/mbc.html">mbc</a>          </span>
-	</div>
-        <p><p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="./images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
-<h2 id="a-brief-overview">A brief overview</h2>
-<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
-<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./talking-about-mitres-malware-behavior-catalog.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a></h1>
-	<div class="meta">
-          <time datetime="2022-07-09T12:11:00+08:00">July 09, 2022</time>
-          in <span class="categories">
-            <a href="./tag/evasion.html">evasion</a>,            <a href="./tag/assembly.html">assembly</a>,            <a href="./tag/av.html">av</a>          </span>
-	</div>
-        <p><p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
-<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
-<h2 id="the-problem">The problem</h2>
-<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Upon compiling …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./string-av-evasion-in-x64-assembly-part-2.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a></h1>
-	<div class="meta">
-          <time datetime="2022-07-08T12:11:00+08:00">July 08, 2022</time>
-          in <span class="categories">
-            <a href="./tag/evasion.html">evasion</a>,            <a href="./tag/assembly.html">assembly</a>,            <a href="./tag/av.html">av</a>          </span>
-	</div>
-        <p><p>One of the features I implemented for my <a href="https://github.com/accidentalrebel/RATwurst">Remote Access Tool</a> was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. </p>
-<p>This was over a year ago. I decided to revisit this feature to try and understand it better and find out if it is actually effective.</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this two-part blog post I will look into the following:</p>
-<ul>
-<li>Hiding argument strings</li>
-<li>Hiding API call strings</li>
-</ul>
-<p>THe one you reading now is about the first one. I will be explaining how it's done in C and later convert it to x64 Windows Assembly so we can better understand what's happening under the hood.</p>
-<h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
-<p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./string-av-evasion-in-x64-assembly-part-1.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./converting-a-malware-dropper-to-x64-assembly.html">Converting a malware dropper to x64 assembly</a></h1>
-	<div class="meta">
-          <time datetime="2022-07-03T09:18:00+08:00">July 03, 2022</time>
-          in <span class="categories">
-            <a href="./tag/malware.html">malware</a>,            <a href="./tag/assembly.html">assembly</a>,            <a href="./tag/reverse-engineering.html">reverse-engineering</a>          </span>
-	</div>
-        <p><p>In this post I'll be listing down lessons I learned while converting a simple malware dropper written in C to x64 assembly. </p>
-<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
-<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./converting-a-malware-dropper-to-x64-assembly.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="./cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a></h1>
-	<div class="meta">
-          <time datetime="2021-11-06T11:10:00+08:00">November 06, 2021</time>
-          in <span class="categories">
-            <a href="./tag/threat-hunting.html">threat-hunting</a>,            <a href="./tag/cyberdefenders.html">cyberdefenders</a>          </span>
-	</div>
-        <p><p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This write-up is the third and final part of this walkthrough. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-2">Part 2 here</a>.</p>
-<h2 id="finding-the-post-reverse-shell-activity">Finding the post-reverse shell activity</h2>
-<blockquote>
-<p>Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host.</p>
-</blockquote>
-<p>So from the question, I …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="./cyber-corp-case-2-writeup-part-3.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-</div>
-<div class="pagination">
-<nav>
-  <ul>
-    <li>Page 1 / 5</li>
-        <li><a href="./index2.html">&rang;</a></li>
-        <li><a href="./index5.html">&Rang;</a></li>
-  </ul>
-</nav>
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight some interesting points about the sample, like the malware signature. It also can skip samples that have already been downloaded to save bandwidth.</p>
+<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-01" src="./images/adding-automation-to-blue-jupyter-malware-notebook-01.png" /></p>
+<p>The second significant addition is the automated generation of <a href="https://github.com/mandiant/capa">Capa</a> results for each downloaded sample. This makes it easy to see which malware has a particular capability so I can quickly see which ones are interesting enough to investigate further.</p>
+<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-02" src="./images/adding-automation-to-blue-jupyter-malware-notebook-02.png" /></p>
+<p>I also added minor improvements like error handling, additional logging for troubleshooting, and some cleanup code just in case I want to start fresh.</p>
+<h1 id="check-it-out">Check it out</h1>
+<p>If you are interested in checking it out, you can view my fork of the repository <a href="https://github.com/accidentalrebel/blue-jupyter/blob/main/malware-analysis/Malware-Analysis.ipynb">here</a>. I did not request for a pull request on the original branch because I've changed a lot of things that the original owner might not prefer to have. Of course, I encourage everyone to fork what I made and make it their own. That's the beauty of Jupyter notebooks, anyway.</p>
         </div>
-      </div>
-    </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <div class="tags">
+            <a href="./tag/malware.html" class="tag">malware</a>
+            <a href="./tag/re.html" class="tag">re</a>
+            <a href="./tag/jupyter.html" class="tag">jupyter</a>
+        </div>
+    </article>
+
+<nav class="pagination">
+
+        <span class="current">1</span>
+        <a href="./index2.html">2</a>
+        <a href="./index3.html">3</a>
+        <a href="./index4.html">4</a>
+        <a href="./index5.html">5</a>
+        <a href="./index6.html">6</a>
+        <a href="./index7.html">7</a>
+        <a href="./index8.html">8</a>
+        <a href="./index9.html">9</a>
+        <a href="./index10.html">10</a>
+        <a href="./index11.html">11</a>
+        <a href="./index12.html">12</a>
+        <a href="./index13.html">13</a>
+        <a href="./index14.html">14</a>
+        <a href="./index15.html">15</a>
+
+    <a href="./index2.html">Next &raquo;</a>
+</nav>
+        </div>
+    </main>
+
+    <script src="./theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

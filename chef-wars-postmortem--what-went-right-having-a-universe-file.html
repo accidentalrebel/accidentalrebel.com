@@ -1,82 +1,62 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Chef Wars Postmortem -- What went right: Having a Universe File</title>
-  <meta name="author" content="AccidentalRebel">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chef Wars Postmortem -- What went right: Having a Universe File | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="./theme/css/main.css">
+    
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="./chef-wars-postmortem--what-went-right-having-a-universe-file.html">
+    <meta property="og:title" content="Chef Wars Postmortem -- What went right: Having a Universe File">
+    <meta property="og:description" content="Note: This is from a series of articles that outlines the things I've learned while making Chef Wars for 2+ years. TLDR All data in our game is contained in one excel file we call the "Universe". Prototypes can be done on the Universe excel file itself Iteration is easier as we only need to change one file. We made a system that downloads changes from our server so players don't need to update their builds. Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. *This file definitely gives a hint on what type of guy Cliff is …">
 
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="description" content="Chef Wars Postmortem -- What went right: Having a Universe File December 05, 2017 in chefwars,gamedev,mindcake,postmortem">
-
-  <link rel="canonical" href="./chef-wars-postmortem--what-went-right-having-a-universe-file.html">
-
-  <link href="./favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-  
-<meta name="twitter:card" content="summary">
-<meta property="og:url" content="./chef-wars-postmortem--what-went-right-having-a-universe-file.html">
-<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
-<meta name="twitter:creator:id" content="accidentalrebel">
-<meta property="og:title" content="Chef Wars Postmortem -- What went right: Having a Universe File">
-<meta property="og:description" content="Note: This is from a series of articles that outlines the things I've learned while making <a href="http://mindcakegam">
-<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png">
-<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
-
-
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="./chef-wars-postmortem--what-went-right-having-a-universe-file.html">
+    <meta property="twitter:title" content="Chef Wars Postmortem -- What went right: Having a Universe File">
+    <meta property="twitter:description" content="Note: This is from a series of articles that outlines the things I've learned while making Chef Wars for 2+ years. TLDR All data in our game is contained in one excel file we call the "Universe". Prototypes can be done on the Universe excel file itself Iteration is easier as we only need to change one file. We made a system that downloads changes from our server so players don't need to update their builds. Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. *This file definitely gives a hint on what type of guy Cliff is …">
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href=".">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="./theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-	<article>
-          <h1><a href="./chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a></h1>
-          <div class="meta">
-            <time datetime="2017-12-05T12:56:00+08:00">December 05, 2017</time>
-            in <span class="categories">
-              <a href="./tag/chefwars.html">chefwars</a>,              <a href="./tag/gamedev.html">gamedev</a>,              <a href="./tag/mindcake.html">mindcake</a>,              <a href="./tag/postmortem.html">postmortem</a>            </span>
-          </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Chef Wars Postmortem -- What went right: Having a Universe File</h1>
+        <div class="article-meta">
+            <time datetime="2017-12-05T12:56:00+08:00">Tue 05 December 2017</time>
+            <span>•</span>
+            <a href="./category/postmortem.html">postmortem</a>
+        </div>
+    </header>
+
+    <div class="article-content">
         <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
 <p><strong>TLDR</strong></p>
 <ul>
@@ -100,50 +80,47 @@
 <p>Initially, when we wanted to update some values, we would need to push a new build version that players need to download. We figured that this is too cumbersome especially if we really have some critical changes we want to get out as soon as possible. As a solution to this, we made a system where a master copy of the JSONs are saved on our servers. We can change the data from here and the game would automatically download the necessary files that we changed. This is a really great feature that has helped us push important changes without having the need for a new build. But it does require a lot of bandwidth especially if a lot of players request for the new data so we do it only when needed like on crash producing bugs.</p>
 <p>As you can see, we've spent a lot of time making sure that our game is data-centric as possible and it benefitted us immensely. This approach has been so useful that we plan to use it on our future projects. And hopefully, after reading this, we've convinced you to try it out too.</p>
 <p><em>[Check out how the universe has been transformed into a game by playing Chef Wars on <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">iOS</a>. Also, be sure to check out Cliff's postmortem where he talks about the <a href="http://mindcakegames.com/chef-wars-launch-post-mortem/">things we learned during our global launch</a>!]</em></p>
-        <!-- Disqus goes here -->
-        <section>
-          <h1>Comments</h1>
-          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
-	  <script>
-	    /**
-	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-	    /*
-	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
-	     this.page.identifier = chef-wars-postmortem--what-went-right-having-a-universe-file.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	     };
-	    */
-	    (function() { // DON'T EDIT BELOW THIS LINE
-		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
-		s.setAttribute('data-timestamp', +new Date());
-		(d.head || d.body).appendChild(s);
-	    })();
-	  </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-        </section>
-	</article>
-      </div>
     </div>
-  </div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-        </div>
-      </div>
-    </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <footer class="article-footer">
+        <div class="tags">
+            <a href="./tag/chefwars.html" class="tag">chefwars</a>
+            <a href="./tag/gamedev.html" class="tag">gamedev</a>
+            <a href="./tag/mindcake.html" class="tag">mindcake</a>
+            <a href="./tag/postmortem.html" class="tag">postmortem</a>
+        </div>
+    </footer>
+</article>
+
+
+<section class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "./chef-wars-postmortem--what-went-right-having-a-universe-file.html";
+            this.page.identifier = "chef-wars-postmortem--what-went-right-having-a-universe-file";
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://AccidentalRebel.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+        </div>
+    </main>
+
+    <script src="./theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

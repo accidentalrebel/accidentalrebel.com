@@ -1,101 +1,77 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Posts for machine_learning</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="../tag/machine_learning.html">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>machine_learning | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="all-posts">
-  <div class="container">
-    <div class="row">
-      <div class="list-title col-md-offset-3 col-md-6">
-        <h4>Posts in machine_learning</h4>
-      </div>
-    </div>
-  </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Tag: machine_learning</h1>
+    </header>
 
-  <div class="article-list">
-    <div class="container">
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a></h4>
-              <span class="meta">
-                <time datetime="2023-04-22T08:44:00+08:00">April 22, 2023</time>
-                in <span class="categories">
-                  <a href="../tag/artificial_intelligence.html">artificial_intelligence</a>,                  <a href="../tag/machine_learning.html">machine_learning</a>              </span>
-            </article>
-          </div>
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
+                <span>•</span>
+                <a href="../category/misc.html">misc</a>
+            </div>
+            <div class="post-summary">
+                <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
+<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
+<p><img alt="classifying-malware-packers-using-machine-learning-01" src="../images/classifying-malware-packers-using-machine-learning-01.png" /></p>
+<p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
+<h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
+<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the …</p>
+            </div>
         </div>
     </div>
-  </div>
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</article>
         </div>
-      </div>
-    </footer>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

@@ -1,82 +1,62 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Building my Virtual Cybersecurity Home Lab</title>
-  <meta name="author" content="AccidentalRebel">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building my Virtual Cybersecurity Home Lab | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="./theme/css/main.css">
+    
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="./building-my-virtual-cybersecurity-home-lab.html">
+    <meta property="og:title" content="Building my Virtual Cybersecurity Home Lab">
+    <meta property="og:description" content="I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. Now I know better. Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab". I first came to know of the concept of homelabs from Reddit. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network. And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …">
 
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="description" content="Building my Virtual Cybersecurity Home Lab September 05, 2021 in malware,dev">
-
-  <link rel="canonical" href="./building-my-virtual-cybersecurity-home-lab.html">
-
-  <link href="./favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-  
-<meta name="twitter:card" content="summary">
-<meta property="og:url" content="./building-my-virtual-cybersecurity-home-lab.html">
-<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
-<meta name="twitter:creator:id" content="accidentalrebel">
-<meta property="og:title" content="Building my Virtual Cybersecurity Home Lab">
-<meta property="og:description" content="I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I sk">
-<meta property="og:image" content="https://www.accidentalrebel.com/images/building-my-virtual-cybersecurity-home-lab-01.png">
-<meta name="twitter:image:src" content="https://www.accidentalrebel.com/images/building-my-virtual-cybersecurity-home-lab-01.png">
-
-
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="./building-my-virtual-cybersecurity-home-lab.html">
+    <meta property="twitter:title" content="Building my Virtual Cybersecurity Home Lab">
+    <meta property="twitter:description" content="I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. Now I know better. Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab". I first came to know of the concept of homelabs from Reddit. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network. And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …">
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href=".">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="./theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-	<article>
-          <h1><a href="./building-my-virtual-cybersecurity-home-lab.html">Building my Virtual Cybersecurity Home Lab</a></h1>
-          <div class="meta">
-            <time datetime="2021-09-05T20:33:00+08:00">September 05, 2021</time>
-            in <span class="categories">
-              <a href="./tag/malware.html">malware</a>,              <a href="./tag/dev.html">dev</a>            </span>
-          </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Building my Virtual Cybersecurity Home Lab</h1>
+        <div class="article-meta">
+            <time datetime="2021-09-05T20:33:00+08:00">Sun 05 September 2021</time>
+            <span>•</span>
+            <a href="./category/malware.html">malware</a>
+        </div>
+    </header>
+
+    <div class="article-content">
         <p>I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. </p>
 <p>Now I know better.</p>
 <p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
@@ -116,50 +96,45 @@
 <p>I'm not stopping here though. I also plan to upgrade the Target network so it would better resemble an enterprise network. For example, setting up an active directory, an internal DNS server, and maybe even a mail server (why not?). This is so I could play around in detecting and remediating more varied enterprise-level scenarios.</p>
 <p>I am also hoping I could get access to more cybersecurity products so I could play around with them. A SOAR (Security Orchestration and Response) would be a nice addition that would work really well.</p>
 <p>But, of course, before I could do any of the above I first need to upgrade my RAM and add more cores!</p>
-        <!-- Disqus goes here -->
-        <section>
-          <h1>Comments</h1>
-          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
-	  <script>
-	    /**
-	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-	    /*
-	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
-	     this.page.identifier = building-my-virtual-cybersecurity-home-lab.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	     };
-	    */
-	    (function() { // DON'T EDIT BELOW THIS LINE
-		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
-		s.setAttribute('data-timestamp', +new Date());
-		(d.head || d.body).appendChild(s);
-	    })();
-	  </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-        </section>
-	</article>
-      </div>
     </div>
-  </div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-        </div>
-      </div>
-    </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <footer class="article-footer">
+        <div class="tags">
+            <a href="./tag/malware.html" class="tag">malware</a>
+            <a href="./tag/dev.html" class="tag">dev</a>
+        </div>
+    </footer>
+</article>
+
+
+<section class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "./building-my-virtual-cybersecurity-home-lab.html";
+            this.page.identifier = "building-my-virtual-cybersecurity-home-lab";
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://AccidentalRebel.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+        </div>
+    </main>
+
+    <script src="./theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

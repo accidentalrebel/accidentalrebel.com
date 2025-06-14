@@ -1,222 +1,221 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="..">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
-
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
-    </div>
-
-<div class="container">
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a></h1>
-	<div class="meta">
-          <time datetime="2017-12-05T12:56:00+08:00">December 05, 2017</time>
-          in <span class="categories">
-            <a href="../tag/chefwars.html">chefwars</a>,            <a href="../tag/gamedev.html">gamedev</a>,            <a href="../tag/mindcake.html">mindcake</a>,            <a href="../tag/postmortem.html">postmortem</a>          </span>
-	</div>
-        <p><p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TLDR</strong></p>
-<ul>
-<li>All data in our game is contained in one excel file we call the "Universe".</li>
-<li>Prototypes can be done on the Universe excel file itself</li>
-<li>Iteration is easier as we only need to change one file.</li>
-<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
-</ul>
-<hr />
-<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
-<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">This</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="nx">definitely</span><span class="w"> </span><span class="nx">gives</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">hint</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">what</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">guy</span><span class="w"> </span><span class="nx">Cliff</span><span class="w"> </span><span class="k">is …</span></code></pre></div>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux</a></h1>
-	<div class="meta">
-          <time datetime="2017-09-23T13:08:00+08:00">September 23, 2017</time>
-          in <span class="categories">
-            <a href="../tag/emacs-windows-linux.html">emacs windows linux</a>          </span>
-	</div>
-        <p><p>One of the problems I was having with my Emacs environment under WSL <em>(Windows Subsystem for Linux, aka. Bash On Windows)</em> is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.</p>
-<p>I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called <a href="https://github.com/rolandwalker/simpleclip">simpleclip</a> that worked but the results were not consistent.</p>
-<p>I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-set-clipboard-data</span><span class="w"> </span><span class="p">(</span><span class="nv">str-val</span><span class="p">)</span>
-<span class="w">  </span><span class="s">&quot;Puts text in Windows clipboard. Copying to Windows from WSL does </span>
-<span class="s">not work on my end so this one is a temporary solution.</span>
-
-<span class="s">This function is called from within the simpleclip package when copy </span>
-<span class="s">or bgcopy …</span></code></pre></div>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../converting-org-journal-entry-to-org-page-post.html">Converting org-journal entry to org-page post</a></h1>
-	<div class="meta">
-          <time datetime="2017-04-19T13:17:00+08:00">April 19, 2017</time>
-          in <span class="categories">
-            <a href="../tag/emacs-org-mode.html">emacs org-mode</a>          </span>
-	</div>
-        <p><p>Since my recent switch from Wordpress to <a href="https://github.com/kelvinh/org-page">org-page</a> I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-org-journal-entry-to-org-page-post</span><span class="w"> </span><span class="p">()</span>
-<span class="w">  </span><span class="s">&quot;Copy the org-journal entry at point and then convert it to a org-page new post buffer.&quot;</span>
-<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">eq</span><span class="w"> </span><span class="ss">&#39;org-journal-mode</span><span class="w"> </span><span class="nv">major-mode</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">headline-text</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="nv">org-heading-components</span><span class="p">)))</span>
-<span class="w">        </span><span class="p">(</span><span class="nv">entry-text</span><span class="w"> </span><span class="p">(</span><span class="nv">org-get-entry</span><span class="p">)))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">funcall-interactively</span><span class="w"> </span><span class="ss">&#39;op/new-post</span><span class="w"> </span><span class="s">&quot;blog&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="w"> </span><span class="nv">headline-text</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">entry-text</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">message</span><span class="w"> </span><span class="s">&quot;This function can only be called inside org-journal-mode.&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">)</span>
-</code></pre></div>
-
-<p>The function is simple and uses functions from org-mode and org-page.</p>
-<ul>
-<li>First, it checks if the current buffer is in org-journal-mode</li>
-<li>Then it gets the headline text and entry texts</li>
-<li>It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to …</li></ul>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../converting-org-journal-entry-to-org-page-post.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../minifying-buffer-contents-in-emacs.html">Converting org-journal entry to org-page post</a></h1>
-	<div class="meta">
-          <time datetime="2017-04-19T13:17:00+08:00">April 19, 2017</time>
-          in <span class="categories">
-            <a href="../tag/emacs.html">emacs</a>          </span>
-	</div>
-        <p><p>I needed a way to minify JSON files from Emacs so I made the short function below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-minify-buffer-contents</span><span class="p">()</span>
-<span class="w">    </span><span class="s">&quot;Minifies the buffer contents by removing whitespaces.&quot;</span>
-<span class="w">    </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">delete-whitespace-rectangle</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">mark-whole-buffer</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">replace-match</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)))</span>
-</code></pre></div>
-
-<p>The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline.</p>
-<p>This effectively turns this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span>
-<span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-
-
-<span class="w">                          </span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]</span>
-<span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup&quot;</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>To this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup …</span></code></pre></div>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../minifying-buffer-contents-in-emacs.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-</div>
-<div class="pagination">
-<nav>
-  <ul>
-        <li><a href="../author/accidentalrebel.html">&Lang;</a></li>
-        <li><a href="../author/accidentalrebel4.html">&lang;</a></li>
-    <li>Page 5 / 5</li>
-  </ul>
-</nav>
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
         </div>
-      </div>
-    </footer>
+    </header>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
+    </div>
+
+    <main>
+        <div class="container">
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
+                <a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-10-18T20:33:00+08:00">Mon 18 October 2021</time>
+                <span>•</span>
+                <a href="../category/tools.html">tools</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
+<p><img alt="new-tool-preview-vattack-01" src="../images/new-tool-preview-vattack-01.png" /></p>
+<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
+<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
+<ul>
+<li>Pink - Related subtechniques</li>
+<li>Orange - Malware that uses the searched technique</li>
+<li>Red - Groups that uses the searched technique</li>
+<li>Blue - Tools that use the searched technique</li>
+<li>Yellow - Mitigations</li>
+</ul>
+<p>This tool is still in development. I plan to add a number of improvements such as:</p>
+<ul>
+<li>Ability to click on nodes and then update the visual map</li>
+<li>Ability to search not just by technique, but also by other categories</li>
+</ul>
+<p>I also plan on releasing a live demo of the tool very soon in the hopes of getting feedback from the community. </p>
+<p>For now, if you are interested in the project, you could visit the <a href="https://github.com/accidentalrebel/vATTACK">tool's Github project page</a> or contact me for any comments or suggestions.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/tools.html" class="tag">tools</a>
+            <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
+                <a href="../ioli-crackme-0x04.html">IOLI Crackme 0x04</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-09-29T10:34:00+08:00">Wed 29 September 2021</time>
+                <span>•</span>
+                <a href="../category/re.html">re</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a>, <a href="../ioli-crackme-0x01.html">0x01</a>, <a href="../ioli-crackme-0x02.html">0x02</a>, and <a href="../ioli-crackme-0x03.html">0x03</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>Loading the program in IDA revealed something new. There is now a <code>_check</code> function that when opened looks more complicated than the previous challenges.</p>
+<p><img alt="ioli-crackme-0x04-01" src="../images/ioli-crackme-0x04-01.png" /></p>
+<p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
+<p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
+<p><img alt="ioli-crackme-0x04-02" src="../images/ioli-crackme-0x04-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span>
+<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span>
+</code></pre></div>
+
+<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the length of the entered string. If you think about it, this means that it doesn't matter how long the string that the user inputs. What's important is the content.</p>
+<p>To find out what the correct content the program expects, we need to look at the other block of code.</p>
+<p><img alt="ioli-crackme-0x04-03" src="../images/ioli-crackme-0x04-03.png" /></p>
+<p>The code uses the same approach as the previous challenge where <code>var_counter</code> is used to loop through individual characters in the input string.</p>
+<p>The part that is new is the use of the <code>_sscanf</code> function which is defined as:</p>
+<blockquote>
+<p>"sscanf reads data from s and stores them according to parameter format into the locations given by the additional arguments, as if scanf was used, but reading from s instead of the standard input (stdin)."</p>
+</blockquote>
+<p>Looking at how the function <code>_sscanf</code> is used, it gets each character in the input string and converts them to decimal integers. This means that the password can only contain the numbers <em>0 through 9</em>. The reason for this is because the result is added to another value at the line <code>add [eax], edx</code>.</p>
+<p>This <em>"other value"</em> is the converted integer value from previous loops. This means that the algorithm adds each number from the input string after every loop. For example, an input string of <code>123</code> translates to <code>1+2+3</code> where the computed sum is saved to <code>var_8</code>.</p>
+<p>Finally, there is the line <code>cmp [ebp+var_8], 0Fh</code>, which tells us that the program expects the computed sum to be equal to <code>0Fh</code> or <code>15</code>. So as long as we enter numbers that would equal to <code>15</code> when combined, then we are good.</p>
+<p><img alt="ioli-crackme-0x04-" src="../images/ioli-crackme-0x04-.png" /></p>
+<h1 id="patching-the-executables">Patching the executables</h1>
+<p>Patching the executable is different this time around. If on previous challenges we patched the program by changing an conditional opcode to a jmp (<code>74</code> to <code>EB</code>), for this one we only need to change the conditional to a <code>no op</code> instruction (<code>00</code>).</p>
+<p><img alt="ioli-crackme-0x04-05" src="../images/ioli-crackme-0x04-05.png" /></p>
+<p>As you can see, the line <code>cmp [ebp+var_8]</code> and the conditional branch disappears allowing us to go directly to the <em>"Password OK"</em> part of the code.</p>
+<p><img alt="ioli-crackme-0x04-06" src="../images/ioli-crackme-0x04-06.png" /></p>
+<h1 id="on-to-the-next-challenge">On to the next challenge...</h1>
+<p>I liked this challenge mostly because it changed the passwords the program expects. The first time I tackled this challenge I used purely static analysis. I thought I got the answer only to realize that I was wrong by debugging the code. We have 5 more challenges to go!</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
+                <a href="../building-my-virtual-cybersecurity-home-lab.html">Building my Virtual Cybersecurity Home Lab</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-09-05T20:33:00+08:00">Sun 05 September 2021</time>
+                <span>•</span>
+                <a href="../category/malware.html">malware</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. </p>
+<p>Now I know better.</p>
+<p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
+<p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
+<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity products.</p>
+<h1 id="the-lab">The Lab</h1>
+<p>The network diagram below shows the current implementation of my lab. I will be discussing each part to give an idea of their purpose (<a href="../images/building-my-virtual-cybersecurity-home-lab-00.png">Click here for a bigger version</a>).</p>
+<p><img alt="building-my-virtual-cybersecurity-home-lab-01" src="../images/building-my-virtual-cybersecurity-home-lab-01.png" /></p>
+<p>At the heart of the network is a firewall running <a href="https://www.pfsense.org/">pfSense</a>. Its purpose is to ensure that each sub-network is separated and protected, and also to protect my virtual host from any malware outbreaks. This machine also serves as a DHCP and NTP server to all the machines in the network.</p>
+<p><img alt="building-my-virtual-cybersecurity-home-lab-13" src="../images/building-my-virtual-cybersecurity-home-lab-13.png" /></p>
+<h1 id="the-target-network">The Target Network</h1>
+<p>On the right side of the diagram is the "Target" network where workstations and vulnerable servers reside. These are the machines that I use to attack with exploits and malware.</p>
+<p><img alt="building-my-virtual-cybersecurity-home-lab-02" src="../images/building-my-virtual-cybersecurity-home-lab-02.png" /></p>
+<p>I have Metasploitable 2 and Metasploitable 3 machines that have various services turned on to play around with. I can learn about specific attacks by exploiting this machine, but I can also don my defenders hat and learn about how to secure them.</p>
+<p>The Windows and Linux machines will serve as typical workstations for various experiments.</p>
+<p>One of the perks of my job is that I get to play with different cybersecurity solutions. I currently have access to a few that I am able to use on my lab for testing.</p>
+<p>One solution that I am using right now is an EDR (Endpoint Detection and Response) (Sorry, I can't reveal which). Each machine has an EDR agent deployed which monitors for any malicious activities on the host. It has an anti-virus feature, anti-ransomware, and fileless attack monitoring. It's awesome stuff but I have yet to maximize this.</p>
+<p>An IDS (intrusion Detection System) running <a href="https://www.snort.org/">Snort</a> monitors the traffic for any malicious activity. Signatures are constantly updated to ensure that I can detect the latest types of attack. If it finds anything important, it then sends an alert to a SIEM (running <a href="https://www.splunk.com/">Splunk</a>) on the Management network.</p>
+<p><img alt="building-my-virtual-cybersecurity-home-lab-11" src="../images/building-my-virtual-cybersecurity-home-lab-11.png" /></p>
+<h1 id="the-management-network">The Management Network</h1>
+<p>On the left side of the diagram is the Managemnet network. This is where the management part of the EDR, IDS, and the SIEM can be accessed from my virtual host.</p>
+<p><img alt="building-my-virtual-cybersecurity-home-lab-03" src="../images/building-my-virtual-cybersecurity-home-lab-03.png" /></p>
+<p>There's nothing special about this network, I do want to note though that I find it interesting the Snort IDS has two interfaces. One is used for access to the management page, and the other is for sniffing traffic on the Attacker network.</p>
+<h1 id="the-operations-network">The Operations Network</h1>
+<p>At the bottom side of the diagram is the "Operations" network.</p>
+<p>A machine running Kali is placed here. I can launch attacks from this machine towards the vulnerable machines on the Target network. This machine also has OpenVAS scanner that helps in discovering vulnerabilities on the target machines.</p>
+<p><img alt="building-my-virtual-cybersecurity-home-lab-04" src="../images/building-my-virtual-cybersecurity-home-lab-04.png" /></p>
+<p>A windows machine serves as my malware analysis lab. It contains a lot of malware analysis tools to aid with investigations. </p>
+<p>This machine is then connected to a <a href="https://remnux.org/">Remnux</a> Linux machine. All traffic from the Windows machine is port forwarded by Remnux. From here I can run Wireshark to inspect the traffic coming from the Windows malware lab and it can also spoof the network responses to influence the behavior of malware. If the Remnux machine is turned off, then the Windows machine is effectively cut off from the whole network. It's a really neat setup that <a href="https://www.ariefprabowo.com/en/malware-analysis-en/personal-notes-building-a-malware-analysis-lab-environment/">I learned here</a>.</p>
+<h1 id="the-present">The Present</h1>
+<p>While the main intent of the network is to learn networking and implementing cybersecurity products, I can also investigate malware and learn about exploits by launching attacks. So it has a lot of multiple uses, which is perfect for someone like me who gets interested in different aspects of cybersecurity.</p>
+<p>My host machine currently has 32GB, 8 cores, and a total of 1.75TB which may seem a lot but is not powerful enough for all the machines to run at the same time. As a workaround, I just open the machines that I need for a particular exercise.</p>
+<p><img alt="building-my-virtual-cybersecurity-home-lab-05" src="../images/building-my-virtual-cybersecurity-home-lab-05.png" /></p>
+<p>For example, if I want to investigate malware then I only need the firewall, Remnux, and the windows malware lab open. But if I want to attack and run an exploit, while making sure that it gets detected, then I need the firewall, EDR, IPS, SIEM, Kali, and the target machine to be open at the same time. This easily consumes around 20GB+!</p>
+<h1 id="the-future">The Future</h1>
+<p>Working on this homelab has taught me a lot of practical knowledge. It helped solidify a lot of networking concepts I've learned througout the years.</p>
+<p>I'm not stopping here though. I also plan to upgrade the Target network so it would better resemble an enterprise network. For example, setting up an active directory, an internal DNS server, and maybe even a mail server (why not?). This is so I could play around in detecting and remediating more varied enterprise-level scenarios.</p>
+<p>I am also hoping I could get access to more cybersecurity products so I could play around with them. A SOAR (Security Orchestration and Response) would be a nice addition that would work really well.</p>
+<p>But, of course, before I could do any of the above I first need to upgrade my RAM and add more cores!</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/malware.html" class="tag">malware</a>
+            <a href="../tag/dev.html" class="tag">dev</a>
+        </div>
+    </article>
+
+<nav class="pagination">
+        <a href="../author/accidentalrebel4.html">&laquo; Previous</a>
+
+        <a href="../index.html">1</a>
+        <a href="../author/accidentalrebel2.html">2</a>
+        <a href="../author/accidentalrebel3.html">3</a>
+        <a href="../author/accidentalrebel4.html">4</a>
+        <span class="current">5</span>
+        <a href="../author/accidentalrebel6.html">6</a>
+        <a href="../author/accidentalrebel7.html">7</a>
+        <a href="../author/accidentalrebel8.html">8</a>
+        <a href="../author/accidentalrebel9.html">9</a>
+        <a href="../author/accidentalrebel10.html">10</a>
+        <a href="../author/accidentalrebel11.html">11</a>
+        <a href="../author/accidentalrebel12.html">12</a>
+        <a href="../author/accidentalrebel13.html">13</a>
+        <a href="../author/accidentalrebel14.html">14</a>
+        <a href="../author/accidentalrebel15.html">15</a>
+
+    <a href="../author/accidentalrebel6.html">Next &raquo;</a>
+</nav>
+        </div>
+    </main>
+
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

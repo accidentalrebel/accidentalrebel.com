@@ -1,72 +1,54 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AccidentalRebel.com - tools category</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="..">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tools | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="container">
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a></h1>
-	<div class="meta">
-          <time datetime="2021-10-18T20:33:00+08:00">October 18, 2021</time>
-          in <span class="categories">
-            <a href="../tag/tools.html">tools</a>,            <a href="../tag/cybersecurity.html">cybersecurity</a>          </span>
-	</div>
-        <p><p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Category: tools</h1>
+    </header>
+
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-10-18T20:33:00+08:00">Mon 18 October 2021</time>
+            </div>
+            <div class="post-summary">
+                <p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
 <p><img alt="new-tool-preview-vattack-01" src="../images/new-tool-preview-vattack-01.png" /></p>
 <p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
 <p>Each node will be colored depending on it's category. The color legends is as follows:</p>
@@ -83,49 +65,47 @@
 <li>Ability to search not just by technique, but also by other categories</li>
 </ul>
 <p>I also plan on releasing a live demo of the tool very soon in the …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../new-tool-preview-vattack.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../introducing-shcode2exe.html">Introducing shcode2exe</a></h1>
-	<div class="meta">
-          <time datetime="2021-02-26T07:34:00+08:00">February 26, 2021</time>
-          in <span class="categories">
-            <a href="../tag/re.html">re</a>,            <a href="../tag/tools.html">tools</a>,            <a href="../tag/malware_analysis.html">malware_analysis</a>          </span>
-	</div>
-        <p><p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
+            </div>
+            <div class="tags">
+                <a href="../tag/tools.html" class="tag">tools</a>
+                <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
+            </div>
+        </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../introducing-shcode2exe.html">Introducing shcode2exe</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-26T07:34:00+08:00">Fri 26 February 2021</time>
+            </div>
+            <div class="post-summary">
+                <p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
 <p>I've been playing around with <a href="https://remnux.org/">Remnux</a> and encountered a problem trying to get one of the tools to run properly. The tool is <a href="https://github.com/repnz/shellcode2exe">shellcode2exe</a>, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.</p>
 <p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
 <p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
 <h2 id="shcode2exe">shcode2exe</h2>
 <p>While similar in …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../introducing-shcode2exe.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-</div>
-<div class="pagination">
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+            </div>
+            <div class="tags">
+                <a href="../tag/re.html" class="tag">re</a>
+                <a href="../tag/tools.html" class="tag">tools</a>
+                <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+            </div>
         </div>
-      </div>
-    </footer>
+    </div>
+</article>
+        </div>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

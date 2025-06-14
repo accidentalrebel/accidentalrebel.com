@@ -1,90 +1,72 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AccidentalRebel.com - ctf category</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="..">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ctf | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="container">
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a></h1>
-	<div class="meta">
-          <time datetime="2021-04-04T16:37:00+08:00">April 04, 2021</time>
-          in <span class="categories">
-            <a href="../tag/maldoc.html">maldoc</a>,            <a href="../tag/ctf.html">ctf</a>          </span>
-	</div>
-        <p><p>I was inspired to make my own CTF challenge after finishing <a href="{filename}/maldoc101-writeup-part-1">Maldoc101</a> found at <a href="https://cyberdefenders.org/">Cyberdefenders.org</a>. The challenge I made is called <a href="https://cyberdefenders.org/labs/56">Emprisa Maldoc</a> and it is now up on their website. </p>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Category: ctf</h1>
+    </header>
+
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-04-04T16:37:00+08:00">Sun 04 April 2021</time>
+            </div>
+            <div class="post-summary">
+                <p>I was inspired to make my own CTF challenge after finishing <a href="{filename}/maldoc101-writeup-part-1">Maldoc101</a> found at <a href="https://cyberdefenders.org/">Cyberdefenders.org</a>. The challenge I made is called <a href="https://cyberdefenders.org/labs/56">Emprisa Maldoc</a> and it is now up on their website. </p>
 <p>Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge.</p>
 <p><img alt="the-emprisa-maldoc-challenge-01" src="../images/the-emprisa-maldoc-challenge-01.png" /></p>
 <p>The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../the-emprisa-maldoc-challenge.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a></h1>
-	<div class="meta">
-          <time datetime="2020-10-05T11:13:00+08:00">October 05, 2020</time>
-          in <span class="categories">
-            <a href="../tag/ctf.html">ctf</a>,            <a href="../tag/cybersecurity.html">cybersecurity</a>          </span>
-	</div>
-        <p><blockquote>
+            </div>
+            <div class="tags">
+                <a href="../tag/maldoc.html" class="tag">maldoc</a>
+                <a href="../tag/ctf.html" class="tag">ctf</a>
+            </div>
+        </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-10-05T11:13:00+08:00">Mon 05 October 2020</time>
+            </div>
+            <div class="post-summary">
+                <blockquote>
 <p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
 </blockquote>
 <p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
@@ -92,48 +74,46 @@
 <h2 id="the-preparation">The Preparation</h2>
 <p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
 <p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../hunt-the-kingdom-ctf-challenge.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-  <!-- CONTENT GOES HERE -->
-  <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-      <article>
-        <h1><a href="../covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a></h1>
-	<div class="meta">
-          <time datetime="2020-08-13T16:58:00+08:00">August 13, 2020</time>
-          in <span class="categories">
-            <a href="../tag/ctf.html">ctf</a>,            <a href="../tag/writeup.html">writeup</a>,            <a href="../tag/malware_analysis.html">malware_analysis</a>,            <a href="../tag/defcon.html">defcon</a>          </span>
-	</div>
-        <p><p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
+            </div>
+            <div class="tags">
+                <a href="../tag/ctf.html" class="tag">ctf</a>
+                <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
+            </div>
+        </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-08-13T16:58:00+08:00">Thu 13 August 2020</time>
+            </div>
+            <div class="post-summary">
+                <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
 <p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
 <h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
 <blockquote>
 <p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …</p></blockquote>
-          <!-- <a class="full-article-link pull-right" rel="full-article" href="../covidscammers-writeup--defcon-rtv-ctf.html">Read on →</a> -->
-      </article>
-    </div>
-  </div>
-</div>
-<div class="pagination">
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+            </div>
+            <div class="tags">
+                <a href="../tag/ctf.html" class="tag">ctf</a>
+                <a href="../tag/writeup.html" class="tag">writeup</a>
+                <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+            </div>
         </div>
-      </div>
-    </footer>
+    </div>
+</article>
+        </div>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

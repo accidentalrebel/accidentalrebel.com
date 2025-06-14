@@ -1,123 +1,132 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Posts for cybersecurity</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href="../tag/cybersecurity.html">
-
-  <link href="../favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="../theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="../theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cybersecurity | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="../theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="../archives.html">Archives</a></li>
+                    <li><a href="../categories.html">Categories</a></li>
+                    <li><a href="../tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href="..">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="../theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href="..">Home</a></li>
-	    <!-- <li><a href="../pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-<div class="all-posts">
-  <div class="container">
-    <div class="row">
-      <div class="list-title col-md-offset-3 col-md-6">
-        <h4>Posts in cybersecurity</h4>
-      </div>
-    </div>
-  </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Tag: cybersecurity</h1>
+    </header>
 
-  <div class="article-list">
-    <div class="container">
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a></h4>
-              <span class="meta">
-                <time datetime="2021-10-18T20:33:00+08:00">October 18, 2021</time>
-                in <span class="categories">
-                  <a href="../tag/tools.html">tools</a>,                  <a href="../tag/cybersecurity.html">cybersecurity</a>              </span>
-            </article>
-          </div>
+    <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-10-18T20:33:00+08:00">Mon 18 October 2021</time>
+                <span>•</span>
+                <a href="../category/tools.html">tools</a>
+            </div>
+            <div class="post-summary">
+                <p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
+<p><img alt="new-tool-preview-vattack-01" src="../images/new-tool-preview-vattack-01.png" /></p>
+<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
+<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
+<ul>
+<li>Pink - Related subtechniques</li>
+<li>Orange - Malware that uses the searched technique</li>
+<li>Red - Groups that uses the searched technique</li>
+<li>Blue - Tools that use the searched technique</li>
+<li>Yellow - Mitigations</li>
+</ul>
+<p>This tool is still in development. I plan to add a number of improvements such as:</p>
+<ul>
+<li>Ability to click on nodes and then update the visual map</li>
+<li>Ability to search not just by technique, but also by other categories</li>
+</ul>
+<p>I also plan on releasing a live demo of the tool very soon in the …</p>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a></h4>
-              <span class="meta">
-                <time datetime="2020-10-05T11:13:00+08:00">October 05, 2020</time>
-                in <span class="categories">
-                  <a href="../tag/ctf.html">ctf</a>,                  <a href="../tag/cybersecurity.html">cybersecurity</a>              </span>
-            </article>
-          </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-10-05T11:13:00+08:00">Mon 05 October 2020</time>
+                <span>•</span>
+                <a href="../category/ctf.html">ctf</a>
+            </div>
+            <div class="post-summary">
+                <blockquote>
+<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
+</blockquote>
+<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
+<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="../covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
+<h2 id="the-preparation">The Preparation</h2>
+<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
+<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
+            </div>
         </div>
-        <div class="row">
-          <div class="col-md-offset-3 col-md-6">
-            <article>
-              <h4><a href="../study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a></h4>
-              <span class="meta">
-                <time datetime="2020-08-01T11:07:00+08:00">August 01, 2020</time>
-                in <span class="categories">
-                  <a href="../tag/spoofing.html">spoofing</a>,                  <a href="../tag/cybersecurity.html">cybersecurity</a>              </span>
-            </article>
-          </div>
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-08-01T11:07:00+08:00">Sat 01 August 2020</time>
+                <span>•</span>
+                <a href="../category/cybersecurity.html">cybersecurity</a>
+            </div>
+            <div class="post-summary">
+                <div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
+</code></pre></div>
+
+<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
+<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
+<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
+<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
+<p>To view the current MAC address:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig
+</code></pre></div>
+
+<p>The current MAC address is <code>08:00 …</code></p>
+            </div>
         </div>
     </div>
-  </div>
-</div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
+</article>
         </div>
-      </div>
-    </footer>
+    </main>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script src="../theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

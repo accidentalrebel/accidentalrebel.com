@@ -1,82 +1,62 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>The Emprisa Maldoc Challenge</title>
-  <meta name="author" content="AccidentalRebel">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Emprisa Maldoc Challenge | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="./theme/css/main.css">
+    
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="./the-emprisa-maldoc-challenge.html">
+    <meta property="og:title" content="The Emprisa Maldoc Challenge">
+    <meta property="og:description" content="I was inspired to make my own CTF challenge after finishing Maldoc101 found at Cyberdefenders.org. The challenge I made is called Emprisa Maldoc and it is now up on their website. Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge. The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open …">
 
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="description" content="The Emprisa Maldoc Challenge April 04, 2021 in maldoc,ctf">
-
-  <link rel="canonical" href="./the-emprisa-maldoc-challenge.html">
-
-  <link href="./favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-  
-<meta name="twitter:card" content="summary">
-<meta property="og:url" content="./the-emprisa-maldoc-challenge.html">
-<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
-<meta name="twitter:creator:id" content="accidentalrebel">
-<meta property="og:title" content="The Emprisa Maldoc Challenge">
-<meta property="og:description" content="I was inspired to make my own CTF challenge after finishing Maldoc101 found at Cyberdefenders.org. The ch">
-<meta property="og:image" content="https://www.accidentalrebel.com/images/the-emprisa-maldoc-challenge-01.png">
-<meta name="twitter:image:src" content="https://www.accidentalrebel.com/images/the-emprisa-maldoc-challenge-01.png">
-
-
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="./the-emprisa-maldoc-challenge.html">
+    <meta property="twitter:title" content="The Emprisa Maldoc Challenge">
+    <meta property="twitter:description" content="I was inspired to make my own CTF challenge after finishing Maldoc101 found at Cyberdefenders.org. The challenge I made is called Emprisa Maldoc and it is now up on their website. Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge. The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open …">
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href=".">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="./theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-	<article>
-          <h1><a href="./the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a></h1>
-          <div class="meta">
-            <time datetime="2021-04-04T16:37:00+08:00">April 04, 2021</time>
-            in <span class="categories">
-              <a href="./tag/maldoc.html">maldoc</a>,              <a href="./tag/ctf.html">ctf</a>            </span>
-          </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>The Emprisa Maldoc Challenge</h1>
+        <div class="article-meta">
+            <time datetime="2021-04-04T16:37:00+08:00">Sun 04 April 2021</time>
+            <span>•</span>
+            <a href="./category/ctf.html">ctf</a>
+        </div>
+    </header>
+
+    <div class="article-content">
         <p>I was inspired to make my own CTF challenge after finishing <a href="{filename}/maldoc101-writeup-part-1">Maldoc101</a> found at <a href="https://cyberdefenders.org/">Cyberdefenders.org</a>. The challenge I made is called <a href="https://cyberdefenders.org/labs/56">Emprisa Maldoc</a> and it is now up on their website. </p>
 <p>Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge.</p>
 <p><img alt="the-emprisa-maldoc-challenge-01" src="./images/the-emprisa-maldoc-challenge-01.png" /></p>
@@ -85,50 +65,45 @@
 <hr />
 <p>Official write-up with hints coming soon.</p>
 <p>I would like to extend my thanks to the team behind CyberDefenders.org. They accepted my submission, reviewed it, and worked with me in improving it. And also to <a href="https://twitter.com/jstrosch">Josh Stroschein</a> for making Maldoc101 and being kind enough to entertain me with my questions related to making challenges.</p>
-        <!-- Disqus goes here -->
-        <section>
-          <h1>Comments</h1>
-          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
-	  <script>
-	    /**
-	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-	    /*
-	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
-	     this.page.identifier = the-emprisa-maldoc-challenge.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	     };
-	    */
-	    (function() { // DON'T EDIT BELOW THIS LINE
-		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
-		s.setAttribute('data-timestamp', +new Date());
-		(d.head || d.body).appendChild(s);
-	    })();
-	  </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-        </section>
-	</article>
-      </div>
     </div>
-  </div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-        </div>
-      </div>
-    </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <footer class="article-footer">
+        <div class="tags">
+            <a href="./tag/maldoc.html" class="tag">maldoc</a>
+            <a href="./tag/ctf.html" class="tag">ctf</a>
+        </div>
+    </footer>
+</article>
+
+
+<section class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "./the-emprisa-maldoc-challenge.html";
+            this.page.identifier = "the-emprisa-maldoc-challenge";
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://AccidentalRebel.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+        </div>
+    </main>
+
+    <script src="./theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

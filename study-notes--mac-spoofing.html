@@ -1,82 +1,62 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Study notes: MAC Spoofing</title>
-  <meta name="author" content="AccidentalRebel">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study notes: MAC Spoofing | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="./theme/css/main.css">
+    
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="./study-notes--mac-spoofing.html">
+    <meta property="og:title" content="Study notes: MAC Spoofing">
+    <meta property="og:description" content="Study notes are my personal research notes on certain topics that interests me. Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing. There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network. Changing MAC Address via ifconfig In Linux we could use ifconfig to change the MAC address. To view the current MAC address: $ ifconfig The current MAC address is 08:00 …">
 
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <meta name="description" content="Study notes: MAC Spoofing August 01, 2020 in spoofing,cybersecurity">
-
-  <link rel="canonical" href="./study-notes--mac-spoofing.html">
-
-  <link href="./favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-  
-<meta name="twitter:card" content="summary">
-<meta property="og:url" content="./study-notes--mac-spoofing.html">
-<meta name="twitter:site:id" content="https://twitter.com/accidentalrebel">
-<meta name="twitter:creator:id" content="accidentalrebel">
-<meta property="og:title" content="Study notes: MAC Spoofing">
-<meta property="og:description" content="Study notes are my personal research notes on certain topics that interests me. Any network capable device has a unique factory-">
-<meta property="og:image" content="https://www.accidentalrebel.com/theme/images/share.png">
-<meta name="twitter:image:src" content="https://www.accidentalrebel.com/theme/images/pic.png">
-
-
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="./study-notes--mac-spoofing.html">
+    <meta property="twitter:title" content="Study notes: MAC Spoofing">
+    <meta property="twitter:description" content="Study notes are my personal research notes on certain topics that interests me. Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing. There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network. Changing MAC Address via ifconfig In Linux we could use ifconfig to change the MAC address. To view the current MAC address: $ ifconfig The current MAC address is 08:00 …">
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href=".">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="./theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-	<article>
-          <h1><a href="./study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a></h1>
-          <div class="meta">
-            <time datetime="2020-08-01T11:07:00+08:00">August 01, 2020</time>
-            in <span class="categories">
-              <a href="./tag/spoofing.html">spoofing</a>,              <a href="./tag/cybersecurity.html">cybersecurity</a>            </span>
-          </div>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Study notes: MAC Spoofing</h1>
+        <div class="article-meta">
+            <time datetime="2020-08-01T11:07:00+08:00">Sat 01 August 2020</time>
+            <span>•</span>
+            <a href="./category/cybersecurity.html">cybersecurity</a>
+        </div>
+    </header>
+
+    <div class="article-content">
         <div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
 </code></pre></div>
 
@@ -131,50 +111,45 @@
 <li><a href="https://www.giac.org/paper/gsec/3199/mac-spoofing-an-introduction/105315">MAC Spoofing - An introduction</a> </li>
 <li><a href="https://www.comparitech.com/net-admin/spoofing-attacks-guide/">A guide to spoofing attacks and how to prevent them</a></li>
 </ul>
-        <!-- Disqus goes here -->
-        <section>
-          <h1>Comments</h1>
-          <div id="disqus_thread" aria-live="polite">Disqus goes here</div>
-	  <script>
-	    /**
-	     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-	     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
-	    /*
-	     var disqus_config = function () {
-	     this.page.url = AccidentalRebel;  // Replace PAGE_URL with your page's canonical URL variable
-	     this.page.identifier = study-notes--mac-spoofing.html; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-	     };
-	    */
-	    (function() { // DON'T EDIT BELOW THIS LINE
-		var d = document, s = d.createElement('script');
-		s.src = 'https://accidentalrebel.disqus.com//embed.js';
-		s.setAttribute('data-timestamp', +new Date());
-		(d.head || d.body).appendChild(s);
-	    })();
-	  </script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-
-        </section>
-	</article>
-      </div>
     </div>
-  </div>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-        </div>
-      </div>
-    </footer>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <footer class="article-footer">
+        <div class="tags">
+            <a href="./tag/spoofing.html" class="tag">spoofing</a>
+            <a href="./tag/cybersecurity.html" class="tag">cybersecurity</a>
+        </div>
+    </footer>
+</article>
+
+
+<section class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = "./study-notes--mac-spoofing.html";
+            this.page.identifier = "study-notes--mac-spoofing";
+        };
+        (function() {
+            var d = document, s = d.createElement('script');
+            s.src = 'https://AccidentalRebel.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+        </div>
+    </main>
+
+    <script src="./theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>

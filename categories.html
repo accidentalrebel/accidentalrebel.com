@@ -1,97 +1,506 @@
 <!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>AccidentalRebel.com - Categories</title>
-  <meta name="author" content="AccidentalRebel">
-
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <link rel="canonical" href=".">
-
-  <link href="./favicon.png" rel="icon">
-
-  <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Full Atom Feed" />
-
-  <link href="./theme/css/screen.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-  <link href="./theme/css/tomorrow.css"  media="screen, projection" rel="stylesheet" type="text/css" />
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories | AccidentalRebel.com</title>
+    
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+    
+    <link rel="stylesheet" href="./theme/css/main.css">
+    
 </head>
-  <body>
+<body>
+    <div class="progress-bar" id="progress"></div>
+    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
 
-    <div class="container" id="site-title">
-      <div class="col-md-8 col-md-offset-2">
-	<h1>
-	  <a href=".">
-	    AccidentalRebel.com
-	  </a>
-	</h1>
-	<div id="profile">
-	  <div class="left">
-	    <img src="./theme/images/pic.png" />
-	  </div>
-	  <div class="right">
-	    Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development.
-	  </div>
-	  <div class="clear"></div>
-	</div>
-	<div id="nav">
-	  <ul>
-	    <li><a href=".">Home</a></li>
-	    <!-- <li><a href="./pages/made.html">My Works</a></li> -->
-	    <li class="icon-nav" id="twitter-nav"><a href="https://twitter.com/accidentalrebel">Twitter</a></li>
-	    <li class="icon-nav" id="github-nav"><a href="https://github.com/accidentalrebel">Github</a></li>
-	    <li class="icon-nav" id="feed-nav"><a href="./feeds/all.atom.xml">RSS</a></li>
-	  </ul>
-	</div>
-      </div>
+    <!-- Comic strip divider -->
+    <div class="comic-container">
+        <div class="comic-strip"></div>
     </div>
 
-    <h2>Categories on AccidentalRebel.com</h2>
-    <ul>
-        <li><a href="./category/ctf.html">ctf</a> (3)</li>
-        <li><a href="./category/cybersecurity.html">cybersecurity</a> (1)</li>
-        <li><a href="./category/dev.html">dev</a> (3)</li>
-        <li><a href="./category/electronics.html">electronics</a> (1)</li>
-        <li><a href="./category/emacs.html">emacs</a> (3)</li>
-        <li><a href="./category/engine.html">engine</a> (1)</li>
-        <li><a href="./category/game_engine.html">game_engine</a> (2)</li>
-        <li><a href="./category/lisp.html">lisp</a> (1)</li>
-        <li><a href="./category/maldoc-writeup-ctf.html">maldoc, writeup, ctf</a> (1)</li>
-        <li><a href="./category/malware.html">malware</a> (4)</li>
-        <li><a href="./category/malware_analysis.html">malware_analysis</a> (1)</li>
-        <li><a href="./category/misc.html">misc</a> (7)</li>
-        <li><a href="./category/org-mode.html">org-mode</a> (1)</li>
-        <li><a href="./category/phishing-threat-hunting-osint.html">phishing, threat-hunting, osint</a> (2)</li>
-        <li><a href="./category/postmortem.html">postmortem</a> (3)</li>
-        <li><a href="./category/re.html">re</a> (5)</li>
-        <li><a href="./category/threat-hunting.html">threat-hunting</a> (3)</li>
-        <li><a href="./category/tools.html">tools</a> (2)</li>
-    </ul>
-    <footer id="footer" class="her-row">
-      <div class="container">
-        <div class="row">
-          <h4>Powered by <a href="http://blog.getpelican.com/">Pelican</a>. Designed by <a href="http://AdrianArtiles.com">Adrian Artiles</a>.</h4>
-        </div>
-      </div>
-    </footer>
+    <main>
+        <div class="container">
+<article>
+    <header class="article-header">
+        <h1>Categories</h1>
+    </header>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <div class="article-content">
+        <h2>
+            <a href="./category/ctf.html">ctf</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-04-04T16:37:00+08:00">Sun 04 April 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-10-05T11:13:00+08:00">Mon 05 October 2020</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-08-13T16:58:00+08:00">Thu 13 August 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/cybersecurity.html">cybersecurity</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-08-01T11:07:00+08:00">Sat 01 August 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/dev.html">dev</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-06-16T05:58:00+08:00">Tue 16 June 2020</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-05-10T07:08:00+08:00">Sun 10 May 2020</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./making-unity-beep-after-scripts-finish-reloading.html">Making Unity beep after scripts finish reloading</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-05-01T17:07:00+08:00">Fri 01 May 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/electronics.html">electronics</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./my-experience-manufacturing-printed-circuit-boards.html">My experience with manufacturing printed circuit boards</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-10-01T07:19:00+08:00">Thu 01 October 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/emacs.html">emacs</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2018-01-24T14:32:00+08:00">Wed 24 January 2018</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2017-09-23T13:08:00+08:00">Sat 23 September 2017</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./minifying-buffer-contents-in-emacs.html">Converting org-journal entry to org-page post</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/engine.html">engine</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-05-03T11:19:00+08:00">Sun 03 May 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/game_engine.html">game_engine</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(2)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-05-19T17:59:00+08:00">Tue 19 May 2020</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./following-lispy-conventions.html">#4 - Following Lispy conventions</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-05-15T07:00:00+08:00">Fri 15 May 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/lisp.html">lisp</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2020-05-07T21:35:00+08:00">Thu 07 May 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/maldoc-writeup-ctf.html">maldoc, writeup, ctf</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-04-30T05:58:00+08:00">Fri 30 April 2021</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/malware.html">malware</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(4)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2023-01-23T21:02:00+08:00">Mon 23 January 2023</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2022-08-02T15:06:00+08:00">Tue 02 August 2022</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./building-my-virtual-cybersecurity-home-lab.html">Building my Virtual Cybersecurity Home Lab</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-09-05T20:33:00+08:00">Sun 05 September 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./making-a-rat.html">Making a RAT</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-07-13T14:56:00+08:00">Tue 13 July 2021</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/malware_analysis.html">malware_analysis</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./maldoc101-writeup-part-1.html">Maldoc101 Writeup (Part 1)</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-03-13T08:34:00+08:00">Sat 13 March 2021</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/misc.html">misc</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(7)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./classifying-more-with-less-new-vgl4nt-update.html">Classifying More With Less: New VGL4NT Update</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2023-05-20T06:46:00+08:00">Sat 20 May 2023</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2022-08-15T11:29:00+08:00">Mon 15 August 2022</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2022-08-08T11:29:00+08:00">Mon 08 August 2022</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2022-07-09T12:11:00+08:00">Sat 09 July 2022</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <a href="./category/misc.html">View all 7 posts in misc &raquo;</a>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/org-mode.html">org-mode</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./converting-org-journal-entry-to-org-page-post.html">Converting org-journal entry to org-page post</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/phishing-threat-hunting-osint.html">phishing, threat-hunting, osint</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(2)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-05-01T20:56:00+08:00">Sat 01 May 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-04-24T05:58:00+08:00">Sat 24 April 2021</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/postmortem.html">postmortem</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2017-12-10T23:33:00+08:00">Sun 10 December 2017</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2017-12-06T00:02:00+08:00">Wed 06 December 2017</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2017-12-05T12:56:00+08:00">Tue 05 December 2017</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/re.html">re</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(5)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./ioli-crackme-0x04.html">IOLI Crackme 0x04</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-09-29T10:34:00+08:00">Wed 29 September 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./ioli-crackme-0x03.html">IOLI Crackme 0x03</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-03-22T20:03:00+08:00">Mon 22 March 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./ioli-crackme-0x02.html">IOLI Crackme 0x02</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-03-06T10:34:00+08:00">Sat 06 March 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./ioli-crackme-0x01.html">IOLI Crackme 0x01</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-02-20T17:34:00+08:00">Sat 20 February 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./ioli-crackme-0x00.html">IOLI Crackme 0x00</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-02-16T21:55:00+08:00">Tue 16 February 2021</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/threat-hunting.html">threat-hunting</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-11-06T11:10:00+08:00">Sat 06 November 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-11-03T12:00:00+08:00">Wed 03 November 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-10-30T12:00:00+08:00">Sat 30 October 2021</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/tools.html">tools</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(2)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-10-18T20:33:00+08:00">Mon 18 October 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./introducing-shcode2exe.html">Introducing shcode2exe</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-02-26T07:34:00+08:00">Fri 26 February 2021</time>
+                </div>
+            </li>
+        </ul>
+    </div>
+</article>
+        </div>
+    </main>
+
+    <script src="./theme/js/main.js"></script>
+    
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'UA-55068085-2');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
     </script>
-  </body>
+</body>
 </html>
