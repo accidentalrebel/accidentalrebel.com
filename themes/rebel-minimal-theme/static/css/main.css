@@ -27,7 +27,7 @@
         --color-border: #e5e5e6;
     }
     
-    h1, .article-header h1, .article-content h1 {
+    h1, .article-content h1 {
         color: #a626a4;
     }
     
@@ -75,7 +75,7 @@ header {
         #51afef 0%, #98be65 25%, #c678dd 50%, #da8548 75%, #51afef 100%);
     background-size: 200px 10px;
     animation: scroll-comic 10s linear infinite;
-    margin-bottom: calc(var(--spacing-unit) * 3);
+    margin-bottom: calc(var(--spacing-unit) * 2);
     position: relative;
     overflow: hidden;
 }
@@ -230,7 +230,7 @@ article {
 h1 {
     font-size: 2rem;
     line-height: 1.2;
-    margin-bottom: var(--spacing-unit);
+    margin: 0 0 var(--spacing-unit) 0;
     font-weight: 700;
     color: #c678dd;
 }
@@ -239,21 +239,21 @@ h1 {
 .article-header h1 {
     font-size: 2.25rem;
     line-height: 1.2;
-    margin-bottom: 0.75rem;
+    margin: 0 0 0.75rem 0;
     font-weight: 700;
-    color: #c678dd;
+    color: var(--color-text);
 }
 
 h2 {
     font-size: 1.5rem;
-    margin: calc(var(--spacing-unit) * 3) 0 var(--spacing-unit) 0;
+    margin: calc(var(--spacing-unit) * 2) 0 var(--spacing-unit) 0;
     font-weight: 600;
     color: #dcaeea;
 }
 
 h3 {
     font-size: 1.25rem;
-    margin: calc(var(--spacing-unit) * 2) 0 var(--spacing-unit) 0;
+    margin: calc(var(--spacing-unit) * 1.5) 0 var(--spacing-unit) 0;
     font-weight: 600;
     color: #dcaeea;
 }
@@ -364,13 +364,14 @@ h3 {
 .article-content pre,
 .codehilite pre {
     background-color: var(--color-border);
-    padding: var(--spacing-unit);
+    padding: calc(var(--spacing-unit) * 1.25);
     overflow-x: auto;
+    overflow-y: hidden;
     margin-bottom: calc(var(--spacing-unit) * 1.5);
     border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 /* Ensure codehilite wrapper has proper styling */
@@ -379,6 +380,11 @@ h3 {
     border-radius: 4px;
     margin-bottom: calc(var(--spacing-unit) * 1.5);
     overflow: hidden;
+}
+
+/* Remove margin from pre inside codehilite to prevent double spacing */
+.codehilite pre {
+    margin-bottom: 0;
 }
 
 /* Syntax highlighting */
@@ -391,8 +397,15 @@ h3 {
 .codehilite pre {
     background: transparent;
     color: var(--color-text);
+    max-height: none;
+}
+
+/* Ensure code and pre elements don't have conflicting styles */
+.codehilite code {
+    background: transparent;
     padding: 0;
-    margin: 0;
+    border-radius: 0;
+    font-size: inherit;
 }
 
 .hljs-comment,
@@ -581,7 +594,7 @@ h3 {
 .article-content img {
     max-width: 100%;
     height: auto;
-    margin: calc(var(--spacing-unit) * 2) 0;
+    margin: var(--spacing-unit) 0;
     border-radius: 4px;
 }
 
@@ -639,9 +652,13 @@ h3 {
 }
 
 .post-item {
-    margin-bottom: calc(var(--spacing-unit) * 4);
-    padding-bottom: calc(var(--spacing-unit) * 3);
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    padding-bottom: calc(var(--spacing-unit) * 2);
     border-bottom: 2px solid var(--color-border);
+}
+
+.post-item:first-child {
+    margin-top: 0;
 }
 
 .post-item:last-child {
@@ -650,7 +667,7 @@ h3 {
 
 .post-title {
     font-size: 2.25rem;
-    margin-bottom: 0.75rem;
+    margin: 0 0 0.75rem 0;
     font-weight: 700;
     line-height: 1.2;
 }
@@ -772,9 +789,10 @@ h3 {
         font-size: 1.5rem;
     }
     
-    .article-content pre {
+    .article-content pre,
+    .codehilite pre {
         font-size: 0.8rem;
-        padding: calc(var(--spacing-unit) * 0.75);
+        padding: calc(var(--spacing-unit) * 1);
     }
 }
 
