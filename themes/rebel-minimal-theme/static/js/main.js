@@ -12,17 +12,17 @@ window.addEventListener('scroll', () => {
     document.getElementById('progress').style.width = scrolled + '%';
 });
 
-// Simple syntax highlighting
-document.addEventListener('DOMContentLoaded', function() {
-    // Apply syntax highlighting to code blocks
-    const codeBlocks = document.querySelectorAll('pre code');
-    codeBlocks.forEach(block => {
-        const language = detectLanguage(block);
-        if (language) {
-            highlightCode(block, language);
-        }
-    });
-});
+// Simple syntax highlighting - DISABLED for now since Pygments handles it
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Apply syntax highlighting to code blocks
+//     const codeBlocks = document.querySelectorAll('pre code');
+//     codeBlocks.forEach(block => {
+//         const language = detectLanguage(block);
+//         if (language) {
+//             highlightCode(block, language);
+//         }
+//     });
+// });
 
 function detectLanguage(block) {
     // Check for class names
@@ -31,12 +31,14 @@ function detectLanguage(block) {
     if (classList.includes('javascript') || classList.includes('language-javascript')) return 'javascript';
     if (classList.includes('bash') || classList.includes('language-bash')) return 'bash';
     if (classList.includes('c') || classList.includes('language-c')) return 'c';
+    if (classList.includes('asm') || classList.includes('language-asm') || classList.includes('assembly')) return 'asm';
     
     // Try to detect based on content
     const code = block.textContent;
     if (/\b(def|import|from|print)\b/.test(code)) return 'python';
     if (/\b(function|const|let|var)\b/.test(code)) return 'javascript';
     if (/\b(#include|int main|printf)\b/.test(code)) return 'c';
+    if (/\b(mov|push|pop|call|ret|jmp|je|jne|lea|sub|add|xor)\b/i.test(code)) return 'asm';
     if (/^\s*[\$#]/.test(code)) return 'bash';
     
     return null;
@@ -57,6 +59,9 @@ function highlightCode(block, language) {
             break;
         case 'c':
             code = highlightC(code);
+            break;
+        case 'asm':
+            code = highlightAsm(code);
             break;
     }
     
