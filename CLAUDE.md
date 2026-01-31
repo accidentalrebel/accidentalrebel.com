@@ -76,10 +76,30 @@ Image: featured-image.png
 - **Social**: Twitter, GitHub, YouTube links
 
 ### Dependencies
-- Python 3
-- Pelican
-- ghp-import (for GitHub Pages deployment)
-- Markdown with extensions (codehilite, extra, toc)
+Dependencies are defined in `requirements.txt`:
+- pelican
+- markdown
+- invoke
+- ghp-import
+
+### Environment Setup
+This project uses a Python virtual environment. Before running any commands:
+```bash
+source venv/bin/activate
+```
+
+If the venv doesn't exist or dependencies need updating:
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+### Quick Workflow: Adding a New Blog Post
+1. Activate the virtual environment: `source venv/bin/activate`
+2. Create the post file in `content/` with Pelican header metadata
+3. Build and preview: `make html && make serve`
+4. When ready: `make publish && make github`
 
 ## Theme Features
 
