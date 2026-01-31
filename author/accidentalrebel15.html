@@ -37,6 +37,51 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-12-05T12:56:00+08:00">Tue 05 December 2017</time>
+                <span>•</span>
+                <a href="../category/postmortem.html">postmortem</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
+<p><strong>TLDR</strong></p>
+<ul>
+<li>All data in our game is contained in one excel file we call the "Universe".</li>
+<li>Prototypes can be done on the Universe excel file itself</li>
+<li>Iteration is easier as we only need to change one file.</li>
+<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
+</ul>
+<hr />
+<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
+<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">This</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="nx">definitely</span><span class="w"> </span><span class="nx">gives</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">hint</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">what</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">guy</span><span class="w"> </span><span class="nx">Cliff</span><span class="w"> </span><span class="k">is</span><span class="p">.</span><span class="o">*</span>
+</code></pre></div>
+
+<p>Having a list of all the data that will be used in the game has helped us visualize the scope and the systems to be built, especially in making prototypes. One time Cliff made a simulation of the battle system using his Excel mastery. The universe data is fed into this simulation (i.e. competition level, recipe power) and the expected values are displayed (i.e. judging result, rewards amount). This mockup allowed us to see how the battles play out and made the whole thing easier for me to understand and implement in the engine.</p>
+<p>All the content of the universe file is then converted to the JSON format which is used directly by the game. Iterating on the game is easy because the file would just need to be converted again for the new changes to show up. The conversion process is done manually though using a CSV to JSON tool. I would have automated the process but didn't have the time to work on it.</p>
+<p><img alt="02" src="https://i.imgur.com/lE5zqDu.png" /></p>
+<div class="codehilite"><pre><span></span><code>*It&#39;s like the Matrix*
+</code></pre></div>
+
+<p>Initially, when we wanted to update some values, we would need to push a new build version that players need to download. We figured that this is too cumbersome especially if we really have some critical changes we want to get out as soon as possible. As a solution to this, we made a system where a master copy of the JSONs are saved on our servers. We can change the data from here and the game would automatically download the necessary files that we changed. This is a really great feature that has helped us push important changes without having the need for a new build. But it does require a lot of bandwidth especially if a lot of players request for the new data so we do it only when needed like on crash producing bugs.</p>
+<p>As you can see, we've spent a lot of time making sure that our game is data-centric as possible and it benefitted us immensely. This approach has been so useful that we plan to use it on our future projects. And hopefully, after reading this, we've convinced you to try it out too.</p>
+<p><em>[Check out how the universe has been transformed into a game by playing Chef Wars on <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">iOS</a>. Also, be sure to check out Cliff's postmortem where he talks about the <a href="http://mindcakegames.com/chef-wars-launch-post-mortem/">things we learned during our global launch</a>!]</em></p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/chefwars.html" class="tag">chefwars</a>
+            <a href="../tag/gamedev.html" class="tag">gamedev</a>
+            <a href="../tag/mindcake.html" class="tag">mindcake</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux</a>
             </h2>
             <div class="article-meta">
@@ -110,68 +155,6 @@
             <a href="../tag/emacs-org-mode.html" class="tag">emacs org-mode</a>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../minifying-buffer-contents-in-emacs.html">Converting org-journal entry to org-page post</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
-                <span>•</span>
-                <a href="../category/emacs.html">emacs</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I needed a way to minify JSON files from Emacs so I made the short function below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-minify-buffer-contents</span><span class="p">()</span>
-<span class="w">    </span><span class="s">&quot;Minifies the buffer contents by removing whitespaces.&quot;</span>
-<span class="w">    </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">delete-whitespace-rectangle</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">mark-whole-buffer</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">replace-match</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)))</span>
-</code></pre></div>
-
-<p>The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline.</p>
-<p>This effectively turns this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span>
-<span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-
-
-<span class="w">                          </span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]</span>
-<span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup&quot;</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>To this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup&quot;</span><span class="p">}}}}}</span>
-</code></pre></div>
-
-<p>It works for my current needs but have not fully tested it yet. It works for emacs lisp buffers too.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/emacs.html" class="tag">emacs</a>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="../author/accidentalrebel14.html">&laquo; Previous</a>
@@ -191,7 +174,9 @@
         <a href="../author/accidentalrebel13.html">13</a>
         <a href="../author/accidentalrebel14.html">14</a>
         <span class="current">15</span>
+        <a href="../author/accidentalrebel16.html">16</a>
 
+    <a href="../author/accidentalrebel16.html">Next &raquo;</a>
 </nav>
         </div>
     </main>

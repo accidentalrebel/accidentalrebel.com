@@ -37,6 +37,39 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-01-23T21:02:00+08:00">Mon 23 January 2023</time>
+                <span>•</span>
+                <a href="../category/malware.html">malware</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
+<h1 id="what-are-jupyter-notebooks">What are Jupyter Notebooks?</h1>
+<p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
+<h1 id="my-additions-to-the-blue-jupyter">My Additions to the Blue-Jupyter</h1>
+<p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
+<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight some interesting points about the sample, like the malware signature. It also can skip samples that have already been downloaded to save bandwidth.</p>
+<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-01" src="../images/adding-automation-to-blue-jupyter-malware-notebook-01.png" /></p>
+<p>The second significant addition is the automated generation of <a href="https://github.com/mandiant/capa">Capa</a> results for each downloaded sample. This makes it easy to see which malware has a particular capability so I can quickly see which ones are interesting enough to investigate further.</p>
+<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-02" src="../images/adding-automation-to-blue-jupyter-malware-notebook-02.png" /></p>
+<p>I also added minor improvements like error handling, additional logging for troubleshooting, and some cleanup code just in case I want to start fresh.</p>
+<h1 id="check-it-out">Check it out</h1>
+<p>If you are interested in checking it out, you can view my fork of the repository <a href="https://github.com/accidentalrebel/blue-jupyter/blob/main/malware-analysis/Malware-Analysis.ipynb">here</a>. I did not request for a pull request on the original branch because I've changed a lot of things that the original owner might not prefer to have. Of course, I encourage everyone to fork what I made and make it their own. That's the beauty of Jupyter notebooks, anyway.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/malware.html" class="tag">malware</a>
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/jupyter.html" class="tag">jupyter</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a>
             </h2>
             <div class="article-meta">
@@ -384,41 +417,6 @@
             <span class="tag">+2 more</span>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2022-08-02T15:06:00+08:00">Tue 02 August 2022</time>
-                <span>•</span>
-                <a href="../category/malware.html">malware</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="../images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
-<h2 id="a-brief-overview">A brief overview</h2>
-<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
-<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses it, and also IDs of ATT&amp;CK techniques related to the behavior.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-02" src="../images/talking-about-mitres-malware-behavior-catalog-02.png" /></p>
-<h2 id="the-tools">The tools</h2>
-<p>There are a number of existing tools that make use of MBC. <a href="https://github.com/mandiant/capa">Flare's Capa</a> lists down MBC along with the related ATT&amp;CK techniques and there's also a repository of MBC community rules for the Cuckoo Sandox.</p>
-<p>I find MBC to have a lot of potential so I decided to contribute by making my own tool called <a href="https://github.com/accidentalrebel/mbcscan">MBCScan</a>. It's a simple tool that uses Capa which scans a supplied file and lists the MBC behaviors and objectives associated with it. It also allows you to explore the related information and relationships directly from the command line.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-03" src="../images/talking-about-mitres-malware-behavior-catalog-03.png" /></p>
-<h2 id="the-future">The future</h2>
-<p>MBC has been around for a number of years already but it still has not risen in popularity. In spite of this, it's still being continuously updated. I hope that by sharing and talking about it it'll help spread awareness and, hopefully, get some adoption.</p>
-<p>You can find more information about the project via this <a href="https://www.youtube.com/watch?v=qZef-SoREdY">video presentation from Mitre</a>. The Github project is <a href="https://github.com/MBCProject">here</a>. And the slides are available <a href="https://docs.google.com/presentation/d/1w89wccaYr2g6104l73Xt2IUMGis_zgTB6krRC1q09Dw/edit?usp=sharing">here</a>. </p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/malware.html" class="tag">malware</a>
-            <a href="../tag/analysis.html" class="tag">analysis</a>
-            <a href="../tag/mitre.html" class="tag">mitre</a>
-            <span class="tag">+1 more</span>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="../index.html">&laquo; Previous</a>
@@ -438,6 +436,7 @@
         <a href="../author/accidentalrebel13.html">13</a>
         <a href="../author/accidentalrebel14.html">14</a>
         <a href="../author/accidentalrebel15.html">15</a>
+        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel3.html">Next &raquo;</a>
 </nav>

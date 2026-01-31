@@ -37,6 +37,116 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../running-ai-agents-in-a-box.html">Running AI agents in a box because I don't trust them</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2026-01-30T10:00:00+08:00">Fri 30 January 2026</time>
+                <span>•</span>
+                <a href="../category/programming.html">programming</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine.</p>
+<p>Being in Cyber Security, I've developed a healthy paranoia about software that can execute arbitrary commands. AI coding assistants are powerful, but they're also unpredictable. They can run shell commands, modify files, and access the network. I wanted all of that contained.</p>
+<h2 id="the-setup">The setup</h2>
+<p>Claudecker is my personal tool that wraps Docker to run Claude Code CLI and Codex CLI in an isolated container. Point it at any project directory and it mounts that directory into the container. The AI can do whatever it wants inside the container, but it can't touch the rest of my system.</p>
+<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
+</code></pre></div>
+
+<p>Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This "clean slate" approach means I don't accumulate cruft or unexpected state changes.</p>
+<h2 id="the-paranoid-feature-network-lockdown">The paranoid feature: network lockdown</h2>
+<p>The feature I'm most pleased with is the network lockdown toggle. It uses iptables to control the container's OUTPUT chain policy.</p>
+<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>lockdown
+</code></pre></div>
+
+<p>This drops all outbound traffic except localhost and already-established connections. The AI can still work on code, but it can't phone home, download packages, or exfiltrate anything. I toggle this on when working on sensitive projects.</p>
+<p>The implementation is straightforward. Just flipping between DROP and ACCEPT policies. The container needs NET_ADMIN capability for this to work, which is a trade-off I'm comfortable with since it's scoped to network operations.</p>
+<h2 id="trade-offs-from-containerization">Trade-offs from containerization</h2>
+<p>Isolation comes with friction. I had to solve several problems that wouldn't exist if I just ran the CLI directly on my host.</p>
+<h3 id="browser-authentication-needs-x11">Browser authentication needs X11</h3>
+<p>Claude and Codex authentication use browser-based OAuth flows. Inside a container, there's no browser. I ended up mounting the X11 socket and forwarding the DISPLAY variable:</p>
+<div class="codehilite"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/.X11-unix:/tmp/.X11-unix:rw</span>
+</code></pre></div>
+
+<p>On Linux this works if you have DISPLAY set. On macOS you need XQuartz. For headless environments, there's a fallback where I manually copy the auth.json file from a machine where you've already logged in.</p>
+<p>Thankfully, Claude Code and Codex CLI makes it easier by providing you a URL to visit, which will give you a code to enter back. This means I rarely need to use browser authentication, but at least the option is there.</p>
+<h3 id="ssh-agent-forwarding-is-annoying">SSH agent forwarding is annoying</h3>
+<p>Getting SSH keys into the container without copying them required some workarounds. Docker's socket permissions don't always cooperate, so I ended up using socat to proxy the SSH agent socket:</p>
+<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>socat<span class="w"> </span>UNIX-LISTEN:/tmp/ssh-agent-forwarded,fork,mode<span class="o">=</span><span class="m">600</span>,user<span class="o">=</span>node<span class="w"> </span><span class="se">\</span>
+<span class="w">          </span>UNIX-CONNECT:/ssh-agent<span class="w"> </span><span class="p">&amp;</span>
+</code></pre></div>
+
+<p>The container tries direct socket access first, falls back to socat if that fails. Limited sudo permissions ensure the node user can only run specific commands.</p>
+<h3 id="port-forwarding-for-web-apps">Port forwarding for web apps</h3>
+<p>If you're developing a web app and want to access it from your host browser, you need to expose ports explicitly:</p>
+<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>--port<span class="w"> </span><span class="m">3000</span><span class="w"> </span>/path/to/project
+</code></pre></div>
+
+<p>This maps the container's port to the host. Without this flag, localhost:3000 inside the container isn't reachable from outside.</p>
+<h2 id="project-specific-dependencies">Project-specific dependencies</h2>
+<p>Different projects need different tools. A C project needs gcc and cmake. A Python ML project needs different libraries. I didn't want to bloat the base image with everything.</p>
+<p>The solution: a <code>.claudecker</code> file in the project directory.</p>
+<div class="codehilite"><pre><span></span><code># .claudecker
+build-essential
+cmake
+gcc
+python3-dev
+</code></pre></div>
+
+<p>On first run, the script hashes the file contents, generates a Dockerfile, and builds a custom image tagged with that hash. Subsequent runs use the cached image. Projects with identical <code>.claudecker</code> files share the same image.</p>
+<div class="codehilite"><pre><span></span><code>claudecker-custom:a1b2c3d4e5f6
+</code></pre></div>
+
+<p>This content-based approach means I'm not rebuilding images unnecessarily, and cleanup is straightforward with <code>clean-custom</code> and <code>clean-all-custom</code> commands.</p>
+<h2 id="skills-system">Skills system</h2>
+<p>A new and recent addition: Claudecker now supports Claude Skills, which are custom prompts that extend its capabilities. I implemented two types:</p>
+<ul>
+<li>GitHub skills get cloned on container startup. The <a href="https://github.com/blader/humanizer">Humanizer skill</a>, for example, comes from a public repo and helps remove AI-isms from text.</li>
+<li>Local skills are baked into the Docker image. I keep these in a <code>local-skills/</code> directory.</li>
+</ul>
+<p>The build process copies these into the image, and the entrypoint installs them into Claude's skills directory. This way I can version-control project-specific skills alongside the code.</p>
+<h2 id="multi-ai-orchestration-with-pal-mcp">Multi-AI orchestration with PAL MCP</h2>
+<p>I also integrated PAL MCP Server, which lets Claude Code collaborate with other AI models (Gemini, GPT, Grok, local Ollama models). I export my API keys before running:</p>
+<div class="codehilite"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OPENROUTER_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-key&quot;</span>
+./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
+</code></pre></div>
+
+<p>Inside Claude Code, I can ask it to use other models for second opinions, code review, or extended reasoning. The MCP server handles the routing.</p>
+<p>This obviously requires network access, so it doesn't work in lockdown mode. Trade-offs.</p>
+<h2 id="wheres-the-code">Where's the code?</h2>
+<p>I planned to release this publicly but decided against it for now. There are rough edges:</p>
+<ul>
+<li>The docker-compose volumes are duplicated in the docker run command for custom images. If you change one, you have to change the other. I left a warning comment but it's still error-prone.</li>
+<li>The firewall whitelist script exists but isn't fully tested across different network configurations.</li>
+<li>Some features assume specific host setups (X11, SSH agent running, etc.) and fail ungracefully when those assumptions don't hold.</li>
+<li>Error handling is minimal in places.</li>
+</ul>
+<p>I use this daily for my own work, but it's not polished enough for others to pick up without reading through the scripts first. Maybe later.</p>
+<h2 id="current-limitations">Current limitations</h2>
+<ul>
+<li>Network lockdown state doesn't persist across container restarts. Restart the container and you're back to full network access.</li>
+<li>Custom image builds happen automatically but failures silently fall back to the base image. You might not notice a package didn't install.</li>
+<li>X11 forwarding is a security surface I'm not entirely comfortable with, but I haven't found a better solution for browser auth.</li>
+</ul>
+<h2 id="what-i-actually-use-it-for">What I actually use it for</h2>
+<p>Most days I run Claude Code in lockdown mode for general coding tasks. When I need it to fetch documentation or install packages, I toggle lockdown off, let it do its thing, then toggle it back on.</p>
+<p>For security research projects, the isolation gives me peace of mind. The AI can analyze suspicious code, suggest modifications, even run tests, all without access to my actual filesystem or network.</p>
+<p>It's not perfect containment. Docker isn't a security boundary the way a VM is. But it's enough friction that an AI agent can't accidentally (or intentionally) do something I'd regret.</p>
+<p>For now, this setup works for my needs. The paranoia tax is a few extra seconds on startup and occasional friction with browser auth. Worth it.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/docker.html" class="tag">docker</a>
+            <a href="../tag/ai.html" class="tag">ai</a>
+            <a href="../tag/claude-code.html" class="tag">claude-code</a>
+            <span class="tag">+2 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../classifying-more-with-less-new-vgl4nt-update.html">Classifying More With Less: New VGL4NT Update</a>
             </h2>
             <div class="article-meta">
@@ -157,39 +267,6 @@
             <a href="../tag/machine_learning.html" class="tag">machine_learning</a>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2023-01-23T21:02:00+08:00">Mon 23 January 2023</time>
-                <span>•</span>
-                <a href="../category/malware.html">malware</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
-<h1 id="what-are-jupyter-notebooks">What are Jupyter Notebooks?</h1>
-<p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
-<h1 id="my-additions-to-the-blue-jupyter">My Additions to the Blue-Jupyter</h1>
-<p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
-<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight some interesting points about the sample, like the malware signature. It also can skip samples that have already been downloaded to save bandwidth.</p>
-<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-01" src="../images/adding-automation-to-blue-jupyter-malware-notebook-01.png" /></p>
-<p>The second significant addition is the automated generation of <a href="https://github.com/mandiant/capa">Capa</a> results for each downloaded sample. This makes it easy to see which malware has a particular capability so I can quickly see which ones are interesting enough to investigate further.</p>
-<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-02" src="../images/adding-automation-to-blue-jupyter-malware-notebook-02.png" /></p>
-<p>I also added minor improvements like error handling, additional logging for troubleshooting, and some cleanup code just in case I want to start fresh.</p>
-<h1 id="check-it-out">Check it out</h1>
-<p>If you are interested in checking it out, you can view my fork of the repository <a href="https://github.com/accidentalrebel/blue-jupyter/blob/main/malware-analysis/Malware-Analysis.ipynb">here</a>. I did not request for a pull request on the original branch because I've changed a lot of things that the original owner might not prefer to have. Of course, I encourage everyone to fork what I made and make it their own. That's the beauty of Jupyter notebooks, anyway.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/malware.html" class="tag">malware</a>
-            <a href="../tag/re.html" class="tag">re</a>
-            <a href="../tag/jupyter.html" class="tag">jupyter</a>
-        </div>
-    </article>
 
 <nav class="pagination">
 
@@ -208,6 +285,7 @@
         <a href="../author/accidentalrebel13.html">13</a>
         <a href="../author/accidentalrebel14.html">14</a>
         <a href="../author/accidentalrebel15.html">15</a>
+        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel2.html">Next &raquo;</a>
 </nav>

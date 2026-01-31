@@ -37,6 +37,49 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="./emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-04-30T05:58:00+08:00">Fri 30 April 2021</time>
+                <span>•</span>
+                <a href="./category/maldoc-writeup-ctf.html">maldoc, writeup, ctf</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <blockquote>
+<p>This is a writeup for <a href="the-emprisa-maldoc-challenge">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
+</blockquote>
+<p>The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.</p>
+<p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
+<p>The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled.</p>
+<p>This new environment is where the document would trigger once double-clicked. After a bit of loading, a pop-up would later appear greeting the analyst with congratulations (this is a stand-in for a malicious payload for this challenge), but of course, it is clear that we are not done yet.</p>
+<p><img alt="emprisa-maldoc-writeup-01" src="./images/emprisa-maldoc-writeup-01.png" /></p>
+<p>Tools such as <a href="https://processhacker.sourceforge.io/">Process Hacker</a> will reveal a new process named <code>EQNEDT32.EXE</code> getting spawned right after opening the document. Those who have read through the CVE details would know that this is the expected behavior, as the vulnerability uses this process to run malicious code. In this case, the exploit downloads a file from the internet and automatically runs it.</p>
+<p>Another tool such as <a href="https://sourceforge.net/projects/regshot/">Regshot</a> would reveal newly created files. It can determine these by taking a snapshot before the malicious document is opened, then taking another one after the downloaded payload gets triggered, and finally comparing the two snapshots and listing the differences. It's an invaluable tool to have.</p>
+<p><img alt="emprisa-maldoc-writeup-02" src="./images/emprisa-maldoc-writeup-02.png" /></p>
+<p>Running <a href="https://github.com/DidierStevens/DidierStevensSuite/blob/master/rtfdump.py">rtfdump.py</a> would then reveal some telling details about our maldoc, like for example, magic signatures and object streams.</p>
+<p>Upon close inspection of the hexdump of the largest object stream (still via rtfdump), one would see a sequence of NOPs (aka a NOPsled) in certain parts. A NOPsled such as this usually indicates the possible start of shellcode. Carving this part of the shellcode and running it on an emulator such as <a href="https://github.com/fireeye/speakeasy">speakeasy</a> or <a href="http://sandsprite.com/blogs/index.php?uid=7&amp;pid=152">scdbg</a> won't work properly, however.</p>
+<p><img alt="emprisa-maldoc-writeup-03" src="./images/emprisa-maldoc-writeup-03.png" /></p>
+<p>The output shows the first line to be <code>LoadLibrary</code>, and then there's an error after that. This indicates that maybe there's a problem with the shellcode. </p>
+<p>On further inspection, a little more further down there is another set of seemingly readable strings. This could indicate another shellcode. Or, maybe, a continuation of the first one? In between these supposed two shellcodes is a readable string that seems out of place in between the gibberish. Carving the two shellcodes and then combining them would now work when run on an emulator.</p>
+<p><img alt="emprisa-maldoc-writeup-04" src="./images/emprisa-maldoc-writeup-04.png" /></p>
+<p>If the previous solution was not immediately clear to you then there is another approach to the above. And that is to step through the <code>EQNEDT32</code> process as soon as it runs. However, attaching to this process is tricky as it triggers only for a split second and then exits. To debug this, a debugger should be automatically connected as soon as the process starts. Check out <a href="https://pentestlab.blog/2020/01/13/persistence-image-file-execution-options-injection/">this post</a> for details on how to do this.</p>
+<p>Once attached, the painstaking process of debugging begins. Thankfully, we have an idea of what code is being loaded into memory. And this is the shellcode that has a NOPSled during our analysis with rtfdump.py above. Looking for this sequence and then putting a breakpoint where the memory location is accessed would stop the program just before the shellcode is run. Once the breakpoint triggered, we could step through the shellcode and find out what exactly the shellcode does and which Libraries are being called.</p>
+<p>From here, we could also backtrack from where the shellcode is called to figure out how the exploit is triggered via a buffer overflow. This requires a bit of knowledge in reverse engineering. An alternative is to <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">check out the CVE details</a> in search for the tool that was likely used to make the exploit, and then examining the code.</p>
+<p>After all of that, you should have everything that you need to answer all the questions in the challenge. You may have noticed that I have not revealed the answers outright. You still have to find it on your own. However, I do hope that by walking you through the process, I have helped you understand how to get there.</p>
+<blockquote>
+<p>If you have more questions, or want to tell me what you think of the challenge, feel free to leave a comment below or send me a mesage at @accidentalrebel. </p>
+</blockquote>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/writeup.html" class="tag">writeup</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="./investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a>
             </h2>
             <div class="article-meta">
@@ -113,71 +156,6 @@
             <a href="./tag/ctf.html" class="tag">ctf</a>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./ioli-crackme-0x03.html">IOLI Crackme 0x03</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-03-22T20:03:00+08:00">Mon 22 March 2021</time>
-                <span>•</span>
-                <a href="./category/re.html">re</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, and <a href="./ioli-crackme-0x02.html">0x02</a>.</p>
-<h1 id="getting-the-password">Getting the password</h1>
-<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="./ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
-<p><img alt="ioli-crackme-0x03-01" src="./images/ioli-crackme-0x03-01.png" /></p>
-<p>Reading through the code I realized that the password for this challenge is exactly the same as the previous one!</p>
-<p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
-<p><img alt="ioli-crackme-0x03-02" src="./images/ioli-crackme-0x03-02.png" /></p>
-<h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
-<p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping back. It seems we have a <em>loop</em> here that we could investigate.</p>
-<p><img alt="ioli-crackme-0x03-03" src="./images/ioli-crackme-0x03-03.png" /></p>
-<p>If we look at the input that the function takes we will find out that the strings that are being passed from the <code>_test</code> function are <code>Lqydolg#Sdvvzrug$</code> and <code>Sdvvzrug#RN$$$#=,</code> for the <em>failure</em> and <em>success</em> messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.</p>
-<h1 id="discovering-the-cipher">Discovering the cipher</h1>
-<p>The best way to discover the cipher used is to step through the code. We can do it with both static or dynamic analysis, but the latter is way easier.</p>
-<p><img alt="ioli-crackme-0x03-04" src="./images/ioli-crackme-0x03-04.png" /></p>
-<p>The code above starts with <code>mov eax, [ebp+arg_0]</code> which copies the pointer to the string passed to our <code>_shift</code> function. We then copy that pointer to <code>[esp+98h+Str]</code> which is the memory location pointing to the top of the current stack. This is done so that it can be passed as an argument when we do <code>call _strlen</code>.</p>
-<p>After executing, <code>_strlen</code> returns the length of the specified string and is saved to register <code>eax</code>. This is then used in the line <code>cmp [ebp+var_7C], eax</code>. </p>
-<p>But what is the value of <code>var_7C</code>? If you scroll up at the start of the subroutine, <code>var_7C</code> is assigned a value of zero. If you know how loops work, you'll realize that this variable is going to be used to hold a counter value. It starts at a value of <code>0</code> and it will eventually be incremented after every loop, which is what is happening at <code>401348</code>.</p>
-<p>To make it easy for us to remember this, let's rename <code>var_7C</code> to a more memorable name like <code>var_counter</code>.</p>
-<p><img alt="ioli-crackme-0x03-05" src="./images/ioli-crackme-0x03-05.png" /></p>
-<p>So going back, to the comparison command <code>cmp [ebp+var_counter], eax</code>, which now translates to <code>cmp 0, 17</code>. <em>17</em> being the length of our failure string <code>Lqydolg#Sdvvzrug$</code>. Since this is not equal it now goes to this next block of code.</p>
-<p><img alt="ioli-crackme-0x03-06" src="./images/ioli-crackme-0x03-06.png" /></p>
-<p>Now this block is interesting. There's a lot that is happening but the gist of it is that the program gets one character from the input string, with <code>var_counter</code> as an offset. It then decrements that character value by 3, and added to a destination string. I'll be going through the code that I described step by step in the next section.</p>
-<h1 id="stepping-through">Stepping through</h1>
-<p>So to start, <code>lea eax, [ebp+var_78]</code> loads the address to <code>var_78</code> which in my case points to the address <code>28FE90</code>.</p>
-<p><code>mov edx, eax</code> copies that address to <code>edx</code> so we can use it on the next line.</p>
-<p><code>add edx, [ebp+var_counter]</code> adds to the address of <code>var_78</code>. Because <code>var_counter</code> is still <code>0</code>, the address remains at <code>28FE90</code>.</p>
-<p><code>add eax, [ebp+arg_0]</code> does the same thing as above but this time adding to <code>[arg_0]</code> which contains the address <code>28FF10</code>.</p>
-<p><code>movzx eax, byte ptr [eax]</code> copies the byte contained in <code>[eax]</code> or <code>28FF10</code>. In this case that byte contains the value <code>4Ch</code> or <code>L</code> in ASCII. This is the first letter in our failure string <code>Lqydolg#Sdvvzrug$</code>!</p>
-<p><code>sub al, 3</code> then substracts 3 to <code>4Ch</code> making it <code>49h</code> which is ASCII for <code>I</code>.</p>
-<p><code>mov [edx], al</code> saves the new character to the variable <code>var_78</code> which is the memory location <code>28FE90</code>. At this point in time the content is currently the character <code>I</code>. To make it easy for us to understand the code, let's rename <code>var_78</code> to <code>var_dest</code>. This name is apt because this will be the destination for our shifted ASCII characters.</p>
-<p><code>lea eax, [ebp+var_counter]</code> and then <code>inc dword ptr [eax]</code> now increments the value of <code>var_counter</code>, which now makes it an integer value of <code>1</code>.</p>
-<h1 id="looping-back">Looping back</h1>
-<p>Alright. Now we go back up again to <code>loc_401320</code>. I'm not going to step through each line again, but I will highlight the important parts now that we have looped back.</p>
-<p><code>cmp [ebp+var_counter]</code> now translates to <code>cmp 1, 17</code>, which is still not equal.</p>
-<p><code>add edx, [ebp+var_counter]</code> now adds 1 to our <code>var_dest</code> variable, turning <code>28FE90</code> to <code>28FE91</code>. The address for the <code>arg_0</code> variable is also added by 1 at <code>add eax, [ebp+arg_0]</code>.</p>
-<p>By the time <code>movzx eax, byte ptr [eax]</code> is executed it now gets the next character in our failure string which is <code>71h</code> or the letter <code>q</code>.</p>
-<p><code>sub al, 3</code> converts are letter <code>q</code> to the letter <code>n</code>. And is once again saved to our <code>var_dest</code> variable with the command <code>mov [edx], al</code>.</p>
-<h1 id="repeat-until">Repeat until...</h1>
-<p>If I haven't lost you, then you should now be able to follow what will happen in the next steps:</p>
-<p><code>var_counter</code> will get incremented again and again, which will point to the next characters in the string. For example, the next characters: <code>y</code> then <code>d</code> then <code>o</code> will get shifted to <code>v</code> then <code>a</code> then <code>l</code>, respectively. This shifting of each characters will continue until <code>cmp [ebp+var_counter</code> equates to <code>cmp 17, 17</code>. </p>
-<p>By the end, <code>var_dest</code> now contains the newly shifted string <code>Invalid Password!</code>. Finally! Applying the same code above to the success message, the garbled message would end with <code>Password OK!!! :)</code>.</p>
-<p>Wasn't that fun?</p>
-<h1 id="on-to-the-next-challenge">On to the next challenge</h1>
-<p>I hope I was able to explain properly the simple shifting algorithm used by the program above. I did it this way mostly for my own benefit and to make sure I really did understand how the algorithm worked in assembly. In future writeups I'll refrain from stepping through code at such a granular level, unless there is something really important that warrants it. Or maybe a video would be a much better format for these kinds of challenges?</p>
-<p>Anyway, I look forward to the next challenge. Hopefully, you are too!</p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/re.html" class="tag">re</a>
-            <a href="./tag/crackme.html" class="tag">crackme</a>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="./index6.html">&laquo; Previous</a>
@@ -197,6 +175,7 @@
         <a href="./index13.html">13</a>
         <a href="./index14.html">14</a>
         <a href="./index15.html">15</a>
+        <a href="./index16.html">16</a>
 
     <a href="./index8.html">Next &raquo;</a>
 </nav>

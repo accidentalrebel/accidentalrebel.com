@@ -37,6 +37,140 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-10-30T12:00:00+08:00">Sat 30 October 2021</time>
+                <span>•</span>
+                <a href="../category/threat-hunting.html">threat-hunting</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
+<p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
+<h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
+<blockquote>
+<p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
+</blockquote>
+<p>So the question tells us that the attacker used WMI subscription to gain persistence in our network.</p>
+<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
+<p><img alt="cyber-corp-case-2-writeup-01" src="../images/cyber-corp-case-2-writeup-01.png" /></p>
+<h2 id="testing-wmi-persistence-in-my-homelab">Testing WMI Persistence in my homelab</h2>
+<p>Now that I understand the concept I then checked <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md">the technique's entry</a> in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about Atomic Red Team is that they have easy-to-follow step-by-step instructions on how to emulate Mitre ATT&amp;CK techniques.</p>
+<p>I took the code on the page and ran it in <a href="building-my-virtual-cybersecurity-home-lab">my homelab</a>. I then fired up Windows Event Viewer and looked for entries with event log ID "5681 (WMI activity)". The entry that I found contains the information below:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">Namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">//</span><span class="p">.</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">subscription</span><span class="err">;</span><span class="w"> </span><span class="n">Eventfilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AtomicRedTeam</span><span class="o">-</span><span class="n">WMIPersistence</span><span class="o">-</span><span class="n">Example</span><span class="w"> </span><span class="p">(</span><span class="n">refer</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">activate</span><span class="w"> </span><span class="n">eventid</span><span class="p">:</span><span class="mi">5859</span><span class="p">)</span><span class="err">;</span><span class="w"> </span><span class="n">Consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CommandLineEventConsumer</span><span class="o">=</span><span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span><span class="w"> </span><span class="n">PossibleCause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Binding</span><span class="w"> </span><span class="n">EventFilter</span><span class="p">:</span><span class="w"> </span>
+<span class="n">instance</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">__EventFilter</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">CreatorSID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">,</span><span class="w"> </span><span class="mi">158</span><span class="p">,</span><span class="w"> </span><span class="mi">195</span><span class="p">,</span><span class="w"> </span><span class="mi">131</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">242</span><span class="p">,</span><span class="w"> </span><span class="mi">87</span><span class="p">,</span><span class="w"> </span><span class="mi">184</span><span class="p">,</span><span class="w"> </span><span class="mi">137</span><span class="p">,</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">134</span><span class="p">,</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="err">;</span>
+<span class="w">    </span><span class="n">EventNamespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;root\\CimV2&quot;</span><span class="err">;</span>
+<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span>
+<span class="w">    </span><span class="n">Query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA &#39;Win32_PerfFormattedData_PerfOS_System&#39; AND TargetInstance.SystemUpTime &gt;= 240 AND TargetInstance.SystemUpTime &lt; 325&quot;</span><span class="err">;</span>
+<span class="w">    </span><span class="n">QueryLanguage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;WQL&quot;</span><span class="err">;</span>
+<span class="p">}</span><span class="err">;</span>
+<span class="n">Perm</span><span class="p">.</span><span class="w"> </span><span class="n">Consumer</span><span class="p">:</span><span class="w"> </span>
+<span class="n">instance</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">CommandLineEventConsumer</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">CommandLineTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;C:\\Windows\\System32\\notepad.exe&quot;</span><span class="err">;</span>
+<span class="w">    </span><span class="n">CreatorSID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">,</span><span class="w"> </span><span class="mi">158</span><span class="p">,</span><span class="w"> </span><span class="mi">195</span><span class="p">,</span><span class="w"> </span><span class="mi">131</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">242</span><span class="p">,</span><span class="w"> </span><span class="mi">87</span><span class="p">,</span><span class="w"> </span><span class="mi">184</span><span class="p">,</span><span class="w"> </span><span class="mi">137</span><span class="p">,</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">134</span><span class="p">,</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="err">;</span>
+<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span>
+<span class="p">}</span><span class="err">;</span>
+</code></pre></div>
+
+<p>Since I have Sysmon logging enabled, I also double-checked the logs using the Sysmon event IDs below:</p>
+<ul>
+<li>Event ID 19: WmiEvent (WmiEventFilter activity detected)</li>
+<li>Event ID 20: WmiEvent (WmiEventConsumer activity detected)</li>
+<li>Event ID 21: WmiEvent (WmiEventConsumerToFilter activity</li>
+</ul>
+<p><img alt="cyber-corp-case-2-writeup-02" src="../images/cyber-corp-case-2-writeup-02.png" /></p>
+<p>As we can see, Sysmon separates the WMIEvents into the different types of WmiEvent activities.</p>
+<h2 id="building-the-query-for-the-kibana-search">Building the Query for the Kibana search</h2>
+<p>Now that I know what the important IOCs are, I could now create the query to answer the first question of the challenge.</p>
+<ul>
+<li>5861</li>
+<li>("QueryLanguage = " AND "Consumer = ")</li>
+</ul>
+<p>When the above information is combined, I get the query <code>5861 OR ("QueryLanguage = " AND "Consumer = ")</code>. Putting this in the Kibana search shows us the one and only entry:</p>
+<p><img alt="cyber-corp-case-2-writeup-03" src="../images/cyber-corp-case-2-writeup-03.png" /></p>
+<p>From there we could easily see the name of the WMI Event Consumer.</p>
+<h2 id="looking-for-the-wmi-subscriber">Looking for the WMI subscriber</h2>
+<blockquote>
+<p>Question 2. In the previous step, you looked for traces of the attacker's persistence in the compromised system through a WMI subscription mechanism. Now find the process that installed the WMI subscription. Answer the question by specifying the PID of that process and the name of its executable file, separated by a comma without spaces.</p>
+</blockquote>
+<p>Reading the question above, I knew that I needed to look for a process that has happened prior to the WMI subscription. And so, I've set the date range to reflect this.</p>
+<p><img alt="cyber-corp-case-2-writeup-04" src="../images/cyber-corp-case-2-writeup-04.png" /></p>
+<p>I wasn't so sure what to look for next so I just looked out for anything suspicious. Thankfully there is the <code>enrich.ioa.*</code> set of fields where enrichment is done that indicate suspiciousness. I've set a filter to show entries that have <code>enrich.ioa.max_severity</code> to <code>exists</code>. This means it'll only show events that are either <code>high</code>, <code>medium</code>, or <code>low</code>.</p>
+<p>These showed some very interesting events:</p>
+<p><img alt="cyber-corp-case-2-writeup-05" src="../images/cyber-corp-case-2-writeup-05.png" /></p>
+<p>It seems like <code>winword.exe</code> is connecting to an external IP. Very suspicious. Searching the IP <code>188.135.15.49</code> on VirusTotal reveals that it is indeed malicious.</p>
+<p><img alt="cyber-corp-case-2-writeup-06" src="../images/cyber-corp-case-2-writeup-06.png" /></p>
+<p>If we look at more of the events we will find that there are a lot of malicious activity with the <code>proc_cmdline</code> that contains the value:</p>
+<blockquote>
+<p>"C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE" /n "C:!Work\Marketing\Docs\OPEC\OPEC crude oil production.docx" /o ""</p>
+</blockquote>
+<p>Having seen all of that we can now safely assume that this is the process that we are looking for. Entering the <code>proc_id</code> along with the proc's file name satisfies question number 2.</p>
+<h2 id="looking-for-the-extracted-archive">Looking for the extracted archive</h2>
+<blockquote>
+<p>Question 3. The process described in the previous question was used to open a file extracted from the archive that the user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.</p>
+</blockquote>
+<p>The question said something about a file being opened, and so I added the filters <code>event_type: FileOpen</code> and <code>proc_file_path: C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE</code> to see what files were opened using Word.exe prior to the WMI subscription. This however showed a lot of files.</p>
+<p><img alt="cyber-corp-case-2-writeup-07" src="../images/cyber-corp-case-2-writeup-07.png" /></p>
+<p>The question also mentioned that the opened file was extracted from an archive received by email. So I added the query <code>*zip* OR *rar*</code> to find out if there are any "zip" or "rar" files that were processed.</p>
+<p>Sure enough, there was, and one particular really stood out. </p>
+<blockquote>
+<p>Process 'c:\program files (x86)\microsoft office\office16\outlook.exe' created file 'c:\users\john.goldberg\appdata\local\microsoft\windows\inetcache\content.outlook\dfn3sfep\report.zip'</p>
+</blockquote>
+<p>This tells us that the archive <code>report.zip</code> was opened via email using the program <code>outlook.exe</code>.</p>
+<p>But what was the generated file when the archive was opened? Looking through the results we could also see one entry that had the <code>enrich.chain</code> with the value of: </p>
+<blockquote>
+<p>'c:\windows\explorer.exe' ➔ 'c:\program files (x86)\microsoft office\office16\winword.exe' ➔ 'c:\users\john.goldberg\appdata\local\temp\temp1_report.zip\market forecast emea.docx'`. </p>
+</blockquote>
+<p>"Market forecaste emea.docx" was opened via "winword.exe" and we could also see that the temporary folder for it is <code>temp1_report.zip</code>. Entering the hash for this "docx" file was the correct answer for this question.</p>
+<h2 id="finding-the-actual-malicious-file">Finding the actual malicious file</h2>
+<blockquote>
+<p>Question 4. The file mentioned in question 3, is not malicious in and of itself, but when it is opened, another file is downloaded from the Internet that already contains the malicious code. Answer the question by specifying the address, from which this file was downloaded, and the SHA256 hash of the downloaded file, separated by commas without spaces.</p>
+</blockquote>
+<p>If we think about it, we can make the date range smaller by starting our range from when the Zip is extracted and from when the WMI subscription happened. </p>
+<p><img alt="cyber-corp-case-2-writeup-08" src="../images/cyber-corp-case-2-writeup-08.png" /></p>
+<p>There are three "action" keywords specified in the question that I knew I could filter for. This led me to use the query below:</p>
+<blockquote>
+<p>event_type:NetworkConnection OR event_type:FileOpen OR event_type:FileCreate</p>
+</blockquote>
+<p>What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signify another file is downloaded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.</p>
+<p>As you can see in the image below, we have a series of events that shows us the three events that we are looking for in the previous paragraph. But because their timestamps are the same, they are all jumbled.</p>
+<p><img alt="cyber-corp-case-2-writeup-09" src="../images/cyber-corp-case-2-writeup-09.png" /></p>
+<p>The way to see if the events happened in the order that we want (Network Connection &gt; FileCreate &gt; FileOpen), then what we can do is to view the surrounding documents on one of the events and see from there. From the image below, we see that the ordering of the events is indeed correct.</p>
+<p><img alt="cyber-corp-case-2-writeup-10" src="../images/cyber-corp-case-2-writeup-10.png" /></p>
+<p>The above tells us two of the answers that we need to answer the 4th question. The IP on the network connection and the hash of the file that was opened.</p>
+<h2 id="finding-the-tricky-technique">Finding the tricky technique</h2>
+<blockquote>
+<p>Question 5. The malicious code from the file, mentioned in question 4, directly installed a WMI subscription, which we started our hunting with, and also downloaded several files from the Internet to the compromised host. For file downloading, the attacker used a tricky technique that gave him the opportunity to hide the real process, which initiated the corresponding network activity. Specify the SHA256 hash of the operating system component whose functionality was used by the attacker to download files from the Internet.</p>
+</blockquote>
+<p>So the event that the question is looking for happened after the WMI subscription. I've updated the date range to reflect this.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-1-11" src="../images/cyber-corp-case-2-writeup-part-1-11.png" /></p>
+<p>Initially, I tried doing the same approach as I did before where I would pick up certain "action" keywords from the question. Something similar to the query below:</p>
+<blockquote>
+<p>(event_type:NetworkConnection OR event_type:FileCreate) AND enrich.ioa.max_severity:*</p>
+</blockquote>
+<p>Sadly, no matter where I looked it doesn't seem to be what the question is looking for.</p>
+<p>And so, I had to start my search from scratch but this time only focusing on any entries after the WMI subscription that have an existing value in <code>enrich.ioa.max_severity</code>. This approach worked and it showed me this very interesting entry marked as <code>win_unusual_ie_com_dll_host_process</code>.</p>
+<p><img alt="cyber-corp-case-2-writeup-part-1-12" src="../images/cyber-corp-case-2-writeup-part-1-12.png" /></p>
+<p>So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it to use "iexplore.exe" in downloading several files from the internet. This technique is unfamiliar to me and researching about it only showed <a href="https://cyberpolygon.com/materials/hunting-for-advanced-tactics-techniques-and-procedures-ttps/">an article from Cyber Polygon</a>. I'll try to explore this in the future, but at least for now. I have the answer to the question.</p>
+<hr />
+<p>This is part 1 of my write-up for this challenge. Expect the next part which would have the answer to the question that a lot of people have difficulty answering, which is #9. Until then!</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="../tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
             </h2>
             <div class="article-meta">
@@ -123,65 +257,6 @@
             <a href="../tag/crackme.html" class="tag">crackme</a>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../building-my-virtual-cybersecurity-home-lab.html">Building my Virtual Cybersecurity Home Lab</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-09-05T20:33:00+08:00">Sun 05 September 2021</time>
-                <span>•</span>
-                <a href="../category/malware.html">malware</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. </p>
-<p>Now I know better.</p>
-<p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
-<p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
-<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity products.</p>
-<h1 id="the-lab">The Lab</h1>
-<p>The network diagram below shows the current implementation of my lab. I will be discussing each part to give an idea of their purpose (<a href="../images/building-my-virtual-cybersecurity-home-lab-00.png">Click here for a bigger version</a>).</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-01" src="../images/building-my-virtual-cybersecurity-home-lab-01.png" /></p>
-<p>At the heart of the network is a firewall running <a href="https://www.pfsense.org/">pfSense</a>. Its purpose is to ensure that each sub-network is separated and protected, and also to protect my virtual host from any malware outbreaks. This machine also serves as a DHCP and NTP server to all the machines in the network.</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-13" src="../images/building-my-virtual-cybersecurity-home-lab-13.png" /></p>
-<h1 id="the-target-network">The Target Network</h1>
-<p>On the right side of the diagram is the "Target" network where workstations and vulnerable servers reside. These are the machines that I use to attack with exploits and malware.</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-02" src="../images/building-my-virtual-cybersecurity-home-lab-02.png" /></p>
-<p>I have Metasploitable 2 and Metasploitable 3 machines that have various services turned on to play around with. I can learn about specific attacks by exploiting this machine, but I can also don my defenders hat and learn about how to secure them.</p>
-<p>The Windows and Linux machines will serve as typical workstations for various experiments.</p>
-<p>One of the perks of my job is that I get to play with different cybersecurity solutions. I currently have access to a few that I am able to use on my lab for testing.</p>
-<p>One solution that I am using right now is an EDR (Endpoint Detection and Response) (Sorry, I can't reveal which). Each machine has an EDR agent deployed which monitors for any malicious activities on the host. It has an anti-virus feature, anti-ransomware, and fileless attack monitoring. It's awesome stuff but I have yet to maximize this.</p>
-<p>An IDS (intrusion Detection System) running <a href="https://www.snort.org/">Snort</a> monitors the traffic for any malicious activity. Signatures are constantly updated to ensure that I can detect the latest types of attack. If it finds anything important, it then sends an alert to a SIEM (running <a href="https://www.splunk.com/">Splunk</a>) on the Management network.</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-11" src="../images/building-my-virtual-cybersecurity-home-lab-11.png" /></p>
-<h1 id="the-management-network">The Management Network</h1>
-<p>On the left side of the diagram is the Managemnet network. This is where the management part of the EDR, IDS, and the SIEM can be accessed from my virtual host.</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-03" src="../images/building-my-virtual-cybersecurity-home-lab-03.png" /></p>
-<p>There's nothing special about this network, I do want to note though that I find it interesting the Snort IDS has two interfaces. One is used for access to the management page, and the other is for sniffing traffic on the Attacker network.</p>
-<h1 id="the-operations-network">The Operations Network</h1>
-<p>At the bottom side of the diagram is the "Operations" network.</p>
-<p>A machine running Kali is placed here. I can launch attacks from this machine towards the vulnerable machines on the Target network. This machine also has OpenVAS scanner that helps in discovering vulnerabilities on the target machines.</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-04" src="../images/building-my-virtual-cybersecurity-home-lab-04.png" /></p>
-<p>A windows machine serves as my malware analysis lab. It contains a lot of malware analysis tools to aid with investigations. </p>
-<p>This machine is then connected to a <a href="https://remnux.org/">Remnux</a> Linux machine. All traffic from the Windows machine is port forwarded by Remnux. From here I can run Wireshark to inspect the traffic coming from the Windows malware lab and it can also spoof the network responses to influence the behavior of malware. If the Remnux machine is turned off, then the Windows machine is effectively cut off from the whole network. It's a really neat setup that <a href="https://www.ariefprabowo.com/en/malware-analysis-en/personal-notes-building-a-malware-analysis-lab-environment/">I learned here</a>.</p>
-<h1 id="the-present">The Present</h1>
-<p>While the main intent of the network is to learn networking and implementing cybersecurity products, I can also investigate malware and learn about exploits by launching attacks. So it has a lot of multiple uses, which is perfect for someone like me who gets interested in different aspects of cybersecurity.</p>
-<p>My host machine currently has 32GB, 8 cores, and a total of 1.75TB which may seem a lot but is not powerful enough for all the machines to run at the same time. As a workaround, I just open the machines that I need for a particular exercise.</p>
-<p><img alt="building-my-virtual-cybersecurity-home-lab-05" src="../images/building-my-virtual-cybersecurity-home-lab-05.png" /></p>
-<p>For example, if I want to investigate malware then I only need the firewall, Remnux, and the windows malware lab open. But if I want to attack and run an exploit, while making sure that it gets detected, then I need the firewall, EDR, IPS, SIEM, Kali, and the target machine to be open at the same time. This easily consumes around 20GB+!</p>
-<h1 id="the-future">The Future</h1>
-<p>Working on this homelab has taught me a lot of practical knowledge. It helped solidify a lot of networking concepts I've learned througout the years.</p>
-<p>I'm not stopping here though. I also plan to upgrade the Target network so it would better resemble an enterprise network. For example, setting up an active directory, an internal DNS server, and maybe even a mail server (why not?). This is so I could play around in detecting and remediating more varied enterprise-level scenarios.</p>
-<p>I am also hoping I could get access to more cybersecurity products so I could play around with them. A SOAR (Security Orchestration and Response) would be a nice addition that would work really well.</p>
-<p>But, of course, before I could do any of the above I first need to upgrade my RAM and add more cores!</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/malware.html" class="tag">malware</a>
-            <a href="../tag/dev.html" class="tag">dev</a>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="../author/accidentalrebel4.html">&laquo; Previous</a>
@@ -201,6 +276,7 @@
         <a href="../author/accidentalrebel13.html">13</a>
         <a href="../author/accidentalrebel14.html">14</a>
         <a href="../author/accidentalrebel15.html">15</a>
+        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel6.html">Next &raquo;</a>
 </nav>

@@ -37,6 +37,101 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-08-13T16:58:00+08:00">Thu 13 August 2020</time>
+                <span>•</span>
+                <a href="../category/ctf.html">ctf</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
+<p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
+<h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
+<blockquote>
+<p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a sample of the malware found on the system has been pulled and given to you. Your task, should you choose to accept it, is to reverse-engineer the sample and locate, fuzz and exploit the C2 server, and then hack-back to learn about the malicious actor and recover the stolen documents.
+Look for the free flag. Get on the scoreboard!</p>
+</blockquote>
+<p>I admit that in a hurry to get points I did not properly read the description of the challenge. I understood that I'll be downloading and reverse-engineering something. But it did not register on my mind that it's actually malware.</p>
+<p>The download was a binary that doesn't do anything when run. My first instict was to use <code>strings</code> to look for the flag, which turned out to be correct.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-01" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-01.png" /></p>
+<p>The flag is: <code>TS{freeFlagLookAtMe}</code>.</p>
+<p>Unfortunately, this challenge was already solved by a team member so I did not get the free flag. The second one, is still open though.</p>
+<h2 id="syscalls-5-points">Syscalls [5 points]</h2>
+<blockquote>
+<p>What syscall is hindering your dynamic analysis? Flag is just the syscall, no brackets or anything.</p>
+</blockquote>
+<p>If we run the file from within gdb to debug it we get:</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-02" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-02.png" /></p>
+<blockquote>
+<p>can't debug this, na na na na...</p>
+</blockquote>
+<p>So from the description we are looking for a syscall that is hindering the debugging of the binary. If we want to find out what syscalls are called by a program, we could determine that using the <code>strace</code> command.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-03" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-03.png" /></p>
+<p>Just before the write syscall for the "na na na" message we see:</p>
+<blockquote>
+<p>ptrace(TRACE_TRACEME) = -1 EPERM (Operation not permitted)</p>
+</blockquote>
+<p>I'm unfamiliar with <code>ptrace</code> so I researched it and tried to understand how it could prevent debugging. I learned that <code>ptrace</code> can be used as an anti-debugging technique as can be seen <a href="https://www.aldeid.com/wiki/Ptrace-anti-debugging">here</a>.</p>
+<p>Sure, enough the flag is: <code>ptrace</code>. </p>
+<p>I got 5 points from this and I finally have a contribution to my team! Unfortunately, real life prevented me from continuing with the CTF and I had to bow out early.</p>
+<h3 id="sidenote-how-to-bypass-ptrace">Sidenote: How to bypass ptrace?</h3>
+<p>How does one bypass this anti-debugging feature? <a href="https://dev.to/denisnutiu/bypassing-ptrace-calls-with-ldpreload-on-linux-12jl">Here's one approach</a> that I tried which should work in theory but doesn't. My guess is that this particular binary has an additional way to prevent debugging, like it spawns a child process and it stays there even if you bypass ptrace. I'd have to look into this further in the future.</p>
+<h2 id="shared-secrets-150-points">Shared Secrets [150 points]</h2>
+<blockquote>
+<p>The malware creates a shared-memory object and stores a flag inside. Recover the flag. Flag has the TS{} format, you'll know when you get it.</p>
+</blockquote>
+<p>I was able to solve this challenge after the CTF preliminaries ended. By this time I was already well rested and have a clearer mind. It was also at this time that I realized that the file is actually a malware and has already infected my machine. Thankfully, I was running a virtual machine which meant I could just revert back to an old working restore point.</p>
+<p>Knowing that the file is a malware, the next step I did was to run <code>rkhunter</code> to look for rootkits and suspcious files. This gave me an interesting finding:</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-04" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-04.png" /></p>
+<p>Opening the suspicious file revealed this: </p>
+<blockquote>
+<p>KRJXW22FMVYES5CTMVBXERKUNNCWK4CJORJWCRTFFZGXERTSGBSE6IL5</p>
+</blockquote>
+<p>This is not the flag yet, it needs to be in the "TS{}" format as instructed in the challenge description.</p>
+<p>I initially had a hard time figuring out how to decode this. It wasn't <code>base64</code> nor any other popular encoding. Thankfully, there are tools like <a href="https://gchq.github.io/CyberChef/">CyberChef</a> to help with this kind of problem. After some experimentation, the "magic" recipe did the trick and revealed to me that it was actually a <code>base32</code> encoding.</p>
+<p><img alt="giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-05" src="../images/giving-malware-to-a-noob--defcon-rtv-ctf-covidscammers-writeup-05.png" /></p>
+<p>This gave me the flag: <code>TS{kEepItSeCrETkEepItSaFe.MrFr0dO!}</code></p>
+<h2 id="license-and-registration-100-points">License and Registration [100 points]</h2>
+<blockquote>
+<p>The malware creates a UUID and stores it in a file, what is the name of this file. Provide the SHA1 hash of hte full path as the flag.</p>
+</blockquote>
+<p>So the description above says that a file is created by the malware and stores data inside of it. I figured that the easiest way to figure out what this created file is to: </p>
+<ul>
+<li>Restore to a previous restore point before I opened the malware</li>
+<li>Run the malware, and then;</li>
+<li>Inspect which other files were created at the time of execution. </li>
+</ul>
+<p>I found out which files were recently created during the last 2 minutes using the following command:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>find<span class="w"> </span>/<span class="w"> </span>-user<span class="w"> </span>kali<span class="w"> </span>-mmin<span class="w"> </span><span class="m">2</span><span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="m">2</span>&gt;<span class="w"> </span>/dev/null
+</code></pre></div>
+
+<p>This showed me a lot of files, but after sifting through that I found one file that seesm promising.</p>
+<blockquote>
+<p>/tmp/.serverauth.tn6aUcM0uM</p>
+</blockquote>
+<p>To get the flag I did this:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span><span class="nb">echo</span><span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;/tmp/.serverauth.tn6aUcM0uM&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sha1sum
+</code></pre></div>
+
+<p>Which resulted in this flag: <code>5b4e97047851682649a602ad62ba4af567e352a3</code></p>
+<h2 id="to-be-continued">To be continued?</h2>
+<p>So I wanted to try and work on the other challenges but it seems that <a href="https://ctf.threatsims.com">the ctf site</a> is currently down. The site redirected to a different non https site and it spooked me so I stopped trying. Good thing that I had NoScript on.</p>
+<p>If you want a longer and more pro writeup about the CovidScammers challenges do check out <a href="https://0xdf.gitlab.io/2020/05/04/covid-19-ctf-covidscammers.html">0xdf's writeup about it</a>.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/ctf.html" class="tag">ctf</a>
+            <a href="../tag/writeup.html" class="tag">writeup</a>
+            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a>
             </h2>
             <div class="article-meta">
@@ -265,35 +360,6 @@
             <span class="tag">+1 more</span>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-05-19T17:59:00+08:00">Tue 19 May 2020</time>
-                <span>•</span>
-                <a href="../category/game_engine.html">game_engine</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
-<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
-<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know it's not a solid reason but I figured it's better to act now while it is still early.</p>
-<p><img alt="switching-from-c-c---to-c-01" src="../images/switching-from-c-c---to-c-01.png" /></p>
-<p>For the most part, dropping C++ was easy. Most of the difficulty I encountered was making sure the changes worked on all three supported platforms. There was a situation when <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">I thought I was done</a> only to find it doesn't work on Mac and Windows. I had to <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">slowly re-apply</a> the changes just to see where exactly things went wrong.</p>
-<p>What's funny is that I learned that I was using a lot more C++ features than I thought. Namespaces and default arguments are some that really surprised me. I always assumed they were supported on both languages. This just proves to me that I still have a lot to learn with these languages.</p>
-<p>I also took the chance during the transition to switch from <a href="https://glm.g-truc.net/0.9.9/index.html">GLM</a>, an OpenGL Mathematics lirary using C++, to <a href="https://github.com/recp/cglm">CGLM</a> a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.</p>
-<p>While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.</p>
-<p>If you are interested to check out my still-under-construction game engine, you can do so <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/dev.html" class="tag">dev</a>
-            <a href="../tag/game_engine.html" class="tag">game_engine</a>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="../author/accidentalrebel10.html">&laquo; Previous</a>
@@ -313,6 +379,7 @@
         <a href="../author/accidentalrebel13.html">13</a>
         <a href="../author/accidentalrebel14.html">14</a>
         <a href="../author/accidentalrebel15.html">15</a>
+        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel12.html">Next &raquo;</a>
 </nav>

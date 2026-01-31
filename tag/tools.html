@@ -42,6 +42,26 @@
     <div class="article-content">
         <div class="post-item">
             <h2 class="post-title">
+                <a href="../running-ai-agents-in-a-box.html">Running AI agents in a box because I don't trust them</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2026-01-30T10:00:00+08:00">Fri 30 January 2026</time>
+                <span>•</span>
+                <a href="../category/programming.html">programming</a>
+            </div>
+            <div class="post-summary">
+                <p>I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine.</p>
+<p>Being in Cyber Security, I've developed a healthy paranoia about software that can execute arbitrary commands. AI coding assistants are powerful, but they're also unpredictable. They can run shell commands, modify files, and access the network. I wanted all of that contained.</p>
+<h2 id="the-setup">The setup</h2>
+<p>Claudecker is my personal tool that wraps Docker to run Claude Code CLI and Codex CLI in an isolated container. Point it at any project directory and it mounts that directory into the container. The AI can do whatever it wants inside the container, but it can't touch the rest of my system.</p>
+<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
+</code></pre></div>
+
+<p>Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This …</p>
+            </div>
+        </div>
+        <div class="post-item">
+            <h2 class="post-title">
                 <a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
             </h2>
             <div class="article-meta">

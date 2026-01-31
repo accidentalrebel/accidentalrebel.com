@@ -37,6 +37,35 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="./switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-19T17:59:00+08:00">Tue 19 May 2020</time>
+                <span>•</span>
+                <a href="./category/game_engine.html">game_engine</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>After the recent changes to the <a href="./following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
+<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
+<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know it's not a solid reason but I figured it's better to act now while it is still early.</p>
+<p><img alt="switching-from-c-c---to-c-01" src="./images/switching-from-c-c---to-c-01.png" /></p>
+<p>For the most part, dropping C++ was easy. Most of the difficulty I encountered was making sure the changes worked on all three supported platforms. There was a situation when <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">I thought I was done</a> only to find it doesn't work on Mac and Windows. I had to <a href="https://github.com/accidentalrebel/rebel-game-engine/commits/cglm-switch-fix">slowly re-apply</a> the changes just to see where exactly things went wrong.</p>
+<p>What's funny is that I learned that I was using a lot more C++ features than I thought. Namespaces and default arguments are some that really surprised me. I always assumed they were supported on both languages. This just proves to me that I still have a lot to learn with these languages.</p>
+<p>I also took the chance during the transition to switch from <a href="https://glm.g-truc.net/0.9.9/index.html">GLM</a>, an OpenGL Mathematics lirary using C++, to <a href="https://github.com/recp/cglm">CGLM</a> a similar library that uses C. It is claimed that the latter is more optimized and, with it being in C, is easier to integrate with my codebase.</p>
+<p>While these changes did not do much in terms of progress, I am happy that my codebase now feels tighter and more coherent. I'm hoping to work on something engine-related next.</p>
+<p>If you are interested to check out my still-under-construction game engine, you can do so <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/dev.html" class="tag">dev</a>
+            <a href="./tag/game_engine.html" class="tag">game_engine</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="./following-lispy-conventions.html">#4 - Following Lispy conventions</a>
             </h2>
             <div class="article-meta">
@@ -185,64 +214,6 @@
             <a href="./tag/game_engine.html" class="tag">game_engine</a>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-05-07T21:35:00+08:00">Thu 07 May 2020</time>
-                <span>•</span>
-                <a href="./category/lisp.html">lisp</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
-<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
-<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="./images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
-<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code after two implementations.</p>
-<p>And my code did change a lot. The biggest change is switching from an object oriented approach to functional style so that it would suit Lisp scripting. I also paid special attention in making sure that whatever change I made would make sense when the game engine is used without scripting. My guiding principle is that implementing a game on both C and Scheme should be structurally identical, aside from the difference in syntaxes, of course.</p>
-<p>Here's a simple program wher you could move a colored box using the keyboard:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">box-sprite</span><span class="p">)</span>
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">box-pos</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">init</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">box-sprite</span><span class="w"> </span><span class="p">(</span><span class="nf">sprite_create</span><span class="w"> </span><span class="nv">assets/textures</span><span class="w"> </span><span class="nv">tile</span><span class="o">.</span><span class="nv">png</span><span class="p">))</span>
-<span class="w">  </span><span class="p">(</span><span class="k">set!</span><span class="w"> </span><span class="nv">box-pos</span><span class="w"> </span><span class="p">(</span><span class="nf">make_vec3</span><span class="w"> </span><span class="mi">400</span><span class="w"> </span><span class="mi">300</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span>
-<span class="w">  </span><span class="no">#t</span><span class="p">)</span>
-
-<span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="p">(</span><span class="nf">update</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="nf">window_clear</span><span class="p">)</span>
-
-<span class="w">  </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">is_key_down</span><span class="w"> </span><span class="nv">KEY_COMMA</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">set_vec3_y</span><span class="w"> </span><span class="nv">box-pos</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">get_vec3_y</span><span class="w"> </span><span class="nv">box-pos</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
-<span class="w">  </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">is_key_down</span><span class="w"> </span><span class="nv">KEY_O</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">set_vec3_y</span><span class="w"> </span><span class="nv">box-pos</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">get_vec3_y</span><span class="w"> </span><span class="nv">box-pos</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
-<span class="w">  </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">is_key_down</span><span class="w"> </span><span class="nv">KEY_E</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">set_vec3_x</span><span class="w"> </span><span class="nv">box-pos</span><span class="w"> </span><span class="p">(</span><span class="nb">+</span><span class="w"> </span><span class="p">(</span><span class="nf">get_vec3_x</span><span class="w"> </span><span class="nv">box-pos</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
-<span class="w">  </span><span class="p">(</span><span class="k">when</span><span class="w"> </span><span class="p">(</span><span class="nf">is_key_down</span><span class="w"> </span><span class="nv">KEY_A</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">set_vec3_x</span><span class="w"> </span><span class="nv">box-pos</span><span class="w"> </span><span class="p">(</span><span class="nb">-</span><span class="w"> </span><span class="p">(</span><span class="nf">get_vec3_x</span><span class="w"> </span><span class="nv">box-pos</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
-
-<span class="w">  </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nf">tint</span><span class="w"> </span><span class="p">(</span><span class="nf">make_vec3</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="p">)))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">sprite_draw</span><span class="w"> </span><span class="nv">box-sprite</span><span class="w"> </span><span class="nv">box-pos</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="mi">50</span><span class="w"> </span><span class="nv">tint</span><span class="w"> </span><span class="no">#f</span><span class="p">))</span>
-
-<span class="w">  </span><span class="p">(</span><span class="nf">window_swap</span><span class="p">)</span>
-<span class="w">  </span><span class="no">#t</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Implementing Lisp, and coding with it has been very fun too. I've had the most fun when <a href="http://wiki.call-cc.org/eggref/5/bind">I implemented the FFI</a>. Every time I go through the wiki I find a better way of doing things so I'd go and re-implement them again. Each iteration I learn something new and it's such a joy exploring.</p>
-<p>Playing with the garbage collector has also made me think about memory management more. This resulted in having two ways to call certain API functions: one will return a pointer that will automatically get tracked by the GC. The other you'd have to free manually. I figured this is a good approach for situations when having control over memory and references is crucial.</p>
-<p>I've already spent a lot of time on this project and it was mostly spent on the scripting side of the engine. There are still more to do for it to be considered useful but I'm happy I was able to learn a lot.</p>
-<p>If you are curious about the engine you could check it out <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/lisp.html" class="tag">lisp</a>
-            <a href="./tag/game_engine.html" class="tag">game_engine</a>
-            <a href="./tag/dev.html" class="tag">dev</a>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="./index11.html">&laquo; Previous</a>
@@ -262,6 +233,7 @@
         <a href="./index13.html">13</a>
         <a href="./index14.html">14</a>
         <a href="./index15.html">15</a>
+        <a href="./index16.html">16</a>
 
     <a href="./index13.html">Next &raquo;</a>
 </nav>

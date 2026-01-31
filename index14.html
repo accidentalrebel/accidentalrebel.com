@@ -37,6 +37,66 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="./opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2018-01-24T14:32:00+08:00">Wed 24 January 2018</time>
+                <span>•</span>
+                <a href="./category/emacs.html">emacs</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
+<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
+<p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
+<p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
+<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text proxy</a> as a external editor and then having that application call Emacs with the correct line number. I was not able to make it work but the idea fascinated me. There was also one that involved using Mac OS X's Automator where you <a href="https://stackoverflow.com/a/1857220">wrap a shell script as an automator app</a> and you set that as the external editor. Didn't work either but it did teach me about Automator and it's future possible uses for my environment.</p>
+<p>Thankfully, there was one solution that worked and it involved creating a .cs file and setting up a function with OnOpenAssetAttribute callback attribute. This function is called when Unity receives a command to open an asset. From here we start a process that invokes emacsclient with the correct file and line numbers. </p>
+<p>Here is a short example:</p>
+<div class="codehilite"><pre><span></span><code><span class="na">[OnOpenAssetAttribute()]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">OnOpenedAsset</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">instanceID</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">line</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Object</span><span class="w"> </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EditorUtility</span><span class="p">.</span><span class="n">InstanceIDToObject</span><span class="p">(</span><span class="n">instanceID</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">ProjectPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">Path</span><span class="p">.</span><span class="n">GetDirectoryName</span><span class="p">(</span><span class="n">UnityEngine</span><span class="p">.</span><span class="n">Application</span><span class="p">.</span><span class="n">dataPath</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">string</span><span class="w"> </span><span class="n">completeFilepath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProjectPath</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Path</span><span class="p">.</span><span class="n">DirectorySeparatorChar</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">AssetDatabase</span><span class="p">.</span><span class="n">GetAssetPath</span><span class="p">(</span><span class="n">selected</span><span class="p">);</span>
+
+<span class="w">    </span><span class="c1">// We check if this is the type of file we can open</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;UnityEditor.MonoScript&quot;</span><span class="w"> </span><span class="o">||</span>
+<span class="w">        </span><span class="n">selected</span><span class="p">.</span><span class="n">GetType</span><span class="p">().</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">&quot;UnityEngine.Shader&quot;</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">        </span><span class="kt">string</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;-n +&quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">line</span><span class="p">.</span><span class="n">ToString</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">completeFilepath</span><span class="p">;</span>
+
+<span class="w">        </span><span class="c1">// We start a process by passing the command &quot;emacsclient -n +linenumber filePath&quot;</span>
+<span class="w">        </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">Process</span><span class="p">();</span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;/Applications/Emacs.app/Contents/MacOS/bin/emacsclient&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">;</span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">UseShellExecute</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">false</span><span class="p">;</span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">WindowStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">System</span><span class="p">.</span><span class="n">Diagnostics</span><span class="p">.</span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Hidden</span><span class="p">;</span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">CreateNoWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">StartInfo</span><span class="p">.</span><span class="n">RedirectStandardOutput</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="w">        </span><span class="n">proc</span><span class="p">.</span><span class="n">Start</span><span class="p">();</span>
+</code></pre></div>
+
+<p>bo          // Tell unity we have handled the opening of the file.
+            return true;
+        }</p>
+<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c1">// We were not able to open the file. Let unity handle the opening.</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">false</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p><strong>Note:</strong> This file needs to be placed inside an "Editor" folder within Unity in order for it to work.</p>
+<p><a href="https://gist.github.com/accidentalrebel/69ac38f729e72c170a8d091b4daaec52">Go here</a> if you want to see a more complete and fully featured implementaition of the code above. Also, a hat tip to <a href="https://github.com/tbriley/Atom">this repository</a> for the solution which was largely inspired by the <a href="https://github.com/dotBunny/VSCode">VSCode project</a>.</p>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/emacs-unity.html" class="tag">emacs unity</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a>
             </h2>
             <div class="article-meta">
@@ -339,51 +399,6 @@
             <span class="tag">+1 more</span>
         </div>
     </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2017-12-05T12:56:00+08:00">Tue 05 December 2017</time>
-                <span>•</span>
-                <a href="./category/postmortem.html">postmortem</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TLDR</strong></p>
-<ul>
-<li>All data in our game is contained in one excel file we call the "Universe".</li>
-<li>Prototypes can be done on the Universe excel file itself</li>
-<li>Iteration is easier as we only need to change one file.</li>
-<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
-</ul>
-<hr />
-<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
-<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">This</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="nx">definitely</span><span class="w"> </span><span class="nx">gives</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">hint</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">what</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">guy</span><span class="w"> </span><span class="nx">Cliff</span><span class="w"> </span><span class="k">is</span><span class="p">.</span><span class="o">*</span>
-</code></pre></div>
-
-<p>Having a list of all the data that will be used in the game has helped us visualize the scope and the systems to be built, especially in making prototypes. One time Cliff made a simulation of the battle system using his Excel mastery. The universe data is fed into this simulation (i.e. competition level, recipe power) and the expected values are displayed (i.e. judging result, rewards amount). This mockup allowed us to see how the battles play out and made the whole thing easier for me to understand and implement in the engine.</p>
-<p>All the content of the universe file is then converted to the JSON format which is used directly by the game. Iterating on the game is easy because the file would just need to be converted again for the new changes to show up. The conversion process is done manually though using a CSV to JSON tool. I would have automated the process but didn't have the time to work on it.</p>
-<p><img alt="02" src="https://i.imgur.com/lE5zqDu.png" /></p>
-<div class="codehilite"><pre><span></span><code>*It&#39;s like the Matrix*
-</code></pre></div>
-
-<p>Initially, when we wanted to update some values, we would need to push a new build version that players need to download. We figured that this is too cumbersome especially if we really have some critical changes we want to get out as soon as possible. As a solution to this, we made a system where a master copy of the JSONs are saved on our servers. We can change the data from here and the game would automatically download the necessary files that we changed. This is a really great feature that has helped us push important changes without having the need for a new build. But it does require a lot of bandwidth especially if a lot of players request for the new data so we do it only when needed like on crash producing bugs.</p>
-<p>As you can see, we've spent a lot of time making sure that our game is data-centric as possible and it benefitted us immensely. This approach has been so useful that we plan to use it on our future projects. And hopefully, after reading this, we've convinced you to try it out too.</p>
-<p><em>[Check out how the universe has been transformed into a game by playing Chef Wars on <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">iOS</a>. Also, be sure to check out Cliff's postmortem where he talks about the <a href="http://mindcakegames.com/chef-wars-launch-post-mortem/">things we learned during our global launch</a>!]</em></p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/chefwars.html" class="tag">chefwars</a>
-            <a href="./tag/gamedev.html" class="tag">gamedev</a>
-            <a href="./tag/mindcake.html" class="tag">mindcake</a>
-            <span class="tag">+1 more</span>
-        </div>
-    </article>
 
 <nav class="pagination">
         <a href="./index13.html">&laquo; Previous</a>
@@ -403,6 +418,7 @@
         <a href="./index13.html">13</a>
         <span class="current">14</span>
         <a href="./index15.html">15</a>
+        <a href="./index16.html">16</a>
 
     <a href="./index15.html">Next &raquo;</a>
 </nav>
