@@ -3,3 +3,4 @@ output/*
 *~undo-tree~
 pelican-env/
 output/
+/venv/
