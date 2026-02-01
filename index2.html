@@ -37,6 +37,67 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="./classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
+                <span>•</span>
+                <a href="./category/misc.html">misc</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
+<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
+<p><img alt="classifying-malware-packers-using-machine-learning-01" src="./images/classifying-malware-packers-using-machine-learning-01.png" /></p>
+<p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
+<h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
+<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the sequence of bytes or strings are altered.</p>
+<p>By using machine learning, the VGL4NT Malware Packer Classifier can be able to take into account minute differences and still be able to detect the packer used.</p>
+<h1 id="how-it-works">How it works</h1>
+<ul>
+<li>The uploaded executable file's bytes are converted into grayscale values, creating an image..</li>
+<li>The grayscale image is then fed into an image machine-learning model I trained from scratch.</li>
+<li>It returns a list of percentages on how similar it is to other Packers.</li>
+</ul>
+<p><img alt="classifying-malware-packers-using-machine-learning-01" src="./images/classifying-malware-packers-using-machine-learning-02.png" /></p>
+<p>The approach above is nothing new and is based on <a href="https://ieeexplore.ieee.org/abstract/document/8328749">this academic paper</a>. The difference is that the paper has a tool that classifies malware families, while mine classifies the packers used.</p>
+<p>Most of the magic happens in the model itself. I've trained it on several packed malware samples and measured its accuracy using multiple iterations. The latest version of this model has a 94% accuracy, which is calculated by comparing the model's predictions to the actual packer labels in a dataset that the model hasn't seen before (the test dataset).</p>
+<h1 id="current-limitations">Current limitations</h1>
+<p>The app works for the most part, but it has its limitations. For example, users can only upload executable files (EXE, Bin, ELF, DLLs, etc) with a maximum size limit of 10MB. </p>
+<p>Furthermore, due to costs of GPU resources during training, only the following packer tools can be classified:</p>
+<ul>
+<li>aspack</li>
+<li>alienyze</li>
+<li>amber</li>
+<li>mew</li>
+<li>mpress</li>
+<li>nspack</li>
+<li>pecompact</li>
+<li>petite</li>
+<li>themida</li>
+<li>upx</li>
+<li>others (Everything else)</li>
+</ul>
+<p>The list of packer tools above was chosen based on available real-world malware samples that I have encountered or studied.</p>
+<h1 id="future-plans-and-updates">Future Plans and Updates</h1>
+<p>If this project gains enough interest, then I plan to add more improvements, such as:</p>
+<ul>
+<li>Increase GPU resources to increase the model's capacity to classify more categories</li>
+<li>Improvements in the training method by handpicking the most important parts of the executable and then feeding that to the model</li>
+<li>Offer an API for integration with existing tools and processes.</li>
+</ul>
+<p>Of course, this project would improve a lot with the community's help. I encourage users to provide feedback, report issues, or request new features. Feel free to throw your thoughts to me through my email, karlo@accidentalrebel.com, or Twitter at @accidentalrebel.</p>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/artificial_intelligence.html" class="tag">artificial_intelligence</a>
+            <a href="./tag/machine_learning.html" class="tag">machine_learning</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="./adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a>
             </h2>
             <div class="article-meta">
@@ -226,187 +287,6 @@
 <p>Over the past two blog posts, we've learned how to use <code>GlobalMemoryStatusEx</code> and <code>GetPhysicallyInstalledSystemMemory</code> to determine the size of the RAM of a machine. We've also learned about using the stack to pass arguments to functions using x64 assembly.</p>
 <p>In future posts I plan to continue exploring malware behavior and techniques and at the same time teach x64 assembly so that we can both improve when writing and reverse engineering malware.</p>
 <p>Until then, you can view the C and Assembly code along with the build scripts for this evasion technique on this repository <a href="https://github.com/accidentalrebel/sandbox-evasion-by-checking-ram-size">here</a>.</p>
-<p>Feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a> for any questions or comments.</p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/malware.html" class="tag">malware</a>
-            <a href="./tag/sandbox.html" class="tag">sandbox</a>
-            <a href="./tag/evasion.html" class="tag">evasion</a>
-            <span class="tag">+2 more</span>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2022-08-08T11:29:00+08:00">Mon 08 August 2022</time>
-                <span>•</span>
-                <a href="./category/misc.html">misc</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
-<h2 id="checking-the-memory">Checking the memory</h2>
-<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is probably a sandbox (To save costs). While it's not exactly fool-proof, it can be used with <a href="https://unprotect.it/category/sandbox-evasion/">other techniques</a> to have a better idea of the machine.</p>
-<p>There are two available APIs to get the memory size of a computer on Windows: <code>GetPhysicallyInstalledSystemMemory</code> and <code>GlobalMemoryStatusEx</code>. <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getphysicallyinstalledsystemmemory">The former</a> lists the physically <em>installed</em> RAM from the BIOS, while <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex">the latter</a> lists the amount available for the operating system to use. Note that the values returned from these two functions will be different but from my tests the difference is only a few hundreds of bytes. Any of these two we can use for our purpose.</p>
-<h2 id="using-getphysicallyinstalledsystemmemory">Using GetPhysicallyInstalledSystemMemory</h2>
-<p>Calling <code>GetPhysicallyInstalledSystemMemory</code> in C is simple:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">memory_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="n">GetPhysicallyInstalledSystemMemory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">memory_size</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Memory size: %lld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">memory_size</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Running the above code shows the following result:</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01.png" /></p>
-<p>And this is what my memory settings is set to on VMWare:</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02.png" /></p>
-<p>You'll immediately notice that the returned value is not exactly the same as the memory settings. I, too, wondered about this so I did a couple of tests.</p>
-<h2 id="investigating-the-results">Investigating the results</h2>
-<p>What I found was that the values that are returned by the <code>GetPhysicallyInstalledSystemMemory</code> in hex format always have the last 3 bytes set to zero. To test this I changed the VM settings and noted the values returned by the program. Here's a table of the results:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">VM Settings</th>
-<th style="text-align: center;">Returned Value</th>
-<th style="text-align: center;">In Hex</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">2000MB</td>
-<td style="text-align: center;">2048000</td>
-<td style="text-align: center;">0x1F4000</td>
-</tr>
-<tr>
-<td style="text-align: center;">3324MB</td>
-<td style="text-align: center;">3403776</td>
-<td style="text-align: center;">0x33F000</td>
-</tr>
-<tr>
-<td style="text-align: center;">4096MB</td>
-<td style="text-align: center;">4194304</td>
-<td style="text-align: center;">0x400000</td>
-</tr>
-<tr>
-<td style="text-align: center;">4338MB</td>
-<td style="text-align: center;">4493312</td>
-<td style="text-align: center;">0x449000</td>
-</tr>
-<tr>
-<td style="text-align: center;">5675MB</td>
-<td style="text-align: center;">5816320</td>
-<td style="text-align: center;">0x58C000</td>
-</tr>
-</tbody>
-</table>
-<p>Before you think that this is a VM thing, here is the same behavior with a Windows system that is not on a VM:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Installed RAM</th>
-<th style="text-align: center;">Returned Value</th>
-<th style="text-align: center;">In Hex</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">16384MB</td>
-<td style="text-align: center;">16777216</td>
-<td style="text-align: center;">0x1000000</td>
-</tr>
-</tbody>
-</table>
-<p>According to the <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getphysicallyinstalledsystemmemory">MSDN docs</a>, the value returned is taken from the SMBIOS firmware tables. I tried to dig further and found the <a href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf">SMBIOS standard manual</a> and saw that the value in the memory size field is returned in MB. This still doesn't explain why the last 3 digits are always zero though. I'm guessing that the API just truncates the last 3 values and saves the higher bytes?</p>
-<blockquote>
-<p><strong>EDIT(2022-08-15):</strong> Twitter user <a href="https://twitter.com/Endeavxor">@Endeavxor</a> pointed out that the returned value of "GetPhysicallyInstalledSystemMemory" is expressed in kibibytes instead of kilobytes. This means the result <code>4194304</code> when divided by <code>1024</code> is <code>4096</code> and is exactly the Memory value set in the VM settings. This means the value returned by the function is correct. It's so simple and I missed it!</p>
-</blockquote>
-<p>Before we get hopelessly trapped in the rabbit hole that is OS internals, let's continue by converting our code above to x64 assembly.</p>
-<h2 id="converting-to-x64-assembly">Converting to x64 Assembly</h2>
-<p>Before we can call the <code>GetPhysicallyInstalledSystemMemory</code> function, we first need to reserve space on the stack that will serve as the <code>memory_size</code> local variable. This is where the result of the function will be placed.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">    </span><span class="c1">; Clear rax</span>
-<span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rax</span><span class="w">        </span><span class="c1">; Push rax to the stack</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Load the memory location of memory_size to rcx</span>
-</code></pre></div>
-
-<p>We then call the <code>GetPhysicallyInstalledSystemMemory</code> function making sure that we reserve and release the shadow space.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">         </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">         </span><span class="c1">; Release shadow space</span>
-</code></pre></div>
-
-<h3 id="aside-shadow-space">Aside: Shadow space</h3>
-<blockquote>
-<p>The concept of "Shadow Space" is important in x64 assembly. I've already discussed it briefly in a <a href="./converting-a-malware-dropper-to-x64-assembly.html">previous post</a> but you can read up more about it <a href="https://retroscience.net/x64-assembly.html">here</a> and then <a href="https://devblogs.microsoft.com/oldnewthing/20160623-00/?p=93735">here</a>.</p>
-</blockquote>
-<p>The result on whether <code>GetPhysicallyInstalledSystemMemory</code> succeeded or not is placed in the <code>ax</code> register. It's good practice to add code to handle if a failure occurs, but we won't be bothering with that for our example.</p>
-<p>What we are interested in is the value placed in the memory location pointed to by <code>memory_size</code>. We can confirm this by checking the value on the stack, as shown below where <code>58C000h</code> converts to <code>5816320</code> which is roughly near the <code>5.5 GB</code> setting we have set in VMWare.</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-04" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-04.png" /></p>
-<p>A much easier way to confirm is that we can also use the <code>printf</code> function to display the value of <code>memory_size</code> on the console. But before we can do that we first need to declare the <code>format</code> string so we can pass it later as the first argument.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_memory_size</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Memory</span><span class="w"> </span><span class="no">size</span><span class="p">:</span><span class="w"> </span><span class="nv">%lld</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-</code></pre></div>
-
-<p>We then call <code>printf</code> making sure we load the correct argument data to the respective registers.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">             </span><span class="c1">; Argument 2; Result of GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_memory_size</span><span class="p">]</span><span class="w"> </span><span class="c1">; Argument 1; Format string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">                </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">                </span><span class="c1">; Release shadow space</span>
-</code></pre></div>
-
-<p>Running that we can now display the value of the memory.</p>
-<p>Here's the full assembly code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_memory_size</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Memory</span><span class="w"> </span><span class="no">size</span><span class="p">:</span><span class="w"> </span><span class="nv">%lld</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">    </span><span class="c1">; Clear rax</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span><span class="w">     </span><span class="c1">; Push RAX to the stack</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Load the memory location of memory_size to rcx</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 2; Result of GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_memory_size</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Format string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">0x8</span><span class="w">    </span><span class="c1">; Release the space of memory_size local variable</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<h2 id="up-next">Up next</h2>
-<p>In the next blog post I'll be showing how to get the size RAM size via an alternative method using <code>GlobalMemoryStatusEx</code>. The code is also straightforward but we'll be exploring how it's values differ from <code>GetPhysicallyInstalledSystemMemory</code> and also how to deal with C structures on the stack in x64 assembly.</p>
-<p>For now, you can view the C and Assembly code along with the build scripts on the repository <a href="https://github.com/accidentalrebel/sandbox-evasion-by-checking-ram-size">here</a>.</p>
 <p>Feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a> for any questions or comments.</p>
         </div>
 

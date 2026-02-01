@@ -37,6 +37,59 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="./making-unity-beep-after-scripts-finish-reloading.html">Making Unity beep after scripts finish reloading</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-01T17:07:00+08:00">Fri 01 May 2020</time>
+                <span>•</span>
+                <a href="./category/dev.html">dev</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
+<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
+<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
+<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="./images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
+<p>I recently got the idea of having Unity inform me when a script has finished reloading. Instead of informing me visually, I decided that it would also be better for it to play an audible beep sound. With this, I could use the time to close my eyes, relax, or stretch. Once it beeps I'll just open my eyes and I'm back to working again. Once it beeps I'll just open my eyes and I'm back to working again. It's such a simple thing but I feel has a good impact on my health.</p>
+<p>Here's the code that I use if you are interested. Note that this is an editor script so it should be placed inside any "Editor" folder for it to run.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">UnityEditor</span><span class="p">;</span>
+<span class="k">using</span><span class="w"> </span><span class="nn">System.Diagnostics</span><span class="p">;</span>
+
+<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BuildManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="na">[UnityEditor.Callbacks.DidReloadScripts]</span>
+<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnScriptsReloaded</span><span class="p">()</span><span class="w"> </span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="n">EditorApplication</span><span class="p">.</span><span class="n">Beep</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The code above uses Unity's <a href="https://docs.unity3d.com/ScriptReference/EditorApplication.Beep.html">EditorApplication.Beep()</a> API so it should work on Windows and Mac. But since I'm using Linux to develop games on it does not seem to work for me. </p>
+<p>Here's a different version that spawns a OS process and runs the <code>play</code> command to generate a short sine wave beep. Be sure to have <a href="http://sox.sourceforge.net/">sox</a> installed on your Linux machine for this to work.</p>
+<div class="codehilite"><pre><span></span><code><span class="n">ProcessStartInfo</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessStartInfo</span><span class="p">();</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;play&quot;</span><span class="p">;</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;-q -n synth 0.1 sin 880 vol 0.2&quot;</span><span class="p">;</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">WindowStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Minimized</span><span class="p">;</span>
+<span class="n">proc</span><span class="p">.</span><span class="n">CreateNoWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
+<span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">proc</span><span class="p">);</span>
+</code></pre></div>
+
+<p>Of course, this is not a solution to the compile time problem. I'd still have to wait for it to finish. But what I like about this is that it has turned a negative into a positive. And that is always great.</p>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/dev.html" class="tag">dev</a>
+            <a href="./tag/unity.html" class="tag">unity</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="./opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a>
             </h2>
             <div class="article-meta">
@@ -324,72 +377,6 @@
 <h2 id="conclusion">Conclusion</h2>
 <p>This simple system has helped us a lot and we plan to use it on all our future projects. It's not 100% accurate but it is accurate enough that we can schedule confidently with it. I would be the first to admit that it may not work for everyone but if you are always overshooting your estimates then this system might be worth a try.</p>
 <p><strong>[Check out our game which was released relatively on time over at <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://itunes.apple.com/us/app/chef-wars/id1254831133?mt=8">iOS</a>]</strong></p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/chefwars.html" class="tag">chefwars</a>
-            <a href="./tag/gamedev.html" class="tag">gamedev</a>
-            <a href="./tag/mindcake.html" class="tag">mindcake</a>
-            <span class="tag">+1 more</span>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2017-12-06T00:02:00+08:00">Wed 06 December 2017</time>
-                <span>•</span>
-                <a href="./category/postmortem.html">postmortem</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TLDR</strong></p>
-<ul>
-<li>There is more to the saying that "premature optimization is the root of all evil".</li>
-<li>Instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize.</li>
-</ul>
-<hr />
-<p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
-<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built, but sadly progress was slow.</p>
-<p>I realized at this point that I was optimizing too prematurely. If I wanted to reach my milestones on time then I needed to change my approach. This means leaving the optimizations for later. When is later though? I figured that it makes sense to do it at the end when all the systems are in place.</p>
-<p>All went smoothly until we reached Open Beta. The game was reported to be sluggish and almost unplayable which signaled the need to start optimizing. While I was able to optimize some parts, there were some that I could not optimize properly without undergoing a major change to the code. Sadly, rewrites were not an option as we were running out of time.</p>
-<p><img alt="01" src="https://media.giphy.com/media/26n6T9MrKZ2Qo16Vy/giphy.gif" /></p>
-<div class="codehilite"><pre><span></span><code>The profiler has been really helpful in catching performance problems.
-</code></pre></div>
-
-<p>Looking back it is easy to pinpoint what went wrong. I was optimizing too early, later changed my approach only to find out that I was already too late to optimize certain critical parts. I, of course, want to prevent this from happening again. So the million dollar question is: How does one determine when to optimize? How does one know when is too early and too late?</p>
-<h2 id="the-complete-version">The complete version</h2>
-<p>I later learned that the famous adage actually has a longer version:</p>
-<blockquote>
-<p>Programmers waste enormous amounts of time thinking about, or worrying about, the speed of noncritical parts of their programs, and these attempts at efficiency actually have a strong negative impact when debugging and maintenance are considered. We should forget about small efficiencies, say about 97% of the time: premature optimization is the root of all evil. Yet we should not pass up our opportunities in that critical 3%.</p>
-</blockquote>
-<p><img alt="02" src="https://i.imgur.com/dqPF0cK.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>From Donald Knuth&#39;s The Art of Computer Programming
-</code></pre></div>
-
-<p>Turns out there was more to the saying that completely changes the lesson to be learned. Breaking it down we can infer that the author is telling us that:</p>
-<ul>
-<li>Too much obsession over non-critical parts wastes time.</li>
-<li>Only focus on efficiencies that matter.</li>
-<li>Optimize whenever possible, but not at the expense of the previously mentioned points.</li>
-</ul>
-<p>So instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize. In other words, anytime there is a chance to evaluate if an optimization is needed, one needs to consider whether there really is something worthwhile to optimise, and if so, how to proceed in optimizing.</p>
-<h2 id="answering-the-what-and-how">Answering the WHAT and HOW</h2>
-<p>Knowing how to answer the WHAT and HOW is not easy and requires both experience and careful planning to get right. The internet is a bit divided about this as nobody really knows the best answer. In spite of this, I was able to gather some helpful nuggets of wisdom during my research that are worth considering:</p>
-<ul>
-<li>Be critical of what optimizations to use at each stage of the project. Determine how critical it is and if it can be done later.</li>
-<li>If setting aside optimizations for later, make sure to prepare the code so that it would be easy to do so when the time comes.</li>
-<li>Proper planning during the design stage can determine what to build and how to optimize in advance.</li>
-<li>Measuring/profiling optimizations would reveal which are the most effective to use in the future.</li>
-</ul>
-<h2 id="conclusion">Conclusion</h2>
-<p>There is a certain sense of pride in producing optimized and stable code. Sadly, this kind of perfection comes at a cost of time. The solution is to always consider at all times when, what, and how to optimize.</p>
-<p>This may all seem overkill to worry about but after going through 2 years worth of development on Chef Wars, I know all of this is worth taking the extra effort to do right. I hope that what I've learned may also be of use to you.</p>
-<p><em>[Our game is running better now and you could play it by downloading it on on <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">Android</a> and <a href="https://play.google.com/store/apps/details?id=air.com.mindcakegames.chefwars&amp;hl=en">iOS</a>. Also check out my <a href="http://www.accidentalrebel.com/blog/2017/12/05/chef-wars-postmortem--what-went-right-having-a-universe-file/">previous postmortem</a> where I talk about something that went right.]</em></p>
         </div>
 
         <div class="tags">

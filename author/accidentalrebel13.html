@@ -37,6 +37,34 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-10T07:08:00+08:00">Sun 10 May 2020</time>
+                <span>•</span>
+                <a href="../category/dev.html">dev</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
+<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="../images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
+<p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
+<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different package managers.</p>
+<p>After a week of this I was finally able to get the engine working on all three platforms. To make sure others can be able to do the same, I also documented the steps which can now be read on <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki">the project's wiki</a>. </p>
+<p>I was surprised that the hardest one to get working was for Windows. Because I didn't want to create a separate build system that uses Visual Studio solution files, I had to find a simple way to make it work and that involved the use of an excellent building platform for Windows called <a href="https://www.msys2.org/">Msys2</a>. </p>
+<p>I am quite happy that I was able to structure the whole system so that you only need one Makefile for all three platforms. I'm not sure if this wil change in the future, but I'll do my best for it to stay like this as long as it's possible.</p>
+<p>If you are interested to try it out here's the project's <a href="https://github.com/accidentalrebel/rebel-game-engine">Github page</a>, depending on your platform here are the instructions on how to build for each one: <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Arch-Linux">Linux</a>, <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-MacOSX">MacOSX</a> and <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Windows-(using-Msys2)">Windows</a>.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/game_engine.html" class="tag">game_engine</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a>
             </h2>
             <div class="article-meta">
@@ -117,59 +145,6 @@
             <a href="../tag/dev.html" class="tag">dev</a>
             <a href="../tag/lisp.html" class="tag">lisp</a>
             <a href="../tag/engine.html" class="tag">engine</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../making-unity-beep-after-scripts-finish-reloading.html">Making Unity beep after scripts finish reloading</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-05-01T17:07:00+08:00">Fri 01 May 2020</time>
-                <span>•</span>
-                <a href="../category/dev.html">dev</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
-<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
-<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
-<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="../images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
-<p>I recently got the idea of having Unity inform me when a script has finished reloading. Instead of informing me visually, I decided that it would also be better for it to play an audible beep sound. With this, I could use the time to close my eyes, relax, or stretch. Once it beeps I'll just open my eyes and I'm back to working again. Once it beeps I'll just open my eyes and I'm back to working again. It's such a simple thing but I feel has a good impact on my health.</p>
-<p>Here's the code that I use if you are interested. Note that this is an editor script so it should be placed inside any "Editor" folder for it to run.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">using</span><span class="w"> </span><span class="nn">System.Collections</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Collections.Generic</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEngine</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">UnityEditor</span><span class="p">;</span>
-<span class="k">using</span><span class="w"> </span><span class="nn">System.Diagnostics</span><span class="p">;</span>
-
-<span class="k">public</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">BuildManager</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">MonoBehaviour</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="na">[UnityEditor.Callbacks.DidReloadScripts]</span>
-<span class="w">    </span><span class="k">private</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">OnScriptsReloaded</span><span class="p">()</span><span class="w"> </span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">        </span><span class="n">EditorApplication</span><span class="p">.</span><span class="n">Beep</span><span class="p">();</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>The code above uses Unity's <a href="https://docs.unity3d.com/ScriptReference/EditorApplication.Beep.html">EditorApplication.Beep()</a> API so it should work on Windows and Mac. But since I'm using Linux to develop games on it does not seem to work for me. </p>
-<p>Here's a different version that spawns a OS process and runs the <code>play</code> command to generate a short sine wave beep. Be sure to have <a href="http://sox.sourceforge.net/">sox</a> installed on your Linux machine for this to work.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ProcessStartInfo</span><span class="w"> </span><span class="n">proc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ProcessStartInfo</span><span class="p">();</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;play&quot;</span><span class="p">;</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">Arguments</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;-q -n synth 0.1 sin 880 vol 0.2&quot;</span><span class="p">;</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">WindowStyle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ProcessWindowStyle</span><span class="p">.</span><span class="n">Minimized</span><span class="p">;</span>
-<span class="n">proc</span><span class="p">.</span><span class="n">CreateNoWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">true</span><span class="p">;</span>
-<span class="n">Process</span><span class="p">.</span><span class="n">Start</span><span class="p">(</span><span class="n">proc</span><span class="p">);</span>
-</code></pre></div>
-
-<p>Of course, this is not a solution to the compile time problem. I'd still have to wait for it to finish. But what I like about this is that it has turned a negative into a positive. And that is always great.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/dev.html" class="tag">dev</a>
-            <a href="../tag/unity.html" class="tag">unity</a>
         </div>
     </article>
 

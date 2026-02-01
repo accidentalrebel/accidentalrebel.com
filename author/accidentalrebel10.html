@@ -37,6 +37,70 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../ioli-crackme-0x01.html">IOLI Crackme 0x01</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-20T17:34:00+08:00">Sat 20 February 2021</time>
+                <span>•</span>
+                <a href="../category/re.html">re</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="../ioli-crackme-0x00.html">here</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>Of course, the first thing we do is run the program.</p>
+<p><img alt="ioli-crackme-0x01-01" src="../images/ioli-crackme-0x01-01.png" /></p>
+<p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
+<p><img alt="ioli-crackme-0x01-02" src="../images/ioli-crackme-0x01-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
+<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
+</code></pre></div>
+
+<p>This seems easy enough. </p>
+<p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
+</code></pre></div>
+
+<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274</code>, which is the correct password.</p>
+<p><img alt="ioli-crackme-0x01-03" src="../images/ioli-crackme-0x01-03.png" /></p>
+<h1 id="patching-the-executables">Patching the executables</h1>
+<p>Patching the executable is actually the same process as <a href="../ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
+<h1 id="passing-arguments-to-functions">Passing arguments to functions</h1>
+<p>Since the crackme was cracked relatively quickly I want to review and highlight how arguments are passed to functions. </p>
+<p>The format of the <code>scanf</code> function in C is like so:</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">scanf</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="p">);</span>
+</code></pre></div>
+
+<p>Here's an example of how it is used:</p>
+<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<span class="n">scanf</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span><span class="o">&amp;</span><span class="n">i</span><span class="p">);</span>
+</code></pre></div>
+
+<p>If we look at the 0x01 program we could see how the arguments are passed to the <em>_scanf</em> function by placing the data to send on top of the stack.</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">lea</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">]</span>
+<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">var_14</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="c1">;  &quot;%d&quot;</span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
+</code></pre></div>
+
+<p><code>lea eax, [ebp+var_4]</code> gets the address of <em>var_4</em>, this is the memory location where scanf would put the inputted data. This is then added to the stack with <code>mov [esp+18h+var_14]</code>.</p>
+<p><code>offset aD</code> gets the address of <code>aD</code> which contains the string <em>"%d"</em>. This is the <em>format</em> parameter that <em>scanf</em> expects. This is then added to the stack with <code>mov [esp+18h+Format]</code>.</p>
+<p>With the two parameters added to the stack, it can now be used by the <em>scanf</em> function when <code>call _scanf</code> is executed.</p>
+<p>I'm not sure if I was able to explain that properly. At the very least, you should have been able to have a basic idea of how variables are passed to functions. Take note, however, that there are other calling conventions for functions which meants that the passing of arguments can also differ.</p>
+<h1 id="on-to-the-next-challenge">On to the next challenge...</h1>
+<p>This is the second challenge out of 10 in the IOLI series of challenges. So far the challenges are still very easy, which is fine because it's still good for practice. I look forward to the next one.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../ioli-crackme-0x00.html">IOLI Crackme 0x00</a>
             </h2>
             <div class="article-meta">
@@ -142,42 +206,6 @@
         <div class="tags">
             <a href="../tag/ctf.html" class="tag">ctf</a>
             <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../my-experience-manufacturing-printed-circuit-boards.html">My experience with manufacturing printed circuit boards</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-10-01T07:19:00+08:00">Thu 01 October 2020</time>
-                <span>•</span>
-                <a href="../category/electronics.html">electronics</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I've done a lot of electronics projects already, all of them were painstakingly hand-soldered on a perfboard. I actually like this approach for quick prototyping, and plus, I've also grown fond of how "raw" it looks like. In spite of this, I've always been curious and interested in having my own printed PCB. I remember designing one for my <a href="https://hackaday.io/project/164144-tiro-vibrating-watch/log/161430-current-state-and-next-steps">TIRO vibrating watch</a> but I never pushed through with it because I wasn't confident with what I've made.</p>
-<p><img alt="my-experience-manufacturing-printed-circuit-boards-01" src="../images/my-experience-manufacturing-printed-circuit-boards-01.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>I really like the raw, almost electronic-punk look of my work
-</code></pre></div>
-
-<p>A couple of months ago I got an email from <a href="https://www.pcbway.com/">PCBWay</a> asking if I was interested in trying out their PCB manufacturing service. The email from PCBWay re-ignited this interest in having a PCB made. The problem is I didn't have a PCB design that I built myself that I knew was going to work. My best option was the "ESPBoy project".</p>
-<p>The <a href="https://hackaday.io/project/164830-espboy-the-ultimate-multi-gadget">ESPBoy</a> is a project by <a href="https://hackaday.io/ESPboy.edu">RomanS</a> that is touted to be the ultimate multi-gadget. RomanS sent me a kit a long time ago (Thank's again, RomanS). I have assembled and <a href="https://www.youtube.com/watch?v=GIrp5Vpr2Ns&amp;feature=emb_title">made a tutorial video</a> for it which means that I know that it works and have a very good idea of how it is laid out.</p>
-<p>With that decided, having the PCB made was a very easy and quick process. I just uploaded the gerber file on the PCBWay website, waited for the review of the PCB to be finished, and in a few hours I clicked the submit button and it was off to the printers.</p>
-<p>Fast forward a few weeks later and the package with the printed pcbs arrived.</p>
-<p><img alt="my-experience-manufacturing-printed-circuit-boards-02" src="../images/my-experience-manufacturing-printed-circuit-boards-02.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>And yes, I changed the color to red just so they would look different.
-</code></pre></div>
-
-<p>I must say that I am very impressed with the quality of the PCBs. The material feels really solid and the lines so fine and accurate. I've seen and held PCB etchings before, and this is like lightyears ahead in terms of quality. The same can be said with my hand soldered perfboards, of course.</p>
-<p>Sadly, these PCBs have been sitting in storage because I haven't found the time due to the baby. Thankfully, my schedule is slowly opening up recently and I plan to build one ESPBoy in the next coming weeks. I plan to remove the parts from the old one and put it on this. This newer PCB design has new features like the ability to connect to an app store (yeah, seriously) and I'm really curious to try it out.</p>
-<p>I also might consider having another PCB made, but this time with my own design. I'm thinking I might go ahead and have my TIRO watch made, or maybe something even simpler. We'll see.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/pcbs.html" class="tag">pcbs</a>
-            <a href="../tag/electronics.html" class="tag">electronics</a>
         </div>
     </article>
 

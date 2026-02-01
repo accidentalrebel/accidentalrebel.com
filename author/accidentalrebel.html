@@ -37,6 +37,50 @@
     <article class="post-item">
         <header class="article-header">
             <h2 class="post-title">
+                <a href="../building-a-session-retrospective-skill-for-claude-code.html">Building a session retrospective skill for Claude Code</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2026-02-01T12:00:00+08:00">Sun 01 February 2026</time>
+                <span>•</span>
+                <a href="../category/programming.html">programming</a>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some useful stuff" but no concrete record of what those lessons actually were.</p>
+<p>Recently, I learned of a skill called <a href="https://github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning">continuous-learning</a>. It automatically extracts reusable patterns and saves them as skills. But I wanted something different. Not automated pattern extraction, but a human-readable summary I could actually share. Something I could look back on, or turn into a blog post.</p>
+<p>So I built the <a href="https://github.com/accidentalrebel/claude-skill-session-retrospective">session-retrospective</a> skill.</p>
+<h2 id="what-it-does">What it does</h2>
+<p>The skill analyzes the current Claude session and generates a markdown summary covering:
+- What we set out to do
+- Problems encountered and how they were solved
+- Mistakes made and corrections
+- Techniques discovered worth remembering
+- Key takeaways</p>
+<p>The output goes straight to console for copy/paste. No files created, no cleanup needed.</p>
+<h2 id="how-it-works">How it works</h2>
+<p>Claude Code stores session history as JSONL files in <code>~/.claude/projects/&lt;project-dir&gt;/&lt;session-id&gt;.jsonl</code>. Each line is JSON with message type, content, timestamps, and metadata. A simple bash file locates and outputs the session JSONL:</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">SESSION_FILE</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PROJECTS_DIR</span><span class="s2">&quot;</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SESSION_ID</span><span class="si">}</span><span class="s2">.jsonl&quot;</span><span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
+cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SESSION_FILE</span><span class="s2">&quot;</span>
+</code></pre></div>
+
+<p>Once the history is fetched, the actual analysis is left to Claude with structured guidance. I provided a template for the output format and a table of what to look for (problems, decisions, techniques, mistakes). There's a lot of freedom, since synthesizing lessons requires judgment.</p>
+<h2 id="whats-next">What's next</h2>
+<p>The skill works for my current needs. I haven't tested it extensively on very long sessions (the JSONL can get large and might need chunking). For now, it handles my typical single-session bursts fine.</p>
+<p>Also, the output format might need iteration based on actual use. The template includes sections for "mistakes made" and "techniques worth remembering" but maybe other categories would be more useful. I'll adjust as I use it more.</p>
+<p>The code is <a href="https://github.com/accidentalrebel/claude-skill-session-retrospective">here</a> if you want to try it.</p>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/claude-code.html" class="tag">claude-code</a>
+            <a href="../tag/tools.html" class="tag">tools</a>
+            <a href="../tag/ai.html" class="tag">ai</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <h2 class="post-title">
                 <a href="../running-ai-agents-in-a-box.html">Running AI agents in a box because I don't trust them</a>
             </h2>
             <div class="article-meta">
@@ -204,67 +248,6 @@ python3-dev
 
         <div class="tags">
             <a href="../tag/packers-malware-machine_learning-ml-update-vgl4nt.html" class="tag">packers malware machine_learning ml update vgl4nt</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="../classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
-                <span>•</span>
-                <a href="../category/misc.html">misc</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
-<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
-<p><img alt="classifying-malware-packers-using-machine-learning-01" src="../images/classifying-malware-packers-using-machine-learning-01.png" /></p>
-<p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
-<h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
-<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the sequence of bytes or strings are altered.</p>
-<p>By using machine learning, the VGL4NT Malware Packer Classifier can be able to take into account minute differences and still be able to detect the packer used.</p>
-<h1 id="how-it-works">How it works</h1>
-<ul>
-<li>The uploaded executable file's bytes are converted into grayscale values, creating an image..</li>
-<li>The grayscale image is then fed into an image machine-learning model I trained from scratch.</li>
-<li>It returns a list of percentages on how similar it is to other Packers.</li>
-</ul>
-<p><img alt="classifying-malware-packers-using-machine-learning-01" src="../images/classifying-malware-packers-using-machine-learning-02.png" /></p>
-<p>The approach above is nothing new and is based on <a href="https://ieeexplore.ieee.org/abstract/document/8328749">this academic paper</a>. The difference is that the paper has a tool that classifies malware families, while mine classifies the packers used.</p>
-<p>Most of the magic happens in the model itself. I've trained it on several packed malware samples and measured its accuracy using multiple iterations. The latest version of this model has a 94% accuracy, which is calculated by comparing the model's predictions to the actual packer labels in a dataset that the model hasn't seen before (the test dataset).</p>
-<h1 id="current-limitations">Current limitations</h1>
-<p>The app works for the most part, but it has its limitations. For example, users can only upload executable files (EXE, Bin, ELF, DLLs, etc) with a maximum size limit of 10MB. </p>
-<p>Furthermore, due to costs of GPU resources during training, only the following packer tools can be classified:</p>
-<ul>
-<li>aspack</li>
-<li>alienyze</li>
-<li>amber</li>
-<li>mew</li>
-<li>mpress</li>
-<li>nspack</li>
-<li>pecompact</li>
-<li>petite</li>
-<li>themida</li>
-<li>upx</li>
-<li>others (Everything else)</li>
-</ul>
-<p>The list of packer tools above was chosen based on available real-world malware samples that I have encountered or studied.</p>
-<h1 id="future-plans-and-updates">Future Plans and Updates</h1>
-<p>If this project gains enough interest, then I plan to add more improvements, such as:</p>
-<ul>
-<li>Increase GPU resources to increase the model's capacity to classify more categories</li>
-<li>Improvements in the training method by handpicking the most important parts of the executable and then feeding that to the model</li>
-<li>Offer an API for integration with existing tools and processes.</li>
-</ul>
-<p>Of course, this project would improve a lot with the community's help. I encourage users to provide feedback, report issues, or request new features. Feel free to throw your thoughts to me through my email, karlo@accidentalrebel.com, or Twitter at @accidentalrebel.</p>
-        </div>
-
-        <div class="tags">
-            <a href="../tag/artificial_intelligence.html" class="tag">artificial_intelligence</a>
-            <a href="../tag/machine_learning.html" class="tag">machine_learning</a>
         </div>
     </article>
 
