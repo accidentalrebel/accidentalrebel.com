@@ -3,22 +3,26 @@
 &lt;p&gt;Recently, I learned of a skill called &lt;a href="https://github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning"&gt;continuous-learning&lt;/a&gt;. It automatically extracts reusable patterns and saves them as skills. But I wanted something different. Not automated pattern extraction, but a human-readable summary I could actually share. Something I could look back on, or turn into a blog post.&lt;/p&gt;
 &lt;p&gt;So I built the &lt;a href="https://github.com/accidentalrebel/claude-skill-session-retrospective"&gt;session-retrospective&lt;/a&gt; skill.&lt;/p&gt;
 &lt;h2 id="what-it-does"&gt;What it does&lt;/h2&gt;
-&lt;p&gt;The skill analyzes the current Claude session and generates a markdown summary covering:
-- What we set out to do
-- Problems encountered and how they were solved
-- Mistakes made and corrections
-- Techniques discovered worth remembering
-- Key takeaways&lt;/p&gt;
+&lt;p&gt;The skill analyzes the current Claude session and generates a markdown summary covering:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What we set out to do&lt;/li&gt;
+&lt;li&gt;Problems encountered and how they were solved&lt;/li&gt;
+&lt;li&gt;Mistakes made and corrections&lt;/li&gt;
+&lt;li&gt;Techniques discovered worth remembering&lt;/li&gt;
+&lt;li&gt;Key takeaways&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;The output goes straight to console for copy/paste. No files created, no cleanup needed …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some useful stuff" but no concrete record of what those lessons actually were.&lt;/p&gt;
 &lt;p&gt;Recently, I learned of a skill called &lt;a href="https://github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning"&gt;continuous-learning&lt;/a&gt;. It automatically extracts reusable patterns and saves them as skills. But I wanted something different. Not automated pattern extraction, but a human-readable summary I could actually share. Something I could look back on, or turn into a blog post.&lt;/p&gt;
 &lt;p&gt;So I built the &lt;a href="https://github.com/accidentalrebel/claude-skill-session-retrospective"&gt;session-retrospective&lt;/a&gt; skill.&lt;/p&gt;
 &lt;h2 id="what-it-does"&gt;What it does&lt;/h2&gt;
-&lt;p&gt;The skill analyzes the current Claude session and generates a markdown summary covering:
-- What we set out to do
-- Problems encountered and how they were solved
-- Mistakes made and corrections
-- Techniques discovered worth remembering
-- Key takeaways&lt;/p&gt;
+&lt;p&gt;The skill analyzes the current Claude session and generates a markdown summary covering:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;What we set out to do&lt;/li&gt;
+&lt;li&gt;Problems encountered and how they were solved&lt;/li&gt;
+&lt;li&gt;Mistakes made and corrections&lt;/li&gt;
+&lt;li&gt;Techniques discovered worth remembering&lt;/li&gt;
+&lt;li&gt;Key takeaways&lt;/li&gt;
+&lt;/ul&gt;
 &lt;p&gt;The output goes straight to console for copy/paste. No files created, no cleanup needed.&lt;/p&gt;
 &lt;h2 id="how-it-works"&gt;How it works&lt;/h2&gt;
 &lt;p&gt;Claude Code stores session history as JSONL files in &lt;code&gt;~/.claude/projects/&amp;lt;project-dir&amp;gt;/&amp;lt;session-id&amp;gt;.jsonl&lt;/code&gt;. Each line is JSON with message type, content, timestamps, and metadata. A simple bash file locates and outputs the session JSONL:&lt;/p&gt;
