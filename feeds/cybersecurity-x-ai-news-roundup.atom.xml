@@ -2,12 +2,16 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - Cybersecurity x AI News Roundup</title><link href="https://www.accidentalrebel.com/" rel="alternate"/><link href="https://www.accidentalrebel.com/feeds/cybersecurity-x-ai-news-roundup.atom.xml" rel="self"/><id>https://www.accidentalrebel.com/</id><updated>2026-02-20T10:00:00+08:00</updated><entry><title>Your AI Assistant Might Be Working for Someone Else</title><link href="https://www.accidentalrebel.com/your-ai-assistant-might-be-working-for-someone-else.html" rel="alternate"/><published>2026-02-20T10:00:00+08:00</published><updated>2026-02-20T10:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2026-02-20:/your-ai-assistant-might-be-working-for-someone-else.html</id><summary type="html">&lt;p&gt;&lt;img alt="Your AI Assistant Might Be Working for Someone Else" src="https://www.accidentalrebel.com/images/your-ai-assistant-might-be-working-for-someone-else.png" /&gt;
 &lt;em&gt;Image made by Gemini&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore.&lt;/p&gt;
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
 &lt;hr /&gt;
 &lt;h2 id="featured-stories"&gt;Featured stories&lt;/h2&gt;
 &lt;h3 id="cline-cli-supply-chain-attack-installs-autonomous-ai-agent-on-developer-machines"&gt;&lt;a href="https://thehackernews.com/2026/02/cline-cli-230-supply-chain-attack.html"&gt;Cline CLI supply chain attack installs autonomous AI agent on developer machines&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;An attacker compromised Cline CLI's npm publish token through a technique called "Clinejection." The clever part: they injected prompts into GitHub issues that tricked Claude (Cline's issue triage AI) into executing commands, then poisoned the build cache and stole publication secrets. The malicious version 2.3.0 ran a postinstall script that globally installed OpenClaw, an autonomous AI agent framework, on roughly 4,000 developer machines over an 8-hour window …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="Your AI Assistant Might Be Working for Someone Else" src="https://www.accidentalrebel.com/images/your-ai-assistant-might-be-working-for-someone-else.png" /&gt;
 &lt;em&gt;Image made by Gemini&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore.&lt;/p&gt;
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
 &lt;hr /&gt;
 &lt;h2 id="featured-stories"&gt;Featured stories&lt;/h2&gt;
 &lt;h3 id="cline-cli-supply-chain-attack-installs-autonomous-ai-agent-on-developer-machines"&gt;&lt;a href="https://thehackernews.com/2026/02/cline-cli-230-supply-chain-attack.html"&gt;Cline CLI supply chain attack installs autonomous AI agent on developer machines&lt;/a&gt;&lt;/h3&gt;
@@ -55,4 +59,90 @@
 &lt;p&gt;&lt;strong&gt;&lt;a href="https://www.wiz.io/blog/detecting-malicious-oauth-applications"&gt;Wiz uses LLMs to detect malicious Azure OAuth applications&lt;/a&gt;&lt;/strong&gt;: Wiz Research built ML-powered detection for malicious Azure app registrations and consent phishing campaigns, catching threats that manual review would miss.&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;hr /&gt;</content><category term="Cybersecurity x AI News Roundup"/><category term="ai"/><category term="security"/><category term="cybersecurity-x-ai"/></entry></feed>
+&lt;hr /&gt;</content><category term="Cybersecurity x AI News Roundup"/><category term="ai"/><category term="security"/><category term="cybersecurity-x-ai"/></entry><entry><title>AI Agents Under Attack</title><link href="https://www.accidentalrebel.com/ai-agents-under-attack.html" rel="alternate"/><published>2026-02-07T10:00:00+08:00</published><updated>2026-02-07T10:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2026-02-07:/ai-agents-under-attack.html</id><summary type="html">&lt;p&gt;&lt;img alt="AI Agents Under Attack" src="https://www.accidentalrebel.com/images/ai-agents-under-attack.webp" /&gt;
+&lt;em&gt;Image made by Gemini&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;AI agents are under attack this week—and AI is doing the attacking. Claude Opus 4.6 found 500+ vulnerabilities in major libraries. Language models can now run complete network breaches autonomously.&lt;/p&gt;
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="featured-stories"&gt;Featured stories&lt;/h2&gt;
+&lt;h3 id="claude-opus-46-discovers-hundreds-of-security-flaws"&gt;&lt;a href="https://thehackernews.com/2026/02/claude-opus-discovers-security-flaws.html"&gt;Claude Opus 4.6 discovers hundreds of security flaws&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Anthropic's latest model identified more than 500 previously unknown high-severity vulnerabilities in major open-source projects like Ghostscript through automated security analysis. The model achieved 65.4% on Terminal-Bench 2.0 (highest ever recorded) and outperforms GPT-5.2 by ~144 ELO points on enterprise knowledge work tasks. Organizations relying on these libraries should monitor for patches.&lt;/p&gt;
+&lt;h3 id="ai-models-execute-autonomous-network-attacks"&gt;&lt;a href="https://www.schneier.com/blog/archives/2026/02/ai-models-execute-autonomous-network-attacks.html"&gt;AI models execute autonomous network attacks&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Language models can now independently conduct multi-stage network penetration testing, handling reconnaissance through data extraction while adapting to defensive measures. Bruce Schneier documented this capability shift, noting that sophisticated attacks previously demanded skilled human oversight—now they require only model access.&lt;/p&gt;
+&lt;h3 id="openclaw-ai-agent-security-risks"&gt;&lt;a href="https://www.crowdstrike.com/en-us/blog/openclaw-ai-agent-security-risks/"&gt;OpenClaw …&lt;/a&gt;&lt;/h3&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="AI Agents Under Attack" src="https://www.accidentalrebel.com/images/ai-agents-under-attack.webp" /&gt;
+&lt;em&gt;Image made by Gemini&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;AI agents are under attack this week—and AI is doing the attacking. Claude Opus 4.6 found 500+ vulnerabilities in major libraries. Language models can now run complete network breaches autonomously.&lt;/p&gt;
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="featured-stories"&gt;Featured stories&lt;/h2&gt;
+&lt;h3 id="claude-opus-46-discovers-hundreds-of-security-flaws"&gt;&lt;a href="https://thehackernews.com/2026/02/claude-opus-discovers-security-flaws.html"&gt;Claude Opus 4.6 discovers hundreds of security flaws&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Anthropic's latest model identified more than 500 previously unknown high-severity vulnerabilities in major open-source projects like Ghostscript through automated security analysis. The model achieved 65.4% on Terminal-Bench 2.0 (highest ever recorded) and outperforms GPT-5.2 by ~144 ELO points on enterprise knowledge work tasks. Organizations relying on these libraries should monitor for patches.&lt;/p&gt;
+&lt;h3 id="ai-models-execute-autonomous-network-attacks"&gt;&lt;a href="https://www.schneier.com/blog/archives/2026/02/ai-models-execute-autonomous-network-attacks.html"&gt;AI models execute autonomous network attacks&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Language models can now independently conduct multi-stage network penetration testing, handling reconnaissance through data extraction while adapting to defensive measures. Bruce Schneier documented this capability shift, noting that sophisticated attacks previously demanded skilled human oversight—now they require only model access.&lt;/p&gt;
+&lt;h3 id="openclaw-ai-agent-security-risks"&gt;&lt;a href="https://www.crowdstrike.com/en-us/blog/openclaw-ai-agent-security-risks/"&gt;OpenClaw AI agent security risks&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;CrowdStrike analyzed OpenClaw's attack surface, examining autonomous agent deployments with tool access and persistent execution. The analysis covers architecture vulnerabilities, plugin security, and compromise vectors.&lt;/p&gt;
+&lt;h3 id="agentic-tool-chain-compromise-threats"&gt;&lt;a href="https://www.crowdstrike.com/en-us/blog/how-agentic-tool-chain-attacks-threaten-ai-agent-security/"&gt;Agentic tool chain compromise threats&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Research reveals how attackers exploit AI agent tool chains for code execution and data theft through legitimate workflows. The core insight: agents implicitly trust their tools, creating an exploitable attack surface.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="in-brief"&gt;In brief&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Malicious OpenClaw plugins&lt;/strong&gt;: A supply-chain attack delivered credential stealers disguised as functional plugins, exploiting ecosystem trust.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Ghidra MCP server&lt;/strong&gt;: A developer released 110 tools integrating Ghidra with AI assistants via Model Context Protocol, enabling AI-assisted binary analysis.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Cybersecurity x AI News Roundup"/><category term="ai"/><category term="security"/><category term="cybersecurity-x-ai"/></entry><entry><title>Developer Tools Are the New Attack Surface</title><link href="https://www.accidentalrebel.com/developer-tools-are-the-new-attack-surface.html" rel="alternate"/><published>2026-01-31T10:00:00+08:00</published><updated>2026-01-31T10:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2026-01-31:/developer-tools-are-the-new-attack-surface.html</id><summary type="html">&lt;p&gt;&lt;img alt="Developer Tools Are the New Attack Surface" src="https://www.accidentalrebel.com/images/developer-tools-are-the-new-attack-surface.png" /&gt;
+&lt;em&gt;Image made by Gemini&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Developer tools are the new attack surface. VS Code extensions with 1.5 million installs exfiltrating source code to China, 175,000 unsecured Ollama servers globally accessible, and CrowdStrike research on compromising AI agent tool chains. Plus: a former Google engineer convicted for AI trade secret theft, and AI models now conducting autonomous multi-stage network attacks.&lt;/p&gt;
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="featured-stories"&gt;Featured stories&lt;/h2&gt;
+&lt;h3 id="175000-ollama-ai-servers-exposed-without-authentication"&gt;&lt;a href="https://thehackernews.com/2026/01/researchers-find-175000-publicly.html"&gt;175,000 Ollama AI servers exposed without authentication&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;SentinelOne and Censys discovered 175,000 Ollama instances across 130 countries operating without authentication. These self-hosted AI servers, frequently deployed on corporate networks, are publicly accessible. Free compute for attackers, free data for exfiltration. Organizations running Ollama should verify firewall configurations.&lt;/p&gt;
+&lt;h3 id="vs-code-ai-extensions-with-15-million-installs-steal-developer-source-code"&gt;&lt;a href="https://thehackernews.com/2026/01/malicious-vs-code-ai-extensions-with-15.html"&gt;VS Code AI extensions with 1.5 million installs steal developer source code&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Two extensions marketed as AI coding assistants reached 1.5 million installations while covertly exfiltrating developer source code to Chinese servers. Despite appearing legitimate and providing …&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="Developer Tools Are the New Attack Surface" src="https://www.accidentalrebel.com/images/developer-tools-are-the-new-attack-surface.png" /&gt;
+&lt;em&gt;Image made by Gemini&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Developer tools are the new attack surface. VS Code extensions with 1.5 million installs exfiltrating source code to China, 175,000 unsecured Ollama servers globally accessible, and CrowdStrike research on compromising AI agent tool chains. Plus: a former Google engineer convicted for AI trade secret theft, and AI models now conducting autonomous multi-stage network attacks.&lt;/p&gt;
+&lt;!-- PELICAN_END_SUMMARY --&gt;
+
+&lt;hr /&gt;
+&lt;h2 id="featured-stories"&gt;Featured stories&lt;/h2&gt;
+&lt;h3 id="175000-ollama-ai-servers-exposed-without-authentication"&gt;&lt;a href="https://thehackernews.com/2026/01/researchers-find-175000-publicly.html"&gt;175,000 Ollama AI servers exposed without authentication&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;SentinelOne and Censys discovered 175,000 Ollama instances across 130 countries operating without authentication. These self-hosted AI servers, frequently deployed on corporate networks, are publicly accessible. Free compute for attackers, free data for exfiltration. Organizations running Ollama should verify firewall configurations.&lt;/p&gt;
+&lt;h3 id="vs-code-ai-extensions-with-15-million-installs-steal-developer-source-code"&gt;&lt;a href="https://thehackernews.com/2026/01/malicious-vs-code-ai-extensions-with-15.html"&gt;VS Code AI extensions with 1.5 million installs steal developer source code&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Two extensions marketed as AI coding assistants reached 1.5 million installations while covertly exfiltrating developer source code to Chinese servers. Despite appearing legitimate and providing functional AI features, they simultaneously harvested typed content. This represents a shift in supply chain attacks from npm packages toward IDE plugins.&lt;/p&gt;
+&lt;h3 id="agentic-tool-chain-attacks-turning-ai-agents-against-themselves"&gt;&lt;a href="https://www.crowdstrike.com/en-us/blog/how-agentic-tool-chain-attacks-threaten-ai-agent-security/"&gt;Agentic tool chain attacks: turning AI agents against themselves&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;CrowdStrike documented methods for exploiting AI agent tool chains to achieve code execution and data exfiltration. These attacks leverage legitimate agent workflows by compromising trusted tools rather than agents themselves. The vulnerability stems from implicit agent trust in their tools. Organizations deploying agents with internal system access should review this research.&lt;/p&gt;
+&lt;h3 id="ex-google-engineer-convicted-for-stealing-ai-trade-secrets"&gt;&lt;a href="https://thehackernews.com/2026/01/ex-google-engineer-convicted-for.html"&gt;Ex-Google engineer convicted for stealing AI trade secrets&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Linwei Ding received conviction on seven counts of economic espionage and trade secret theft for transferring Google's AI research to a China-based startup. The prosecution underscores that AI intellectual property theft now receives national security treatment, with additional similar cases anticipated.&lt;/p&gt;
+&lt;h3 id="ai-models-now-run-autonomous-multi-stage-network-attacks"&gt;&lt;a href="https://www.schneier.com/blog/archives/2026/01/ais-are-getting-better-at-finding-and-exploiting-security-vulnerabilities.html"&gt;AI models now run autonomous multi-stage network attacks&lt;/a&gt;&lt;/h3&gt;
+&lt;p&gt;Bruce Schneier documented AI models executing multi-stage network attacks autonomously using standard penetration testing tools without requiring human guidance between steps. Previously requiring skilled operators, models now independently conduct reconnaissance, exploitation, and data exfiltration. The barrier to sophisticated attacks has significantly lowered.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id="in-brief"&gt;In brief&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://thehackernews.com/2026/01/researchers-uncover-chrome-extensions.html"&gt;Chrome extensions harvesting ChatGPT tokens&lt;/a&gt;&lt;/strong&gt;: Malicious browser extensions redirect affiliate links and collect OpenAI authentication tokens from logged-in users. Extension audits recommended.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://thehackernews.com/2026/01/fake-moltbot-ai-coding-assistant-on-vs.html"&gt;Fake AI coding assistant on VS Code delivers malware&lt;/a&gt;&lt;/strong&gt;: An extension named Moltbot posed as free AI assistance while delivering malware. Microsoft removed it, though the pattern persists.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://thehackernews.com/2026/01/konni-hackers-deploy-ai-generated.html"&gt;North Korean Konni group using AI-generated backdoors&lt;/a&gt;&lt;/strong&gt;: Konni threat actors employ AI to generate PowerShell backdoors targeting blockchain developers. State-sponsored actors now use generative AI for malware development.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://www.bleepingcomputer.com/news/security/hugging-face-abused-to-spread-thousands-of-android-malware-variants/"&gt;Hugging Face abused to host Android malware&lt;/a&gt;&lt;/strong&gt;: Attackers distribute thousands of Android malware variants through Hugging Face repositories for credential harvesting. AI platforms are becoming malware distribution infrastructure.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://unit42.paloaltonetworks.com/real-time-malicious-javascript-through-llms/"&gt;LLMs generate phishing JavaScript in real-time&lt;/a&gt;&lt;/strong&gt;: Unit 42 documented attacks where malicious webpages invoke LLM APIs to dynamically generate phishing code in-browser with varying payloads, defeating signature-based detection.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://thehackernews.com/2026/01/who-approved-this-agent-rethinking.html"&gt;AI agent access control is a governance gap&lt;/a&gt;&lt;/strong&gt;: Analysis reveals organizations deploy AI agents without proper access controls or accountability frameworks, leaving agent permissions unmonitored.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;&lt;a href="https://simonwillison.net/2026/Jan/30/moltbook/"&gt;Moltbook shows prompt injection risks in agent networks&lt;/a&gt;&lt;/strong&gt;: Simon Willison examines Moltbook, a social network for AI agent interaction, identifying heightened prompt injection threats when agents communicate with other agents.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Cybersecurity x AI News Roundup"/><category term="ai"/><category term="security"/><category term="cybersecurity-x-ai"/></entry></feed>

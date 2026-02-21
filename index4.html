@@ -50,6 +50,76 @@
                 <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="./category/re.html" class="article-category-label">re</a>
+            <h2 class="post-title">
+                <a href="./ioli-crackme-0x01.html">IOLI Crackme 0x01</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-20T17:34:00+08:00">Sat 20 February 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="./ioli-crackme-0x00.html">here</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>Of course, the first thing we do is run the program.</p>
+<p><img alt="ioli-crackme-0x01-01" src="./images/ioli-crackme-0x01-01.png" /></p>
+<p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
+<p><img alt="ioli-crackme-0x01-02" src="./images/ioli-crackme-0x01-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
+<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
+</code></pre></div>
+
+<p>This seems easy enough. </p>
+<p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
+</code></pre></div>
+
+<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
+            <a href="./ioli-crackme-0x01.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/re.html" class="tag">re</a>
+            <a href="./tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/re.html" class="article-category-label">re</a>
+            <h2 class="post-title">
+                <a href="./ioli-crackme-0x00.html">IOLI Crackme 0x00</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-16T21:55:00+08:00">Tue 16 February 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.</p>
+<h2 id="getting-the-password">Getting the password</h2>
+<p>Running the program shows a password prompt. </p>
+<p><img alt="ioli-crackme-0x00-03" src="./images/ioli-crackme-0x00-03.png" /></p>
+<p>Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code.</p>
+<p>I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this:</p>
+<p><img alt="ioli-crackme-0x00-02" src="./images/ioli-crackme-0x00-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
+<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span>
+</code></pre></div>
+
+<p>And just from these few lines alone I already knew what the password is …</p>
+            <a href="./ioli-crackme-0x00.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/re.html" class="tag">re</a>
+            <a href="./tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
             <a href="./category/ctf.html" class="article-category-label">ctf</a>
             <h2 class="post-title">
                 <a href="./hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a>
@@ -279,56 +349,6 @@
         <div class="tags">
             <a href="./tag/dev.html" class="tag">dev</a>
             <a href="./tag/game_engine.html" class="tag">game_engine</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <a href="./category/lisp.html" class="article-category-label">lisp</a>
-            <h2 class="post-title">
-                <a href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-05-07T21:35:00+08:00">Thu 07 May 2020</time>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
-<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
-<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="./images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
-<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code …</p>
-            <a href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html" class="read-more">Read more &rarr;</a>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/lisp.html" class="tag">lisp</a>
-            <a href="./tag/game_engine.html" class="tag">game_engine</a>
-            <a href="./tag/dev.html" class="tag">dev</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <a href="./category/engine.html" class="article-category-label">engine</a>
-            <h2 class="post-title">
-                <a href="./thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2020-05-03T11:19:00+08:00">Sun 03 May 2020</time>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
-<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
-<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="./images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
-<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …</p>
-            <a href="./thinking-of-adding-lisp-to-my-custom-game-engine.html" class="read-more">Read more &rarr;</a>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/dev.html" class="tag">dev</a>
-            <a href="./tag/lisp.html" class="tag">lisp</a>
-            <a href="./tag/engine.html" class="tag">engine</a>
         </div>
     </article>
 

@@ -50,6 +50,60 @@
                 <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="./category/malware.html" class="article-category-label">malware</a>
+            <h2 class="post-title">
+                <a href="./making-a-rat.html">Making a RAT</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-07-13T14:56:00+08:00">Tue 13 July 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
+<p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
+<p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
+<p>Having learned how to do runtime DLL loading myself I …</p>
+            <a href="./making-a-rat.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/malware.html" class="tag">malware</a>
+            <a href="./tag/dev.html" class="tag">dev</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/security.html" class="article-category-label">security</a>
+            <h2 class="post-title">
+                <a href="./finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-05-01T20:56:00+08:00">Sat 01 May 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Since my last post about <a href="investigating-an-fb-phishing-site">my investigations of a Facebook phishing site</a>, I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.</p>
+<p><img alt="finding-phished-passwords-from-a-scam-site-01" src="./images/finding-phished-passwords-from-a-scam-site-01.png" /></p>
+<p>This particular phishing site conducts its operations like this:</p>
+<ul>
+<li>An ad is shown on Facebook, promising free coupons for famous fast food restaurants</li>
+<li>Clicking on the ad takes the user to a fake Facebook login page hosted on <em>blogger.com</em></li>
+<li>Login page then sends phished username and passwords to a PHP file hosted on <em>000webhost</em></li>
+</ul>
+<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's …</p>
+            <a href="./finding-phished-passwords-on-a-scam-site.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/phishing.html" class="tag">phishing</a>
+            <a href="./tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="./tag/osint.html" class="tag">osint</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
             <a href="./category/ctf.html" class="article-category-label">ctf</a>
             <h2 class="post-title">
                 <a href="./emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>
@@ -264,76 +318,6 @@ queegthaen = giakfeiw + roubhaol.joefwoefcheaw
             <a href="./tag/re.html" class="tag">re</a>
             <a href="./tag/tools.html" class="tag">tools</a>
             <a href="./tag/malware_analysis.html" class="tag">malware_analysis</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <a href="./category/re.html" class="article-category-label">re</a>
-            <h2 class="post-title">
-                <a href="./ioli-crackme-0x01.html">IOLI Crackme 0x01</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-02-20T17:34:00+08:00">Sat 20 February 2021</time>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="./ioli-crackme-0x00.html">here</a>.</p>
-<h1 id="getting-the-password">Getting the password</h1>
-<p>Of course, the first thing we do is run the program.</p>
-<p><img alt="ioli-crackme-0x01-01" src="./images/ioli-crackme-0x01-01.png" /></p>
-<p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
-<p><img alt="ioli-crackme-0x01-02" src="./images/ioli-crackme-0x01-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
-<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
-</code></pre></div>
-
-<p>This seems easy enough. </p>
-<p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
-</code></pre></div>
-
-<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
-            <a href="./ioli-crackme-0x01.html" class="read-more">Read more &rarr;</a>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/re.html" class="tag">re</a>
-            <a href="./tag/crackme.html" class="tag">crackme</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <a href="./category/re.html" class="article-category-label">re</a>
-            <h2 class="post-title">
-                <a href="./ioli-crackme-0x00.html">IOLI Crackme 0x00</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-02-16T21:55:00+08:00">Tue 16 February 2021</time>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.</p>
-<h2 id="getting-the-password">Getting the password</h2>
-<p>Running the program shows a password prompt. </p>
-<p><img alt="ioli-crackme-0x00-03" src="./images/ioli-crackme-0x00-03.png" /></p>
-<p>Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code.</p>
-<p>I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this:</p>
-<p><img alt="ioli-crackme-0x00-02" src="./images/ioli-crackme-0x00-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
-<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span>
-</code></pre></div>
-
-<p>And just from these few lines alone I already knew what the password is …</p>
-            <a href="./ioli-crackme-0x00.html" class="read-more">Read more &rarr;</a>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/re.html" class="tag">re</a>
-            <a href="./tag/crackme.html" class="tag">crackme</a>
         </div>
     </article>
 

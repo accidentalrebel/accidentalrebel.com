@@ -50,6 +50,72 @@
                 <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="./category/malware.html" class="article-category-label">malware</a>
+            <h2 class="post-title">
+                <a href="./talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-08-02T15:06:00+08:00">Tue 02 August 2022</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
+<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="./images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
+<h2 id="a-brief-overview">A brief overview</h2>
+<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
+<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses …</p>
+            <a href="./talking-about-mitres-malware-behavior-catalog.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/malware.html" class="tag">malware</a>
+            <a href="./tag/analysis.html" class="tag">analysis</a>
+            <a href="./tag/mitre.html" class="tag">mitre</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/misc.html" class="article-category-label">misc</a>
+            <h2 class="post-title">
+                <a href="./string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-07-09T12:11:00+08:00">Sat 09 July 2022</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
+<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
+<h2 id="the-problem">The problem</h2>
+<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Upon compiling …</p>
+            <a href="./string-av-evasion-in-x64-assembly-part-2.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/evasion.html" class="tag">evasion</a>
+            <a href="./tag/assembly.html" class="tag">assembly</a>
+            <a href="./tag/av.html" class="tag">av</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
             <a href="./category/misc.html" class="article-category-label">misc</a>
             <h2 class="post-title">
                 <a href="./string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a>
@@ -286,60 +352,6 @@
         <div class="tags">
             <a href="./tag/malware.html" class="tag">malware</a>
             <a href="./tag/dev.html" class="tag">dev</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <a href="./category/malware.html" class="article-category-label">malware</a>
-            <h2 class="post-title">
-                <a href="./making-a-rat.html">Making a RAT</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-07-13T14:56:00+08:00">Tue 13 July 2021</time>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
-<p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
-<p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
-<p>Having learned how to do runtime DLL loading myself I …</p>
-            <a href="./making-a-rat.html" class="read-more">Read more &rarr;</a>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/malware.html" class="tag">malware</a>
-            <a href="./tag/dev.html" class="tag">dev</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <a href="./category/security.html" class="article-category-label">security</a>
-            <h2 class="post-title">
-                <a href="./finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-05-01T20:56:00+08:00">Sat 01 May 2021</time>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>Since my last post about <a href="investigating-an-fb-phishing-site">my investigations of a Facebook phishing site</a>, I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.</p>
-<p><img alt="finding-phished-passwords-from-a-scam-site-01" src="./images/finding-phished-passwords-from-a-scam-site-01.png" /></p>
-<p>This particular phishing site conducts its operations like this:</p>
-<ul>
-<li>An ad is shown on Facebook, promising free coupons for famous fast food restaurants</li>
-<li>Clicking on the ad takes the user to a fake Facebook login page hosted on <em>blogger.com</em></li>
-<li>Login page then sends phished username and passwords to a PHP file hosted on <em>000webhost</em></li>
-</ul>
-<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's …</p>
-            <a href="./finding-phished-passwords-on-a-scam-site.html" class="read-more">Read more &rarr;</a>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/phishing.html" class="tag">phishing</a>
-            <a href="./tag/threat-hunting.html" class="tag">threat-hunting</a>
-            <a href="./tag/osint.html" class="tag">osint</a>
         </div>
     </article>
 
