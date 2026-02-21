@@ -2,7 +2,7 @@ Title: #5 - Switching from C/C++ to C
 Date: 2020-05-19 17:59
 Slug: switching-from-c-c---to-c
 Tags: dev, game_engine, 
-Category: game_engine
+Category: Misc
 
    After the recent changes to the [lisp side of my engine]({filename}/following-lispy-conventions.md), I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. 
 

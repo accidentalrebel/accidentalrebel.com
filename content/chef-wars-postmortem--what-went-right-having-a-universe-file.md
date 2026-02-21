@@ -2,7 +2,7 @@ Title: Chef Wars Postmortem -- What went right: Having a Universe File
 Date: 2017-12-05 12:56
 Slug: chef-wars-postmortem--what-went-right-having-a-universe-file
 Tags: chefwars, gamedev, mindcake, postmortem
-Category: postmortem
+Category: Misc
 
 **Note: This is from a [series of articles](http://www.accidentalrebel.com/tags/chefwars_postmortem/) that outlines the things I've learned while making [Chef Wars](http://mindcakegames.com/) for 2+ years.**
 

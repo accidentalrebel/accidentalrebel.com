@@ -2,7 +2,7 @@ Title: #3 - Rebel Game Engine now works on different platforms
 Date: 2020-05-10 07:08
 Slug: rebel-game-engine-now-works-on-different-platforms
 Tags: dev, game_engine, 
-Category: dev
+Category: Misc
 
    After [finishing the integration](implemented-basic-scheme-scripting-for-rebel-game-engine.md) of Chicken-scheme scripting for [my custom game engine](https://github.com/accidentalrebel/Rebel-Game-Engine) I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.
    

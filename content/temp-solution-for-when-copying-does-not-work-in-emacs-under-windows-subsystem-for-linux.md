@@ -2,7 +2,7 @@ Title: Temp Solution For When Text Copying Does Not Work in Emacs Under Windows 
 Date: 2017-09-23 13:08
 Slug: temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux
 Tags: emacs windows linux
-Category: emacs
+Category: Misc
 
 One of the problems I was having with my Emacs environment under WSL _(Windows Subsystem for Linux, aka. Bash On Windows)_ is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.
 

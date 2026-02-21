@@ -2,7 +2,7 @@ Title: Opening Unity Script Files in Emacs
 Date: 2018-01-24 14:32
 Slug: opening-unity-script-files-in-emacs
 Tags: emacs unity
-Category: emacs
+Category: Misc
 
 ![01](https://i.imgur.com/9XWvvi0.png)
 

@@ -2,7 +2,7 @@ Title: #4 - Following Lispy conventions
 Date: 2020-05-15 07:00
 Slug: following-lispy-conventions
 Tags: dev, game_engine, 
-Category: game_engine
+Category: Misc
 
    ![following-lispy-conventions-01]({attach}/images/following-lispy-conventions-01.png)
 

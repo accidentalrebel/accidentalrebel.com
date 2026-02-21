@@ -2,7 +2,7 @@ Title: Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimate
 Date: 2017-12-10 23:33
 Slug: chef-wars-postmortem--what-went-right-risk-adjusted-estimates
 Tags: chefwars, gamedev, mindcake, postmortem
-Category: postmortem
+Category: Misc
 
 **Note: This is from a [series of articles](http://www.accidentalrebel.com/tags/chefwars_postmortem/) that outlines the things I've learned while making [Chef Wars](http://mindcakegames.com/) for 2+ years.**
 

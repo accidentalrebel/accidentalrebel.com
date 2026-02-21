@@ -2,7 +2,7 @@ Title: Making Unity beep after scripts finish reloading
 Date: 2020-05-01 17:07
 Slug: making-unity-beep-after-scripts-finish-reloading
 Tags: dev, unity, 
-Category: dev
+Category: Misc
 FacebookImage: {attach}/images/making-unity-beep-after-scripts-finish-reloading-02.jpg
 
 Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! 
