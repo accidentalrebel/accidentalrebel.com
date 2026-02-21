@@ -120,22 +120,23 @@
 </section>
 {% endif %}
 
-{% if DISQUS_SITENAME and SITEURL and article.status != "draft" %}
+{% if SITEURL and article.status != "draft" %}
 <section class="comments">
-    <div id="disqus_thread"></div>
-    <script>
-        var disqus_config = function () {
-            this.page.url = "{{ SITEURL }}/{{ article.url }}";
-            this.page.identifier = "{{ article.slug }}";
-        };
-        (function() {
-            var d = document, s = d.createElement('script');
-            s.src = 'https://{{ DISQUS_SITENAME }}.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-        })();
+    <script src="https://giscus.app/client.js"
+        data-repo="accidentalrebel/accidentalrebel.com"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMTkzODk2NjU="
+        data-category="Comments"
+        data-category-id="DIC_kwDOBx294c4C26p7"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
     </script>
-    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
 {% endif %}
 {% endblock %}
