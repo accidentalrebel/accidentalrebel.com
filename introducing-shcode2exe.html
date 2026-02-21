@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introducing shcode2exe | AccidentalRebel.com</title>
 
-<meta name="description" content="[Edit: shcode2exe is now part of Remnux] I've been playing around with Remnux and encountered a problem trying to get one of the tools to run properly. The...">
+<meta name="description" content="shcode2exe converts raw shellcode blobs or strings into debuggable executables targeting 32 or 64-bit Windows, with no Wine dependency when running on Linux.">
 
     <link rel="canonical" href="./introducing-shcode2exe.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Introducing shcode2exe">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-02-26T07:34:00+08:00">
-    <meta property="og:description" content="[Edit: shcode2exe is now part of Remnux] I've been playing around with Remnux and encountered a problem trying to get one of the tools to run properly. The tool is shellcode2exe, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger. When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the incbin assembly instruction. From there, the file is then automatically compiled and linked. One big problem with the tool is that it needs to use Wine if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of shcode2exe. shcode2exe While similar in …">
+    <meta property="og:description" content="shcode2exe converts raw shellcode blobs or strings into debuggable executables targeting 32 or 64-bit Windows, with no Wine dependency when running on Linux.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./introducing-shcode2exe.html">
     <meta property="twitter:title" content="Introducing shcode2exe">
-    <meta property="twitter:description" content="[Edit: shcode2exe is now part of Remnux] I've been playing around with Remnux and encountered a problem trying to get one of the tools to run properly. The tool is shellcode2exe, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger. When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the incbin assembly instruction. From there, the file is then automatically compiled and linked. One big problem with the tool is that it needs to use Wine if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of shcode2exe. shcode2exe While similar in …">
+    <meta property="twitter:description" content="shcode2exe converts raw shellcode blobs or strings into debuggable executables targeting 32 or 64-bit Windows, with no Wine dependency when running on Linux.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./introducing-shcode2exe.html",
-        "description": "[Edit: shcode2exe is now part of Remnux] I've been playing around with Remnux and encountered a problem trying to get one of the tools to run properly. The..."
+        "description": "shcode2exe converts raw shellcode blobs or strings into debuggable executables targeting 32 or 64-bit Windows, with no Wine dependency when running on Linux.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -101,7 +104,7 @@
         <p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
 <p>I've been playing around with <a href="https://remnux.org/">Remnux</a> and encountered a problem trying to get one of the tools to run properly. The tool is <a href="https://github.com/repnz/shellcode2exe">shellcode2exe</a>, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.</p>
 <p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
-<p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
+<p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for <a href="./building-my-virtual-cybersecurity-home-lab.html">my own malware analysis lab</a> so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
 <h2 id="shcode2exe">shcode2exe</h2>
 <p>While similar in functionality with the original tool, the biggest improvement I made is that it it does not depend on Wine along with other features as listed below:</p>
 <ul>
@@ -149,6 +152,7 @@
 <h2 id="next-steps">Next steps</h2>
 <p>I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway. (Update 2021-02-07: It's now <a href="https://github.com/REMnux/salt-states/issues/169">under review</a>)</p>
 <p>For more information about the tool and it's code, go to <a href="https://github.com/accidentalrebel/shcode2exe">it's Github page</a>. If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at <a href="https://twitter.com/accidentalrebel">@accidentalrebel</a>.</p>
+<p>Tools like shcode2exe are useful for the shellcode analysis workflow shown in the <a href="./emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>.</p>
     </div>
 
     <footer class="article-footer">

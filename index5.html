@@ -23,6 +23,15 @@
     }
     </script>
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="./">
+    <meta property="og:title" content="AccidentalRebel.com">
+    <meta property="og:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="og:image" content="./images/default-og.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AccidentalRebel.com">
+    <meta property="twitter:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="twitter:image" content="./images/default-og.png">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -59,11 +68,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
-<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
-<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="./images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
-<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code …</p>
+            <p>Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.</p>
             <a href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -84,11 +91,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
-<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
-<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="./images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
-<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …</p>
+            <p>Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.</p>
             <a href="./thinking-of-adding-lisp-to-my-custom-game-engine.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -109,12 +114,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
-<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
-<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
-<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="./images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
-<p>I recently got the idea of having Unity inform …</p>
+            <p>A Unity editor script that plays an audible beep when script reloading finishes, so you can look away from the screen instead of watching the progress spinner.</p>
             <a href="./making-unity-beep-after-scripts-finish-reloading.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -134,12 +136,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
-<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
-<p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
-<p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
-<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text …</a></p>
+            <p>How to open Unity script files in Emacs with correct line numbers using the OnOpenAssetAttribute callback and emacsclient.</p>
             <a href="./opening-unity-script-files-in-emacs.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -158,16 +157,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TL;DR</strong></p>
-<ul>
-<li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
-</ul>
-<hr />
-<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
-<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
-<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system …</p>
+            <p>A risk-adjusted estimation system that pairs time estimates with confidence levels to produce reliable schedules — used to ship Chef Wars on time.</p>
             <a href="./chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -189,16 +181,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TLDR</strong></p>
-<ul>
-<li>There is more to the saying that "premature optimization is the root of all evil".</li>
-<li>Instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize.</li>
-</ul>
-<hr />
-<p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
-<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built …</p>
+            <p>Lessons from Chef Wars on premature optimization: why asking WHAT and HOW to optimize matters more than asking WHEN, after making both mistakes in production.</p>
             <a href="./chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -220,19 +205,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TLDR</strong></p>
-<ul>
-<li>All data in our game is contained in one excel file we call the "Universe".</li>
-<li>Prototypes can be done on the Universe excel file itself</li>
-<li>Iteration is easier as we only need to change one file.</li>
-<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
-</ul>
-<hr />
-<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
-<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">This</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="nx">definitely</span><span class="w"> </span><span class="nx">gives</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">hint</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">what</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">guy</span><span class="w"> </span><span class="nx">Cliff</span><span class="w"> </span><span class="k">is …</span></code></pre></div>
+            <p>How keeping all Chef Wars game data in a single "Universe" spreadsheet made prototyping, iteration, and live patching faster across two years of development.</p>
             <a href="./chef-wars-postmortem--what-went-right-having-a-universe-file.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -254,16 +229,9 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p>One of the problems I was having with my Emacs environment under WSL <em>(Windows Subsystem for Linux, aka. Bash On Windows)</em> is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.</p>
-<p>I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called <a href="https://github.com/rolandwalker/simpleclip">simpleclip</a> that worked but the results were not consistent.</p>
-<p>I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-set-clipboard-data</span><span class="w"> </span><span class="p">(</span><span class="nv">str-val</span><span class="p">)</span>
-<span class="w">  </span><span class="s">&quot;Puts text in Windows clipboard. Copying to Windows from WSL does </span>
-<span class="s">not work on my end so this one is a temporary solution.</span>
 
-<span class="s">This function is called from within the simpleclip package when copy </span>
-<span class="s">or bgcopy …</span></code></pre></div>
+        <div class="article-content">
+            <p>A quick Emacs Lisp fix for clipboard copy not working from WSL to Windows applications, using clip.exe as a workaround via the simpleclip package.</p>
             <a href="./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -282,25 +250,9 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p>Since my recent switch from Wordpress to <a href="https://github.com/kelvinh/org-page">org-page</a> I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-org-journal-entry-to-org-page-post</span><span class="w"> </span><span class="p">()</span>
-<span class="w">  </span><span class="s">&quot;Copy the org-journal entry at point and then convert it to a org-page new post buffer.&quot;</span>
-<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">eq</span><span class="w"> </span><span class="ss">&#39;org-journal-mode</span><span class="w"> </span><span class="nv">major-mode</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">headline-text</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="nv">org-heading-components</span><span class="p">)))</span>
-<span class="w">        </span><span class="p">(</span><span class="nv">entry-text</span><span class="w"> </span><span class="p">(</span><span class="nv">org-get-entry</span><span class="p">)))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">funcall-interactively</span><span class="w"> </span><span class="ss">&#39;op/new-post</span><span class="w"> </span><span class="s">&quot;blog&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="w"> </span><span class="nv">headline-text</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">entry-text</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">message</span><span class="w"> </span><span class="s">&quot;This function can only be called inside org-journal-mode.&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">)</span>
-</code></pre></div>
 
-<p>The function is simple and uses functions from org-mode and org-page.</p>
-<ul>
-<li>First, it checks if the current buffer is in org-journal-mode</li>
-<li>Then it gets the headline text and entry texts</li>
-<li>It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to …</li></ul>
+        <div class="article-content">
+            <p>An Emacs Lisp function that converts an org-journal entry at point into a new org-page blog post, avoiding manual copy-paste between buffers.</p>
             <a href="./converting-org-journal-entry-to-org-page-post.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -319,47 +271,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>I needed a way to minify JSON files from Emacs so I made the short function below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-minify-buffer-contents</span><span class="p">()</span>
-<span class="w">    </span><span class="s">&quot;Minifies the buffer contents by removing whitespaces.&quot;</span>
-<span class="w">    </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">delete-whitespace-rectangle</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">mark-whole-buffer</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">replace-match</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)))</span>
-</code></pre></div>
-
-<p>The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline.</p>
-<p>This effectively turns this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span>
-<span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-
-
-<span class="w">                          </span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]</span>
-<span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup&quot;</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>To this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup …</span></code></pre></div>
+            <p>A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.</p>
             <a href="./minifying-buffer-contents-in-emacs.html" class="read-more">Read more &rarr;</a>
         </div>
 

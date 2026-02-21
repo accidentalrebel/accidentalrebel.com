@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>#4 - Following Lispy conventions | AccidentalRebel.com</title>
 
-<meta name="description" content="I was adding new Lisp functions to my game engine when I noticed that I had functions that had a naming scheme that were inconsistent with others. For...">
+<meta name="description" content="Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.">
 
     <link rel="canonical" href="./following-lispy-conventions.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="#4 - Following Lispy conventions">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2020-05-15T07:00:00+08:00">
-    <meta property="og:description" content="I was adding new Lisp functions to my game engine when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like sprite_create and shader_create but this one function I named make_vec3. I proceeded to rename make_vec3 to vec3_create. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. This made me wonder if there are other ways I could improve which led me to this page about variable naming conventions for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. For example, adding a ? prefix easily indicates that the function, when called, will always return …">
+    <meta property="og:description" content="Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./following-lispy-conventions.html">
     <meta property="twitter:title" content="#4 - Following Lispy conventions">
-    <meta property="twitter:description" content="I was adding new Lisp functions to my game engine when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like sprite_create and shader_create but this one function I named make_vec3. I proceeded to rename make_vec3 to vec3_create. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. This made me wonder if there are other ways I could improve which led me to this page about variable naming conventions for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. For example, adding a ? prefix easily indicates that the function, when called, will always return …">
+    <meta property="twitter:description" content="Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./following-lispy-conventions.html",
-        "description": "I was adding new Lisp functions to my game engine when I noticed that I had functions that had a naming scheme that were inconsistent with others. For..."
+        "description": "Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -201,6 +204,7 @@
 
 <p>I also changed my C functions to reflect a <em>NamespaceVerb</em> convention. I could have used <em>namespace::Verb</em> but the <a href="http://wiki.call-cc.org/eggref/5/bind">FFI that I use</a> to communicate with C cannot parse C namespaces. So instead of <em>Shader::Create</em>, I am left with <em>ShaderCreate</em>. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, <a href="https://www.raylib.com/examples.html">Raylib also uses this convention</a> for their functions).</p>
 <p>I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.</p>
+<p>For the low-level FFI bindings that these conventions apply to, see <a href="./chicken-scheme-ffi-examples.html">Chicken Scheme FFI Examples</a>.</p>
     </div>
 
     <footer class="article-footer">

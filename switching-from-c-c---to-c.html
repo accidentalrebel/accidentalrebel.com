@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>#5 - Switching from C/C++ to C | AccidentalRebel.com</title>
 
-<meta name="description" content="After the recent changes to the lisp side of my engine, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's...">
+<meta name="description" content="Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.">
 
     <link rel="canonical" href="./switching-from-c-c---to-c.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="#5 - Switching from C/C++ to C">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2020-05-19T17:59:00+08:00">
-    <meta property="og:description" content="After the recent changes to the lisp side of my engine, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features. Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …">
+    <meta property="og:description" content="Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./switching-from-c-c---to-c.html">
     <meta property="twitter:title" content="#5 - Switching from C/C++ to C">
-    <meta property="twitter:description" content="After the recent changes to the lisp side of my engine, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features. Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …">
+    <meta property="twitter:description" content="Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./switching-from-c-c---to-c.html",
-        "description": "After the recent changes to the lisp side of my engine, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's..."
+        "description": "Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.",
+        "image": "./images/default-og.png"
     }
     </script>
 

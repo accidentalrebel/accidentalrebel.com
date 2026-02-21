@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IOLI Crackme 0x04 | AccidentalRebel.com</title>
 
-<meta name="description" content="I am continuing my reverse engineering review by tackling the IOLI crackmes by @pof. These are beginner friendly challenges that is perfect for newbies or...">
+<meta name="description" content="IOLI Crackme 0x04 walkthrough — the password is any digits that sum to 15, revealed by tracing sscanf-based accumulation through static analysis in IDA.">
 
     <link rel="canonical" href="./ioli-crackme-0x04.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="IOLI Crackme 0x04">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-09-29T10:34:00+08:00">
-    <meta property="og:description" content="I am continuing my reverse engineering review by tackling the IOLI crackmes by @pof. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for 0x00, 0x01, 0x02, and 0x03. Getting the password Loading the program in IDA revealed something new. There is now a _check function that when opened looks more complicated than the previous challenges. The one thing that I immediately noticed is the call to the _strlen function similar to the previous challenge. This means that the length of the input string plays another important role. One curious thing is the condition that leads to the "Password Incorrect" block, as shown below. call _strlen cmp [ebp+var_C], eax jnb short loc_401387 From the looks of it, the check will fail if var_C (Which is our var_counter from the previous challenge) reaches the …">
+    <meta property="og:description" content="IOLI Crackme 0x04 walkthrough — the password is any digits that sum to 15, revealed by tracing sscanf-based accumulation through static analysis in IDA.">
+    <meta property="og:image" content="./images/ioli-crackme-0x04-01.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./ioli-crackme-0x04.html">
     <meta property="twitter:title" content="IOLI Crackme 0x04">
-    <meta property="twitter:description" content="I am continuing my reverse engineering review by tackling the IOLI crackmes by @pof. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for 0x00, 0x01, 0x02, and 0x03. Getting the password Loading the program in IDA revealed something new. There is now a _check function that when opened looks more complicated than the previous challenges. The one thing that I immediately noticed is the call to the _strlen function similar to the previous challenge. This means that the length of the input string plays another important role. One curious thing is the condition that leads to the "Password Incorrect" block, as shown below. call _strlen cmp [ebp+var_C], eax jnb short loc_401387 From the looks of it, the check will fail if var_C (Which is our var_counter from the previous challenge) reaches the …">
+    <meta property="twitter:description" content="IOLI Crackme 0x04 walkthrough — the password is any digits that sum to 15, revealed by tracing sscanf-based accumulation through static analysis in IDA.">
+    <meta property="twitter:image" content="./images/ioli-crackme-0x04-01.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./ioli-crackme-0x04.html",
-        "description": "I am continuing my reverse engineering review by tackling the IOLI crackmes by @pof. These are beginner friendly challenges that is perfect for newbies or..."
+        "description": "IOLI Crackme 0x04 walkthrough — the password is any digits that sum to 15, revealed by tracing sscanf-based accumulation through static analysis in IDA.",
+        "image": "./images/ioli-crackme-0x04-01.png"
     }
     </script>
 

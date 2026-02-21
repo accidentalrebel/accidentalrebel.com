@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Running AI agents in a box because I don't trust them | AccidentalRebel.com</title>
 
-<meta name="description" content="I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine. Being in Cyber...">
+<meta name="description" content="Claudecker is my Docker wrapper for Claude Code that isolates AI agents from my host with network lockdown, per-project custom images, and SSH agent forwarding.">
 
     <link rel="canonical" href="./running-ai-agents-in-a-box.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Running AI agents in a box because I don't trust them">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2026-01-30T10:00:00+08:00">
-    <meta property="og:description" content="I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine. Being in Cyber Security, I've developed a healthy paranoia about software that can execute arbitrary commands. AI coding assistants are powerful, but they're also unpredictable. They can run shell commands, modify files, and access the network. I wanted all of that contained. The setup Claudecker is my personal tool that wraps Docker to run Claude Code CLI and Codex CLI in an isolated container. Point it at any project directory and it mounts that directory into the container. The AI can do whatever it wants inside the container, but it can't touch the rest of my system. ./claudecker.sh run /path/to/project Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This …">
+    <meta property="og:description" content="Claudecker is my Docker wrapper for Claude Code that isolates AI agents from my host with network lockdown, per-project custom images, and SSH agent forwarding.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./running-ai-agents-in-a-box.html">
     <meta property="twitter:title" content="Running AI agents in a box because I don't trust them">
-    <meta property="twitter:description" content="I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine. Being in Cyber Security, I've developed a healthy paranoia about software that can execute arbitrary commands. AI coding assistants are powerful, but they're also unpredictable. They can run shell commands, modify files, and access the network. I wanted all of that contained. The setup Claudecker is my personal tool that wraps Docker to run Claude Code CLI and Codex CLI in an isolated container. Point it at any project directory and it mounts that directory into the container. The AI can do whatever it wants inside the container, but it can't touch the rest of my system. ./claudecker.sh run /path/to/project Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This …">
+    <meta property="twitter:description" content="Claudecker is my Docker wrapper for Claude Code that isolates AI agents from my host with network lockdown, per-project custom images, and SSH agent forwarding.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./running-ai-agents-in-a-box.html",
-        "description": "I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine. Being in Cyber..."
+        "description": "Claudecker is my Docker wrapper for Claude Code that isolates AI agents from my host with network lockdown, per-project custom images, and SSH agent forwarding.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -186,6 +189,8 @@ python3-dev
 <p>For security research projects, the isolation gives me peace of mind. The AI can analyze suspicious code, suggest modifications, even run tests, all without access to my actual filesystem or network.</p>
 <p>It's not perfect containment. Docker isn't a security boundary the way a VM is. But it's enough friction that an AI agent can't accidentally (or intentionally) do something I'd regret.</p>
 <p>For now, this setup works for my needs. The paranoia tax is a few extra seconds on startup and occasional friction with browser auth. Worth it.</p>
+<p>The threat landscape that motivated this setup is covered in <a href="./developer-tools-are-the-new-attack-surface.html">Developer Tools Are the New Attack Surface</a>.</p>
+<p>For another Claude Code workflow improvement, see the <a href="./building-a-session-retrospective-skill-for-claude-code.html">session retrospective skill</a> I built to capture lessons from each coding session.</p>
     </div>
 
     <footer class="article-footer">

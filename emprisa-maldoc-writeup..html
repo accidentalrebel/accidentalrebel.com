@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emprisa Maldoc Writeup | AccidentalRebel.com</title>
 
-<meta name="description" content="This is a writeup for Emprisa maldoc challenge that I made for CyberDefenders.org. You can play it here. The very first thing that I do when confronted with...">
+<meta name="description" content="Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.">
 
     <link rel="canonical" href="./emprisa-maldoc-writeup..html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Emprisa Maldoc Writeup">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-04-30T05:58:00+08:00">
-    <meta property="og:description" content="This is a writeup for Emprisa maldoc challenge that I made for CyberDefenders.org. You can play it here. The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word. A quick search of the hash on malware sandboxes would reveal that the document makes use of the CVE-2017-18822 vulnerability. This is a vulnerability that became known and was promptly patched around November of 2017. The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled. This new environment …">
+    <meta property="og:description" content="Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.">
+    <meta property="og:image" content="./images/emprisa-maldoc-writeup-01.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./emprisa-maldoc-writeup..html">
     <meta property="twitter:title" content="Emprisa Maldoc Writeup">
-    <meta property="twitter:description" content="This is a writeup for Emprisa maldoc challenge that I made for CyberDefenders.org. You can play it here. The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word. A quick search of the hash on malware sandboxes would reveal that the document makes use of the CVE-2017-18822 vulnerability. This is a vulnerability that became known and was promptly patched around November of 2017. The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled. This new environment …">
+    <meta property="twitter:description" content="Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.">
+    <meta property="twitter:image" content="./images/emprisa-maldoc-writeup-01.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./emprisa-maldoc-writeup..html",
-        "description": "This is a writeup for Emprisa maldoc challenge that I made for CyberDefenders.org. You can play it here. The very first thing that I do when confronted with..."
+        "description": "Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.",
+        "image": "./images/emprisa-maldoc-writeup-01.png"
     }
     </script>
 
@@ -99,7 +102,7 @@
 
     <div class="article-content">
         <blockquote>
-<p>This is a writeup for <a href="the-emprisa-maldoc-challenge">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
+<p>This is a writeup for <a href="./the-emprisa-maldoc-challenge.html">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
 </blockquote>
 <p>The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.</p>
 <p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
@@ -120,8 +123,9 @@
 <p>From here, we could also backtrack from where the shellcode is called to figure out how the exploit is triggered via a buffer overflow. This requires a bit of knowledge in reverse engineering. An alternative is to <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">check out the CVE details</a> in search for the tool that was likely used to make the exploit, and then examining the code.</p>
 <p>After all of that, you should have everything that you need to answer all the questions in the challenge. You may have noticed that I have not revealed the answers outright. You still have to find it on your own. However, I do hope that by walking you through the process, I have helped you understand how to get there.</p>
 <blockquote>
-<p>If you have more questions, or want to tell me what you think of the challenge, feel free to leave a comment below or send me a mesage at @accidentalrebel. </p>
+<p>If you have more questions, or want to tell me what you think of the challenge, feel free to leave a comment below or send me a mesage at @accidentalrebel.</p>
 </blockquote>
+<p>For another maldoc challenge walkthrough, check out <a href="./maldoc101-writeup-part-1.html">Maldoc101</a>, which inspired me to create the Emprisa challenge.</p>
     </div>
 
     <footer class="article-footer">

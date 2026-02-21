@@ -23,6 +23,7 @@
     }
     </script>
 
+<meta name="robots" content="noindex">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -64,11 +65,7 @@
                 <a href="../category/malware-analysis.html">Malware Analysis</a>
             </div>
             <div class="post-summary">
-                <p>I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. </p>
-<p>Now I know better.</p>
-<p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
-<p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
-<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …</p>
+                <p>How I built a virtual cybersecurity home lab with pfSense, Metasploitable, Kali, Splunk, Snort, and a dedicated malware analysis network using Remnux.</p>
             </div>
         </div>
         <div class="post-item">
@@ -81,10 +78,7 @@
                 <a href="../category/malware-analysis.html">Malware Analysis</a>
             </div>
             <div class="post-summary">
-                <p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
-<p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
-<p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
-<p>Having learned how to do runtime DLL loading myself I …</p>
+                <p>Building RATwurst, a RAT in C and Python, with runtime DLL loading, socket comms, anti-sandbox checks, and basic AV evasion — for educational purposes only.</p>
             </div>
         </div>
         <div class="post-item">
@@ -97,33 +91,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
-<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
-<hr />
-<h2 id="foreign-lambda-example">foreign-lambda example</h2>
-<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
-<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span>
-
-<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span>
-<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span>
-<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span>
-<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
+                <p>Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.</p>
             </div>
         </div>
         <div class="post-item">
@@ -136,9 +104,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
-<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
-<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …</p>
+                <p>Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.</p>
             </div>
         </div>
         <div class="post-item">
@@ -151,10 +117,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
-<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
-<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return …</p>
+                <p>Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.</p>
             </div>
         </div>
         <div class="post-item">
@@ -167,10 +130,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
-<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="../images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
-<p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
-<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different …</p>
+                <p>Getting a custom C game engine to build on Linux, Windows, and macOS with one Makefile — lessons from cross-platform debugging and using Msys2 on Windows.</p>
             </div>
         </div>
         <div class="post-item">
@@ -183,10 +143,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
-<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
-<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="../images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
-<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code …</p>
+                <p>Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.</p>
             </div>
         </div>
         <div class="post-item">
@@ -199,10 +156,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
-<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
-<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="../images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
-<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …</p>
+                <p>Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.</p>
             </div>
         </div>
         <div class="post-item">
@@ -215,11 +169,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
-<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
-<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
-<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="../images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
-<p>I recently got the idea of having Unity inform …</p>
+                <p>A Unity editor script that plays an audible beep when script reloading finishes, so you can look away from the screen instead of watching the progress spinner.</p>
             </div>
         </div>
     </div>

@@ -23,6 +23,15 @@
     }
     </script>
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="./">
+    <meta property="og:title" content="AccidentalRebel.com">
+    <meta property="og:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="og:image" content="./images/default-og.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AccidentalRebel.com">
+    <meta property="twitter:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="twitter:image" content="./images/default-og.png">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -59,12 +68,12 @@
             </div>
         </header>
 
+        <a href="./talking-about-mitres-malware-behavior-catalog.html" class="post-image-link">
+            <img src="./images/talking-about-mitres-malware-behavior-catalog-02.png" alt="Talking about Mitre's Malware Behavior Catalog" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="./images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
-<h2 id="a-brief-overview">A brief overview</h2>
-<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
-<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses …</p>
+            <p>An overview of MITRE's Malware Behavior Catalog (MBC) framework and MBCScan, a command-line tool I built to surface MBC behaviors from Capa scan results.</p>
             <a href="./talking-about-mitres-malware-behavior-catalog.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -86,25 +95,12 @@
             </div>
         </header>
 
+        <a href="./string-av-evasion-in-x64-assembly-part-2.html" class="post-image-link">
+            <img src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png" alt="String anti-virus evasion in x64 assembly (Part 2)" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
-<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
-<h2 id="the-problem">The problem</h2>
-<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Upon compiling …</p>
+            <p>How to hide API call strings from antivirus detection using LoadLibrary and GetProcAddress for runtime DLL loading, with a full x64 assembly implementation.</p>
             <a href="./string-av-evasion-in-x64-assembly-part-2.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -125,18 +121,12 @@
             </div>
         </header>
 
+        <a href="./string-av-evasion-in-x64-assembly-part-1.html" class="post-image-link">
+            <img src="./images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png" alt="String anti-virus evasion in x64 assembly (Part 1)" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>One of the features I implemented for my <a href="https://github.com/accidentalrebel/RATwurst">Remote Access Tool</a> was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. </p>
-<p>This was over a year ago. I decided to revisit this feature to try and understand it better and find out if it is actually effective.</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this two-part blog post I will look into the following:</p>
-<ul>
-<li>Hiding argument strings</li>
-<li>Hiding API call strings</li>
-</ul>
-<p>THe one you reading now is about the first one. I will be explaining how it's done in C and later convert it to x64 Windows Assembly so we can better understand what's happening under the hood.</p>
-<h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
-<p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an …</p>
+            <p>How to hide strings from antivirus detection by placing them on the stack instead of the .data segment, demonstrated in C and x64 Windows assembly.</p>
             <a href="./string-av-evasion-in-x64-assembly-part-1.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -157,12 +147,12 @@
             </div>
         </header>
 
+        <a href="./converting-a-malware-dropper-to-x64-assembly.html" class="post-image-link">
+            <img src="./images/converting-a-malware-dropper-to-x64-assembly-04.png" alt="Converting a malware dropper to x64 assembly" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>In this post I'll be listing down lessons I learned while converting a simple malware dropper written in C to x64 assembly. </p>
-<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
-<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better …</p>
+            <p>Practical lessons from converting a C malware dropper to x64 Windows assembly, covering shadow spaces, calling conventions, and memory segments.</p>
             <a href="./converting-a-malware-dropper-to-x64-assembly.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -183,14 +173,12 @@
             </div>
         </header>
 
+        <a href="./cyber-corp-case-2-writeup-part-3.html" class="post-image-link">
+            <img src="./images/cyber-corp-case-2-writeup-part-3-10.png" alt="Cyber Corp Case 2 Writeup - Part 3" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This write-up is the third and final part of this walkthrough. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-2">Part 2 here</a>.</p>
-<h2 id="finding-the-post-reverse-shell-activity">Finding the post-reverse shell activity</h2>
-<blockquote>
-<p>Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host.</p>
-</blockquote>
-<p>So from the question, I …</p>
+            <p>CyberCorp Case 2 part 3 — certutil download, LSASS dumping, WMI lateral movement to a domain controller, and tracking the second reverse shell C2 address.</p>
             <a href="./cyber-corp-case-2-writeup-part-3.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -210,19 +198,12 @@
             </div>
         </header>
 
+        <a href="./cyber-corp-case-2-writeup-part-2.html" class="post-image-link">
+            <img src="./images/cyber-corp-case-2-writeup-part-2-03.png" alt="Cyber Corp Case 2 Writeup - Part 2" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This writeup is part 2 out of multiple parts. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3 here</a>.</p>
-<h2 id="checking-dns-requests">Checking DNS Requests</h2>
-<blockquote>
-<p>Question 6. Specify the domain name of the resource from which the files mentioned in question 5 were supposedly downloaded as a result of malicious code execution.</p>
-</blockquote>
-<p>This one is easy. Using the same date range from the previous question, I changed the query to <code>event_type:DNSReq</code> (where "DNSReq" is short for "DNS Requests").</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-01" src="./images/cyber-corp-case-2-writeup-part-2-01.png" /></p>
-<p>We could easily see a DNS record being queried, which is our answer to this question.</p>
-<h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
-<blockquote>
-<p>Question 7. The first file downloaded (as a result of executing the code …</p></blockquote>
+            <p>CyberCorp Case 2 part 2 — decoding a base64 gzipped registry payload, tracing PID spoofing in PowerShell, and identifying the reverse shell C2 IP.</p>
             <a href="./cyber-corp-case-2-writeup-part-2.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -242,15 +223,12 @@
             </div>
         </header>
 
+        <a href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html" class="post-image-link">
+            <img src="./images/cyber-corp-case-2-writeup-01.png" alt="Cyber Corp Case 2 Writeup - Part 1" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
-<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
-<h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
-<blockquote>
-<p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
-</blockquote>
-<p>So the question tells us that …</p>
+            <p>CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.</p>
             <a href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -270,24 +248,12 @@
             </div>
         </header>
 
+        <a href="./new-tool-preview-vattack.html" class="post-image-link">
+            <img src="./images/new-tool-preview-vattack-01.png" alt="New Tool Preview: vATT&CK" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
-<p><img alt="new-tool-preview-vattack-01" src="./images/new-tool-preview-vattack-01.png" /></p>
-<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
-<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
-<ul>
-<li>Pink - Related subtechniques</li>
-<li>Orange - Malware that uses the searched technique</li>
-<li>Red - Groups that uses the searched technique</li>
-<li>Blue - Tools that use the searched technique</li>
-<li>Yellow - Mitigations</li>
-</ul>
-<p>This tool is still in development. I plan to add a number of improvements such as:</p>
-<ul>
-<li>Ability to click on nodes and then update the visual map</li>
-<li>Ability to search not just by technique, but also by other categories</li>
-</ul>
-<p>I also plan on releasing a live demo of the tool very soon in the …</p>
+            <p>vATT&amp;CK is a visual relationship mapper for MITRE ATT&amp;CK that shows linked malware, threat groups, mitigations, and subtechniques in a single interactive graph.</p>
             <a href="./new-tool-preview-vattack.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -307,20 +273,12 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, <a href="./ioli-crackme-0x02.html">0x02</a>, and <a href="./ioli-crackme-0x03.html">0x03</a>.</p>
-<h1 id="getting-the-password">Getting the password</h1>
-<p>Loading the program in IDA revealed something new. There is now a <code>_check</code> function that when opened looks more complicated than the previous challenges.</p>
-<p><img alt="ioli-crackme-0x04-01" src="./images/ioli-crackme-0x04-01.png" /></p>
-<p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
-<p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
-<p><img alt="ioli-crackme-0x04-02" src="./images/ioli-crackme-0x04-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span>
-<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
-<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span>
-</code></pre></div>
+        <a href="./ioli-crackme-0x04.html" class="post-image-link">
+            <img src="./images/ioli-crackme-0x04-01.png" alt="IOLI Crackme 0x04" class="post-image" loading="lazy">
+        </a>
 
-<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
+        <div class="article-content">
+            <p>IOLI Crackme 0x04 walkthrough — the password is any digits that sum to 15, revealed by tracing sscanf-based accumulation through static analysis in IDA.</p>
             <a href="./ioli-crackme-0x04.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -340,12 +298,12 @@
             </div>
         </header>
 
+        <a href="./building-my-virtual-cybersecurity-home-lab.html" class="post-image-link">
+            <img src="./images/building-my-virtual-cybersecurity-home-lab-01.png" alt="Building my Virtual Cybersecurity Home Lab" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. </p>
-<p>Now I know better.</p>
-<p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
-<p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
-<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …</p>
+            <p>How I built a virtual cybersecurity home lab with pfSense, Metasploitable, Kali, Splunk, Snort, and a dedicated malware analysis network using Remnux.</p>
             <a href="./building-my-virtual-cybersecurity-home-lab.html" class="read-more">Read more &rarr;</a>
         </div>
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your AI Assistant Might Be Working for Someone Else | AccidentalRebel.com</title>
 
-<meta name="description" content="Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2...">
+<meta name="description" content="Copilot and Grok repurposed as C2 channels, Cline supply chain attack installed AI agents on 4,000 dev machines, and AI found 12 zero-days in OpenSSL.">
 
     <link rel="canonical" href="./your-ai-assistant-might-be-working-for-someone-else.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Your AI Assistant Might Be Working for Someone Else">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2026-02-20T10:00:00+08:00">
-    <meta property="og:description" content="Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore. Editorial Your AI assistant is someone else's C2 channel I think a lot about what everyday services can double as C2 channels. A while back I built wp-c2, a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention. The technique: malware on a compromised machine sends crafted prompts to the …">
+    <meta property="og:description" content="Copilot and Grok repurposed as C2 channels, Cline supply chain attack installed AI agents on 4,000 dev machines, and AI found 12 zero-days in OpenSSL.">
+    <meta property="og:image" content="./images/your-ai-assistant-might-be-working-for-someone-else.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./your-ai-assistant-might-be-working-for-someone-else.html">
     <meta property="twitter:title" content="Your AI Assistant Might Be Working for Someone Else">
-    <meta property="twitter:description" content="Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore. Editorial Your AI assistant is someone else's C2 channel I think a lot about what everyday services can double as C2 channels. A while back I built wp-c2, a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention. The technique: malware on a compromised machine sends crafted prompts to the …">
+    <meta property="twitter:description" content="Copilot and Grok repurposed as C2 channels, Cline supply chain attack installed AI agents on 4,000 dev machines, and AI found 12 zero-days in OpenSSL.">
+    <meta property="twitter:image" content="./images/your-ai-assistant-might-be-working-for-someone-else.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./your-ai-assistant-might-be-working-for-someone-else.html",
-        "description": "Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2..."
+        "description": "Copilot and Grok repurposed as C2 channels, Cline supply chain attack installed AI agents on 4,000 dev machines, and AI found 12 zero-days in OpenSSL.",
+        "image": "./images/your-ai-assistant-might-be-working-for-someone-else.png"
     }
     </script>
 
@@ -112,6 +115,7 @@
 <p>The researchers went further. They showed the AI can also act as an "external decision engine" for the attacker, assessing system value, suggesting evasion strategies, and deciding what to do next. The AI isn't just the communication pipe. It's also the brain.</p>
 <p>That's the part that got me. My WordPress C2 and most other "hide in legitimate traffic" approaches are dumb pipes. You send a command, you get output. With an AI assistant as the relay, the attacker gets a reasoning engine for free. The malware can ask Copilot to assess whether the compromised machine is worth persisting on, or how to evade the specific EDR it detects. The C2 channel is also the operator.</p>
 <p>For defenders, the problem is architectural. You can't disable the browsing capability without killing the product. Anonymous sessions mean no authentication trail. Most organizations are still debating whether to deploy these tools at all, while attackers have already figured out how to live inside them.</p>
+<p>I've also approached this defensively: <a href="./running-ai-agents-in-a-box.html">running AI agents in isolated containers</a> prevents the agent itself from becoming a pivot point.</p>
 <hr />
 <h2 id="featured-stories">Featured stories</h2>
 <h3 id="cline-cli-supply-chain-attack-installs-autonomous-ai-agent-on-developer-machines"><a href="https://thehackernews.com/2026/02/cline-cli-230-supply-chain-attack.html">Cline CLI supply chain attack installs autonomous AI agent on developer machines</a></h3>
@@ -151,6 +155,7 @@
 </li>
 </ul>
 <hr />
+<p>Previous roundup: <a href="./ai-agents-under-attack.html">AI Agents Under Attack</a> — Claude finds 500+ vulns and LLMs run autonomous network breaches.</p>
     </div>
 
     <footer class="article-footer">

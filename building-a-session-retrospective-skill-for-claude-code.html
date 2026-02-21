@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Building a session retrospective skill for Claude Code | AccidentalRebel.com</title>
 
-<meta name="description" content="I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some...">
+<meta name="description" content="A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.">
 
     <link rel="canonical" href="./building-a-session-retrospective-skill-for-claude-code.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Building a session retrospective skill for Claude Code">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2026-02-01T12:00:00+08:00">
-    <meta property="og:description" content="I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some useful stuff" but no concrete record of what those lessons actually were. Recently, I learned of a skill called continuous-learning. It automatically extracts reusable patterns and saves them as skills. But I wanted something different. Not automated pattern extraction, but a human-readable summary I could actually share. Something I could look back on, or turn into a blog post. So I built the session-retrospective skill. What it does The skill analyzes the current Claude session and generates a markdown summary covering: What we set out to do Problems encountered and how they were solved Mistakes made and corrections Techniques discovered worth remembering Key takeaways The output goes straight to console for copy/paste. No files created, no cleanup needed …">
+    <meta property="og:description" content="A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./building-a-session-retrospective-skill-for-claude-code.html">
     <meta property="twitter:title" content="Building a session retrospective skill for Claude Code">
-    <meta property="twitter:description" content="I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some useful stuff" but no concrete record of what those lessons actually were. Recently, I learned of a skill called continuous-learning. It automatically extracts reusable patterns and saves them as skills. But I wanted something different. Not automated pattern extraction, but a human-readable summary I could actually share. Something I could look back on, or turn into a blog post. So I built the session-retrospective skill. What it does The skill analyzes the current Claude session and generates a markdown summary covering: What we set out to do Problems encountered and how they were solved Mistakes made and corrections Techniques discovered worth remembering Key takeaways The output goes straight to console for copy/paste. No files created, no cleanup needed …">
+    <meta property="twitter:description" content="A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./building-a-session-retrospective-skill-for-claude-code.html",
-        "description": "I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some..."
+        "description": "A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -122,6 +125,7 @@ cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SESSI
 <p>The skill works for my current needs. I haven't tested it extensively on very long sessions (the JSONL can get large and might need chunking). For now, it handles my typical single-session bursts fine.</p>
 <p>Also, the output format might need iteration based on actual use. The template includes sections for "mistakes made" and "techniques worth remembering" but maybe other categories would be more useful. I'll adjust as I use it more.</p>
 <p>The code is <a href="https://github.com/accidentalrebel/claude-skill-session-retrospective">here</a> if you want to try it.</p>
+<p>If you think about how to run Claude Code safely as well as effectively, see how I <a href="./running-ai-agents-in-a-box.html">containerize it in Docker with network lockdown</a>.</p>
     </div>
 
     <footer class="article-footer">

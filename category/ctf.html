@@ -23,6 +23,7 @@
     }
     </script>
 
+<meta name="robots" content="noindex">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -62,13 +63,7 @@
                 <time datetime="2021-04-30T05:58:00+08:00">Fri 30 April 2021</time>
             </div>
             <div class="post-summary">
-                <blockquote>
-<p>This is a writeup for <a href="the-emprisa-maldoc-challenge">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
-</blockquote>
-<p>The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.</p>
-<p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
-<p>The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled.</p>
-<p>This new environment …</p>
+                <p>Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.</p>
             </div>
             <div class="tags">
                 <a href="../tag/maldoc.html" class="tag">maldoc</a>
@@ -83,10 +78,7 @@
                 <time datetime="2021-04-04T16:37:00+08:00">Sun 04 April 2021</time>
             </div>
             <div class="post-summary">
-                <p>I was inspired to make my own CTF challenge after finishing <a href="../maldoc101-writeup-part-1.html">Maldoc101</a> found at <a href="https://cyberdefenders.org/">Cyberdefenders.org</a>. The challenge I made is called <a href="https://cyberdefenders.org/labs/56">Emprisa Maldoc</a> and it is now up on their website. </p>
-<p>Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge.</p>
-<p><img alt="the-emprisa-maldoc-challenge-01" src="../images/the-emprisa-maldoc-challenge-01.png" /></p>
-<p>The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open …</p>
+                <p>How I turned a real-world malicious document exploit into the Emprisa Maldoc CTF on CyberDefenders — 14 questions targeting intermediate maldoc analysts.</p>
             </div>
             <div class="tags">
                 <a href="../tag/maldoc.html" class="tag">maldoc</a>
@@ -101,14 +93,7 @@
                 <time datetime="2020-10-05T11:13:00+08:00">Mon 05 October 2020</time>
             </div>
             <div class="post-summary">
-                <blockquote>
-<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
-</blockquote>
-<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
-<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="../covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
-<h2 id="the-preparation">The Preparation</h2>
-<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
-<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
+                <p>How I won the GuideM Hunt the Kingdom blue team CTF — strategy, preparation, and the high-stakes final minutes that came down to four unsolved questions.</p>
             </div>
             <div class="tags">
                 <a href="../tag/ctf.html" class="tag">ctf</a>
@@ -123,11 +108,7 @@
                 <time datetime="2020-08-13T16:58:00+08:00">Thu 13 August 2020</time>
             </div>
             <div class="post-summary">
-                <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
-<p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
-<h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
-<blockquote>
-<p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …</p></blockquote>
+                <p>Defcon RTV CTF writeup — reversing a Linux malware binary, bypassing ptrace anti-debugging, and recovering flags from shared memory and rootkit files.</p>
             </div>
             <div class="tags">
                 <a href="../tag/ctf.html" class="tag">ctf</a>

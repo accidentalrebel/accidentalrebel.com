@@ -23,6 +23,7 @@
     }
     </script>
 
+<meta name="robots" content="noindex">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -62,19 +63,7 @@
                 <time datetime="2026-02-01T12:00:00+08:00">Sun 01 February 2026</time>
             </div>
             <div class="post-summary">
-                <p>I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some useful stuff" but no concrete record of what those lessons actually were.</p>
-<p>Recently, I learned of a skill called <a href="https://github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning">continuous-learning</a>. It automatically extracts reusable patterns and saves them as skills. But I wanted something different. Not automated pattern extraction, but a human-readable summary I could actually share. Something I could look back on, or turn into a blog post.</p>
-<p>So I built the <a href="https://github.com/accidentalrebel/claude-skill-session-retrospective">session-retrospective</a> skill.</p>
-<h2 id="what-it-does">What it does</h2>
-<p>The skill analyzes the current Claude session and generates a markdown summary covering:</p>
-<ul>
-<li>What we set out to do</li>
-<li>Problems encountered and how they were solved</li>
-<li>Mistakes made and corrections</li>
-<li>Techniques discovered worth remembering</li>
-<li>Key takeaways</li>
-</ul>
-<p>The output goes straight to console for copy/paste. No files created, no cleanup needed …</p>
+                <p>A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.</p>
             </div>
             <div class="tags">
                 <a href="../tag/claude-code.html" class="tag">claude-code</a>
@@ -90,15 +79,7 @@
                 <time datetime="2023-05-20T06:46:00+08:00">Sat 20 May 2023</time>
             </div>
             <div class="post-summary">
-                <h2 id="tldr">TLDR:</h2>
-<ul>
-<li>Packed malware machine learning classifier can only previously identify 10 packers</li>
-<li>Solution was a customized version of model ensembling, which is to train multiple models and resolve their results</li>
-<li>It works with a slight caveat of more extended training and processing, which I could happily live with</li>
-</ul>
-<p>I recently presented <a href="https://packers.vgl4nt.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
-<h2 id="a-simple-solution">A Simple Solution</h2>
-<p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which …</p>
+                <p>How I doubled VGL4NT's malware packer classification capacity without extra GPU by using task decomposition to run multiple specialized models in parallel.</p>
             </div>
             <div class="tags">
                 <a href="../tag/packers-malware-machine_learning-ml-update-vgl4nt.html" class="tag">packers malware machine_learning ml update vgl4nt</a>
@@ -112,12 +93,7 @@
                 <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
             </div>
             <div class="post-summary">
-                <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
-<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
-<p><img alt="classifying-malware-packers-using-machine-learning-01" src="../images/classifying-malware-packers-using-machine-learning-01.png" /></p>
-<p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
-<h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
-<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the …</p>
+                <p>How I built VGL4NT, a machine learning classifier that identifies malware packers like UPX, Themida, and MPRESS with 94% accuracy using image-based ML models.</p>
             </div>
             <div class="tags">
                 <a href="../tag/artificial_intelligence.html" class="tag">artificial_intelligence</a>
@@ -132,12 +108,7 @@
                 <time datetime="2022-08-15T11:29:00+08:00">Mon 15 August 2022</time>
             </div>
             <div class="post-summary">
-                <p>In the <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
-<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
-<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
-<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include …</span></code></pre></div>
+                <p>Implementing sandbox evasion via GlobalMemoryStatusEx in x64 assembly, including how to manually calculate C struct sizes and pass pointers on the stack.</p>
             </div>
             <div class="tags">
                 <a href="../tag/malware.html" class="tag">malware</a>
@@ -153,12 +124,7 @@
                 <time datetime="2022-08-08T11:29:00+08:00">Mon 08 August 2022</time>
             </div>
             <div class="post-summary">
-                <p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
-<h2 id="checking-the-memory">Checking the memory</h2>
-<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is probably a sandbox (To save costs). While it's not exactly fool-proof …</p>
+                <p>Implementing the malware sandbox evasion technique of checking RAM size using GetPhysicallyInstalledSystemMemory, converted from C to x64 Windows assembly.</p>
             </div>
             <div class="tags">
                 <a href="../tag/malware.html" class="tag">malware</a>
@@ -174,24 +140,7 @@
                 <time datetime="2022-07-09T12:11:00+08:00">Sat 09 July 2022</time>
             </div>
             <div class="post-summary">
-                <p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
-<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
-<h2 id="the-problem">The problem</h2>
-<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Upon compiling …</p>
+                <p>How to hide API call strings from antivirus detection using LoadLibrary and GetProcAddress for runtime DLL loading, with a full x64 assembly implementation.</p>
             </div>
             <div class="tags">
                 <a href="../tag/evasion.html" class="tag">evasion</a>
@@ -207,17 +156,7 @@
                 <time datetime="2022-07-08T12:11:00+08:00">Fri 08 July 2022</time>
             </div>
             <div class="post-summary">
-                <p>One of the features I implemented for my <a href="https://github.com/accidentalrebel/RATwurst">Remote Access Tool</a> was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. </p>
-<p>This was over a year ago. I decided to revisit this feature to try and understand it better and find out if it is actually effective.</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this two-part blog post I will look into the following:</p>
-<ul>
-<li>Hiding argument strings</li>
-<li>Hiding API call strings</li>
-</ul>
-<p>THe one you reading now is about the first one. I will be explaining how it's done in C and later convert it to x64 Windows Assembly so we can better understand what's happening under the hood.</p>
-<h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
-<p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an …</p>
+                <p>How to hide strings from antivirus detection by placing them on the stack instead of the .data segment, demonstrated in C and x64 Windows assembly.</p>
             </div>
             <div class="tags">
                 <a href="../tag/evasion.html" class="tag">evasion</a>
@@ -233,11 +172,7 @@
                 <time datetime="2022-07-03T09:18:00+08:00">Sun 03 July 2022</time>
             </div>
             <div class="post-summary">
-                <p>In this post I'll be listing down lessons I learned while converting a simple malware dropper written in C to x64 assembly. </p>
-<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
-<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better …</p>
+                <p>Practical lessons from converting a C malware dropper to x64 Windows assembly, covering shadow spaces, calling conventions, and memory segments.</p>
             </div>
             <div class="tags">
                 <a href="../tag/malware.html" class="tag">malware</a>
@@ -253,12 +188,7 @@
                 <time datetime="2020-10-01T07:19:00+08:00">Thu 01 October 2020</time>
             </div>
             <div class="post-summary">
-                <p>I've done a lot of electronics projects already, all of them were painstakingly hand-soldered on a perfboard. I actually like this approach for quick prototyping, and plus, I've also grown fond of how "raw" it looks like. In spite of this, I've always been curious and interested in having my own printed PCB. I remember designing one for my <a href="https://hackaday.io/project/164144-tiro-vibrating-watch/log/161430-current-state-and-next-steps">TIRO vibrating watch</a> but I never pushed through with it because I wasn't confident with what I've made.</p>
-<p><img alt="my-experience-manufacturing-printed-circuit-boards-01" src="../images/my-experience-manufacturing-printed-circuit-boards-01.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>I really like the raw, almost electronic-punk look of my work
-</code></pre></div>
-
-<p>A couple of months ago I got an email from <a href="https://www.pcbway.com/">PCBWay</a> asking if I was interested in trying out their PCB manufacturing service. The email from PCBWay re-ignited this interest in having a PCB made. The problem is I didn't have a PCB design that I built myself that I knew was going to work. My best option was the "ESPBoy project …</p>
+                <p>First-time experience ordering custom PCBs from PCBWay using the ESPBoy gerber files — the process, quality, and what comes next for future board designs.</p>
             </div>
             <div class="tags">
                 <a href="../tag/pcbs.html" class="tag">pcbs</a>
@@ -273,18 +203,7 @@
                 <time datetime="2020-08-01T11:07:00+08:00">Sat 01 August 2020</time>
             </div>
             <div class="post-summary">
-                <div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
-</code></pre></div>
-
-<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
-<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
-<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
-<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
-<p>To view the current MAC address:</p>
-<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig
-</code></pre></div>
-
-<p>The current MAC address is <code>08:00 …</code></p>
+                <p>Study notes on MAC spoofing — what it is, legitimate versus illegitimate uses, and how to change your MAC address using ifconfig or macchanger on Linux.</p>
             </div>
             <div class="tags">
                 <a href="../tag/spoofing.html" class="tag">spoofing</a>
@@ -299,33 +218,7 @@
                 <time datetime="2020-06-16T05:58:00+08:00">Tue 16 June 2020</time>
             </div>
             <div class="post-summary">
-                <p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
-<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
-<hr />
-<h2 id="foreign-lambda-example">foreign-lambda example</h2>
-<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
-<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span>
-
-<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span>
-<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span>
-<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span>
-<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
+                <p>Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.</p>
             </div>
             <div class="tags">
                 <a href="../tag/programming.html" class="tag">programming</a>
@@ -341,9 +234,7 @@
                 <time datetime="2020-05-19T17:59:00+08:00">Tue 19 May 2020</time>
             </div>
             <div class="post-summary">
-                <p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
-<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
-<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …</p>
+                <p>Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.</p>
             </div>
             <div class="tags">
                 <a href="../tag/dev.html" class="tag">dev</a>
@@ -358,10 +249,7 @@
                 <time datetime="2020-05-15T07:00:00+08:00">Fri 15 May 2020</time>
             </div>
             <div class="post-summary">
-                <p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
-<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
-<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return …</p>
+                <p>Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.</p>
             </div>
             <div class="tags">
                 <a href="../tag/dev.html" class="tag">dev</a>
@@ -376,10 +264,7 @@
                 <time datetime="2020-05-10T07:08:00+08:00">Sun 10 May 2020</time>
             </div>
             <div class="post-summary">
-                <p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
-<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="../images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
-<p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
-<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different …</p>
+                <p>Getting a custom C game engine to build on Linux, Windows, and macOS with one Makefile — lessons from cross-platform debugging and using Msys2 on Windows.</p>
             </div>
             <div class="tags">
                 <a href="../tag/dev.html" class="tag">dev</a>
@@ -394,10 +279,7 @@
                 <time datetime="2020-05-07T21:35:00+08:00">Thu 07 May 2020</time>
             </div>
             <div class="post-summary">
-                <p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
-<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
-<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="../images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
-<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code …</p>
+                <p>Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.</p>
             </div>
             <div class="tags">
                 <a href="../tag/lisp.html" class="tag">lisp</a>
@@ -413,10 +295,7 @@
                 <time datetime="2020-05-03T11:19:00+08:00">Sun 03 May 2020</time>
             </div>
             <div class="post-summary">
-                <p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
-<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
-<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="../images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
-<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …</p>
+                <p>Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.</p>
             </div>
             <div class="tags">
                 <a href="../tag/dev.html" class="tag">dev</a>
@@ -432,11 +311,7 @@
                 <time datetime="2020-05-01T17:07:00+08:00">Fri 01 May 2020</time>
             </div>
             <div class="post-summary">
-                <p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
-<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
-<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
-<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="../images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
-<p>I recently got the idea of having Unity inform …</p>
+                <p>A Unity editor script that plays an audible beep when script reloading finishes, so you can look away from the screen instead of watching the progress spinner.</p>
             </div>
             <div class="tags">
                 <a href="../tag/dev.html" class="tag">dev</a>
@@ -451,11 +326,7 @@
                 <time datetime="2018-01-24T14:32:00+08:00">Wed 24 January 2018</time>
             </div>
             <div class="post-summary">
-                <p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
-<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
-<p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
-<p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
-<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text …</a></p>
+                <p>How to open Unity script files in Emacs with correct line numbers using the OnOpenAssetAttribute callback and emacsclient.</p>
             </div>
             <div class="tags">
                 <a href="../tag/emacs-unity.html" class="tag">emacs unity</a>
@@ -469,15 +340,7 @@
                 <time datetime="2017-12-10T23:33:00+08:00">Sun 10 December 2017</time>
             </div>
             <div class="post-summary">
-                <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TL;DR</strong></p>
-<ul>
-<li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
-</ul>
-<hr />
-<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
-<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
-<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system …</p>
+                <p>A risk-adjusted estimation system that pairs time estimates with confidence levels to produce reliable schedules — used to ship Chef Wars on time.</p>
             </div>
             <div class="tags">
                 <a href="../tag/chefwars.html" class="tag">chefwars</a>
@@ -493,15 +356,7 @@
                 <time datetime="2017-12-06T00:02:00+08:00">Wed 06 December 2017</time>
             </div>
             <div class="post-summary">
-                <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TLDR</strong></p>
-<ul>
-<li>There is more to the saying that "premature optimization is the root of all evil".</li>
-<li>Instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize.</li>
-</ul>
-<hr />
-<p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
-<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built …</p>
+                <p>Lessons from Chef Wars on premature optimization: why asking WHAT and HOW to optimize matters more than asking WHEN, after making both mistakes in production.</p>
             </div>
             <div class="tags">
                 <a href="../tag/chefwars.html" class="tag">chefwars</a>
@@ -517,18 +372,7 @@
                 <time datetime="2017-12-05T12:56:00+08:00">Tue 05 December 2017</time>
             </div>
             <div class="post-summary">
-                <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
-<p><strong>TLDR</strong></p>
-<ul>
-<li>All data in our game is contained in one excel file we call the "Universe".</li>
-<li>Prototypes can be done on the Universe excel file itself</li>
-<li>Iteration is easier as we only need to change one file.</li>
-<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
-</ul>
-<hr />
-<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
-<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">This</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="nx">definitely</span><span class="w"> </span><span class="nx">gives</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">hint</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">what</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">guy</span><span class="w"> </span><span class="nx">Cliff</span><span class="w"> </span><span class="k">is …</span></code></pre></div>
+                <p>How keeping all Chef Wars game data in a single "Universe" spreadsheet made prototyping, iteration, and live patching faster across two years of development.</p>
             </div>
             <div class="tags">
                 <a href="../tag/chefwars.html" class="tag">chefwars</a>
@@ -544,15 +388,7 @@
                 <time datetime="2017-09-23T13:08:00+08:00">Sat 23 September 2017</time>
             </div>
             <div class="post-summary">
-                <p>One of the problems I was having with my Emacs environment under WSL <em>(Windows Subsystem for Linux, aka. Bash On Windows)</em> is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.</p>
-<p>I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called <a href="https://github.com/rolandwalker/simpleclip">simpleclip</a> that worked but the results were not consistent.</p>
-<p>I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-set-clipboard-data</span><span class="w"> </span><span class="p">(</span><span class="nv">str-val</span><span class="p">)</span>
-<span class="w">  </span><span class="s">&quot;Puts text in Windows clipboard. Copying to Windows from WSL does </span>
-<span class="s">not work on my end so this one is a temporary solution.</span>
-
-<span class="s">This function is called from within the simpleclip package when copy </span>
-<span class="s">or bgcopy …</span></code></pre></div>
+                <p>A quick Emacs Lisp fix for clipboard copy not working from WSL to Windows applications, using clip.exe as a workaround via the simpleclip package.</p>
             </div>
             <div class="tags">
                 <a href="../tag/emacs-windows-linux.html" class="tag">emacs windows linux</a>
@@ -566,24 +402,7 @@
                 <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
             </div>
             <div class="post-summary">
-                <p>Since my recent switch from Wordpress to <a href="https://github.com/kelvinh/org-page">org-page</a> I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-org-journal-entry-to-org-page-post</span><span class="w"> </span><span class="p">()</span>
-<span class="w">  </span><span class="s">&quot;Copy the org-journal entry at point and then convert it to a org-page new post buffer.&quot;</span>
-<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-<span class="w">  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">eq</span><span class="w"> </span><span class="ss">&#39;org-journal-mode</span><span class="w"> </span><span class="nv">major-mode</span><span class="p">)</span>
-<span class="w">      </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">headline-text</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="nv">org-heading-components</span><span class="p">)))</span>
-<span class="w">        </span><span class="p">(</span><span class="nv">entry-text</span><span class="w"> </span><span class="p">(</span><span class="nv">org-get-entry</span><span class="p">)))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">funcall-interactively</span><span class="w"> </span><span class="ss">&#39;op/new-post</span><span class="w"> </span><span class="s">&quot;blog&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="w"> </span><span class="nv">headline-text</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">entry-text</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">message</span><span class="w"> </span><span class="s">&quot;This function can only be called inside org-journal-mode.&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">)</span>
-</code></pre></div>
-
-<p>The function is simple and uses functions from org-mode and org-page.</p>
-<ul>
-<li>First, it checks if the current buffer is in org-journal-mode</li>
-<li>Then it gets the headline text and entry texts</li>
-<li>It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to …</li></ul>
+                <p>An Emacs Lisp function that converts an org-journal entry at point into a new org-page blog post, avoiding manual copy-paste between buffers.</p>
             </div>
             <div class="tags">
                 <a href="../tag/emacs-org-mode.html" class="tag">emacs org-mode</a>
@@ -597,46 +416,7 @@
                 <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
             </div>
             <div class="post-summary">
-                <p>I needed a way to minify JSON files from Emacs so I made the short function below.</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-minify-buffer-contents</span><span class="p">()</span>
-<span class="w">    </span><span class="s">&quot;Minifies the buffer contents by removing whitespaces.&quot;</span>
-<span class="w">    </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">delete-whitespace-rectangle</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="nv">mark-whole-buffer</span><span class="p">)</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">))</span>
-<span class="w">    </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">replace-match</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)))</span>
-</code></pre></div>
-
-<p>The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline.</p>
-<p>This effectively turns this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span>
-<span class="w">    </span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span>
-<span class="w">            </span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                </span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">                    </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
-<span class="w">                    </span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span>
-<span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-
-
-<span class="w">                          </span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span>
-<span class="w">                        </span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]</span>
-<span class="w">                    </span><span class="p">},</span>
-<span class="w">                    </span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup&quot;</span>
-<span class="w">                </span><span class="p">}</span>
-<span class="w">            </span><span class="p">}</span>
-<span class="w">        </span><span class="p">}</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>To this:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup …</span></code></pre></div>
+                <p>A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.</p>
             </div>
             <div class="tags">
                 <a href="../tag/emacs.html" class="tag">emacs</a>

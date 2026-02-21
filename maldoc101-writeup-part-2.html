@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maldoc101 Writeup (Part 2) | AccidentalRebel.com</title>
 
-<meta name="description" content="This is part 2 of my writeup for the Maldoc101 challenge. Check out part 1 for the beginning of the analysis. The next couple of lines does the same...">
+<meta name="description" content="Continuing the Maldoc101 malware analysis — decoding obfuscated VBA string concatenation to reveal WMI class references used for process execution.">
 
     <link rel="canonical" href="./maldoc101-writeup-part-2.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Maldoc101 Writeup (Part 2)">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-03-14T08:34:00+08:00">
-    <meta property="og:description" content="This is part 2 of my writeup for the Maldoc101 challenge. Check out part 1 for the beginning of the analysis. The next couple of lines does the same concatenating technique similar to the previous steps. deaknaugthein = roubhaol.kaizseah.ControlTipText giakfeiw = deulsaocthuul + gooykadheoj + roubhaol.paerwagyouqumeid.ControlTipText + deaknaugthein queegthaen = giakfeiw + roubhaol.joefwoefcheaw At the end of the code above queegthaen now contains the value Win32_Process + s + tar + tu + P. Or when combined creates the string Win32_ProcessstartuP which probably refers to this WMI class in the Microsoft docs. Note: This writeup appears to be incomplete. For the complete analysis, please refer to part 1 of this series.">
+    <meta property="og:description" content="Continuing the Maldoc101 malware analysis — decoding obfuscated VBA string concatenation to reveal WMI class references used for process execution.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./maldoc101-writeup-part-2.html">
     <meta property="twitter:title" content="Maldoc101 Writeup (Part 2)">
-    <meta property="twitter:description" content="This is part 2 of my writeup for the Maldoc101 challenge. Check out part 1 for the beginning of the analysis. The next couple of lines does the same concatenating technique similar to the previous steps. deaknaugthein = roubhaol.kaizseah.ControlTipText giakfeiw = deulsaocthuul + gooykadheoj + roubhaol.paerwagyouqumeid.ControlTipText + deaknaugthein queegthaen = giakfeiw + roubhaol.joefwoefcheaw At the end of the code above queegthaen now contains the value Win32_Process + s + tar + tu + P. Or when combined creates the string Win32_ProcessstartuP which probably refers to this WMI class in the Microsoft docs. Note: This writeup appears to be incomplete. For the complete analysis, please refer to part 1 of this series.">
+    <meta property="twitter:description" content="Continuing the Maldoc101 malware analysis — decoding obfuscated VBA string concatenation to reveal WMI class references used for process execution.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./maldoc101-writeup-part-2.html",
-        "description": "This is part 2 of my writeup for the Maldoc101 challenge. Check out part 1 for the beginning of the analysis. The next couple of lines does the same..."
+        "description": "Continuing the Maldoc101 malware analysis — decoding obfuscated VBA string concatenation to reveal WMI class references used for process execution.",
+        "image": "./images/default-og.png"
     }
     </script>
 

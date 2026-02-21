@@ -23,6 +23,7 @@
     }
     </script>
 
+<meta name="robots" content="noindex">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -64,11 +65,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
-<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
-<p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
-<p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
-<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text …</a></p>
+                <p>How to open Unity script files in Emacs with correct line numbers using the OnOpenAssetAttribute callback and emacsclient.</p>
             </div>
         </div>
     </div>

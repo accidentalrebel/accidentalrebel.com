@@ -23,6 +23,15 @@
     }
     </script>
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="../">
+    <meta property="og:title" content="AccidentalRebel.com">
+    <meta property="og:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="og:image" content="../images/default-og.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AccidentalRebel.com">
+    <meta property="twitter:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="twitter:image" content="../images/default-og.png">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -59,24 +68,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="../ioli-crackme-0x00.html">here</a>.</p>
-<h1 id="getting-the-password">Getting the password</h1>
-<p>Of course, the first thing we do is run the program.</p>
-<p><img alt="ioli-crackme-0x01-01" src="../images/ioli-crackme-0x01-01.png" /></p>
-<p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
-<p><img alt="ioli-crackme-0x01-02" src="../images/ioli-crackme-0x01-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
-<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
-</code></pre></div>
-
-<p>This seems easy enough. </p>
-<p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
-</code></pre></div>
-
-<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
+            <p>IOLI Crackme 0x01 walkthrough — converting hex to decimal to find the password, plus a closer look at how arguments are passed to functions in x86 assembly.</p>
             <a href="../ioli-crackme-0x01.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -96,20 +90,9 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p>I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.</p>
-<h2 id="getting-the-password">Getting the password</h2>
-<p>Running the program shows a password prompt. </p>
-<p><img alt="ioli-crackme-0x00-03" src="../images/ioli-crackme-0x00-03.png" /></p>
-<p>Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code.</p>
-<p>I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this:</p>
-<p><img alt="ioli-crackme-0x00-02" src="../images/ioli-crackme-0x00-02.png" /></p>
-<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
-<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
-<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span>
-</code></pre></div>
 
-<p>And just from these few lines alone I already knew what the password is …</p>
+        <div class="article-content">
+            <p>IOLI Crackme 0x00 walkthrough — finding the hardcoded password in IDA Pro and patching the binary to accept any input by changing a jz opcode to jmp.</p>
             <a href="../ioli-crackme-0x00.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -129,15 +112,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <blockquote>
-<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
-</blockquote>
-<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
-<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="../covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
-<h2 id="the-preparation">The Preparation</h2>
-<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
-<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
+            <p>How I won the GuideM Hunt the Kingdom blue team CTF — strategy, preparation, and the high-stakes final minutes that came down to four unsolved questions.</p>
             <a href="../hunt-the-kingdom-ctf-challenge.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -157,13 +134,9 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p>I've done a lot of electronics projects already, all of them were painstakingly hand-soldered on a perfboard. I actually like this approach for quick prototyping, and plus, I've also grown fond of how "raw" it looks like. In spite of this, I've always been curious and interested in having my own printed PCB. I remember designing one for my <a href="https://hackaday.io/project/164144-tiro-vibrating-watch/log/161430-current-state-and-next-steps">TIRO vibrating watch</a> but I never pushed through with it because I wasn't confident with what I've made.</p>
-<p><img alt="my-experience-manufacturing-printed-circuit-boards-01" src="../images/my-experience-manufacturing-printed-circuit-boards-01.jpg" /></p>
-<div class="codehilite"><pre><span></span><code>I really like the raw, almost electronic-punk look of my work
-</code></pre></div>
 
-<p>A couple of months ago I got an email from <a href="https://www.pcbway.com/">PCBWay</a> asking if I was interested in trying out their PCB manufacturing service. The email from PCBWay re-ignited this interest in having a PCB made. The problem is I didn't have a PCB design that I built myself that I knew was going to work. My best option was the "ESPBoy project …</p>
+        <div class="article-content">
+            <p>First-time experience ordering custom PCBs from PCBWay using the ESPBoy gerber files — the process, quality, and what comes next for future board designs.</p>
             <a href="../my-experience-manufacturing-printed-circuit-boards.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -183,12 +156,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
-<p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
-<h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
-<blockquote>
-<p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …</p></blockquote>
+            <p>Defcon RTV CTF writeup — reversing a Linux malware binary, bypassing ptrace anti-debugging, and recovering flags from shared memory and rootkit files.</p>
             <a href="../covidscammers-writeup--defcon-rtv-ctf.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -210,19 +180,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
-</code></pre></div>
-
-<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
-<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
-<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
-<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
-<p>To view the current MAC address:</p>
-<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig
-</code></pre></div>
-
-<p>The current MAC address is <code>08:00 …</code></p>
+            <p>Study notes on MAC spoofing — what it is, legitimate versus illegitimate uses, and how to change your MAC address using ifconfig or macchanger on Linux.</p>
             <a href="../study-notes--mac-spoofing.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -242,34 +202,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
-<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
-<hr />
-<h2 id="foreign-lambda-example">foreign-lambda example</h2>
-<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
-<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span>
-
-<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
-<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
-<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span>
-<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span>
-<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span>
-<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span>
-<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
+            <p>Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.</p>
             <a href="../chicken-scheme-ffi-examples.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -291,10 +226,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
-<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
-<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …</p>
+            <p>Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.</p>
             <a href="../switching-from-c-c---to-c.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -314,11 +248,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
-<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
-<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
-<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return …</p>
+            <p>Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.</p>
             <a href="../following-lispy-conventions.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -338,11 +270,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
-<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="../images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
-<p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
-<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different …</p>
+            <p>Getting a custom C game engine to build on Linux, Windows, and macOS with one Makefile — lessons from cross-platform debugging and using Msys2 on Windows.</p>
             <a href="../rebel-game-engine-now-works-on-different-platforms.html" class="read-more">Read more &rarr;</a>
         </div>
 

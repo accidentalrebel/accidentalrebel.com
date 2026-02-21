@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Converting org-journal entry to org-page post | AccidentalRebel.com</title>
 
-<meta name="description" content="I needed a way to minify JSON files from Emacs so I made the short function below. (defun arebel-minify-buffer-contents() "Minifies the buffer contents by...">
+<meta name="description" content="A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.">
 
     <link rel="canonical" href="./minifying-buffer-contents-in-emacs.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Converting org-journal entry to org-page post">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2017-04-19T13:17:00+08:00">
-    <meta property="og:description" content="I needed a way to minify JSON files from Emacs so I made the short function below. (defun arebel-minify-buffer-contents() "Minifies the buffer contents by removing whitespaces." (interactive) (delete-whitespace-rectangle (point-min) (point-max)) (mark-whole-buffer) (goto-char (point-min)) (while (search-forward "\n" nil t) (replace-match "" nil t))) The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline. This effectively turns this: { "glossary": { "title": "example glossary", "GlossDiv": { "title": "S", "GlossList": { "GlossEntry": { "ID": "SGML", "SortAs": "SGML", "GlossTerm": "Standard Generalized Markup Language", "Acronym": "SGML", "Abbrev": "ISO 8879:1986", "GlossDef": { "para": "A meta-markup language, used to create markup languages such as DocBook.", "GlossSeeAlso": ["GML", "XML"] }, "GlossSee": "markup" } } } } } To this: {"glossary": {"title": "example glossary","GlossDiv": {"title": "S","GlossList": {"GlossEntry": {"ID": "SGML","SortAs": "SGML","GlossTerm": "Standard Generalized Markup Language","Acronym": "SGML","Abbrev": "ISO 8879:1986","GlossDef": {"para": "A meta-markup language, used to create markup languages such as DocBook.","GlossSeeAlso": ["GML", "XML"]},"GlossSee": "markup …">
+    <meta property="og:description" content="A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./minifying-buffer-contents-in-emacs.html">
     <meta property="twitter:title" content="Converting org-journal entry to org-page post">
-    <meta property="twitter:description" content="I needed a way to minify JSON files from Emacs so I made the short function below. (defun arebel-minify-buffer-contents() "Minifies the buffer contents by removing whitespaces." (interactive) (delete-whitespace-rectangle (point-min) (point-max)) (mark-whole-buffer) (goto-char (point-min)) (while (search-forward "\n" nil t) (replace-match "" nil t))) The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline. This effectively turns this: { "glossary": { "title": "example glossary", "GlossDiv": { "title": "S", "GlossList": { "GlossEntry": { "ID": "SGML", "SortAs": "SGML", "GlossTerm": "Standard Generalized Markup Language", "Acronym": "SGML", "Abbrev": "ISO 8879:1986", "GlossDef": { "para": "A meta-markup language, used to create markup languages such as DocBook.", "GlossSeeAlso": ["GML", "XML"] }, "GlossSee": "markup" } } } } } To this: {"glossary": {"title": "example glossary","GlossDiv": {"title": "S","GlossList": {"GlossEntry": {"ID": "SGML","SortAs": "SGML","GlossTerm": "Standard Generalized Markup Language","Acronym": "SGML","Abbrev": "ISO 8879:1986","GlossDef": {"para": "A meta-markup language, used to create markup languages such as DocBook.","GlossSeeAlso": ["GML", "XML"]},"GlossSee": "markup …">
+    <meta property="twitter:description" content="A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./minifying-buffer-contents-in-emacs.html",
-        "description": "I needed a way to minify JSON files from Emacs so I made the short function below. (defun arebel-minify-buffer-contents() "Minifies the buffer contents by..."
+        "description": "A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.",
+        "image": "./images/default-og.png"
     }
     </script>
 

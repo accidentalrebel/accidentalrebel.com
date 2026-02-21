@@ -23,6 +23,7 @@
     }
     </script>
 
+<meta name="robots" content="noindex">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -64,13 +65,7 @@
                 <a href="../category/ctf.html">CTF</a>
             </div>
             <div class="post-summary">
-                <blockquote>
-<p>This is a writeup for <a href="the-emprisa-maldoc-challenge">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
-</blockquote>
-<p>The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.</p>
-<p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
-<p>The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled.</p>
-<p>This new environment …</p>
+                <p>Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.</p>
             </div>
         </div>
         <div class="post-item">
@@ -83,11 +78,7 @@
                 <a href="../category/ctf.html">CTF</a>
             </div>
             <div class="post-summary">
-                <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
-<p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
-<h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
-<blockquote>
-<p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …</p></blockquote>
+                <p>Defcon RTV CTF writeup — reversing a Linux malware binary, bypassing ptrace anti-debugging, and recovering flags from shared memory and rootkit files.</p>
             </div>
         </div>
     </div>

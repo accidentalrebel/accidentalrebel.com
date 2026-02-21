@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chicken-Scheme FFI Examples | AccidentalRebel.com</title>
 
-<meta name="description" content="I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the Bind chicken egg but I wanted to...">
+<meta name="description" content="Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.">
 
     <link rel="canonical" href="./chicken-scheme-ffi-examples.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Chicken-Scheme FFI Examples">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2020-06-16T05:58:00+08:00">
-    <meta property="og:description" content="I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the Bind chicken egg but I wanted to have more control over the implementation by using the low level foreign functions. To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project. foreign-lambda example Let's say we have a structure Vec3 and a function Vec3Create that we want to access from chicken-scheme. typedef struct Vec3 { float x; float y; float z; } Vec3; Vec3* Vec3Create(float x, float y, float z) { Vec3* v = (Vec3*)malloc(sizeof(Vec3)); v->x = x; v->y = y; v->z = z; return v; } We could use foreign-lambda to bind to the function: (define vec3_create (foreign-lambda (c-pointer (struct "Vec3")) ; Return type, a pointer to a struct object of Vec3 "Vec3Create" ; Name fo the function float float float)) ; The …">
+    <meta property="og:description" content="Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./chicken-scheme-ffi-examples.html">
     <meta property="twitter:title" content="Chicken-Scheme FFI Examples">
-    <meta property="twitter:description" content="I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the Bind chicken egg but I wanted to have more control over the implementation by using the low level foreign functions. To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project. foreign-lambda example Let's say we have a structure Vec3 and a function Vec3Create that we want to access from chicken-scheme. typedef struct Vec3 { float x; float y; float z; } Vec3; Vec3* Vec3Create(float x, float y, float z) { Vec3* v = (Vec3*)malloc(sizeof(Vec3)); v->x = x; v->y = y; v->z = z; return v; } We could use foreign-lambda to bind to the function: (define vec3_create (foreign-lambda (c-pointer (struct "Vec3")) ; Return type, a pointer to a struct object of Vec3 "Vec3Create" ; Name fo the function float float float)) ; The …">
+    <meta property="twitter:description" content="Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./chicken-scheme-ffi-examples.html",
-        "description": "I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the Bind chicken egg but I wanted to..."
+        "description": "Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -233,6 +236,7 @@
 <hr />
 <p>These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found <a href="https://github.com/accidentalrebel/chicken-scheme-ffi-example">on Github</a>.</p>
 <p>Also, check out <a href="http://wiki.call-cc.org/eggref/5/bind">the chicken-bind egg</a>, it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.</p>
+<p>For how these FFI bindings get named consistently in the scripting API, see <a href="./following-lispy-conventions.html">Following Lispy Conventions</a>.</p>
     </div>
 
     <footer class="article-footer">

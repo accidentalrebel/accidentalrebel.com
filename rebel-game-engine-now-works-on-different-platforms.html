@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>#3 - Rebel Game Engine now works on different platforms | AccidentalRebel.com</title>
 
-<meta name="description" content="After finishing the integration of Chicken-scheme scripting for my custom game engine I decided I wanted to tackle another hard problem, and that is making...">
+<meta name="description" content="Getting a custom C game engine to build on Linux, Windows, and macOS with one Makefile — lessons from cross-platform debugging and using Msys2 on Windows.">
 
     <link rel="canonical" href="./rebel-game-engine-now-works-on-different-platforms.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="#3 - Rebel Game Engine now works on different platforms">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2020-05-10T07:08:00+08:00">
-    <meta property="og:description" content="After finishing the integration of Chicken-scheme scripting for my custom game engine I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX. It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them. It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different …">
+    <meta property="og:description" content="Getting a custom C game engine to build on Linux, Windows, and macOS with one Makefile — lessons from cross-platform debugging and using Msys2 on Windows.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./rebel-game-engine-now-works-on-different-platforms.html">
     <meta property="twitter:title" content="#3 - Rebel Game Engine now works on different platforms">
-    <meta property="twitter:description" content="After finishing the integration of Chicken-scheme scripting for my custom game engine I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX. It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them. It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different …">
+    <meta property="twitter:description" content="Getting a custom C game engine to build on Linux, Windows, and macOS with one Makefile — lessons from cross-platform debugging and using Msys2 on Windows.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./rebel-game-engine-now-works-on-different-platforms.html",
-        "description": "After finishing the integration of Chicken-scheme scripting for my custom game engine I decided I wanted to tackle another hard problem, and that is making..."
+        "description": "Getting a custom C game engine to build on Linux, Windows, and macOS with one Makefile — lessons from cross-platform debugging and using Msys2 on Windows.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -106,6 +109,7 @@
 <p>I was surprised that the hardest one to get working was for Windows. Because I didn't want to create a separate build system that uses Visual Studio solution files, I had to find a simple way to make it work and that involved the use of an excellent building platform for Windows called <a href="https://www.msys2.org/">Msys2</a>. </p>
 <p>I am quite happy that I was able to structure the whole system so that you only need one Makefile for all three platforms. I'm not sure if this wil change in the future, but I'll do my best for it to stay like this as long as it's possible.</p>
 <p>If you are interested to try it out here's the project's <a href="https://github.com/accidentalrebel/rebel-game-engine">Github page</a>, depending on your platform here are the instructions on how to build for each one: <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Arch-Linux">Linux</a>, <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-MacOSX">MacOSX</a> and <a href="https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Windows-(using-Msys2)">Windows</a>.</p>
+<p>Next in this series: <a href="./following-lispy-conventions.html">applying Lispy naming conventions to the engine's scripting API</a>.</p>
     </div>
 
     <footer class="article-footer">

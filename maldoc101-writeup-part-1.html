@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maldoc101 Writeup (Part 1) | AccidentalRebel.com</title>
 
-<meta name="description" content="This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (@jstrosch) and is currently playable at Cyberdefenders.Org. I've...">
+<meta name="description" content="Step-by-step maldoc analysis of the Maldoc101 challenge using oledump and olevba — deobfuscating VBA macros and tracing the WMI process execution chain.">
 
     <link rel="canonical" href="./maldoc101-writeup-part-1.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Maldoc101 Writeup (Part 1)">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-03-13T08:34:00+08:00">
-    <meta property="og:description" content="This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (@jstrosch) and is currently playable at Cyberdefenders.Org. I've done some maldoc analysis before but this is the first time I'm writing about my approach. There is also an already existing writeup about this challenge from the creator himself. You should check that out if you want a more detailed and focused writeup. This writeup is more from the perspective of someone relatively new to malware analysis. There's a lot more exploration and trial-and-error which, I hope, might give the reader a different view in how this kind of problem is approached. The challenge Name MalDoc101 - Malicious Document Description It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended …">
+    <meta property="og:description" content="Step-by-step maldoc analysis of the Maldoc101 challenge using oledump and olevba — deobfuscating VBA macros and tracing the WMI process execution chain.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./maldoc101-writeup-part-1.html">
     <meta property="twitter:title" content="Maldoc101 Writeup (Part 1)">
-    <meta property="twitter:description" content="This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (@jstrosch) and is currently playable at Cyberdefenders.Org. I've done some maldoc analysis before but this is the first time I'm writing about my approach. There is also an already existing writeup about this challenge from the creator himself. You should check that out if you want a more detailed and focused writeup. This writeup is more from the perspective of someone relatively new to malware analysis. There's a lot more exploration and trial-and-error which, I hope, might give the reader a different view in how this kind of problem is approached. The challenge Name MalDoc101 - Malicious Document Description It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended …">
+    <meta property="twitter:description" content="Step-by-step maldoc analysis of the Maldoc101 challenge using oledump and olevba — deobfuscating VBA macros and tracing the WMI process execution chain.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./maldoc101-writeup-part-1.html",
-        "description": "This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (@jstrosch) and is currently playable at Cyberdefenders.Org. I've..."
+        "description": "Step-by-step maldoc analysis of the Maldoc101 challenge using oledump and olevba — deobfuscating VBA macros and tracing the WMI process execution chain.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -337,6 +340,8 @@ End Function
 <h2 id="taking-a-step-back">Taking a step back</h2>
 <p>At this point there are already a number of questions that we could answer based on what we've done so far. Some are not yet answerable at the moment, however, so nothing left to do but to push forward. But that will be for the next part of this two part series.</p>
 <p>Until then, I'm taking a step back as I marvel at my progress. It wouldn't take long until all the pieces would fall into place.</p>
+<p>For the next part of this writeup, see <a href="./maldoc101-writeup-part-2.html">Maldoc101 Writeup Part 2</a>.</p>
+<p>If you enjoyed this, see the <a href="./the-emprisa-maldoc-challenge.html">Emprisa Maldoc challenge</a> I created on CyberDefenders, directly inspired by Maldoc101.</p>
     </div>
 
     <footer class="article-footer">

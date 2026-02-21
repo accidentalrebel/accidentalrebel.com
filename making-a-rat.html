@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Making a RAT | AccidentalRebel.com</title>
 
-<meta name="description" content="A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used...">
+<meta name="description" content="Building RATwurst, a RAT in C and Python, with runtime DLL loading, socket comms, anti-sandbox checks, and basic AV evasion — for educational purposes only.">
 
     <link rel="canonical" href="./making-a-rat.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Making a RAT">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-07-13T14:56:00+08:00">
-    <meta property="og:description" content="A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works. I was following along the Handmade Hero project 1 when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it. Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting. Having learned how to do runtime DLL loading myself I …">
+    <meta property="og:description" content="Building RATwurst, a RAT in C and Python, with runtime DLL loading, socket comms, anti-sandbox checks, and basic AV evasion — for educational purposes only.">
+    <meta property="og:image" content="./images/making-a-rat-01.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./making-a-rat.html">
     <meta property="twitter:title" content="Making a RAT">
-    <meta property="twitter:description" content="A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works. I was following along the Handmade Hero project 1 when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it. Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting. Having learned how to do runtime DLL loading myself I …">
+    <meta property="twitter:description" content="Building RATwurst, a RAT in C and Python, with runtime DLL loading, socket comms, anti-sandbox checks, and basic AV evasion — for educational purposes only.">
+    <meta property="twitter:image" content="./images/making-a-rat-01.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./making-a-rat.html",
-        "description": "A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used..."
+        "description": "Building RATwurst, a RAT in C and Python, with runtime DLL loading, socket comms, anti-sandbox checks, and basic AV evasion — for educational purposes only.",
+        "image": "./images/making-a-rat-01.png"
     }
     </script>
 
@@ -138,6 +141,8 @@
 <p>The most useful thing that I learned is the client and server communication via sockets. I've dabbled with it before but only in this project have I actually sent actual data back and forth.</p>
 <p>I am also happy that I got to use more Windows APIs. It's fun to play around with what's available and it is opening my mind as to what other things I can make in the future.</p>
 <p>And of course, this project has given me a good insight into the techniques used by malware. Learning about them is not enough until you've built one yourself.</p>
+<p>I later did a deep dive on the string obfuscation technique used here: <a href="./string-av-evasion-in-x64-assembly-part-1.html">String AV Evasion in x64 Assembly</a>.</p>
+<p>For a safe environment to test projects like this, see how I built <a href="./building-my-virtual-cybersecurity-home-lab.html">my virtual cybersecurity home lab</a>.</p>
 <div class="footnote">
 <hr />
 <ol>

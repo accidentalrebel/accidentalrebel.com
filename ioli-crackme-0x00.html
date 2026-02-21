@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IOLI Crackme 0x00 | AccidentalRebel.com</title>
 
-<meta name="description" content="I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof....">
+<meta name="description" content="IOLI Crackme 0x00 walkthrough — finding the hardcoded password in IDA Pro and patching the binary to accept any input by changing a jz opcode to jmp.">
 
     <link rel="canonical" href="./ioli-crackme-0x00.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="IOLI Crackme 0x00">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-02-16T21:55:00+08:00">
-    <meta property="og:description" content="I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct. Getting the password Running the program shows a password prompt. Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code. I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this: mov [esp+38h+Str2], offset Str2; "250382" mov [esp+38h+Format], eax; call _strcmp And just from these few lines alone I already knew what the password is …">
+    <meta property="og:description" content="IOLI Crackme 0x00 walkthrough — finding the hardcoded password in IDA Pro and patching the binary to accept any input by changing a jz opcode to jmp.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./ioli-crackme-0x00.html">
     <meta property="twitter:title" content="IOLI Crackme 0x00">
-    <meta property="twitter:description" content="I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct. Getting the password Running the program shows a password prompt. Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code. I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this: mov [esp+38h+Str2], offset Str2; "250382" mov [esp+38h+Format], eax; call _strcmp And just from these few lines alone I already knew what the password is …">
+    <meta property="twitter:description" content="IOLI Crackme 0x00 walkthrough — finding the hardcoded password in IDA Pro and patching the binary to accept any input by changing a jz opcode to jmp.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./ioli-crackme-0x00.html",
-        "description": "I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof...."
+        "description": "IOLI Crackme 0x00 walkthrough — finding the hardcoded password in IDA Pro and patching the binary to accept any input by changing a jz opcode to jmp.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -133,6 +136,7 @@
 <p><img alt="ioli-crackme-0x00-09" src="./images/ioli-crackme-0x00-09.png" /></p>
 <h2 id="on-to-the-next-challenge">On to the next challenge...</h2>
 <p>This is the first out of the 10 challenges from this set. Since this is the first one, it is only natural for it to be very easy. It's still a good refresher for me especially since the last time I did any reversing was from a few years ago. I look forward to the next challenges, I do hope that they would ramp up in difficulty and also teach me new things for me to improve.</p>
+<p>Continue to <a href="./ioli-crackme-0x01.html">IOLI Crackme 0x01</a> where we tackle hex-to-decimal conversion.</p>
     </div>
 
     <footer class="article-footer">

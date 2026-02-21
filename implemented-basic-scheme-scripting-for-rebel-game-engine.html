@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>#2 - Implemented basic Scheme scripting for Rebel Game Engine | AccidentalRebel.com</title>
 
-<meta name="description" content="When I first learned about Chibi, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make...">
+<meta name="description" content="Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.">
 
     <link rel="canonical" href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="#2 - Implemented basic Scheme scripting for Rebel Game Engine">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2020-05-07T21:35:00+08:00">
-    <meta property="og:description" content="When I first learned about Chibi, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration. I then learned about Chicken Scheme, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it. Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code …">
+    <meta property="og:description" content="Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">
     <meta property="twitter:title" content="#2 - Implemented basic Scheme scripting for Rebel Game Engine">
-    <meta property="twitter:description" content="When I first learned about Chibi, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration. I then learned about Chicken Scheme, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it. Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code …">
+    <meta property="twitter:description" content="Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./implemented-basic-scheme-scripting-for-rebel-game-engine.html",
-        "description": "When I first learned about Chibi, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make..."
+        "description": "Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -135,6 +138,8 @@
 <p>Playing with the garbage collector has also made me think about memory management more. This resulted in having two ways to call certain API functions: one will return a pointer that will automatically get tracked by the GC. The other you'd have to free manually. I figured this is a good approach for situations when having control over memory and references is crucial.</p>
 <p>I've already spent a lot of time on this project and it was mostly spent on the scripting side of the engine. There are still more to do for it to be considered useful but I'm happy I was able to learn a lot.</p>
 <p>If you are curious about the engine you could check it out <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">here</a>.</p>
+<p>Next: <a href="./rebel-game-engine-now-works-on-different-platforms.html">making the Rebel Game Engine build on Linux, Windows, and macOS</a>.</p>
+<p>For the low-level FFI details used to wire Chicken Scheme into C, see <a href="./chicken-scheme-ffi-examples.html">Chicken Scheme FFI Examples</a>.</p>
     </div>
 
     <footer class="article-footer">

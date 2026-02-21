@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber Corp Case 2 Writeup - Part 1 | AccidentalRebel.com</title>
 
-<meta name="description" content="The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is...">
+<meta name="description" content="CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.">
 
     <link rel="canonical" href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Cyber Corp Case 2 Writeup - Part 1">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-10-30T12:00:00+08:00">
-    <meta property="og:description" content="The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting. This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question. Edit: Part 2 and Part 3 is now out. Understanding WMI Persistence Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold. So the question tells us that …">
+    <meta property="og:description" content="CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.">
+    <meta property="og:image" content="./images/cyber-corp-case-2-writeup-01.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">
     <meta property="twitter:title" content="Cyber Corp Case 2 Writeup - Part 1">
-    <meta property="twitter:description" content="The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting. This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question. Edit: Part 2 and Part 3 is now out. Understanding WMI Persistence Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold. So the question tells us that …">
+    <meta property="twitter:description" content="CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.">
+    <meta property="twitter:image" content="./images/cyber-corp-case-2-writeup-01.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./threat-hunting-from-home-cyber-corp-wmi-persistence.html",
-        "description": "The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is..."
+        "description": "CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.",
+        "image": "./images/cyber-corp-case-2-writeup-01.png"
     }
     </script>
 
@@ -106,7 +109,7 @@
 <p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
 </blockquote>
 <p>So the question tells us that the attacker used WMI subscription to gain persistence in our network.</p>
-<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
+<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="./new-tool-preview-vattack.html">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
 <p><img alt="cyber-corp-case-2-writeup-01" src="./images/cyber-corp-case-2-writeup-01.png" /></p>
 <h2 id="testing-wmi-persistence-in-my-homelab">Testing WMI Persistence in my homelab</h2>
 <p>Now that I understand the concept I then checked <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md">the technique's entry</a> in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about Atomic Red Team is that they have easy-to-follow step-by-step instructions on how to emulate Mitre ATT&amp;CK techniques.</p>

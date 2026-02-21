@@ -23,6 +23,15 @@
     }
     </script>
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="./">
+    <meta property="og:title" content="AccidentalRebel.com">
+    <meta property="og:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="og:image" content="./images/default-og.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AccidentalRebel.com">
+    <meta property="twitter:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="twitter:image" content="./images/default-og.png">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -59,17 +68,12 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p><img alt="Your AI Assistant Might Be Working for Someone Else" src="./images/your-ai-assistant-might-be-working-for-someone-else.png" />
-<em>Image made by Gemini</em></p>
-<p>Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore.</p>
-<!-- PELICAN_END_SUMMARY -->
+        <a href="./your-ai-assistant-might-be-working-for-someone-else.html" class="post-image-link">
+            <img src="./images/your-ai-assistant-might-be-working-for-someone-else.png" alt="Your AI Assistant Might Be Working for Someone Else" class="post-image" loading="lazy">
+        </a>
 
-<hr />
-<h2 id="editorial">Editorial</h2>
-<h3 id="your-ai-assistant-is-someone-elses-c2-channel"><a href="https://research.checkpoint.com/2026/ai-in-the-middle-turning-web-based-ai-services-into-c2-proxies-the-future-of-ai-driven-attacks/">Your AI assistant is someone else's C2 channel</a></h3>
-<p>I think a lot about what everyday services can double as C2 channels. A while back I built <a href="https://github.com/accidentalrebel/wp-c2">wp-c2</a>, a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention.</p>
-<p>The technique: malware on a compromised machine sends crafted prompts to the …</p>
+        <div class="article-content">
+            <p>Copilot and Grok repurposed as C2 channels, Cline supply chain attack installed AI agents on 4,000 dev machines, and AI found 12 zero-days in OpenSSL.</p>
             <a href="./your-ai-assistant-might-be-working-for-someone-else.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -90,19 +94,12 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p><img alt="AI Agents Under Attack" src="./images/ai-agents-under-attack.webp" />
-<em>Image made by Gemini</em></p>
-<p>AI agents are under attack this week—and AI is doing the attacking. Claude Opus 4.6 found 500+ vulnerabilities in major libraries. Language models can now run complete network breaches autonomously.</p>
-<!-- PELICAN_END_SUMMARY -->
+        <a href="./ai-agents-under-attack.html" class="post-image-link">
+            <img src="./images/ai-agents-under-attack.webp" alt="AI Agents Under Attack" class="post-image" loading="lazy">
+        </a>
 
-<hr />
-<h2 id="featured-stories">Featured stories</h2>
-<h3 id="claude-opus-46-discovers-hundreds-of-security-flaws"><a href="https://thehackernews.com/2026/02/claude-opus-discovers-security-flaws.html">Claude Opus 4.6 discovers hundreds of security flaws</a></h3>
-<p>Anthropic's latest model identified more than 500 previously unknown high-severity vulnerabilities in major open-source projects like Ghostscript through automated security analysis. The model achieved 65.4% on Terminal-Bench 2.0 (highest ever recorded) and outperforms GPT-5.2 by ~144 ELO points on enterprise knowledge work tasks. Organizations relying on these libraries should monitor for patches.</p>
-<h3 id="ai-models-execute-autonomous-network-attacks"><a href="https://www.schneier.com/blog/archives/2026/02/ai-models-execute-autonomous-network-attacks.html">AI models execute autonomous network attacks</a></h3>
-<p>Language models can now independently conduct multi-stage network penetration testing, handling reconnaissance through data extraction while adapting to defensive measures. Bruce Schneier documented this capability shift, noting that sophisticated attacks previously demanded skilled human oversight—now they require only model access.</p>
-<h3 id="openclaw-ai-agent-security-risks"><a href="https://www.crowdstrike.com/en-us/blog/openclaw-ai-agent-security-risks/">OpenClaw …</a></h3>
+        <div class="article-content">
+            <p>AI security roundup: Claude finds 500+ vulns in open-source libs, LLMs conduct autonomous network breaches, and AI agent attack surfaces keep expanding.</p>
             <a href="./ai-agents-under-attack.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -123,20 +120,9 @@
             </div>
         </header>
 
+
         <div class="article-content">
-            <p>I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some useful stuff" but no concrete record of what those lessons actually were.</p>
-<p>Recently, I learned of a skill called <a href="https://github.com/affaan-m/everything-claude-code/tree/main/skills/continuous-learning">continuous-learning</a>. It automatically extracts reusable patterns and saves them as skills. But I wanted something different. Not automated pattern extraction, but a human-readable summary I could actually share. Something I could look back on, or turn into a blog post.</p>
-<p>So I built the <a href="https://github.com/accidentalrebel/claude-skill-session-retrospective">session-retrospective</a> skill.</p>
-<h2 id="what-it-does">What it does</h2>
-<p>The skill analyzes the current Claude session and generates a markdown summary covering:</p>
-<ul>
-<li>What we set out to do</li>
-<li>Problems encountered and how they were solved</li>
-<li>Mistakes made and corrections</li>
-<li>Techniques discovered worth remembering</li>
-<li>Key takeaways</li>
-</ul>
-<p>The output goes straight to console for copy/paste. No files created, no cleanup needed …</p>
+            <p>A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.</p>
             <a href="./building-a-session-retrospective-skill-for-claude-code.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -158,18 +144,12 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p><img alt="Developer Tools Are the New Attack Surface" src="./images/developer-tools-are-the-new-attack-surface.png" />
-<em>Image made by Gemini</em></p>
-<p>Developer tools are the new attack surface. VS Code extensions with 1.5 million installs exfiltrating source code to China, 175,000 unsecured Ollama servers globally accessible, and CrowdStrike research on compromising AI agent tool chains. Plus: a former Google engineer convicted for AI trade secret theft, and AI models now conducting autonomous multi-stage network attacks.</p>
-<!-- PELICAN_END_SUMMARY -->
+        <a href="./developer-tools-are-the-new-attack-surface.html" class="post-image-link">
+            <img src="./images/developer-tools-are-the-new-attack-surface.png" alt="Developer Tools Are the New Attack Surface" class="post-image" loading="lazy">
+        </a>
 
-<hr />
-<h2 id="featured-stories">Featured stories</h2>
-<h3 id="175000-ollama-ai-servers-exposed-without-authentication"><a href="https://thehackernews.com/2026/01/researchers-find-175000-publicly.html">175,000 Ollama AI servers exposed without authentication</a></h3>
-<p>SentinelOne and Censys discovered 175,000 Ollama instances across 130 countries operating without authentication. These self-hosted AI servers, frequently deployed on corporate networks, are publicly accessible. Free compute for attackers, free data for exfiltration. Organizations running Ollama should verify firewall configurations.</p>
-<h3 id="vs-code-ai-extensions-with-15-million-installs-steal-developer-source-code"><a href="https://thehackernews.com/2026/01/malicious-vs-code-ai-extensions-with-15.html">VS Code AI extensions with 1.5 million installs steal developer source code</a></h3>
-<p>Two extensions marketed as AI coding assistants reached 1.5 million installations while covertly exfiltrating developer source code to Chinese servers. Despite appearing legitimate and providing …</p>
+        <div class="article-content">
+            <p>VS Code AI extensions with 1.5M installs stealing source code, 175K Ollama servers exposed globally, and AI running autonomous multi-stage network attacks.</p>
             <a href="./developer-tools-are-the-new-attack-surface.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -190,15 +170,9 @@
             </div>
         </header>
 
-        <div class="article-content">
-            <p>I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine.</p>
-<p>Being in Cyber Security, I've developed a healthy paranoia about software that can execute arbitrary commands. AI coding assistants are powerful, but they're also unpredictable. They can run shell commands, modify files, and access the network. I wanted all of that contained.</p>
-<h2 id="the-setup">The setup</h2>
-<p>Claudecker is my personal tool that wraps Docker to run Claude Code CLI and Codex CLI in an isolated container. Point it at any project directory and it mounts that directory into the container. The AI can do whatever it wants inside the container, but it can't touch the rest of my system.</p>
-<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
-</code></pre></div>
 
-<p>Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This …</p>
+        <div class="article-content">
+            <p>Claudecker is my Docker wrapper for Claude Code that isolates AI agents from my host with network lockdown, per-project custom images, and SSH agent forwarding.</p>
             <a href="./running-ai-agents-in-a-box.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -220,16 +194,12 @@
             </div>
         </header>
 
+        <a href="./classifying-more-with-less-new-vgl4nt-update.html" class="post-image-link">
+            <img src="./images/adding-automation-to-blue-jupyter-malware-notebook-01.png" alt="Classifying More With Less: New VGL4NT Update" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <h2 id="tldr">TLDR:</h2>
-<ul>
-<li>Packed malware machine learning classifier can only previously identify 10 packers</li>
-<li>Solution was a customized version of model ensembling, which is to train multiple models and resolve their results</li>
-<li>It works with a slight caveat of more extended training and processing, which I could happily live with</li>
-</ul>
-<p>I recently presented <a href="https://packers.vgl4nt.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
-<h2 id="a-simple-solution">A Simple Solution</h2>
-<p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which …</p>
+            <p>How I doubled VGL4NT's malware packer classification capacity without extra GPU by using task decomposition to run multiple specialized models in parallel.</p>
             <a href="./classifying-more-with-less-new-vgl4nt-update.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -248,13 +218,12 @@
             </div>
         </header>
 
+        <a href="./classifying-malware-packers-using-machine-learning.html" class="post-image-link">
+            <img src="./images/classifying-malware-packers-using-machine-learning-02.png" alt="Classifying Malware Packers Using Machine Learning" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
-<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
-<p><img alt="classifying-malware-packers-using-machine-learning-01" src="./images/classifying-malware-packers-using-machine-learning-01.png" /></p>
-<p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
-<h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
-<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the …</p>
+            <p>How I built VGL4NT, a machine learning classifier that identifies malware packers like UPX, Themida, and MPRESS with 94% accuracy using image-based ML models.</p>
             <a href="./classifying-malware-packers-using-machine-learning.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -274,13 +243,12 @@
             </div>
         </header>
 
+        <a href="./adding-automation-to-blue-jupyter-malware-notebook.html" class="post-image-link">
+            <img src="./images/adding-automation-to-blue-jupyter-malware-notebook-02.png" alt="Adding Automation to Blue-Jupyter Malware Notebook" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
-<h1 id="what-are-jupyter-notebooks">What are Jupyter Notebooks?</h1>
-<p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
-<h1 id="my-additions-to-the-blue-jupyter">My Additions to the Blue-Jupyter</h1>
-<p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
-<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight …</p>
+            <p>Automating malware sample discovery with a Jupyter notebook that downloads from Malware Bazaar and runs Capa capability analysis on each sample automatically.</p>
             <a href="./adding-automation-to-blue-jupyter-malware-notebook.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -301,13 +269,12 @@
             </div>
         </header>
 
+        <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html" class="post-image-link">
+            <img src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2-01.png" alt="Malware sandbox evasion in x64 assembly by checking ram size - Part 2" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>In the <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
-<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
-<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
-<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include …</span></code></pre></div>
+            <p>Implementing sandbox evasion via GlobalMemoryStatusEx in x64 assembly, including how to manually calculate C struct sizes and pass pointers on the stack.</p>
             <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html" class="read-more">Read more &rarr;</a>
         </div>
 
@@ -329,13 +296,12 @@
             </div>
         </header>
 
+        <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html" class="post-image-link">
+            <img src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-04.png" alt="Malware sandbox evasion in x64 assembly by checking ram size - Part 1" class="post-image" loading="lazy">
+        </a>
+
         <div class="article-content">
-            <p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
-<h2 id="checking-the-memory">Checking the memory</h2>
-<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is probably a sandbox (To save costs). While it's not exactly fool-proof …</p>
+            <p>Implementing the malware sandbox evasion technique of checking RAM size using GetPhysicallyInstalledSystemMemory, converted from C to x64 Windows assembly.</p>
             <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html" class="read-more">Read more &rarr;</a>
         </div>
 

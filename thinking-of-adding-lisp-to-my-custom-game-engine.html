@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>#1 - Thinking of adding Lisp to my custom game engine | AccidentalRebel.com</title>
 
-<meta name="description" content="I've long wondered if I should add a scripting language to my game engine. I know that most game engines could do without such a feature but I just recently...">
+<meta name="description" content="Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.">
 
     <link rel="canonical" href="./thinking-of-adding-lisp-to-my-custom-game-engine.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="#1 - Thinking of adding Lisp to my custom game engine">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2020-05-03T11:19:00+08:00">
-    <meta property="og:description" content="I've long wondered if I should add a scripting language to my game engine. I know that most game engines could do without such a feature but I just recently came across Chibi-Scheme, a library that allows the use of Scheme lisp scripting for C programs. I like Lisp. I use it a lot when customizing my Emacs environment (using ELisp). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason. I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …">
+    <meta property="og:description" content="Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./thinking-of-adding-lisp-to-my-custom-game-engine.html">
     <meta property="twitter:title" content="#1 - Thinking of adding Lisp to my custom game engine">
-    <meta property="twitter:description" content="I've long wondered if I should add a scripting language to my game engine. I know that most game engines could do without such a feature but I just recently came across Chibi-Scheme, a library that allows the use of Scheme lisp scripting for C programs. I like Lisp. I use it a lot when customizing my Emacs environment (using ELisp). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason. I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …">
+    <meta property="twitter:description" content="Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./thinking-of-adding-lisp-to-my-custom-game-engine.html",
-        "description": "I've long wondered if I should add a scripting language to my game engine. I know that most game engines could do without such a feature but I just recently..."
+        "description": "Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -104,6 +107,7 @@
 <p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay if no one would try it out as long as I get to learn from it.</p>
 <p>This morning I started implementing a simple implementation of Chibi. Thankfully, it's easy to setup. However, the more I implement it the more that I realize that I may need to change how my engine is structured to better suit Lisp's functional nature. This means less object oriented design similar to how <a href="https://www.raylib.com/index.html">Raylib</a> does things. </p>
 <p>I still need some time to think this through. I am open to do the changes needed if I am to include a scripting language. I just want to make sure if my engine would really need it. We'll see.</p>
+<p>Follow-up: <a href="./implemented-basic-scheme-scripting-for-rebel-game-engine.html">I implemented basic Chicken Scheme scripting for the Rebel Game Engine</a>.</p>
     </div>
 
     <footer class="article-footer">

@@ -23,6 +23,7 @@
     }
     </script>
 
+<meta name="robots" content="noindex">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -64,23 +65,7 @@
                 <a href="../category/tools.html">Tools</a>
             </div>
             <div class="post-summary">
-                <p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
-<p><img alt="new-tool-preview-vattack-01" src="../images/new-tool-preview-vattack-01.png" /></p>
-<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
-<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
-<ul>
-<li>Pink - Related subtechniques</li>
-<li>Orange - Malware that uses the searched technique</li>
-<li>Red - Groups that uses the searched technique</li>
-<li>Blue - Tools that use the searched technique</li>
-<li>Yellow - Mitigations</li>
-</ul>
-<p>This tool is still in development. I plan to add a number of improvements such as:</p>
-<ul>
-<li>Ability to click on nodes and then update the visual map</li>
-<li>Ability to search not just by technique, but also by other categories</li>
-</ul>
-<p>I also plan on releasing a live demo of the tool very soon in the …</p>
+                <p>vATT&amp;CK is a visual relationship mapper for MITRE ATT&amp;CK that shows linked malware, threat groups, mitigations, and subtechniques in a single interactive graph.</p>
             </div>
         </div>
         <div class="post-item">
@@ -93,14 +78,7 @@
                 <a href="../category/ctf.html">CTF</a>
             </div>
             <div class="post-summary">
-                <blockquote>
-<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
-</blockquote>
-<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
-<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="../covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
-<h2 id="the-preparation">The Preparation</h2>
-<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
-<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
+                <p>How I won the GuideM Hunt the Kingdom blue team CTF — strategy, preparation, and the high-stakes final minutes that came down to four unsolved questions.</p>
             </div>
         </div>
         <div class="post-item">
@@ -113,18 +91,7 @@
                 <a href="../category/misc.html">Misc</a>
             </div>
             <div class="post-summary">
-                <div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
-</code></pre></div>
-
-<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
-<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
-<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
-<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
-<p>To view the current MAC address:</p>
-<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig
-</code></pre></div>
-
-<p>The current MAC address is <code>08:00 …</code></p>
+                <p>Study notes on MAC spoofing — what it is, legitimate versus illegitimate uses, and how to change your MAC address using ifconfig or macchanger on Linux.</p>
             </div>
         </div>
     </div>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CovidScammers writeup (Defcon RTV CTF) | AccidentalRebel.com</title>
 
-<meta name="description" content="I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like...">
+<meta name="description" content="Defcon RTV CTF writeup — reversing a Linux malware binary, bypassing ptrace anti-debugging, and recovering flags from shared memory and rootkit files.">
 
     <link rel="canonical" href="./covidscammers-writeup--defcon-rtv-ctf.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="CovidScammers writeup (Defcon RTV CTF)">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2020-08-13T16:58:00+08:00">
-    <meta property="og:description" content="I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like overthewire.org and vulnhub. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other. Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that. Free Flag (and binary) [1 point] You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …">
+    <meta property="og:description" content="Defcon RTV CTF writeup — reversing a Linux malware binary, bypassing ptrace anti-debugging, and recovering flags from shared memory and rootkit files.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./covidscammers-writeup--defcon-rtv-ctf.html">
     <meta property="twitter:title" content="CovidScammers writeup (Defcon RTV CTF)">
-    <meta property="twitter:description" content="I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like overthewire.org and vulnhub. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other. Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that. Free Flag (and binary) [1 point] You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …">
+    <meta property="twitter:description" content="Defcon RTV CTF writeup — reversing a Linux malware binary, bypassing ptrace anti-debugging, and recovering flags from shared memory and rootkit files.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./covidscammers-writeup--defcon-rtv-ctf.html",
-        "description": "I joined the Defcon Red Team Village CTF because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like..."
+        "description": "Defcon RTV CTF writeup — reversing a Linux malware binary, bypassing ptrace anti-debugging, and recovering flags from shared memory and rootkit files.",
+        "image": "./images/default-og.png"
     }
     </script>
 
@@ -171,6 +174,8 @@ Look for the free flag. Get on the scoreboard!</p>
 <h2 id="to-be-continued">To be continued?</h2>
 <p>So I wanted to try and work on the other challenges but it seems that <a href="https://ctf.threatsims.com">the ctf site</a> is currently down. The site redirected to a different non https site and it spooked me so I stopped trying. Good thing that I had NoScript on.</p>
 <p>If you want a longer and more pro writeup about the CovidScammers challenges do check out <a href="https://0xdf.gitlab.io/2020/05/04/covid-19-ctf-covidscammers.html">0xdf's writeup about it</a>.</p>
+<p>I later competed in another CTF — <a href="./hunt-the-kingdom-ctf-challenge.html">the Hunt the Kingdom blue team challenge</a>, where I placed first.</p>
+<p>Running malware safely requires a proper isolated environment — see how I set up <a href="./building-my-virtual-cybersecurity-home-lab.html">my virtual cybersecurity home lab</a>.</p>
     </div>
 
     <footer class="article-footer">

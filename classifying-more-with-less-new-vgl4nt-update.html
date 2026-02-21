@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classifying More With Less: New VGL4NT Update | AccidentalRebel.com</title>
 
-<meta name="description" content="TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to...">
+<meta name="description" content="How I doubled VGL4NT's malware packer classification capacity without extra GPU by using task decomposition to run multiple specialized models in parallel.">
 
     <link rel="canonical" href="./classifying-more-with-less-new-vgl4nt-update.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Classifying More With Less: New VGL4NT Update">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2023-05-20T06:46:00+08:00">
-    <meta property="og:description" content="TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to train multiple models and resolve their results It works with a slight caveat of more extended training and processing, which I could happily live with I recently presented VGL4NT, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter. A Simple Solution The solution I came up with isn't exactly original. It's based on Task Decomposition, which …">
+    <meta property="og:description" content="How I doubled VGL4NT's malware packer classification capacity without extra GPU by using task decomposition to run multiple specialized models in parallel.">
+    <meta property="og:image" content="./images/adding-automation-to-blue-jupyter-malware-notebook-01.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./classifying-more-with-less-new-vgl4nt-update.html">
     <meta property="twitter:title" content="Classifying More With Less: New VGL4NT Update">
-    <meta property="twitter:description" content="TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to train multiple models and resolve their results It works with a slight caveat of more extended training and processing, which I could happily live with I recently presented VGL4NT, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter. A Simple Solution The solution I came up with isn't exactly original. It's based on Task Decomposition, which …">
+    <meta property="twitter:description" content="How I doubled VGL4NT's malware packer classification capacity without extra GPU by using task decomposition to run multiple specialized models in parallel.">
+    <meta property="twitter:image" content="./images/adding-automation-to-blue-jupyter-malware-notebook-01.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./classifying-more-with-less-new-vgl4nt-update.html",
-        "description": "TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to..."
+        "description": "How I doubled VGL4NT's malware packer classification capacity without extra GPU by using task decomposition to run multiple specialized models in parallel.",
+        "image": "./images/adding-automation-to-blue-jupyter-malware-notebook-01.png"
     }
     </script>
 
@@ -104,7 +107,7 @@
 <li>Solution was a customized version of model ensembling, which is to train multiple models and resolve their results</li>
 <li>It works with a slight caveat of more extended training and processing, which I could happily live with</li>
 </ul>
-<p>I recently presented <a href="https://packers.vgl4nt.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
+<p>I recently presented <a href="./classifying-malware-packers-using-machine-learning.html">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
 <h2 id="a-simple-solution">A Simple Solution</h2>
 <p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which involves training separate models for different categories and combining their predictions. This way, I could double the classification capacity without requiring additional hardware resources.</p>
 <p>This was implemented by creating multiple machine learning models, each specializing in recognizing a subset of packers. The real challenge, however, lies in combining the predictions from these models to form a unified output.</p>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux | AccidentalRebel.com</title>
 
-<meta name="description" content="One of the problems I was having with my Emacs environment under WSL (Windows Subsystem for Linux, aka. Bash On Windows) is that I could not copy text from...">
+<meta name="description" content="A quick Emacs Lisp fix for clipboard copy not working from WSL to Windows applications, using clip.exe as a workaround via the simpleclip package.">
 
     <link rel="canonical" href="./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2017-09-23T13:08:00+08:00">
-    <meta property="og:description" content="One of the problems I was having with my Emacs environment under WSL (Windows Subsystem for Linux, aka. Bash On Windows) is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around. I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called simpleclip that worked but the results were not consistent. I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below. (defun arebel-set-clipboard-data (str-val) "Puts text in Windows clipboard. Copying to Windows from WSL does not work on my end so this one is a temporary solution. This function is called from within the simpleclip package when copy or bgcopy …">
+    <meta property="og:description" content="A quick Emacs Lisp fix for clipboard copy not working from WSL to Windows applications, using clip.exe as a workaround via the simpleclip package.">
+    <meta property="og:image" content="./images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">
     <meta property="twitter:title" content="Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux">
-    <meta property="twitter:description" content="One of the problems I was having with my Emacs environment under WSL (Windows Subsystem for Linux, aka. Bash On Windows) is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around. I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called simpleclip that worked but the results were not consistent. I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below. (defun arebel-set-clipboard-data (str-val) "Puts text in Windows clipboard. Copying to Windows from WSL does not work on my end so this one is a temporary solution. This function is called from within the simpleclip package when copy or bgcopy …">
+    <meta property="twitter:description" content="A quick Emacs Lisp fix for clipboard copy not working from WSL to Windows applications, using clip.exe as a workaround via the simpleclip package.">
+    <meta property="twitter:image" content="./images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html",
-        "description": "One of the problems I was having with my Emacs environment under WSL (Windows Subsystem for Linux, aka. Bash On Windows) is that I could not copy text from..."
+        "description": "A quick Emacs Lisp fix for clipboard copy not working from WSL to Windows applications, using clip.exe as a workaround via the simpleclip package.",
+        "image": "./images/default-og.png"
     }
     </script>
 

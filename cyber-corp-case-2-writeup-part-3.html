@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cyber Corp Case 2 Writeup - Part 3 | AccidentalRebel.com</title>
 
-<meta name="description" content="The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is...">
+<meta name="description" content="CyberCorp Case 2 part 3 — certutil download, LSASS dumping, WMI lateral movement to a domain controller, and tracking the second reverse shell C2 address.">
 
     <link rel="canonical" href="./cyber-corp-case-2-writeup-part-3.html">
 
@@ -31,13 +31,15 @@
     <meta property="og:title" content="Cyber Corp Case 2 Writeup - Part 3">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-11-06T11:10:00+08:00">
-    <meta property="og:description" content="The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting. This write-up is the third and final part of this walkthrough. You could read Part 1 here and Part 2 here. Finding the post-reverse shell activity Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host. So from the question, I …">
+    <meta property="og:description" content="CyberCorp Case 2 part 3 — certutil download, LSASS dumping, WMI lateral movement to a domain controller, and tracking the second reverse shell C2 address.">
+    <meta property="og:image" content="./images/cyber-corp-case-2-writeup-part-3-10.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./cyber-corp-case-2-writeup-part-3.html">
     <meta property="twitter:title" content="Cyber Corp Case 2 Writeup - Part 3">
-    <meta property="twitter:description" content="The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting. This write-up is the third and final part of this walkthrough. You could read Part 1 here and Part 2 here. Finding the post-reverse shell activity Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host. So from the question, I …">
+    <meta property="twitter:description" content="CyberCorp Case 2 part 3 — certutil download, LSASS dumping, WMI lateral movement to a domain controller, and tracking the second reverse shell C2 address.">
+    <meta property="twitter:image" content="./images/cyber-corp-case-2-writeup-part-3-10.png">
 
     <script type="application/ld+json">
     {
@@ -48,7 +50,8 @@
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
         "url": "./cyber-corp-case-2-writeup-part-3.html",
-        "description": "The second case of the CyberCorp challenge on CyberDefenders.org is all about threat hunting. Created by @BlackMatter23 and his team, this challenge is..."
+        "description": "CyberCorp Case 2 part 3 — certutil download, LSASS dumping, WMI lateral movement to a domain controller, and tracking the second reverse shell C2 address.",
+        "image": "./images/cyber-corp-case-2-writeup-part-3-10.png"
     }
     </script>
 

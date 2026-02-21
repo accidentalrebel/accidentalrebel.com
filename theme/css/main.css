@@ -67,6 +67,7 @@ body {
     border-image: linear-gradient(to bottom, transparent, var(--color-accent), transparent) 1;
     padding-left: calc(var(--spacing-unit) * 2);
     padding-right: calc(var(--spacing-unit) * 2);
+    min-width: 0;
 }
 
 /* Sidebar */
@@ -365,7 +366,7 @@ h3 {
     background-color: #1a1b26;
     border-radius: 8px;
     margin-bottom: calc(var(--spacing-unit) * 1.5);
-    overflow: hidden;
+    overflow-x: auto;
 }
 
 .codehilite pre {
@@ -375,11 +376,13 @@ h3 {
     max-height: none;
 }
 
-.codehilite code {
+.codehilite code,
+.article-content .codehilite code {
     background: transparent;
     padding: 0;
     border-radius: 0;
     font-size: inherit;
+    color: #c0caf5;
 }
 
 /* Pygments syntax highlighting — always dark (Tokyo Night inspired) */
@@ -409,6 +412,20 @@ h3 {
     max-width: 100%;
     height: auto;
     margin: var(--spacing-unit) 0;
+    border-radius: 8px;
+}
+
+.post-image-link {
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: var(--spacing-unit);
+}
+
+.post-image {
+    display: block;
+    width: 100%;
+    height: auto;
     border-radius: 8px;
 }
 
