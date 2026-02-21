@@ -23,10 +23,14 @@
     }
     </script>
 
+    <meta name="author" content="AccidentalRebel">
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="./converting-org-journal-entry-to-org-page-post.html">
     <meta property="og:title" content="Converting org-journal entry to org-page post">
+    <meta property="article:author" content="AccidentalRebel">
+    <meta property="article:published_time" content="2017-04-19T13:17:00+08:00">
     <meta property="og:description" content="Since my recent switch from Wordpress to org-page I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below: (defun arebel-org-journal-entry-to-org-page-post () "Copy the org-journal entry at point and then convert it to a org-page new post buffer." (interactive) (if (eq 'org-journal-mode major-mode) (let ((headline-text (nth 4 (org-heading-components))) (entry-text (org-get-entry))) (funcall-interactively 'op/new-post "blog" (concat (buffer-name) "-" headline-text)) (goto-char (point-max)) (insert entry-text)) (message "This function can only be called inside org-journal-mode.")) ) The function is simple and uses functions from org-mode and org-page. First, it checks if the current buffer is in org-journal-mode Then it gets the headline text and entry texts It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to …">
 
     <!-- Twitter -->
