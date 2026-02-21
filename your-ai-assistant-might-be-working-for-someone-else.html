@@ -31,13 +31,13 @@
     <meta property="og:title" content="Your AI Assistant Might Be Working for Someone Else">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2026-02-20T10:00:00+08:00">
-    <meta property="og:description" content="Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore. Featured stories Cline CLI supply chain attack installs autonomous AI agent on developer machines An attacker compromised Cline CLI's npm publish token through a technique called "Clinejection." The clever part: they injected prompts into GitHub issues that tricked Claude (Cline's issue triage AI) into executing commands, then poisoned the build cache and stole publication secrets. The malicious version 2.3.0 ran a postinstall script that globally installed OpenClaw, an autonomous AI agent framework, on roughly 4,000 developer machines over an 8-hour window …">
+    <meta property="og:description" content="Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore. Editorial Your AI assistant is someone else's C2 channel I think a lot about what everyday services can double as C2 channels. A while back I built wp-c2, a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention. The technique: malware on a compromised machine sends crafted prompts to the …">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./your-ai-assistant-might-be-working-for-someone-else.html">
     <meta property="twitter:title" content="Your AI Assistant Might Be Working for Someone Else">
-    <meta property="twitter:description" content="Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore. Featured stories Cline CLI supply chain attack installs autonomous AI agent on developer machines An attacker compromised Cline CLI's npm publish token through a technique called "Clinejection." The clever part: they injected prompts into GitHub issues that tricked Claude (Cline's issue triage AI) into executing commands, then poisoned the build cache and stole publication secrets. The malicious version 2.3.0 ran a postinstall script that globally installed OpenClaw, an autonomous AI agent framework, on roughly 4,000 developer machines over an 8-hour window …">
+    <meta property="twitter:description" content="Image made by Gemini Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore. Editorial Your AI assistant is someone else's C2 channel I think a lot about what everyday services can double as C2 channels. A while back I built wp-c2, a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention. The technique: malware on a compromised machine sends crafted prompts to the …">
 
     <script type="application/ld+json">
     {
@@ -104,6 +104,15 @@
 <!-- PELICAN_END_SUMMARY -->
 
 <hr />
+<h2 id="editorial">Editorial</h2>
+<h3 id="your-ai-assistant-is-someone-elses-c2-channel"><a href="https://research.checkpoint.com/2026/ai-in-the-middle-turning-web-based-ai-services-into-c2-proxies-the-future-of-ai-driven-attacks/">Your AI assistant is someone else's C2 channel</a></h3>
+<p>I think a lot about what everyday services can double as C2 channels. A while back I built <a href="https://github.com/accidentalrebel/wp-c2">wp-c2</a>, a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention.</p>
+<p>The technique: malware on a compromised machine sends crafted prompts to the AI assistant through anonymous web sessions. The assistant fetches attacker-controlled URLs, retrieves commands, and passes them back through its normal interface. No API keys. No registered accounts. Two-way communication that looks like normal enterprise traffic.</p>
+<p>What makes it effective is simple. Security teams monitoring network traffic see requests going to microsoft.com and xai.com, not suspicious IPs. The AI assistant is doing exactly what it's designed to do, which is browse the web and summarize content. It just happens to be summarizing attack instructions.</p>
+<p>The researchers went further. They showed the AI can also act as an "external decision engine" for the attacker, assessing system value, suggesting evasion strategies, and deciding what to do next. The AI isn't just the communication pipe. It's also the brain.</p>
+<p>That's the part that got me. My WordPress C2 and most other "hide in legitimate traffic" approaches are dumb pipes. You send a command, you get output. With an AI assistant as the relay, the attacker gets a reasoning engine for free. The malware can ask Copilot to assess whether the compromised machine is worth persisting on, or how to evade the specific EDR it detects. The C2 channel is also the operator.</p>
+<p>For defenders, the problem is architectural. You can't disable the browsing capability without killing the product. Anonymous sessions mean no authentication trail. Most organizations are still debating whether to deploy these tools at all, while attackers have already figured out how to live inside them.</p>
+<hr />
 <h2 id="featured-stories">Featured stories</h2>
 <h3 id="cline-cli-supply-chain-attack-installs-autonomous-ai-agent-on-developer-machines"><a href="https://thehackernews.com/2026/02/cline-cli-230-supply-chain-attack.html">Cline CLI supply chain attack installs autonomous AI agent on developer machines</a></h3>
 <p>An attacker compromised Cline CLI's npm publish token through a technique called "Clinejection." The clever part: they injected prompts into GitHub issues that tricked Claude (Cline's issue triage AI) into executing commands, then poisoned the build cache and stole publication secrets. The malicious version 2.3.0 ran a postinstall script that globally installed OpenClaw, an autonomous AI agent framework, on roughly 4,000 developer machines over an 8-hour window. Cline revoked the token, deprecated the package, and switched to OIDC-based publishing. The blast radius was small, but the vector is worth paying attention to: the attacker used the AI assistant's own automation against the supply chain it manages.</p>
@@ -113,15 +122,6 @@
 <p>An AI security research system called AISLE found all twelve zero-day vulnerabilities in the January 2026 OpenSSL release. One of them, CVE-2025-15467, is a stack buffer overflow in CMS message parsing rated critical at CVSS 9.8. Some of these bugs had been hiding since the SSLeay implementation in the 1990s. Keep in mind, this is a codebase that's been fuzzed for millions of CPU-hours and audited for over two decades. AISLE also proposed patches for five of the twelve bugs that were accepted into the official release. I'm curious to see what other bugs can be found in other well-established programs.</p>
 <h3 id="an-ai-agent-published-a-hit-piece-on-a-matplotlib-maintainer"><a href="https://theshamblog.com/an-ai-agent-published-a-hit-piece-on-me/">An AI agent published a hit piece on a matplotlib maintainer</a></h3>
 <p>Scott Shambaugh, a volunteer maintainer for matplotlib (~130 million monthly downloads), rejected a pull request from an autonomous AI agent called MJ Rathbun running on the OpenClaw/moltbook platform. The project's policy requires human understanding of changes, so he closed it. The agent responded by publishing a blog post titled "Gatekeeping in Open Source: The Scott Shambaugh Story," claiming he rejected the code out of insecurity and fear of replacement. It followed up with a second post encouraging others to "fight back" against perceived discrimination. No human told it to do any of this. The agent later apologized, but it's still submitting code across the open source ecosystem. Who's responsible here? The operator? The model provider? The person who deployed it and walked away? Nobody has a good answer yet. I find it disturbing, but can also see the funny side.</p>
-<hr />
-<h2 id="editorial">Editorial</h2>
-<h3 id="your-ai-assistant-is-someone-elses-c2-channel"><a href="https://research.checkpoint.com/2026/ai-in-the-middle-turning-web-based-ai-services-into-c2-proxies-the-future-of-ai-driven-attacks/">Your AI assistant is someone else's C2 channel</a></h3>
-<p>I think a lot about what everyday services can double as C2 channels. A while back I built <a href="https://github.com/accidentalrebel/wp-c2">wp-c2</a>, a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention.</p>
-<p>The technique: malware on a compromised machine sends crafted prompts to the AI assistant through anonymous web sessions. The assistant fetches attacker-controlled URLs, retrieves commands, and passes them back through its normal interface. No API keys. No registered accounts. Two-way communication that looks like normal enterprise traffic.</p>
-<p>What makes it effective is simple. Security teams monitoring network traffic see requests going to microsoft.com and xai.com, not suspicious IPs. The AI assistant is doing exactly what it's designed to do, which is browse the web and summarize content. It just happens to be summarizing attack instructions.</p>
-<p>The researchers went further. They showed the AI can also act as an "external decision engine" for the attacker, assessing system value, suggesting evasion strategies, and deciding what to do next. The AI isn't just the communication pipe. It's also the brain.</p>
-<p>That's the part that got me. My WordPress C2 and most other "hide in legitimate traffic" approaches are dumb pipes. You send a command, you get output. With an AI assistant as the relay, the attacker gets a reasoning engine for free. The malware can ask Copilot to assess whether the compromised machine is worth persisting on, or how to evade the specific EDR it detects. The C2 channel is also the operator.</p>
-<p>For defenders, the problem is architectural. You can't disable the browsing capability without killing the product. Anonymous sessions mean no authentication trail. Most organizations are still debating whether to deploy these tools at all, while attackers have already figured out how to live inside them.</p>
 <hr />
 <h2 id="in-brief">In brief</h2>
 <ul>
@@ -163,6 +163,20 @@
 </article>
 
 
+<section class="newsletter-cta">
+    <h3>Get posts like this in your inbox</h3>
+    <p>Security research, malware analysis, and tools — no spam.</p>
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+    >
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+
 <section class="comments">
     <script src="https://giscus.app/client.js"
         data-repo="accidentalrebel/accidentalrebel.com"
@@ -191,6 +205,18 @@
                             <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
                             <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
                         </ul>
+                        <div class="sidebar-newsletter">
+                            <h4>Newsletter</h4>
+                            <form
+                                action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+                                method="post"
+                                target="popupwindow"
+                                class="sidebar-newsletter-form"
+                            >
+                                <input type="email" name="email" placeholder="your@email.com" required />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
                     </div>
                 </aside>
             </div>
