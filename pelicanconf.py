@@ -26,7 +26,7 @@ LINKS = ()
 SOCIAL = (('LinkedIn', 'https://www.linkedin.com/in/juan-karlo-licudine/'),
           ('GitHub', 'https://github.com/accidentalrebel'))
 
-BLURB = "Defense-first security engineer who builds tools and thinks like an attacker — now focused on where AI and security collide."
+BLURB = "Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide."
 
 DEFAULT_PAGINATION = 10
 
