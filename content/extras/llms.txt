@@ -1,0 +1,39 @@
+# AccidentalRebel.com
+
+> Personal blog by Karlo Licudine (AccidentalRebel), a security engineer who builds tools and writes about where AI and cybersecurity collide. L2 SOC lead and content engineering lead at TryHackMe, building hands-on security training for 3M+ users.
+
+## About the Author
+
+Karlo sits at the intersection of security operations and AI. He leads L2 security operations for a 24/7 SOC, builds security tools (ML-based malware classification, shellcode analysis, AI agent containment), and writes about the practical side of both fields. 10+ years in software engineering before pivoting to security. Computer Engineer by training.
+
+## Key Topics
+
+- Detection engineering and SOC operations
+- AI agents and security (risks, containment, trust)
+- Malware analysis and reverse engineering
+- Security tool development
+- Security training and education design
+
+## Best Articles
+
+- [The Hidden Tax of Security Tooling](https://www.accidentalrebel.com/the-hidden-tax-of-security-tooling.html): Why SOC analysts spend more time clicking through UIs than analyzing threats, and what to do about it
+- [Your AI Assistant Might Be Working for Someone Else](https://www.accidentalrebel.com/your-ai-assistant-might-be-working-for-someone-else.html): How prompt injection and tool-use in AI agents create new attack surfaces
+- [Developer Tools Are the New Attack Surface](https://www.accidentalrebel.com/developer-tools-are-the-new-attack-surface.html): MCP servers, AI coding assistants, and supply chain risk
+- [AI Agents Under Attack](https://www.accidentalrebel.com/ai-agents-under-attack.html): Threat models for autonomous AI systems
+- [Running AI Agents in a Box](https://www.accidentalrebel.com/running-ai-agents-in-a-box.html): Containerizing AI agents for safe execution
+- [Building a Session Retrospective Skill for Claude Code](https://www.accidentalrebel.com/building-a-session-retrospective-skill-for-claude-code.html): Practical AI tool customization for developer workflows
+- [Classifying Malware Packers Using Machine Learning](https://www.accidentalrebel.com/classifying-malware-packers-using-machine-learning.html): Building VGL4NT, an ML-based malware classification tool
+- [Building My Virtual Cybersecurity Home Lab](https://www.accidentalrebel.com/building-my-virtual-cybersecurity-home-lab.html): Practical guide to setting up a security research environment
+- [Malware Sandbox Evasion in x64 Assembly](https://www.accidentalrebel.com/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html): Writing malware techniques from scratch to understand detection
+
+## Tools Built
+
+- [VGL4NT](https://github.com/accidentalrebel/vgl4nt): ML-based malware packer classification
+- [shcode2exe](https://github.com/accidentalrebel/shcode2exe): Convert shellcode to executable for analysis
+- [Claudecker](https://github.com/accidentalrebel/claudecker): Docker-based containment for AI coding agents
+
+## Optional
+
+- [About Page](https://www.accidentalrebel.com/pages/about.html): Full bio and background
+- [Newsletter](https://www.accidentalrebel.com/category/cybersecurity-x-ai-news-roundup.html): Weekly Cybersecurity x AI News Roundup
+- [All Posts](https://www.accidentalrebel.com/archives.html): Complete archive
