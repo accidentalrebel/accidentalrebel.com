@@ -63,6 +63,7 @@ Fetch ALL feeds and extract title, link, description, pubDate:
 | Wiz | `https://www.wiz.io/blog/rss` |
 | Google Security Blog | `http://feeds.feedburner.com/GoogleOnlineSecurityBlog` |
 | Epoch AI | `https://epochai.substack.com/feed` |
+| Cyber Security News (AI) | `https://cybersecuritynews.com/category/cyber-ai/feed/` |
 
 ---
 
@@ -258,10 +259,10 @@ The draft follows the established pattern for "Cybersecurity x AI News Roundup" 
 1. **Title** (H1) — catchy headline summarizing the week's theme (NOT "WaitAISec")
 2. **Introduction** — 2-3 sentences summarizing what's in this issue, followed by `<!-- PELICAN_END_SUMMARY -->`
 3. **Horizontal rule** (`---`)
-4. **Featured stories** (`## Featured stories`) — 4-5 major stories with full summaries
-5. **Horizontal rule** (`---`)
-6. **Editorial** (`## Editorial`, optional) — Long-form deep-dive on one story (3-5 paragraphs). Omit entirely if no EDITORIAL selected.
-7. **Horizontal rule** (`---`) (only if editorial exists)
+4. **Editorial** (`## Editorial`, optional) — Long-form deep-dive on one story (3-5 paragraphs). Omit entirely if no EDITORIAL selected.
+5. **Horizontal rule** (`---`) (only if editorial exists)
+6. **Featured stories** (`## Featured stories`) — 4-5 major stories with full summaries
+7. **Horizontal rule** (`---`)
 8. **In brief** (`## In brief`) — 5-7 one-liner mentions
 
 ---
@@ -283,11 +284,19 @@ AI agents are under attack this week—and AI is doing the attacking. Claude Opu
 
 ---
 
+## Editorial
+
+### The real problem with autonomous vulnerability discovery
+
+Anthropic's Claude Opus 4.6 found 500+ vulnerabilities in major open-source projects. That's impressive. It's also terrifying — because attackers have access to the same models.
+
+We're entering an arms race where both sides use AI to find bugs. The difference: defenders need to patch all of them, attackers only need one. The economics favor offense, and the gap will only widen as models improve.
+
+The practical takeaway? If you maintain open-source code, assume AI is already auditing it. Automated scanning isn't optional anymore — it's table stakes.
+
+---
+
 ## Featured stories
-
-### [Claude Opus 4.6 discovers hundreds of security flaws](https://example.com/article)
-
-Anthropic's latest model identified more than 500 previously unknown high-severity vulnerabilities in major open-source projects like Ghostscript through automated security analysis.
 
 ### [AI models execute autonomous network attacks](https://example.com/article2)
 
