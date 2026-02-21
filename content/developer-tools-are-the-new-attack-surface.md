@@ -53,3 +53,7 @@ Bruce Schneier documented AI models executing multi-stage network attacks autono
 - **[AI agent access control is a governance gap](https://thehackernews.com/2026/01/who-approved-this-agent-rethinking.html)**: Analysis reveals organizations deploy AI agents without proper access controls or accountability frameworks, leaving agent permissions unmonitored.
 
 - **[Moltbook shows prompt injection risks in agent networks](https://simonwillison.net/2026/Jan/30/moltbook/)**: Simon Willison examines Moltbook, a social network for AI agent interaction, identifying heightened prompt injection threats when agents communicate with other agents.
+
+Next roundup: [AI Agents Under Attack]({filename}/ai-agents-under-attack.md) — Claude finds 500+ vulns and LLMs run autonomous network breaches.
+
+One practical response to these threats: [Running AI Agents in a Box]({filename}/running-ai-agents-in-a-box.md), where I containerize AI coding tools with network lockdown.

@@ -18,6 +18,6 @@ I don't want to spoil too much but if you are for it, you can give it a go [here
 
 ---
 
-Official write-up with hints coming soon.
+Official write-up: [Emprisa Maldoc Writeup]({filename}/emprisa-maldoc-writeup.md).
 
 I would like to extend my thanks to the team behind CyberDefenders.org. They accepted my submission, reviewed it, and worked with me in improving it. And also to [Josh Stroschein](https://twitter.com/jstrosch) for making Maldoc101 and being kind enough to entertain me with my questions related to making challenges.

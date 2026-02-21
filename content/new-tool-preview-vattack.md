@@ -28,3 +28,7 @@ This tool is still in development. I plan to add a number of improvements such a
 I also plan on releasing a live demo of the tool very soon in the hopes of getting feedback from the community. 
 
 For now, if you are interested in the project, you could visit the [tool's Github project page](https://github.com/accidentalrebel/vATTACK) or contact me for any comments or suggestions.
+
+See vATT&CK in use during the [Cyber Corp Case 2 threat hunting walkthrough]({filename}/cyber-corp-case-2-writeup-part-1.md).
+
+For MITRE's malware-focused companion framework, see the post on the [Malware Behavior Catalog (MBC)]({filename}/talking-about-mitres-malware-behavior-catalog.md).

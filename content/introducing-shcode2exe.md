@@ -11,7 +11,7 @@ I've been playing around with [Remnux](https://remnux.org/) and encountered a pr
 
 When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the `incbin` assembly instruction. From there, the file is then automatically compiled and linked.
 
-One big problem with the tool is that it needs to use [Wine](https://www.winehq.org/) if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of `shcode2exe`.
+One big problem with the tool is that it needs to use [Wine](https://www.winehq.org/) if it needs to run on Linux. I don't want such a huge dependency especially for [my own malware analysis lab]({filename}/building-my-virtual-cybersecurity-home-lab.md) so I decided to write my own version which have led to the creation of `shcode2exe`.
 
 ## shcode2exe
 
@@ -72,5 +72,7 @@ test-blob.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for
 I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway. (Update 2021-02-07: It's now [under review](https://github.com/REMnux/salt-states/issues/169))
 
 For more information about the tool and it's code, go to [it's Github page](https://github.com/accidentalrebel/shcode2exe). If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at [@accidentalrebel](https://twitter.com/accidentalrebel).
+
+Tools like shcode2exe are useful for the shellcode analysis workflow shown in the [Emprisa Maldoc Writeup]({filename}/emprisa-maldoc-writeup.md).
 
 

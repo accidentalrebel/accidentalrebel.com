@@ -39,3 +39,9 @@ Research reveals how attackers exploit AI agent tool chains for code execution a
 - **Malicious OpenClaw plugins**: A supply-chain attack delivered credential stealers disguised as functional plugins, exploiting ecosystem trust.
 
 - **Ghidra MCP server**: A developer released 110 tools integrating Ghidra with AI assistants via Model Context Protocol, enabling AI-assisted binary analysis.
+
+Previous roundup: [Developer Tools Are the New Attack Surface]({filename}/developer-tools-are-the-new-attack-surface.md).
+
+Next roundup: [Your AI Assistant Might Be Working for Someone Else]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) — Copilot and Grok repurposed as C2 channels.
+
+For a practical defensive response to agentic attack surfaces, see how I [run AI agents in an isolated Docker container]({filename}/running-ai-agents-in-a-box.md).

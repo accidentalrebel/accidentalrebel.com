@@ -60,3 +60,5 @@ I rarely engage in any competitive activity so my competitive side rarely comes 
 I want to give a shoutout to [GuideM](https://www.facebook.com/guidemtraining) for guiding us throughout the course and for the extremely fun CTF challenge. Also to *BoyHack3r*, *Overwatch*, and *:]* for making me sweat bullets.
 
 This is another big step for me into the world of cybersecurity and I do hope I could learn more and improve. I look forward to the next CTF!
+
+If you enjoy blue team challenges, see my detailed walkthrough of the [Cyber Corp Case 2 threat hunting challenge]({filename}/cyber-corp-case-2-writeup-part-1.md).

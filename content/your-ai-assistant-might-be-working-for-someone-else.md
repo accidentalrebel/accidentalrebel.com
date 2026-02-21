@@ -30,6 +30,8 @@ That's the part that got me. My WordPress C2 and most other "hide in legitimate 
 
 For defenders, the problem is architectural. You can't disable the browsing capability without killing the product. Anonymous sessions mean no authentication trail. Most organizations are still debating whether to deploy these tools at all, while attackers have already figured out how to live inside them.
 
+I've also approached this defensively: [running AI agents in isolated containers]({filename}/running-ai-agents-in-a-box.md) prevents the agent itself from becoming a pivot point.
+
 ---
 
 ## Featured stories
@@ -71,4 +73,6 @@ Scott Shambaugh, a volunteer maintainer for matplotlib (~130 million monthly dow
 - **[Wiz uses LLMs to detect malicious Azure OAuth applications](https://www.wiz.io/blog/detecting-malicious-oauth-applications)**: Wiz Research built ML-powered detection for malicious Azure app registrations and consent phishing campaigns, catching threats that manual review would miss.
 
 ---
+
+Previous roundup: [AI Agents Under Attack]({filename}/ai-agents-under-attack.md) — Claude finds 500+ vulns and LLMs run autonomous network breaches.
 

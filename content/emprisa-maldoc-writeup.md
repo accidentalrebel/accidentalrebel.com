@@ -6,7 +6,7 @@ Category: CTF
 Image: emprisa-maldoc-writeup-01.png
 Summary: Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.
 
-> This is a writeup for [Emprisa maldoc challenge](the-emprisa-maldoc-challenge) that I made for [CyberDefenders.org](https://cyberdefenders.org/). You can play it [here](https://cyberdefenders.org/labs/56).
+> This is a writeup for [Emprisa maldoc challenge]({filename}/the-emprisa-maldoc-challenge.md) that I made for [CyberDefenders.org](https://cyberdefenders.org/). You can play it [here](https://cyberdefenders.org/labs/56).
 
 The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.
 
@@ -44,4 +44,6 @@ From here, we could also backtrack from where the shellcode is called to figure 
 
 After all of that, you should have everything that you need to answer all the questions in the challenge. You may have noticed that I have not revealed the answers outright. You still have to find it on your own. However, I do hope that by walking you through the process, I have helped you understand how to get there.
 
-> If you have more questions, or want to tell me what you think of the challenge, feel free to leave a comment below or send me a mesage at @accidentalrebel. 
+> If you have more questions, or want to tell me what you think of the challenge, feel free to leave a comment below or send me a mesage at @accidentalrebel.
+
+For another maldoc challenge walkthrough, check out [Maldoc101]({filename}/maldoc101-writeup-part-1.md), which inspired me to create the Emprisa challenge.

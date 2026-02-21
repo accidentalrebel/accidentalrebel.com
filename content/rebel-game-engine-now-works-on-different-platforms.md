@@ -20,3 +20,5 @@ Summary: Getting a custom C game engine to build on Linux, Windows, and macOS wi
    I am quite happy that I was able to structure the whole system so that you only need one Makefile for all three platforms. I'm not sure if this wil change in the future, but I'll do my best for it to stay like this as long as it's possible.
 
    If you are interested to try it out here's the project's [Github page](https://github.com/accidentalrebel/rebel-game-engine), depending on your platform here are the instructions on how to build for each one: [Linux](https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Arch-Linux), [MacOSX](https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-MacOSX) and [Windows](https://github.com/accidentalrebel/rebel-game-engine/wiki/Building-and-running-the-engine-for-Windows-(using-Msys2)).
+
+Next in this series: [applying Lispy naming conventions to the engine's scripting API]({filename}/following-lispy-conventions.md).

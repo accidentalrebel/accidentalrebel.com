@@ -167,6 +167,8 @@ Summary: Practical Chicken Scheme FFI examples covering foreign-lambda, struct a
 These are the basic FFI implementations that I have explored. It should be enough for most uses. The example project with working code can be found [on Github](https://github.com/accidentalrebel/chicken-scheme-ffi-example).
 
 Also, check out [the chicken-bind egg](http://wiki.call-cc.org/eggref/5/bind), it already has all of the code above conveniently in one package. If you don't need full control and just want a simple FFI solution then this is what you need.
+
+For how these FFI bindings get named consistently in the scripting API, see [Following Lispy Conventions]({filename}/following-lispy-conventions.md).
 	  
 
    

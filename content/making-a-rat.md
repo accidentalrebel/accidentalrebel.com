@@ -77,3 +77,7 @@ And of course, this project has given me a good insight into the techniques used
 [^1]: Handmade here is a project by Casey Muratori where a game is created from scratch live on stream, has been going on for 6+ years, it's awesome
 
 [^2]: Multi-scanners help to easily distribute virus signatures to security services. An opposite to this are "no-distribute" sacnners. More info about this [here](https://www.bleepingcomputer.com/news/security/75-percent-of-malware-uploaded-on-no-distribute-scanners-is-unknown-to-researchers/).
+
+I later did a deep dive on the string obfuscation technique used here: [String AV Evasion in x64 Assembly]({filename}/string-av-evasion-in-x64-assembly-part-1.md).
+
+For a safe environment to test projects like this, see how I built [my virtual cybersecurity home lab]({filename}/building-my-virtual-cybersecurity-home-lab.md).

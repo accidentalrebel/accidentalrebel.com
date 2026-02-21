@@ -40,3 +40,5 @@ The skill works for my current needs. I haven't tested it extensively on very lo
 Also, the output format might need iteration based on actual use. The template includes sections for "mistakes made" and "techniques worth remembering" but maybe other categories would be more useful. I'll adjust as I use it more.
 
 The code is [here](https://github.com/accidentalrebel/claude-skill-session-retrospective) if you want to try it.
+
+If you think about how to run Claude Code safely as well as effectively, see how I [containerize it in Docker with network lockdown]({filename}/running-ai-agents-in-a-box.md).

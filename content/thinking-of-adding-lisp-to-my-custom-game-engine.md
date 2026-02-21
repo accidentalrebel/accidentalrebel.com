@@ -17,3 +17,5 @@ FacebookImage: https://www.accidentalrebel.com/images/thinking-of-adding-lisp-to
    This morning I started implementing a simple implementation of Chibi. Thankfully, it's easy to setup. However, the more I implement it the more that I realize that I may need to change how my engine is structured to better suit Lisp's functional nature. This means less object oriented design similar to how [Raylib](https://www.raylib.com/index.html) does things. 
 
    I still need some time to think this through. I am open to do the changes needed if I am to include a scripting language. I just want to make sure if my engine would really need it. We'll see.
+
+Follow-up: [I implemented basic Chicken Scheme scripting for the Rebel Game Engine]({filename}/implemented-basic-scheme-scripting-for-rebel-game-engine.md).

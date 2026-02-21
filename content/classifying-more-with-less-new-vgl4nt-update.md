@@ -10,7 +10,7 @@ Summary: How I doubled VGL4NT's malware packer classification capacity without e
 * Solution was a customized version of model ensembling, which is to train multiple models and resolve their results
 * It works with a slight caveat of more extended training and processing, which I could happily live with
 
-I recently presented [VGL4NT](https://packers.vgl4nt.com/), my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.
+I recently presented [VGL4NT]({filename}/classifying-malware-packers-using-machine-learning.md), my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.
 
 ## A Simple Solution
 

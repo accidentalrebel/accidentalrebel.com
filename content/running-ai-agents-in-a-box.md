@@ -139,3 +139,7 @@ For security research projects, the isolation gives me peace of mind. The AI can
 It's not perfect containment. Docker isn't a security boundary the way a VM is. But it's enough friction that an AI agent can't accidentally (or intentionally) do something I'd regret.
 
 For now, this setup works for my needs. The paranoia tax is a few extra seconds on startup and occasional friction with browser auth. Worth it.
+
+The threat landscape that motivated this setup is covered in [Developer Tools Are the New Attack Surface]({filename}/developer-tools-are-the-new-attack-surface.md).
+
+For another Claude Code workflow improvement, see the [session retrospective skill]({filename}/building-a-session-retrospective-skill-for-claude-code.md) I built to capture lessons from each coding session.

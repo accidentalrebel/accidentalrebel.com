@@ -87,3 +87,5 @@ Summary: Applying Scheme naming conventions (?, !, %, *) to a game engine's scri
    I also changed my C functions to reflect a *NamespaceVerb* convention. I could have used *namespace::Verb* but the [FFI that I use](http://wiki.call-cc.org/eggref/5/bind) to communicate with C cannot parse C namespaces. So instead of *Shader::Create*, I am left with *ShaderCreate*. This is unfortunate, but I'm fine with it since the lisp scripting side of the engine will be the most prominently used (Plus, [Raylib also uses this convention](https://www.raylib.com/examples.html) for their functions).
 
    I am happy that I was able to do these changes early. Because of this, readability of my code has increased, something I worried about when I first started implementing scripting.
+
+For the low-level FFI bindings that these conventions apply to, see [Chicken Scheme FFI Examples]({filename}/chicken-scheme-ffi-examples.md).

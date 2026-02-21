@@ -296,3 +296,7 @@ Looking at [the microsoft docs](https://docs.microsoft.com/en-us/windows/win32/c
 At this point there are already a number of questions that we could answer based on what we've done so far. Some are not yet answerable at the moment, however, so nothing left to do but to push forward. But that will be for the next part of this two part series.
 
 Until then, I'm taking a step back as I marvel at my progress. It wouldn't take long until all the pieces would fall into place.
+
+For the next part of this writeup, see [Maldoc101 Writeup Part 2]({filename}/maldoc101-writeup-part-2.md).
+
+If you enjoyed this, see the [Emprisa Maldoc challenge]({filename}/the-emprisa-maldoc-challenge.md) I created on CyberDefenders, directly inspired by Maldoc101.

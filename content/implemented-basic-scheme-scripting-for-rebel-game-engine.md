@@ -51,3 +51,7 @@ Summary: Adding Chicken Scheme scripting to a C game engine — switching to a f
    I've already spent a lot of time on this project and it was mostly spent on the scripting side of the engine. There are still more to do for it to be considered useful but I'm happy I was able to learn a lot.
 
    If you are curious about the engine you could check it out [here](https://github.com/accidentalrebel/Rebel-Game-Engine).
+
+Next: [making the Rebel Game Engine build on Linux, Windows, and macOS]({filename}/rebel-game-engine-now-works-on-different-platforms.md).
+
+For the low-level FFI details used to wire Chicken Scheme into C, see [Chicken Scheme FFI Examples]({filename}/chicken-scheme-ffi-examples.md).

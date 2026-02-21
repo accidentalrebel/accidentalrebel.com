@@ -66,3 +66,5 @@ This particular site may be down now, but I bet there will be more in the future
 
 > If you want to know more or discuss the details about the phishing site, I would be happy to exchange notes. Drop me a line on Twitter @accidentalrebel.
 
+This investigation led to a more alarming follow-up: [Finding Phished Passwords on a Scam Site]({filename}/finding-phished-passwords-on-a-scam-site.md), where I found publicly accessible victim credentials.
+

@@ -18,7 +18,7 @@ Edit: [Part 2](cyber-corp-case-2-writeup-part-2) and [Part 3](cyber-corp-case-2-
 
 So the question tells us that the attacker used WMI subscription to gain persistence in our network.
 
-The very first thing I did was to check the Mitre ATT&CK wiki for information about this attack. My search led me to the "[Event Triggered Execution: Windows Management Instrumentation Event Subscription](https://attack.mitre.org/techniques/T1546/003/)" with technique ID `T1546.003`. And, of course, I fired up [my vATT&CK tool](https://github.com/accidentalrebel/vATTACK) to better visualize the technique and its related information.
+The very first thing I did was to check the Mitre ATT&CK wiki for information about this attack. My search led me to the "[Event Triggered Execution: Windows Management Instrumentation Event Subscription](https://attack.mitre.org/techniques/T1546/003/)" with technique ID `T1546.003`. And, of course, I fired up [my vATT&CK tool]({filename}/new-tool-preview-vattack.md) to better visualize the technique and its related information.
 
 ![cyber-corp-case-2-writeup-01]({attach}/images/cyber-corp-case-2-writeup-01.png)
 

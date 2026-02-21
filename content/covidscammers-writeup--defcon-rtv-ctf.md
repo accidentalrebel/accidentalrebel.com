@@ -100,3 +100,7 @@ Which resulted in this flag: `5b4e97047851682649a602ad62ba4af567e352a3`
 So I wanted to try and work on the other challenges but it seems that [the ctf site](https://ctf.threatsims.com) is currently down. The site redirected to a different non https site and it spooked me so I stopped trying. Good thing that I had NoScript on.
 
 If you want a longer and more pro writeup about the CovidScammers challenges do check out [0xdf's writeup about it](https://0xdf.gitlab.io/2020/05/04/covid-19-ctf-covidscammers.html).
+
+I later competed in another CTF — [the Hunt the Kingdom blue team challenge]({filename}/hunt-the-kingdom-ctf-challenge.md), where I placed first.
+
+Running malware safely requires a proper isolated environment — see how I set up [my virtual cybersecurity home lab]({filename}/building-my-virtual-cybersecurity-home-lab.md).

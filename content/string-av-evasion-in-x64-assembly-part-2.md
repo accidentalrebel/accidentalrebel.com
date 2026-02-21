@@ -286,4 +286,8 @@ I might post more assembly shenanigans in the future, so stay tuned.
 
 And as always, for any questions or comments, feel free to reach out to me on [Twitter](https://twitter.com/accidentalrebel) or [LinkedIn](https://www.linkedin.com/in/juan-karlo-licudine/).
 
+For the foundational x64 Windows assembly concepts used throughout this series, see [Converting a Malware Dropper to x64 Assembly]({filename}/converting-a-malware-dropper-to-x64-assembly.md).
+
+These evasion techniques were first applied in [Making a RAT]({filename}/making-a-rat.md), where I implemented string obfuscation in a real C project.
+
 

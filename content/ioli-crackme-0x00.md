@@ -67,6 +67,8 @@ All that is left to do is to patch the executable via "Edit > Patch Program > Ap
 
 This is the first out of the 10 challenges from this set. Since this is the first one, it is only natural for it to be very easy. It's still a good refresher for me especially since the last time I did any reversing was from a few years ago. I look forward to the next challenges, I do hope that they would ramp up in difficulty and also teach me new things for me to improve.
 
+Continue to [IOLI Crackme 0x01]({filename}/ioli-crackme-0x01.md) where we tackle hex-to-decimal conversion.
+
 
 
 

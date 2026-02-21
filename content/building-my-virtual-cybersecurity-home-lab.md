@@ -79,3 +79,7 @@ I'm not stopping here though. I also plan to upgrade the Target network so it wo
 I am also hoping I could get access to more cybersecurity products so I could play around with them. A SOAR (Security Orchestration and Response) would be a nice addition that would work really well.
 
 But, of course, before I could do any of the above I first need to upgrade my RAM and add more cores!
+
+One example of what I test in this lab: [Making a RAT]({filename}/making-a-rat.md), a remote access tool with anti-sandbox checks, built for educational purposes.
+
+A useful tool for the malware analysis portion of this lab: [shcode2exe]({filename}/introducing-shcode2exe.md), which compiles shellcode into debuggable Windows executables without requiring Wine.
