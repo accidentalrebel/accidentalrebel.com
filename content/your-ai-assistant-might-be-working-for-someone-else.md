@@ -9,6 +9,7 @@ Image: your-ai-assistant-might-be-working-for-someone-else.png
 *Image made by Gemini*
 
 Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore.
+<!-- PELICAN_END_SUMMARY -->
 
 ---
 

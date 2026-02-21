@@ -30,6 +30,9 @@ BLURB = "SOC leader and content engineer at TryHackMe. Writing about AI, securit
 
 DEFAULT_PAGINATION = 10
 
+SUMMARY_END_MARKER = '<!-- PELICAN_END_SUMMARY -->'
+SUMMARY_MAX_LENGTH = 50
+
 DISPLAY_CATEGORIES_ON_MENU = False
 DISPLAY_PAGES_ON_MENU = True
 
