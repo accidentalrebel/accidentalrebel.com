@@ -3,6 +3,7 @@ Date: 2026-02-23 20:00
 Slug: the-hidden-tax-of-security-tooling
 Tags: security, tools
 Category: security
+Status: draft
 Image: the-hidden-tax-of-security-tooling.png
 Summary: SOC analysts waste 20+ minutes per shift on UI clicks in tools like Sentinel. Here's the bookmarklet I built to fix it, and why vendors don't measure this cost.
 

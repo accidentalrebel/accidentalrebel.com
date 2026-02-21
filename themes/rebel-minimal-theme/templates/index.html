@@ -2,6 +2,18 @@
 
 {% block title %}{{ SITENAME }}{% if SITESUBTITLE %} | {{ SITESUBTITLE }}{% endif %}{% endblock %}
 
+{% block extra_head %}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ SITEURL }}/">
+    <meta property="og:title" content="{{ SITENAME }}">
+    <meta property="og:description" content="{{ BLURB }}">
+    <meta property="og:image" content="{{ SITEURL }}/images/default-og.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="{{ SITENAME }}">
+    <meta property="twitter:description" content="{{ BLURB }}">
+    <meta property="twitter:image" content="{{ SITEURL }}/images/default-og.png">
+{% endblock %}
+
 {% block content %}
 {% if articles %}
     {% for article in articles_page.object_list %}
