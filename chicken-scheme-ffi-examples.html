@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chicken-Scheme FFI Examples | AccidentalRebel.com</title>
-    
+
+<meta name="description" content="I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the Bind chicken egg but I wanted to...">
+
+    <link rel="canonical" href="./chicken-scheme-ffi-examples.html">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="./theme/css/main.css">
-    
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="./chicken-scheme-ffi-examples.html">
@@ -21,38 +34,62 @@
     <meta property="twitter:url" content="./chicken-scheme-ffi-examples.html">
     <meta property="twitter:title" content="Chicken-Scheme FFI Examples">
     <meta property="twitter:description" content="I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the Bind chicken egg but I wanted to have more control over the implementation by using the low level foreign functions. To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project. foreign-lambda example Let's say we have a structure Vec3 and a function Vec3Create that we want to access from chicken-scheme. typedef struct Vec3 { float x; float y; float z; } Vec3; Vec3* Vec3Create(float x, float y, float z) { Vec3* v = (Vec3*)malloc(sizeof(Vec3)); v->x = x; v->y = y; v->z = z; return v; } We could use foreign-lambda to bind to the function: (define vec3_create (foreign-lambda (c-pointer (struct "Vec3")) ; Return type, a pointer to a struct object of Vec3 "Vec3Create" ; Name fo the function float float float)) ; The …">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Chicken-Scheme FFI Examples",
+        "datePublished": "2020-06-16T05:58:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "./chicken-scheme-ffi-examples.html",
+        "description": "I'm currently working on refactoring the FFI implementation for the Rebel Game Engine. It was previously written using the Bind chicken egg but I wanted to..."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
+            { "@type": "ListItem", "position": 2, "name": "dev", "item": "./category/dev.html" },
+            { "@type": "ListItem", "position": 3, "name": "Chicken-Scheme FFI Examples" }
+        ]
+    }
+    </script>
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="./archives.html">Archives</a></li>
                     <li><a href="./categories.html">Categories</a></li>
                     <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
 <article>
     <header class="article-header">
+        <a href="./category/dev.html" class="article-category-label">dev</a>
         <h1>Chicken-Scheme FFI Examples</h1>
         <div class="article-meta">
             <time datetime="2020-06-16T05:58:00+08:00">Tue 16 June 2020</time>
-            <span>•</span>
-            <a href="./category/dev.html">dev</a>
         </div>
     </header>
 
@@ -221,12 +258,37 @@
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="./theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

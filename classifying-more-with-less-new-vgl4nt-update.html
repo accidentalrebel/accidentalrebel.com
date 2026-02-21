@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classifying More With Less: New VGL4NT Update | AccidentalRebel.com</title>
-    
+
+<meta name="description" content="TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to...">
+
+    <link rel="canonical" href="./classifying-more-with-less-new-vgl4nt-update.html">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="./theme/css/main.css">
-    
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="./classifying-more-with-less-new-vgl4nt-update.html">
@@ -21,38 +34,62 @@
     <meta property="twitter:url" content="./classifying-more-with-less-new-vgl4nt-update.html">
     <meta property="twitter:title" content="Classifying More With Less: New VGL4NT Update">
     <meta property="twitter:description" content="TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to train multiple models and resolve their results It works with a slight caveat of more extended training and processing, which I could happily live with I recently presented VGL4NT, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter. A Simple Solution The solution I came up with isn't exactly original. It's based on Task Decomposition, which …">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Classifying More With Less: New VGL4NT Update",
+        "datePublished": "2023-05-20T06:46:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "./classifying-more-with-less-new-vgl4nt-update.html",
+        "description": "TLDR: Packed malware machine learning classifier can only previously identify 10 packers Solution was a customized version of model ensembling, which is to..."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
+            { "@type": "ListItem", "position": 2, "name": "misc", "item": "./category/misc.html" },
+            { "@type": "ListItem", "position": 3, "name": "Classifying More With Less: New VGL4NT Update" }
+        ]
+    }
+    </script>
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="./archives.html">Archives</a></li>
                     <li><a href="./categories.html">Categories</a></li>
                     <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
 <article>
     <header class="article-header">
+        <a href="./category/misc.html" class="article-category-label">misc</a>
         <h1>Classifying More With Less: New VGL4NT Update</h1>
         <div class="article-meta">
             <time datetime="2023-05-20T06:46:00+08:00">Sat 20 May 2023</time>
-            <span>•</span>
-            <a href="./category/misc.html">misc</a>
         </div>
     </header>
 
@@ -126,12 +163,37 @@
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="./theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

@@ -4,36 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Categories | AccidentalRebel.com</title>
-    
+
+    <meta name="description" content="SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.">
+
+    <link rel="canonical" href="./">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="./theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="./archives.html">Archives</a></li>
                     <li><a href="./categories.html">Categories</a></li>
                     <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
 <article>
     <header class="article-header">
         <h1>Categories</h1>
@@ -42,9 +56,17 @@
     <div class="article-content">
         <h2>
             <a href="./category/ctf.html">ctf</a>
-            <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(4)</span>
         </h2>
         <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-04-30T05:58:00+08:00">Fri 30 April 2021</time>
+                </div>
+            </li>
             <li class="post-item">
                 <h3 class="post-title">
                     <a href="./the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a>
@@ -81,6 +103,20 @@
                 </h3>
                 <div class="article-meta">
                     <time datetime="2020-08-01T11:07:00+08:00">Sat 01 August 2020</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
+            <a href="./category/cybersecurity-x-ai-news-roundup.html">Cybersecurity x AI News Roundup</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./your-ai-assistant-might-be-working-for-someone-else.html">Your AI Assistant Might Be Working for Someone Else</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2026-02-20T10:00:00+08:00">Fri 20 February 2026</time>
                 </div>
             </li>
         </ul>
@@ -209,20 +245,6 @@
             </li>
         </ul>
         <h2>
-            <a href="./category/maldoc-writeup-ctf.html">maldoc, writeup, ctf</a>
-            <span style="color: var(--color-text-muted); font-size: 0.8em;">(1)</span>
-        </h2>
-        <ul class="post-list">
-            <li class="post-item">
-                <h3 class="post-title">
-                    <a href="./emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>
-                </h3>
-                <div class="article-meta">
-                    <time datetime="2021-04-30T05:58:00+08:00">Fri 30 April 2021</time>
-                </div>
-            </li>
-        </ul>
-        <h2>
             <a href="./category/malware.html">malware</a>
             <span style="color: var(--color-text-muted); font-size: 0.8em;">(4)</span>
         </h2>
@@ -346,28 +368,6 @@
             </li>
         </ul>
         <h2>
-            <a href="./category/phishing-threat-hunting-osint.html">phishing, threat-hunting, osint</a>
-            <span style="color: var(--color-text-muted); font-size: 0.8em;">(2)</span>
-        </h2>
-        <ul class="post-list">
-            <li class="post-item">
-                <h3 class="post-title">
-                    <a href="./finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a>
-                </h3>
-                <div class="article-meta">
-                    <time datetime="2021-05-01T20:56:00+08:00">Sat 01 May 2021</time>
-                </div>
-            </li>
-            <li class="post-item">
-                <h3 class="post-title">
-                    <a href="./investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a>
-                </h3>
-                <div class="article-meta">
-                    <time datetime="2021-04-24T05:58:00+08:00">Sat 24 April 2021</time>
-                </div>
-            </li>
-        </ul>
-        <h2>
             <a href="./category/postmortem.html">postmortem</a>
             <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
         </h2>
@@ -466,6 +466,28 @@
             </li>
         </ul>
         <h2>
+            <a href="./category/security.html">security</a>
+            <span style="color: var(--color-text-muted); font-size: 0.8em;">(2)</span>
+        </h2>
+        <ul class="post-list">
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-05-01T20:56:00+08:00">Sat 01 May 2021</time>
+                </div>
+            </li>
+            <li class="post-item">
+                <h3 class="post-title">
+                    <a href="./investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a>
+                </h3>
+                <div class="article-meta">
+                    <time datetime="2021-04-24T05:58:00+08:00">Sat 24 April 2021</time>
+                </div>
+            </li>
+        </ul>
+        <h2>
             <a href="./category/threat-hunting.html">threat-hunting</a>
             <span style="color: var(--color-text-muted); font-size: 0.8em;">(3)</span>
         </h2>
@@ -519,12 +541,37 @@
         </ul>
     </div>
 </article>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="./theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

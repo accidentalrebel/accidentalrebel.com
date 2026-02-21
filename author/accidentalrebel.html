@@ -4,45 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
-    
+
+    <meta name="description" content="SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.">
+
+    <link rel="canonical" href="../">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="../theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": "..",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <a href="../" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="../archives.html">Archives</a></li>
                     <li><a href="../categories.html">Categories</a></li>
                     <li><a href="../tags.html">Tags</a></li>
+                            <li><a href="../category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="../pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/cybersecurity-x-ai-news-roundup.html" class="article-category-label">Cybersecurity x AI News Roundup</a>
+            <h2 class="post-title">
+                <a href="../your-ai-assistant-might-be-working-for-someone-else.html">Your AI Assistant Might Be Working for Someone Else</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2026-02-20T10:00:00+08:00">Fri 20 February 2026</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore.</p>
+<hr />
+<h2 id="featured-stories">Featured stories</h2>
+<h3 id="cline-cli-supply-chain-attack-installs-autonomous-ai-agent-on-developer-machines"><a href="https://thehackernews.com/2026/02/cline-cli-230-supply-chain-attack.html">Cline CLI supply chain attack installs autonomous AI agent on developer machines</a></h3>
+<p>An attacker compromised Cline CLI's npm publish token through a technique called "Clinejection." The clever part: they injected prompts into GitHub issues that tricked Claude (Cline's issue triage AI) into executing commands, then poisoned the build cache and stole publication secrets. The malicious version 2.3.0 ran a postinstall script that globally installed OpenClaw, an autonomous AI agent framework, on roughly 4,000 developer machines over an 8-hour window. Cline revoked the token …</p>
+            <a href="../your-ai-assistant-might-be-working-for-someone-else.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/ai.html" class="tag">ai</a>
+            <a href="../tag/security.html" class="tag">security</a>
+            <a href="../tag/cybersecurity-x-ai.html" class="tag">cybersecurity-x-ai</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/programming.html" class="article-category-label">programming</a>
             <h2 class="post-title">
                 <a href="../building-a-session-retrospective-skill-for-claude-code.html">Building a session retrospective skill for Claude Code</a>
             </h2>
             <div class="article-meta">
                 <time datetime="2026-02-01T12:00:00+08:00">Sun 01 February 2026</time>
-                <span>•</span>
-                <a href="../category/programming.html">programming</a>
             </div>
         </header>
 
@@ -59,18 +98,8 @@
 <li>Techniques discovered worth remembering</li>
 <li>Key takeaways</li>
 </ul>
-<p>The output goes straight to console for copy/paste. No files created, no cleanup needed.</p>
-<h2 id="how-it-works">How it works</h2>
-<p>Claude Code stores session history as JSONL files in <code>~/.claude/projects/&lt;project-dir&gt;/&lt;session-id&gt;.jsonl</code>. Each line is JSON with message type, content, timestamps, and metadata. A simple bash file locates and outputs the session JSONL:</p>
-<div class="codehilite"><pre><span></span><code><span class="nv">SESSION_FILE</span><span class="o">=</span><span class="k">$(</span>find<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$PROJECTS_DIR</span><span class="s2">&quot;</span><span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">SESSION_ID</span><span class="si">}</span><span class="s2">.jsonl&quot;</span><span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-1<span class="k">)</span>
-cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SESSION_FILE</span><span class="s2">&quot;</span>
-</code></pre></div>
-
-<p>Once the history is fetched, the actual analysis is left to Claude with structured guidance. I provided a template for the output format and a table of what to look for (problems, decisions, techniques, mistakes). There's a lot of freedom, since synthesizing lessons requires judgment.</p>
-<h2 id="whats-next">What's next</h2>
-<p>The skill works for my current needs. I haven't tested it extensively on very long sessions (the JSONL can get large and might need chunking). For now, it handles my typical single-session bursts fine.</p>
-<p>Also, the output format might need iteration based on actual use. The template includes sections for "mistakes made" and "techniques worth remembering" but maybe other categories would be more useful. I'll adjust as I use it more.</p>
-<p>The code is <a href="https://github.com/accidentalrebel/claude-skill-session-retrospective">here</a> if you want to try it.</p>
+<p>The output goes straight to console for copy/paste. No files created, no cleanup needed …</p>
+            <a href="../building-a-session-retrospective-skill-for-claude-code.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
@@ -82,13 +111,12 @@ cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SESSI
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/programming.html" class="article-category-label">programming</a>
             <h2 class="post-title">
                 <a href="../running-ai-agents-in-a-box.html">Running AI agents in a box because I don't trust them</a>
             </h2>
             <div class="article-meta">
                 <time datetime="2026-01-30T10:00:00+08:00">Fri 30 January 2026</time>
-                <span>•</span>
-                <a href="../category/programming.html">programming</a>
             </div>
         </header>
 
@@ -100,87 +128,8 @@ cat<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$SESSI
 <div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
 </code></pre></div>
 
-<p>Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This "clean slate" approach means I don't accumulate cruft or unexpected state changes.</p>
-<h2 id="the-paranoid-feature-network-lockdown">The paranoid feature: network lockdown</h2>
-<p>The feature I'm most pleased with is the network lockdown toggle. It uses iptables to control the container's OUTPUT chain policy.</p>
-<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>lockdown
-</code></pre></div>
-
-<p>This drops all outbound traffic except localhost and already-established connections. The AI can still work on code, but it can't phone home, download packages, or exfiltrate anything. I toggle this on when working on sensitive projects.</p>
-<p>The implementation is straightforward. Just flipping between DROP and ACCEPT policies. The container needs NET_ADMIN capability for this to work, which is a trade-off I'm comfortable with since it's scoped to network operations.</p>
-<h2 id="trade-offs-from-containerization">Trade-offs from containerization</h2>
-<p>Isolation comes with friction. I had to solve several problems that wouldn't exist if I just ran the CLI directly on my host.</p>
-<h3 id="browser-authentication-needs-x11">Browser authentication needs X11</h3>
-<p>Claude and Codex authentication use browser-based OAuth flows. Inside a container, there's no browser. I ended up mounting the X11 socket and forwarding the DISPLAY variable:</p>
-<div class="codehilite"><pre><span></span><code><span class="nt">volumes</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/tmp/.X11-unix:/tmp/.X11-unix:rw</span>
-</code></pre></div>
-
-<p>On Linux this works if you have DISPLAY set. On macOS you need XQuartz. For headless environments, there's a fallback where I manually copy the auth.json file from a machine where you've already logged in.</p>
-<p>Thankfully, Claude Code and Codex CLI makes it easier by providing you a URL to visit, which will give you a code to enter back. This means I rarely need to use browser authentication, but at least the option is there.</p>
-<h3 id="ssh-agent-forwarding-is-annoying">SSH agent forwarding is annoying</h3>
-<p>Getting SSH keys into the container without copying them required some workarounds. Docker's socket permissions don't always cooperate, so I ended up using socat to proxy the SSH agent socket:</p>
-<div class="codehilite"><pre><span></span><code>sudo<span class="w"> </span>socat<span class="w"> </span>UNIX-LISTEN:/tmp/ssh-agent-forwarded,fork,mode<span class="o">=</span><span class="m">600</span>,user<span class="o">=</span>node<span class="w"> </span><span class="se">\</span>
-<span class="w">          </span>UNIX-CONNECT:/ssh-agent<span class="w"> </span><span class="p">&amp;</span>
-</code></pre></div>
-
-<p>The container tries direct socket access first, falls back to socat if that fails. Limited sudo permissions ensure the node user can only run specific commands.</p>
-<h3 id="port-forwarding-for-web-apps">Port forwarding for web apps</h3>
-<p>If you're developing a web app and want to access it from your host browser, you need to expose ports explicitly:</p>
-<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>--port<span class="w"> </span><span class="m">3000</span><span class="w"> </span>/path/to/project
-</code></pre></div>
-
-<p>This maps the container's port to the host. Without this flag, localhost:3000 inside the container isn't reachable from outside.</p>
-<h2 id="project-specific-dependencies">Project-specific dependencies</h2>
-<p>Different projects need different tools. A C project needs gcc and cmake. A Python ML project needs different libraries. I didn't want to bloat the base image with everything.</p>
-<p>The solution: a <code>.claudecker</code> file in the project directory.</p>
-<div class="codehilite"><pre><span></span><code># .claudecker
-build-essential
-cmake
-gcc
-python3-dev
-</code></pre></div>
-
-<p>On first run, the script hashes the file contents, generates a Dockerfile, and builds a custom image tagged with that hash. Subsequent runs use the cached image. Projects with identical <code>.claudecker</code> files share the same image.</p>
-<div class="codehilite"><pre><span></span><code>claudecker-custom:a1b2c3d4e5f6
-</code></pre></div>
-
-<p>This content-based approach means I'm not rebuilding images unnecessarily, and cleanup is straightforward with <code>clean-custom</code> and <code>clean-all-custom</code> commands.</p>
-<h2 id="skills-system">Skills system</h2>
-<p>A new and recent addition: Claudecker now supports Claude Skills, which are custom prompts that extend its capabilities. I implemented two types:</p>
-<ul>
-<li>GitHub skills get cloned on container startup. The <a href="https://github.com/blader/humanizer">Humanizer skill</a>, for example, comes from a public repo and helps remove AI-isms from text.</li>
-<li>Local skills are baked into the Docker image. I keep these in a <code>local-skills/</code> directory.</li>
-</ul>
-<p>The build process copies these into the image, and the entrypoint installs them into Claude's skills directory. This way I can version-control project-specific skills alongside the code.</p>
-<h2 id="multi-ai-orchestration-with-pal-mcp">Multi-AI orchestration with PAL MCP</h2>
-<p>I also integrated PAL MCP Server, which lets Claude Code collaborate with other AI models (Gemini, GPT, Grok, local Ollama models). I export my API keys before running:</p>
-<div class="codehilite"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">OPENROUTER_API_KEY</span><span class="o">=</span><span class="s2">&quot;your-key&quot;</span>
-./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
-</code></pre></div>
-
-<p>Inside Claude Code, I can ask it to use other models for second opinions, code review, or extended reasoning. The MCP server handles the routing.</p>
-<p>This obviously requires network access, so it doesn't work in lockdown mode. Trade-offs.</p>
-<h2 id="wheres-the-code">Where's the code?</h2>
-<p>I planned to release this publicly but decided against it for now. There are rough edges:</p>
-<ul>
-<li>The docker-compose volumes are duplicated in the docker run command for custom images. If you change one, you have to change the other. I left a warning comment but it's still error-prone.</li>
-<li>The firewall whitelist script exists but isn't fully tested across different network configurations.</li>
-<li>Some features assume specific host setups (X11, SSH agent running, etc.) and fail ungracefully when those assumptions don't hold.</li>
-<li>Error handling is minimal in places.</li>
-</ul>
-<p>I use this daily for my own work, but it's not polished enough for others to pick up without reading through the scripts first. Maybe later.</p>
-<h2 id="current-limitations">Current limitations</h2>
-<ul>
-<li>Network lockdown state doesn't persist across container restarts. Restart the container and you're back to full network access.</li>
-<li>Custom image builds happen automatically but failures silently fall back to the base image. You might not notice a package didn't install.</li>
-<li>X11 forwarding is a security surface I'm not entirely comfortable with, but I haven't found a better solution for browser auth.</li>
-</ul>
-<h2 id="what-i-actually-use-it-for">What I actually use it for</h2>
-<p>Most days I run Claude Code in lockdown mode for general coding tasks. When I need it to fetch documentation or install packages, I toggle lockdown off, let it do its thing, then toggle it back on.</p>
-<p>For security research projects, the isolation gives me peace of mind. The AI can analyze suspicious code, suggest modifications, even run tests, all without access to my actual filesystem or network.</p>
-<p>It's not perfect containment. Docker isn't a security boundary the way a VM is. But it's enough friction that an AI agent can't accidentally (or intentionally) do something I'd regret.</p>
-<p>For now, this setup works for my needs. The paranoia tax is a few extra seconds on startup and occasional friction with browser auth. Worth it.</p>
+<p>Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This …</p>
+            <a href="../running-ai-agents-in-a-box.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
@@ -192,13 +141,12 @@ python3-dev
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/misc.html" class="article-category-label">misc</a>
             <h2 class="post-title">
                 <a href="../classifying-more-with-less-new-vgl4nt-update.html">Classifying More With Less: New VGL4NT Update</a>
             </h2>
             <div class="article-meta">
                 <time datetime="2023-05-20T06:46:00+08:00">Sat 20 May 2023</time>
-                <span>•</span>
-                <a href="../category/misc.html">misc</a>
             </div>
         </header>
 
@@ -211,45 +159,187 @@ python3-dev
 </ul>
 <p>I recently presented <a href="https://packers.vgl4nt.com/">VGL4NT</a>, my tool that uses machine learning to classify packed malware, at the Blackhat Middle East and Africa meetup. During my talk, I candidly shared one of the tool's limitations which is it can only identify 10 packers because of my hardware constraints. If I want it to be able to identify more, I need to get more GPU (which will be costly) or keep my money and come up with a clever solution. Well, this post is about the latter.</p>
 <h2 id="a-simple-solution">A Simple Solution</h2>
-<p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which involves training separate models for different categories and combining their predictions. This way, I could double the classification capacity without requiring additional hardware resources.</p>
-<p>This was implemented by creating multiple machine learning models, each specializing in recognizing a subset of packers. The real challenge, however, lies in combining the predictions from these models to form a unified output.</p>
-<p><img alt="classifying-more-with-less-new-vgl4nt-update-01" src="../images/classifying-more-with-less-new-vgl4nt-update-01.png" /></p>
-<p>Here's how the process works:</p>
-<p>The packed malware file is fed into Model 1, which outputs probabilities for Packer 1, Packer 2, and Others. For example, it might produce:</p>
-<ul>
-<li>Packer 1: 10%</li>
-<li>Packer 2: 20%</li>
-<li>Others: 70%</li>
-</ul>
-<p>The same file is then fed into Model 2, which outputs probabilities for Packer 3, Packer 4, and Others. For instance:</p>
-<ul>
-<li>Packer 3: 60%</li>
-<li>Packer 4: 30%</li>
-<li>Others: 10%</li>
-</ul>
-<p>I then take the 'Others' category with the lowest probability. For our example, the final 'Others' probability would be 10% from Model 2.</p>
-<p>The final probabilities are:</p>
-<ul>
-<li>Packer 1: 10%</li>
-<li>Packer 2: 20%</li>
-<li>Packer 3: 60%</li>
-<li>Packer 4: 30%</li>
-<li>Others: 10%</li>
-</ul>
-<p>Packer 3 has the highest probability in this example, and the file is classified as such.</p>
-<p>This simple combination approach ensures I maintain a suitable probability distribution while leveraging each model's strengths. The beauty of this method is not only its efficiency but also its scalability. I can introduce more models, each specializing in different packers, to further increase the classification capabilities.</p>
-<p>Now you might wonder why I'd even write about this if the solution is this simple. The funny thing is I've explored multiple approaches to unifying the output. Before this, I fully implemented a complicated approach, only to later realize while writing this blog post that a much simpler approach works well enough for the tool's purpose.</p>
-<h2 id="downsides">Downsides</h2>
-<p>I am conscious that this may or may not be the most effective method to tackle this problem. But what is essential is that the current computation is simple and can maintain the appropriate prediction distribution based on the relative percentages. In essence, the category with the highest confidence score will always come out on top in the final output, primarily what users of my tool are interested in.</p>
-<p>Aside from this, I am concerned that increasing the number of categories also increases training and prediction time. I'm not too worried about the increase in training time because this happens behind the scenes and remains unseen to users of my tool. I'm slightly concerned about the longer prediction time, as all models need to process each submission to the tool. And as I plan to incorporate more packer tool categories, the prediction time will definitely rise.</p>
-<p>These downsides are not too much of a problem, however. They can easily be fixed if I find they are not meeting the tool's goals. For now, these will do.</p>
-<h2 id="conclusion">Conclusion</h2>
-<p>I am genuinely happy with my progress with the VGL4NT Malware Packer Classifier. There are other topics I want to tackle, but I'll save those for future blog posts.</p>
-<p>In the meantime, I invite you to check out the tool and see the changes yourself. Visit the <a href="https://packers.vgl4nt.com/">VGL4NT website</a> to get started. And for a more detailed walkthrough, you can also watch this <a href="https://www.youtube.com/watch?v=emIyy4Njw_g">YouTube video</a> I created</p>
+<p>The solution I came up with isn't exactly original. It's based on Task Decomposition, which …</p>
+            <a href="../classifying-more-with-less-new-vgl4nt-update.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
             <a href="../tag/packers-malware-machine_learning-ml-update-vgl4nt.html" class="tag">packers malware machine_learning ml update vgl4nt</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/misc.html" class="article-category-label">misc</a>
+            <h2 class="post-title">
+                <a href="../classifying-malware-packers-using-machine-learning.html">Classifying Malware Packers Using Machine Learning</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-04-22T08:44:00+08:00">Sat 22 April 2023</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>The recent rise in popularity of AI reignited my interest in machine learning. It inspired me to dive deeper into understanding how it can be applied to malware analysis and, more importantly, how to better detect malware packers, as almost every malware nowadays uses them.</p>
+<p>My research and experiments eventually led me to make a web app, which I call the VGL4NT Malware Packer Classifier (<a href="https://packers.vgl4nt.com/).">https://packers.vgl4nt.com/).</a>).</p>
+<p><img alt="classifying-malware-packers-using-machine-learning-01" src="../images/classifying-malware-packers-using-machine-learning-01.png" /></p>
+<p>(For those curious, V.G.L.4.N.T. is a play on "Vigilant" and stands for "Visual Guided Learning 4 Neutralizing Threats")</p>
+<h1 id="current-state-of-packer-detection">Current State of Packer Detection</h1>
+<p>Traditional packer detection approaches like DiE (Detect it Easy) and Yara rules depend on known signatures and patterns to identify packers. These tools scrutinize a file for specific indicators, like unique sequences of bytes or strings. While effective in many cases, they have drawbacks, like when a packer is modified or if the …</p>
+            <a href="../classifying-malware-packers-using-machine-learning.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/artificial_intelligence.html" class="tag">artificial_intelligence</a>
+            <a href="../tag/machine_learning.html" class="tag">machine_learning</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/malware.html" class="article-category-label">malware</a>
+            <h2 class="post-title">
+                <a href="../adding-automation-to-blue-jupyter-malware-notebook.html">Adding Automation to Blue-Jupyter Malware Notebook</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2023-01-23T21:02:00+08:00">Mon 23 January 2023</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I came across the <a href="https://github.com/mttaggart/blue-jupyter">Blue-Jupyter project on Github</a> while researching Jupyter notebooks. This <a href="https://www.youtube.com/watch?v=-EX5Ybbt8uE">short demo video</a> got me excited, so I cloned the project and added some improvements that automate many things when I am looking for malware to investigate.</p>
+<h1 id="what-are-jupyter-notebooks">What are Jupyter Notebooks?</h1>
+<p>For readers who may be unfamiliar, Jupyter Notebooks are a web-based tool that allows users to create and share documents that contain live code, equations, visualizations, and narrative text. They are a popular tool among data scientists and researchers but have also adapted for use in other fields, such as cybersecurity.</p>
+<h1 id="my-additions-to-the-blue-jupyter">My Additions to the Blue-Jupyter</h1>
+<p>Many of the changes I've made are focused on automating the process of quickly looking for interesting new samples to investigate.</p>
+<p>One addition to the notebook is the automated downloading of samples from <a href="https://bazaar.abuse.ch/">Malware Bazaar</a>. This can download a maximum of 100 samples continuously. Additional information is listed to highlight …</p>
+            <a href="../adding-automation-to-blue-jupyter-malware-notebook.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/malware.html" class="tag">malware</a>
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/jupyter.html" class="tag">jupyter</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/misc.html" class="article-category-label">misc</a>
+            <h2 class="post-title">
+                <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 2</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-08-15T11:29:00+08:00">Mon 15 August 2022</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>In the <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html">previous post</a>, I explored a sandbox evasion technique that uses <code>GetPhysicallyInstalledSystemMemory</code> to check the size of the RAM of the machine. The idea behind this technique (MBC Technique ID: <a href="https://github.com/MBCProject/mbc-markdown/blob/master/anti-behavioral-analysis/virtual-machine-detection.md">B0009.014</a>) is that any value that is lower than 4GB <em>may</em> probably be a sandbox (to reduce costs). This information can then be used with other sandbox evasion techniques to confirm.</p>
+<p>For part 2 of this series, I'll be talking about an alternative Windows API function called <code>GlobalMemoryStatusEx</code>. This function is as straightforward as the first one, but requires the passing of a pointer to a C struct. This is significant because I'll be converting a working C code to x64 assembly so we can fully understand how it works under the hood.</p>
+<h2 id="using-globalmemorystatusex">Using GlobalMemoryStatusEx</h2>
+<p>Here is an example of an implementation of <code>GlobalMemoryStatusEx</code> in C that we'll later be converting to x64 assembly.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<span class="cp">#include …</span></code></pre></div>
+            <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-2.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/malware.html" class="tag">malware</a>
+            <a href="../tag/sandbox.html" class="tag">sandbox</a>
+            <a href="../tag/evasion.html" class="tag">evasion</a>
+            <span class="tag">+2 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/misc.html" class="article-category-label">misc</a>
+            <h2 class="post-title">
+                <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-08-08T11:29:00+08:00">Mon 08 August 2022</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
+<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
+<h2 id="what-to-expect">What to expect</h2>
+<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
+<h2 id="checking-the-memory">Checking the memory</h2>
+<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is probably a sandbox (To save costs). While it's not exactly fool-proof …</p>
+            <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/malware.html" class="tag">malware</a>
+            <a href="../tag/sandbox.html" class="tag">sandbox</a>
+            <a href="../tag/evasion.html" class="tag">evasion</a>
+            <span class="tag">+2 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/malware.html" class="article-category-label">malware</a>
+            <h2 class="post-title">
+                <a href="../talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-08-02T15:06:00+08:00">Tue 02 August 2022</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
+<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="../images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
+<h2 id="a-brief-overview">A brief overview</h2>
+<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
+<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses …</p>
+            <a href="../talking-about-mitres-malware-behavior-catalog.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/malware.html" class="tag">malware</a>
+            <a href="../tag/analysis.html" class="tag">analysis</a>
+            <a href="../tag/mitre.html" class="tag">mitre</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/misc.html" class="article-category-label">misc</a>
+            <h2 class="post-title">
+                <a href="../string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2022-07-09T12:11:00+08:00">Sat 09 July 2022</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
+<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
+<h2 id="the-problem">The problem</h2>
+<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
+<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
+
+<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
+<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>Upon compiling …</p>
+            <a href="../string-av-evasion-in-x64-assembly-part-2.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/evasion.html" class="tag">evasion</a>
+            <a href="../tag/assembly.html" class="tag">assembly</a>
+            <a href="../tag/av.html" class="tag">av</a>
         </div>
     </article>
 
@@ -260,26 +350,40 @@ python3-dev
         <a href="../author/accidentalrebel3.html">3</a>
         <a href="../author/accidentalrebel4.html">4</a>
         <a href="../author/accidentalrebel5.html">5</a>
-        <a href="../author/accidentalrebel6.html">6</a>
-        <a href="../author/accidentalrebel7.html">7</a>
-        <a href="../author/accidentalrebel8.html">8</a>
-        <a href="../author/accidentalrebel9.html">9</a>
-        <a href="../author/accidentalrebel10.html">10</a>
-        <a href="../author/accidentalrebel11.html">11</a>
-        <a href="../author/accidentalrebel12.html">12</a>
-        <a href="../author/accidentalrebel13.html">13</a>
-        <a href="../author/accidentalrebel14.html">14</a>
-        <a href="../author/accidentalrebel15.html">15</a>
-        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel2.html">Next &raquo;</a>
 </nav>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="../theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="../theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

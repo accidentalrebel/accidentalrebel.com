@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Introducing shcode2exe | AccidentalRebel.com</title>
-    
+
+<meta name="description" content="[Edit: shcode2exe is now part of Remnux] I've been playing around with Remnux and encountered a problem trying to get one of the tools to run properly. The...">
+
+    <link rel="canonical" href="./introducing-shcode2exe.html">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="./theme/css/main.css">
-    
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="./introducing-shcode2exe.html">
@@ -21,38 +34,62 @@
     <meta property="twitter:url" content="./introducing-shcode2exe.html">
     <meta property="twitter:title" content="Introducing shcode2exe">
     <meta property="twitter:description" content="[Edit: shcode2exe is now part of Remnux] I've been playing around with Remnux and encountered a problem trying to get one of the tools to run properly. The tool is shellcode2exe, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger. When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the incbin assembly instruction. From there, the file is then automatically compiled and linked. One big problem with the tool is that it needs to use Wine if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of shcode2exe. shcode2exe While similar in …">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Introducing shcode2exe",
+        "datePublished": "2021-02-26T07:34:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "./introducing-shcode2exe.html",
+        "description": "[Edit: shcode2exe is now part of Remnux] I've been playing around with Remnux and encountered a problem trying to get one of the tools to run properly. The..."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
+            { "@type": "ListItem", "position": 2, "name": "tools", "item": "./category/tools.html" },
+            { "@type": "ListItem", "position": 3, "name": "Introducing shcode2exe" }
+        ]
+    }
+    </script>
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="./archives.html">Archives</a></li>
                     <li><a href="./categories.html">Categories</a></li>
                     <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
 <article>
     <header class="article-header">
+        <a href="./category/tools.html" class="article-category-label">tools</a>
         <h1>Introducing shcode2exe</h1>
         <div class="article-meta">
             <time datetime="2021-02-26T07:34:00+08:00">Fri 26 February 2021</time>
-            <span>•</span>
-            <a href="./category/tools.html">tools</a>
         </div>
     </header>
 
@@ -136,12 +173,37 @@
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="./theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

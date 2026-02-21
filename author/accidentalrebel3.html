@@ -4,493 +4,336 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
-    
+
+    <meta name="description" content="SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.">
+
+    <link rel="canonical" href="../">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="../theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": "..",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <a href="../" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="../archives.html">Archives</a></li>
                     <li><a href="../categories.html">Categories</a></li>
                     <li><a href="../tags.html">Tags</a></li>
+                            <li><a href="../category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="../pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/ctf.html" class="article-category-label">ctf</a>
             <h2 class="post-title">
-                <a href="../malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Malware sandbox evasion in x64 assembly by checking ram size - Part 1</a>
+                <a href="../emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2022-08-08T11:29:00+08:00">Mon 08 August 2022</time>
-                <span>•</span>
-                <a href="../category/misc.html">misc</a>
+                <time datetime="2021-04-30T05:58:00+08:00">Fri 30 April 2021</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>During my malware sandbox evasion research, I stumbled upon the <a href="https://unprotect.it/">Unprotect Project</a> website. It is a community-contributed repository of evasion techniques used by malware. I saw that the the <a href="https://unprotect.it/technique/checking-memory-size/">Checking Memory Size technique</a> doesn't have a example snippet yet so I figured this would be a good first contribution to the project.</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-03.png" /></p>
-<h2 id="what-to-expect">What to expect</h2>
-<p>In this blog post I'll be making a code snippet that showcases how to get the size of a computer's RAM in C. I will then convert this code into x64 assembly, mostly for me to practice writing in it, but also so that we can understand it better.</p>
-<h2 id="checking-the-memory">Checking the memory</h2>
-<p>The idea behind this evasion technique is simple. Most modern user machines will have at least around 4GB of RAM. Anything lower than that can be an indication that the machine is probably a sandbox (To save costs). While it's not exactly fool-proof, it can be used with <a href="https://unprotect.it/category/sandbox-evasion/">other techniques</a> to have a better idea of the machine.</p>
-<p>There are two available APIs to get the memory size of a computer on Windows: <code>GetPhysicallyInstalledSystemMemory</code> and <code>GlobalMemoryStatusEx</code>. <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getphysicallyinstalledsystemmemory">The former</a> lists the physically <em>installed</em> RAM from the BIOS, while <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-globalmemorystatusex">the latter</a> lists the amount available for the operating system to use. Note that the values returned from these two functions will be different but from my tests the difference is only a few hundreds of bytes. Any of these two we can use for our purpose.</p>
-<h2 id="using-getphysicallyinstalledsystemmemory">Using GetPhysicallyInstalledSystemMemory</h2>
-<p>Calling <code>GetPhysicallyInstalledSystemMemory</code> in C is simple:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="kt">long</span><span class="w"> </span><span class="n">memory_size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
-<span class="w">    </span><span class="n">GetPhysicallyInstalledSystemMemory</span><span class="p">(</span><span class="o">&amp;</span><span class="n">memory_size</span><span class="p">);</span>
-<span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;Memory size: %lld</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">memory_size</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Running the above code shows the following result:</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-01.png" /></p>
-<p>And this is what my memory settings is set to on VMWare:</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-02.png" /></p>
-<p>You'll immediately notice that the returned value is not exactly the same as the memory settings. I, too, wondered about this so I did a couple of tests.</p>
-<h2 id="investigating-the-results">Investigating the results</h2>
-<p>What I found was that the values that are returned by the <code>GetPhysicallyInstalledSystemMemory</code> in hex format always have the last 3 bytes set to zero. To test this I changed the VM settings and noted the values returned by the program. Here's a table of the results:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">VM Settings</th>
-<th style="text-align: center;">Returned Value</th>
-<th style="text-align: center;">In Hex</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">2000MB</td>
-<td style="text-align: center;">2048000</td>
-<td style="text-align: center;">0x1F4000</td>
-</tr>
-<tr>
-<td style="text-align: center;">3324MB</td>
-<td style="text-align: center;">3403776</td>
-<td style="text-align: center;">0x33F000</td>
-</tr>
-<tr>
-<td style="text-align: center;">4096MB</td>
-<td style="text-align: center;">4194304</td>
-<td style="text-align: center;">0x400000</td>
-</tr>
-<tr>
-<td style="text-align: center;">4338MB</td>
-<td style="text-align: center;">4493312</td>
-<td style="text-align: center;">0x449000</td>
-</tr>
-<tr>
-<td style="text-align: center;">5675MB</td>
-<td style="text-align: center;">5816320</td>
-<td style="text-align: center;">0x58C000</td>
-</tr>
-</tbody>
-</table>
-<p>Before you think that this is a VM thing, here is the same behavior with a Windows system that is not on a VM:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: center;">Installed RAM</th>
-<th style="text-align: center;">Returned Value</th>
-<th style="text-align: center;">In Hex</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: center;">16384MB</td>
-<td style="text-align: center;">16777216</td>
-<td style="text-align: center;">0x1000000</td>
-</tr>
-</tbody>
-</table>
-<p>According to the <a href="https://docs.microsoft.com/en-us/windows/win32/api/sysinfoapi/nf-sysinfoapi-getphysicallyinstalledsystemmemory">MSDN docs</a>, the value returned is taken from the SMBIOS firmware tables. I tried to dig further and found the <a href="https://www.dmtf.org/sites/default/files/standards/documents/DSP0134_3.5.0.pdf">SMBIOS standard manual</a> and saw that the value in the memory size field is returned in MB. This still doesn't explain why the last 3 digits are always zero though. I'm guessing that the API just truncates the last 3 values and saves the higher bytes?</p>
-<blockquote>
-<p><strong>EDIT(2022-08-15):</strong> Twitter user <a href="https://twitter.com/Endeavxor">@Endeavxor</a> pointed out that the returned value of "GetPhysicallyInstalledSystemMemory" is expressed in kibibytes instead of kilobytes. This means the result <code>4194304</code> when divided by <code>1024</code> is <code>4096</code> and is exactly the Memory value set in the VM settings. This means the value returned by the function is correct. It's so simple and I missed it!</p>
+            <blockquote>
+<p>This is a writeup for <a href="the-emprisa-maldoc-challenge">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
 </blockquote>
-<p>Before we get hopelessly trapped in the rabbit hole that is OS internals, let's continue by converting our code above to x64 assembly.</p>
-<h2 id="converting-to-x64-assembly">Converting to x64 Assembly</h2>
-<p>Before we can call the <code>GetPhysicallyInstalledSystemMemory</code> function, we first need to reserve space on the stack that will serve as the <code>memory_size</code> local variable. This is where the result of the function will be placed.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">    </span><span class="c1">; Clear rax</span>
-<span class="w">    </span><span class="nf">push</span><span class="w"> </span><span class="no">rax</span><span class="w">        </span><span class="c1">; Push rax to the stack</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Load the memory location of memory_size to rcx</span>
-</code></pre></div>
-
-<p>We then call the <code>GetPhysicallyInstalledSystemMemory</code> function making sure that we reserve and release the shadow space.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">         </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">         </span><span class="c1">; Release shadow space</span>
-</code></pre></div>
-
-<h3 id="aside-shadow-space">Aside: Shadow space</h3>
-<blockquote>
-<p>The concept of "Shadow Space" is important in x64 assembly. I've already discussed it briefly in a <a href="../converting-a-malware-dropper-to-x64-assembly.html">previous post</a> but you can read up more about it <a href="https://retroscience.net/x64-assembly.html">here</a> and then <a href="https://devblogs.microsoft.com/oldnewthing/20160623-00/?p=93735">here</a>.</p>
-</blockquote>
-<p>The result on whether <code>GetPhysicallyInstalledSystemMemory</code> succeeded or not is placed in the <code>ax</code> register. It's good practice to add code to handle if a failure occurs, but we won't be bothering with that for our example.</p>
-<p>What we are interested in is the value placed in the memory location pointed to by <code>memory_size</code>. We can confirm this by checking the value on the stack, as shown below where <code>58C000h</code> converts to <code>5816320</code> which is roughly near the <code>5.5 GB</code> setting we have set in VMWare.</p>
-<p><img alt="malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-04" src="../images/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1-04.png" /></p>
-<p>A much easier way to confirm is that we can also use the <code>printf</code> function to display the value of <code>memory_size</code> on the console. But before we can do that we first need to declare the <code>format</code> string so we can pass it later as the first argument.</p>
-<div class="codehilite"><pre><span></span><code><span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_memory_size</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Memory</span><span class="w"> </span><span class="no">size</span><span class="p">:</span><span class="w"> </span><span class="nv">%lld</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-</code></pre></div>
-
-<p>We then call <code>printf</code> making sure we load the correct argument data to the respective registers.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">             </span><span class="c1">; Argument 2; Result of GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_memory_size</span><span class="p">]</span><span class="w"> </span><span class="c1">; Argument 1; Format string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">                </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">                </span><span class="c1">; Release shadow space</span>
-</code></pre></div>
-
-<p>Running that we can now display the value of the memory.</p>
-<p>Here's the full assembly code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">bits</span><span class="w"> </span><span class="mi">64</span>
-<span class="w">    </span><span class="nf">default</span><span class="w"> </span><span class="no">rel</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.data</span>
-<span class="w">    </span><span class="nf">msg_memory_size</span><span class="w"> </span><span class="no">db</span><span class="w">  </span><span class="err">&quot;</span><span class="no">Memory</span><span class="w"> </span><span class="no">size</span><span class="p">:</span><span class="w"> </span><span class="nv">%lld</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0xd</span><span class="p">,</span><span class="w"> </span><span class="mi">0xa</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span>
-
-<span class="nf">segment</span><span class="w"> </span><span class="no">.text</span>
-<span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">ExitProcess</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
-
-<span class="nl">main:</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">    </span><span class="c1">; Clear rax</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rax</span><span class="w">     </span><span class="c1">; Push RAX to the stack</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Load the memory location of memory_size to rcx</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 2; Result of GetPhysicallyInstalledSystemMemory</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_memory_size</span><span class="p">]</span><span class="w">  </span><span class="c1">; Argument 1; Format string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Reserve shadow space</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">printf</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="w">     </span><span class="c1">; Release shadow space</span>
-
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">0x8</span><span class="w">    </span><span class="c1">; Release the space of memory_size local variable</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<h2 id="up-next">Up next</h2>
-<p>In the next blog post I'll be showing how to get the size RAM size via an alternative method using <code>GlobalMemoryStatusEx</code>. The code is also straightforward but we'll be exploring how it's values differ from <code>GetPhysicallyInstalledSystemMemory</code> and also how to deal with C structures on the stack in x64 assembly.</p>
-<p>For now, you can view the C and Assembly code along with the build scripts on the repository <a href="https://github.com/accidentalrebel/sandbox-evasion-by-checking-ram-size">here</a>.</p>
-<p>Feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a> for any questions or comments.</p>
+<p>The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.</p>
+<p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
+<p>The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled.</p>
+<p>This new environment …</p>
+            <a href="../emprisa-maldoc-writeup..html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/malware.html" class="tag">malware</a>
-            <a href="../tag/sandbox.html" class="tag">sandbox</a>
-            <a href="../tag/evasion.html" class="tag">evasion</a>
-            <span class="tag">+2 more</span>
+            <a href="../tag/maldoc.html" class="tag">maldoc</a>
+            <a href="../tag/writeup.html" class="tag">writeup</a>
         </div>
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/security.html" class="article-category-label">security</a>
             <h2 class="post-title">
-                <a href="../talking-about-mitres-malware-behavior-catalog.html">Talking about Mitre's Malware Behavior Catalog</a>
+                <a href="../investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2022-08-02T15:06:00+08:00">Tue 02 August 2022</time>
-                <span>•</span>
-                <a href="../category/malware.html">malware</a>
+                <time datetime="2021-04-24T05:58:00+08:00">Sat 24 April 2021</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>I gave a 10-minute lightning talk at the recently concluded Blackhat Middle East &amp; Africa community meetup. The topic is about Mitre's Malware Behavior Catalog (MBC) framework and the existing tools for it. My reason for selecting this topic is because I feel that more people should know about Mitre's not-so-well-known project.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-01" src="../images/talking-about-mitres-malware-behavior-catalog-01.png" /></p>
-<h2 id="a-brief-overview">A brief overview</h2>
-<p>MBC is a framework made by Mitre, similar to ATT&amp;CK, but focuses on malware. It lists down the common objectives and behaviors commonly seen in malware. The purpose is to have standardize reporting so that everyone would use the same definitions when writing and talking about malware. This also aids with analysis and correlation with other tools.</p>
-<p>It has it's own matrix with malware objectives as headers for columns and an entry for each behavior. Each behavior then has a list of methods that explains how that behavior is achieved, example of malware that uses it, and also IDs of ATT&amp;CK techniques related to the behavior.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-02" src="../images/talking-about-mitres-malware-behavior-catalog-02.png" /></p>
-<h2 id="the-tools">The tools</h2>
-<p>There are a number of existing tools that make use of MBC. <a href="https://github.com/mandiant/capa">Flare's Capa</a> lists down MBC along with the related ATT&amp;CK techniques and there's also a repository of MBC community rules for the Cuckoo Sandox.</p>
-<p>I find MBC to have a lot of potential so I decided to contribute by making my own tool called <a href="https://github.com/accidentalrebel/mbcscan">MBCScan</a>. It's a simple tool that uses Capa which scans a supplied file and lists the MBC behaviors and objectives associated with it. It also allows you to explore the related information and relationships directly from the command line.</p>
-<p><img alt="talking-about-mitres-malware-behavior-catalog-03" src="../images/talking-about-mitres-malware-behavior-catalog-03.png" /></p>
-<h2 id="the-future">The future</h2>
-<p>MBC has been around for a number of years already but it still has not risen in popularity. In spite of this, it's still being continuously updated. I hope that by sharing and talking about it it'll help spread awareness and, hopefully, get some adoption.</p>
-<p>You can find more information about the project via this <a href="https://www.youtube.com/watch?v=qZef-SoREdY">video presentation from Mitre</a>. The Github project is <a href="https://github.com/MBCProject">here</a>. And the slides are available <a href="https://docs.google.com/presentation/d/1w89wccaYr2g6104l73Xt2IUMGis_zgTB6krRC1q09Dw/edit?usp=sharing">here</a>. </p>
+            <p>Last April 21, people were posting warnings about a suspicious Facebook post where your account will supposedly get hacked when you click it. From the discussions, I gathered that it is a classic phishing site scam. A very effective one too, because as soon as an account gets compromised the attacker logs in and tags the friends in the account allowing it to spread further. The news of this got big that even the PH CERT issued <a href="https://www.facebook.com/Ncertgovph/posts/1879686332199270">a security advisory on it</a>.</p>
+<p><img alt="checking-the-fb-phishing-site-02" src="../images/checking-the-fb-phishing-site-02.jpg" /></p>
+<h1 id="i-was-just-curious-i-swear">I was just curious, I swear!</h1>
+<p>I wanted to see the phishing site for myself but I was unlucky and did not get tagged by anyone. So I reached out to people who did and I eventually got to this page shown below:</p>
+<p><img alt="checking-the-fb-phishing-site-01" src="../images/checking-the-fb-phishing-site-01.png" /></p>
+<p>To a trained eye, one could easily see the obvious red flags. But how can one notice them if there is a very attention-catching image …</p>
+            <a href="../investigating-an-fb-phishing-site.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/malware.html" class="tag">malware</a>
-            <a href="../tag/analysis.html" class="tag">analysis</a>
-            <a href="../tag/mitre.html" class="tag">mitre</a>
-            <span class="tag">+1 more</span>
+            <a href="../tag/phishing.html" class="tag">phishing</a>
+            <a href="../tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="../tag/osint.html" class="tag">osint</a>
         </div>
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/ctf.html" class="article-category-label">ctf</a>
             <h2 class="post-title">
-                <a href="../string-av-evasion-in-x64-assembly-part-2.html">String anti-virus evasion in x64 assembly (Part 2)</a>
+                <a href="../the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2022-07-09T12:11:00+08:00">Sat 09 July 2022</time>
-                <span>•</span>
-                <a href="../category/misc.html">misc</a>
+                <time datetime="2021-04-04T16:37:00+08:00">Sun 04 April 2021</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
-<p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
-<h2 id="the-problem">The problem</h2>
-<p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-<span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;shellapi.h&gt;</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">ShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>Upon compiling the program, the compiler takes the list of all functions used and places them in the executable (In this case, in the <code>.rdata</code> segment) as a readable string:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-07" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png" /></p>
-<p>A function name like <code>ShellExecuteA</code> will be sure to raise some eyebrows so we do not want it to be detectable. To hide this we need to do load the DLL at runtime by using <code>LoadLibrary</code> and <code>GetProcAddress</code>.</p>
-<h2 id="coding-in-c">Coding in C</h2>
-<p><code>LoadLibrary</code> accepts a string containing the DLL that we want to load.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">HANDLE</span><span class="w"> </span><span class="n">hShell32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s">&quot;shell32.dll&quot;</span><span class="p">);</span>
-</code></pre></div>
-
-<p>This loads the DLL's code into memory and returns a handle to that location. We can see the result of this when we look at the memory map in a debugger. Here's the memory map prior to calling <code>LoadLibrary</code>:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-03" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-03.png" /></p>
-<p>And here's what it looks like after:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-04" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-04.png" /></p>
-<p>The <code>LoadLibrary</code> API loaded <code>shell32.dll</code> along with it's dependencies into memory. We can also see that it automatically handled where the new DLLs will be placed. In this case, in between pre-existing ones.</p>
-<hr />
-<h3 id="aside-how-do-we-know-which-dll-is-needed">Aside: How do we know which DLL is needed?</h3>
-<blockquote>
-<p>We can find out which DLL is needed by a function by looking at it's <a href="https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibrarya">MSDN documentation</a>. Scroll at the end of every function documentation to see the "Requirements" section that lists the DLL that it needs.</p>
-</blockquote>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-02" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-02.png" /></p>
-<hr />
-<p><code>LoadLibrary</code> then returns a <code>HANDLE</code> object which we can then pass to <code>GetProcAddress</code>.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">_ShellExecuteA</span><span class="w"> </span><span class="n">fShellExecuteA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">_ShellExecuteA</span><span class="p">)</span><span class="w"> </span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hShell32</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ShellExecuteA&quot;</span><span class="p">);</span>
-</code></pre></div>
-
-<p><code>GetProcAddress</code> looks through the library we loaded and returns the address of the <code>ShellExecuteA</code> function. This address needs to be cast to a typedef first before it can be called. This means we need to know the structure of the typedef, which we can determine by looking at the "Syntax" section in MSDN.</p>
-<p>Here's the syntax for <code>ShellExecuteA</code> according to <a href="https://docs.microsoft.com/en-us/windows/win32/api/shellapi/nf-shellapi-shellexecutea">its documentation</a>:</p>
-<div class="codehilite"><pre><span></span><code><span class="n">HINSTANCE</span><span class="w"> </span><span class="nf">ShellExecuteA</span><span class="p">(</span>
-<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">optional</span><span class="p">]</span><span class="w"> </span><span class="n">HWND</span><span class="w">   </span><span class="n">hwnd</span><span class="p">,</span>
-<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">optional</span><span class="p">]</span><span class="w"> </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpOperation</span><span class="p">,</span>
-<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w">           </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpFile</span><span class="p">,</span>
-<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">optional</span><span class="p">]</span><span class="w"> </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpParameters</span><span class="p">,</span>
-<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">,</span><span class="w"> </span><span class="n">optional</span><span class="p">]</span><span class="w"> </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpDirectory</span><span class="p">,</span>
-<span class="w">  </span><span class="p">[</span><span class="n">in</span><span class="p">]</span><span class="w">           </span><span class="n">INT</span><span class="w">    </span><span class="n">nShowCmd</span>
-<span class="p">);</span>
-</code></pre></div>
-
-<p>And here's our typedef implementation:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">typedef</span><span class="w"> </span><span class="n">HINSTANCE</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">_ShellExecuteA</span><span class="p">)</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">HWND</span><span class="w">   </span><span class="n">hwnd</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpOperation</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpFile</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpParameters</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpDirectory</span><span class="p">,</span>
-<span class="w">    </span><span class="n">INT</span><span class="w">    </span><span class="n">nShowCmd</span>
-<span class="p">);</span>
-</code></pre></div>
-
-<p>When everything is setup properly, the variable <code>fShellExecuteA</code> can now be used as a function.</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">fShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-</code></pre></div>
-
-<p>Combining these together, this is what our code will look like:</p>
-<div class="codehilite"><pre><span></span><code><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;windows.h&gt;</span>
-
-<span class="k">typedef</span><span class="w"> </span><span class="n">HINSTANCE</span><span class="w"> </span><span class="p">(</span><span class="o">*</span><span class="n">_ShellExecuteA</span><span class="p">)</span><span class="w"> </span><span class="p">(</span>
-<span class="w">    </span><span class="n">HWND</span><span class="w">   </span><span class="n">hwnd</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpOperation</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpFile</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpParameters</span><span class="p">,</span>
-<span class="w">    </span><span class="n">LPCSTR</span><span class="w"> </span><span class="n">lpDirectory</span><span class="p">,</span>
-<span class="w">    </span><span class="n">INT</span><span class="w">    </span><span class="n">nShowCmd</span>
-<span class="p">);</span>
-
-<span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">HANDLE</span><span class="w"> </span><span class="n">hShell32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadLibrary</span><span class="p">(</span><span class="s">&quot;shell32.dll&quot;</span><span class="p">);</span>
-<span class="w">    </span><span class="n">_ShellExecuteA</span><span class="w"> </span><span class="n">fShellExecuteA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">_ShellExecuteA</span><span class="p">)</span><span class="w"> </span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hShell32</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ShellExecuteA&quot;</span><span class="p">);</span>
-
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;n&#39;</span><span class="p">,</span><span class="sc">&#39;o&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;p&#39;</span><span class="p">,</span><span class="sc">&#39;a&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">fShellExecuteA</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;open&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ca_notepad</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="nb">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">SW_SHOW</span><span class="p">);</span>
-
-<span class="w">    </span><span class="n">ExitProcess</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<p>This is not yet done, however, as <code>strings.exe</code> can still detect our strings. This is because we now have strings "shell32.dll" and "ShellExecuteA" as parameters for <code>LoadLibrary</code> and <code>GetProcAddress</code>. And these are placed in the <code>.data</code> segment in memory.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-05" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-05.png" /></p>
-<p>This is where we can use the technique that we used in <a href="string-av-evasion-in-x64-assembly-part-1">part 1</a>. By declaring the string as an array as a local variable, the data is placed on the stack instead of in the <code>.data</code> segment. </p>
-<p>Applying this technique gives us the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_shell32</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;s&#39;</span><span class="p">,</span><span class="sc">&#39;h&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;3&#39;</span><span class="p">,</span><span class="sc">&#39;2&#39;</span><span class="p">,</span><span class="sc">&#39;.&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">HANDLE</span><span class="w"> </span><span class="n">hShell32</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadLibrary</span><span class="p">(</span><span class="n">ca_shell32</span><span class="p">);</span>
-
-<span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_shellExA</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;S&#39;</span><span class="p">,</span><span class="sc">&#39;h&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;E&#39;</span><span class="p">,</span><span class="sc">&#39;x&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;c&#39;</span><span class="p">,</span><span class="sc">&#39;u&#39;</span><span class="p">,</span><span class="sc">&#39;t&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
-<span class="w">    </span><span class="n">_ShellExecuteA</span><span class="w"> </span><span class="n">fShellExecuteA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">_ShellExecuteA</span><span class="p">)</span><span class="w"> </span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hShell32</span><span class="p">,</span><span class="w"> </span><span class="n">ca_shellExA</span><span class="p">);</span>
-</code></pre></div>
-
-<p>And now we can see that it works!</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-06" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-06.png" /></p>
-<h2 id="converting-to-assembly">Converting to assembly</h2>
-<p>As promised, we'll be converting the code above into x64 windows assembly. It's an extra step, but can give us a better understanding by approaching it from a different programming language.</p>
-<p>Starting from the beginning, we'll be using <code>LoadLibraryA</code> and <code>GetProcAddress</code> to dynamically load the <code>ShellExecuteA</code> function at runtime. </p>
-<p>If we fast forward a bit, here's what we'll end up with:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">str_shell32</span><span class="p">]</span><span class="w">     </span><span class="c1">; Load &quot;shell32.dll&quot; string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">LoadLibraryA</span><span class="w">       </span><span class="c1">; Call &quot;LoadLibraryA&quot;</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">               </span><span class="c1">; Save result of LoadLibraryA to rcx</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">str_shexa</span><span class="p">]</span><span class="w">       </span><span class="c1">; Load &quot;ShellExecuteA&quot; string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GetProcAddress</span><span class="w">     </span><span class="c1">; Call &quot;GetProcAddress&quot;</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rbx</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">               </span><span class="c1">; The address of &quot;ShellExecuteA&quot; is saved to rbx</span>
-<span class="w">    </span><span class="na">...</span><span class="w">                        </span>
-<span class="w">    </span><span class="no">...</span><span class="w"> </span>
-<span class="w">    </span><span class="no">call</span><span class="w">    </span><span class="no">rbx</span><span class="w">                </span><span class="c1">; Call &quot;ShellExeecuteA&quot;</span>
-</code></pre></div>
-
-<p>Wait, that's it? Yes! </p>
-<p>This is the one of those rare moments that the Assembly code is more straightforward than C. This is because the value returned by <code>GetProcAddresss</code> is already an address. Since assembly deals with memory addresses, there's no need for any conversion like we did in the C version. The address can be called directly.</p>
-<p>And just like the previous one, the code above is still not complete. The "shell" strings are still visible via <code>strings.exe</code> so we need to apply the technique again from Part 1. I won't be showing it step by step here anymore as it's quite lengthy.</p>
-<p>This means that this example piece of code:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">str_shell32</span><span class="p">]</span><span class="w">     </span><span class="c1">; Load &quot;shell32.dll&quot; string</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">LoadLibraryA</span><span class="w">       </span><span class="c1">; Call &quot;LoadLibraryA&quot;</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-</code></pre></div>
-
-<p>Will now be like this:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">          </span><span class="c1">; Place &quot;shell32.dll&quot; string to the stack</span>
-<span class="w">    </span><span class="nf">addstr2stack</span><span class="w"> </span><span class="err">&quot;</span><span class="no">s</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">h</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="mi">3</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="mi">2</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="p">.</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0</span><span class="w"> </span>
-<span class="w">    </span><span class="no">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">LoadLibraryA</span><span class="w"> </span><span class="c1">; Call &quot;LoadLibraryA&quot;</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-</code></pre></div>
-
-<p><code>addstr2stack</code> is a macro we've written before <a href="string-av-evasion-in-x64-assembly-part-1">in part 1</a>. It makes declaring an string array easier.</p>
-<p>Combining everything again, here's the final assembly code with comments:</p>
-<div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="no">rbp</span>
-<span class="w">    </span><span class="nf">mov</span><span class="w">     </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span>
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="c1">;; = START LOADLIBRARY ===========================================</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">         </span><span class="c1">; Place &quot;shell32.dll&quot; string to the stack</span>
-<span class="w">    </span><span class="nf">addstr2stack</span><span class="w"> </span><span class="err">&quot;</span><span class="no">s</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">h</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="mi">3</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="mi">2</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="p">.</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0</span><span class="w"> </span>
-<span class="w">    </span><span class="no">lea</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">LoadLibraryA</span><span class="w"> </span><span class="c1">; Call LoadLibraryA</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">         </span><span class="c1">; Release &quot;shell32.dll&quot; string from stack</span>
-
-<span class="w">    </span><span class="c1">;; = END LOADLIBRARY ===========================================</span>
-
-
-<span class="w">    </span><span class="c1">;; = START GETPROCADDRESS ===========================================</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">        </span><span class="c1">; Save value to rcx (1st parameter register)</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">         </span><span class="c1">; Place &quot;ShellExecuteA&quot; string to the stack</span>
-<span class="w">    </span><span class="nf">addstr2stack</span><span class="w"> </span><span class="err">&quot;</span><span class="no">S</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">h</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">l</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">E</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">x</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">c</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">u</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">A</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">GetProcAddress</span><span class="w">  </span><span class="c1">; Call GetProcAddress</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">         </span><span class="c1">; Release &quot;ShellExecuteA&quot; from stack</span>
-
-<span class="w">    </span><span class="c1">;; = END GETPROCADDRESS ===========================================</span>
-
-
-<span class="w">    </span><span class="c1">;; = START SHELLEXECUTEA ===========================================</span>
-
-<span class="w">    </span><span class="nf">mov</span><span class="w"> </span><span class="no">r12</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span><span class="w">        </span><span class="c1">; Save address of &quot;ShellExecuteA&quot; to r12 (To be called later)</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">         </span><span class="c1">; Place &quot;notepad&quot; string to the stack</span>
-<span class="w">    </span><span class="nf">addstr2stack</span><span class="w"> </span><span class="err">&quot;</span><span class="no">n</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">o</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">t</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">e</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">p</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">a</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="err">&quot;</span><span class="no">d</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0x0</span>
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">r8</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rsp</span><span class="p">]</span>
-
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x5</span>
-<span class="w">    </span><span class="nf">push</span><span class="w">    </span><span class="mi">0x0</span>
-<span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">r9</span><span class="p">,</span><span class="w"> </span><span class="no">r9</span>
-
-<span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdx</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">msg_open</span><span class="p">]</span><span class="w"> </span>
-<span class="w">    </span><span class="no">xor</span><span class="w"> </span><span class="no">rcx</span><span class="p">,</span><span class="w"> </span><span class="no">rcx</span>
-
-<span class="w">    </span><span class="nf">sub</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">r12</span><span class="w">         </span><span class="c1">; Call &quot;ShellExecuteA&quot;, jump to addres</span>
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span>
-
-<span class="w">    </span><span class="nf">add</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">         </span><span class="c1">; Release &quot;notepad&quot; string from stack</span>
-
-<span class="w">    </span><span class="c1">;; = END SHELLEXECUTEA ===========================================</span>
-
-<span class="w">    </span><span class="nf">xor</span><span class="w">     </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="no">rax</span>
-<span class="w">    </span><span class="nf">call</span><span class="w">    </span><span class="no">ExitProcess</span>
-</code></pre></div>
-
-<p>I know there's a lot to digest with the code above. I've made the flow similar to the flow of the C program so you can review them side by side if you feel lost. Hopefully, the comments and the separators would also help.</p>
-<blockquote>
-<p><strong>Note:</strong> Pay special attention to how the stack is reserved (with <code>sub rsp, 16</code>) and released (with <code>add rsp, 16</code>). I did not discuss stack alignments as it's a lengthy explanation in itself. But just remember that we are releasing the data once we've finished passing it to the function.</p>
-</blockquote>
-<p>If done correctly, the strings would not be detectable because the data is now on the stack and not in the <code>.data</code> segment.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-06" src="../images/string-anti-virus-evasion-in-x64-assembly-part-2-06.png" /></p>
-<hr />
-<p>It is important to note that anti-viruses can employ different techniques to do detection, but a huge part of their functionality will rely on detecting malicious strings. So at least, on that front, we now have an idea on how to defeat it.</p>
-<p>You can view the code for part 1 and 2 <a href="https://github.com/accidentalrebel/string-anti-virus-evasion-x64-assembly">on Github</a>. Updates and fixes will be placed there.</p>
-<p>I might post more assembly shenanigans in the future, so stay tuned.</p>
-<p>And as always, for any questions or comments, feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a>.</p>
+            <p>I was inspired to make my own CTF challenge after finishing <a href="{filename}/maldoc101-writeup-part-1">Maldoc101</a> found at <a href="https://cyberdefenders.org/">Cyberdefenders.org</a>. The challenge I made is called <a href="https://cyberdefenders.org/labs/56">Emprisa Maldoc</a> and it is now up on their website. </p>
+<p>Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge.</p>
+<p><img alt="the-emprisa-maldoc-challenge-01" src="../images/the-emprisa-maldoc-challenge-01.png" /></p>
+<p>The challenge has 14 questions with increasing and varying difficulty. The challenge is targeted towards intermediate analysts who already have experience examining maldocs before. The goal is to reinforce the use of common malware analysis tools, but at the same time, teach players new things and techniques. It involves flexing muscles related to open …</p>
+            <a href="../the-emprisa-maldoc-challenge.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/evasion.html" class="tag">evasion</a>
-            <a href="../tag/assembly.html" class="tag">assembly</a>
-            <a href="../tag/av.html" class="tag">av</a>
+            <a href="../tag/maldoc.html" class="tag">maldoc</a>
+            <a href="../tag/ctf.html" class="tag">ctf</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/re.html" class="article-category-label">re</a>
+            <h2 class="post-title">
+                <a href="../ioli-crackme-0x03.html">IOLI Crackme 0x03</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-03-22T20:03:00+08:00">Mon 22 March 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a>, <a href="../ioli-crackme-0x01.html">0x01</a>, and <a href="../ioli-crackme-0x02.html">0x02</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="../ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
+<p><img alt="ioli-crackme-0x03-01" src="../images/ioli-crackme-0x03-01.png" /></p>
+<p>Reading through the code I realized that the password for this challenge is exactly the same as the previous one!</p>
+<p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
+<p><img alt="ioli-crackme-0x03-02" src="../images/ioli-crackme-0x03-02.png" /></p>
+<h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
+<p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping …</p>
+            <a href="../ioli-crackme-0x03.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/malware_analysis.html" class="article-category-label">malware_analysis</a>
+            <h2 class="post-title">
+                <a href="../maldoc101-writeup-part-2.html">Maldoc101 Writeup (Part 2)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-03-14T08:34:00+08:00">Sun 14 March 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>This is part 2 of my writeup for the Maldoc101 challenge. Check out <a href="../maldoc101-writeup-part-1.html">part 1</a> for the beginning of the analysis.</p>
+<p>The next couple of lines does the same concatenating technique similar to the previous steps. </p>
+<div class="codehilite"><pre><span></span><code>deaknaugthein = roubhaol.kaizseah.ControlTipText
+giakfeiw = deulsaocthuul + gooykadheoj + roubhaol.paerwagyouqumeid.ControlTipText + deaknaugthein
+queegthaen = giakfeiw + roubhaol.joefwoefcheaw
+</code></pre></div>
+
+<p>At the end of the code above <code>queegthaen</code> now contains the value <code>Win32_Process</code> + <code>s</code> + <code>tar</code> + <code>tu</code> + <code>P</code>. Or when combined creates the string <code>Win32_ProcessstartuP</code> which probably refers <a href="https://docs.microsoft.com/en-us/windows/win32/cimwin32prov/win32-processstartup">to this WMI class</a> in the Microsoft docs.</p>
+<p><em>Note: This writeup appears to be incomplete. For the complete analysis, please refer to <a href="../maldoc101-writeup-part-1.html">part 1</a> of this series.</em></p>
+            <a href="../maldoc101-writeup-part-2.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+            <a href="../tag/malware.html" class="tag">malware</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/malware_analysis.html" class="article-category-label">malware_analysis</a>
+            <h2 class="post-title">
+                <a href="../maldoc101-writeup-part-1.html">Maldoc101 Writeup (Part 1)</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-03-13T08:34:00+08:00">Sat 13 March 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein (<a href="https://twitter.com/jstrosch">@jstrosch</a>) and is currently playable at <a href="https://cyberdefenders.org/labs/51">Cyberdefenders.Org</a>. I've done some maldoc analysis before but this is the first time I'm writing about my approach.</p>
+<p>There is also an already existing writeup about this challenge <a href="https://github.com/jstrosch/malware-samples/blob/master/malware_analysis_exercises/2020/December/solution.md">from the creator himself</a>. You should check that out if you want a more detailed and focused writeup. This writeup is more from the perspective of someone relatively new to malware analysis. There's a lot more exploration and trial-and-error which, I hope, might give the reader a different view in how this kind of problem is approached.</p>
+<h2 id="the-challenge">The challenge</h2>
+<h3 id="name">Name</h3>
+<p><a href="https://cyberdefenders.org/labs/51">MalDoc101 - Malicious Document</a></p>
+<h3 id="description">Description</h3>
+<p>It is common for threat actors to utilize living off the land (LOTL) techniques, such as the execution of PowerShell to further their attacks and transition from macro code. This challenge is intended …</p>
+            <a href="../maldoc101-writeup-part-1.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+            <a href="../tag/malware.html" class="tag">malware</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/re.html" class="article-category-label">re</a>
+            <h2 class="post-title">
+                <a href="../ioli-crackme-0x02.html">IOLI Crackme 0x02</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-03-06T10:34:00+08:00">Sat 06 March 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="../ioli-crackme-0x00.html">0x00</a> and <a href="../ioli-crackme-0x01.html">0x01</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>After the first two challenges I kinda know what to expect already so I skipped running the program and immediately loaded it in IDA.</p>
+<p><img alt="ioli-crackme-0x02-01" src="../images/ioli-crackme-0x02-01.png" /></p>
+<p>So the lines leading to the comparison command now looks more complicated than before. We could easily see that there are some computations that happens thanks to the presence of <code>add</code> and <code>imul</code>. Before those, we have two values (<code>5Ah</code> and <code>1ECh</code>) which we can easily guess are the values that will be worked on by these arithmetic functions.</p>
+<p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which …</p>
+            <a href="../ioli-crackme-0x02.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/tools.html" class="article-category-label">tools</a>
+            <h2 class="post-title">
+                <a href="../introducing-shcode2exe.html">Introducing shcode2exe</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-26T07:34:00+08:00">Fri 26 February 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><strong>[Edit: shcode2exe is <a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe">now part of Remnux</a>]</strong></p>
+<p>I've been playing around with <a href="https://remnux.org/">Remnux</a> and encountered a problem trying to get one of the tools to run properly. The tool is <a href="https://github.com/repnz/shellcode2exe">shellcode2exe</a>, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.</p>
+<p>When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the <code>incbin</code> assembly instruction. From there, the file is then automatically compiled and linked.</p>
+<p>One big problem with the tool is that it needs to use <a href="https://www.winehq.org/">Wine</a> if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of <code>shcode2exe</code>.</p>
+<h2 id="shcode2exe">shcode2exe</h2>
+<p>While similar in …</p>
+            <a href="../introducing-shcode2exe.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/tools.html" class="tag">tools</a>
+            <a href="../tag/malware_analysis.html" class="tag">malware_analysis</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/re.html" class="article-category-label">re</a>
+            <h2 class="post-title">
+                <a href="../ioli-crackme-0x01.html">IOLI Crackme 0x01</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-20T17:34:00+08:00">Sat 20 February 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeup for 0x00 <a href="../ioli-crackme-0x00.html">here</a>.</p>
+<h1 id="getting-the-password">Getting the password</h1>
+<p>Of course, the first thing we do is run the program.</p>
+<p><img alt="ioli-crackme-0x01-01" src="../images/ioli-crackme-0x01-01.png" /></p>
+<p>Just like last time, we opened up the program in IDA and focused on the part of the code that does the comparing of passwords.</p>
+<p><img alt="ioli-crackme-0x01-02" src="../images/ioli-crackme-0x01-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">cmp</span><span class="w"> </span><span class="p">[</span><span class="no">ebp</span><span class="err">+</span><span class="no">var_4</span><span class="p">],</span><span class="w"> </span><span class="mi">149</span><span class="no">Ah</span>
+<span class="nf">jz</span><span class="w"> </span><span class="no">short</span><span class="w"> </span><span class="no">loc_40137c</span>
+</code></pre></div>
+
+<p>This seems easy enough. </p>
+<p>Initially I entered <code>149A</code> as the password but this turned out to be incorrect. The reason for this is because <code>scanf</code> was passed a format of <em>"%d"</em>.</p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">18</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">aD</span><span class="w"> </span><span class="c1">; &quot;%d&quot;</span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_scanf</span>
+</code></pre></div>
+
+<p>This means that the input it expects is actually a decimal integer. So converting <code>149A</code> to decimal results in <code>5274 …</code></p>
+            <a href="../ioli-crackme-0x01.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/crackme.html" class="tag">crackme</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/re.html" class="article-category-label">re</a>
+            <h2 class="post-title">
+                <a href="../ioli-crackme-0x00.html">IOLI Crackme 0x00</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-02-16T21:55:00+08:00">Tue 16 February 2021</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.</p>
+<h2 id="getting-the-password">Getting the password</h2>
+<p>Running the program shows a password prompt. </p>
+<p><img alt="ioli-crackme-0x00-03" src="../images/ioli-crackme-0x00-03.png" /></p>
+<p>Of course, randomly entering passwords is going to be a waste of time so I opened up IDA to look at its code.</p>
+<p>I knew that whatever password I enter in the program would be checked against the actual password. This is the part of the program that I should focus on so I scanned the code and found this:</p>
+<p><img alt="ioli-crackme-0x00-02" src="../images/ioli-crackme-0x00-02.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Str2</span><span class="p">],</span><span class="w"> </span><span class="no">offset</span><span class="w"> </span><span class="no">Str2</span><span class="c1">; &quot;250382&quot;</span>
+<span class="nf">mov</span><span class="w"> </span><span class="p">[</span><span class="no">esp</span><span class="err">+</span><span class="mi">38</span><span class="no">h</span><span class="err">+</span><span class="no">Format</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="c1">; </span>
+<span class="nf">call</span><span class="w"> </span><span class="no">_strcmp</span>
+</code></pre></div>
+
+<p>And just from these few lines alone I already knew what the password is …</p>
+            <a href="../ioli-crackme-0x00.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/re.html" class="tag">re</a>
+            <a href="../tag/crackme.html" class="tag">crackme</a>
         </div>
     </article>
 
@@ -502,26 +345,40 @@
         <span class="current">3</span>
         <a href="../author/accidentalrebel4.html">4</a>
         <a href="../author/accidentalrebel5.html">5</a>
-        <a href="../author/accidentalrebel6.html">6</a>
-        <a href="../author/accidentalrebel7.html">7</a>
-        <a href="../author/accidentalrebel8.html">8</a>
-        <a href="../author/accidentalrebel9.html">9</a>
-        <a href="../author/accidentalrebel10.html">10</a>
-        <a href="../author/accidentalrebel11.html">11</a>
-        <a href="../author/accidentalrebel12.html">12</a>
-        <a href="../author/accidentalrebel13.html">13</a>
-        <a href="../author/accidentalrebel14.html">14</a>
-        <a href="../author/accidentalrebel15.html">15</a>
-        <a href="../author/accidentalrebel16.html">16</a>
 
     <a href="../author/accidentalrebel4.html">Next &raquo;</a>
 </nav>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="../theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="../theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

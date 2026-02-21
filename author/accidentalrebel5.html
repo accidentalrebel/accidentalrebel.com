@@ -4,376 +4,317 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
-    
+
+    <meta name="description" content="SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.">
+
+    <link rel="canonical" href="../">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="../theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": "..",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <a href="../" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="../archives.html">Archives</a></li>
                     <li><a href="../categories.html">Categories</a></li>
                     <li><a href="../tags.html">Tags</a></li>
+                            <li><a href="../category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="../pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/dev.html" class="article-category-label">dev</a>
             <h2 class="post-title">
-                <a href="../cyber-corp-case-2-writeup-part-2.html">Cyber Corp Case 2 Writeup - Part 2</a>
+                <a href="../making-unity-beep-after-scripts-finish-reloading.html">Making Unity beep after scripts finish reloading</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2021-11-03T12:00:00+08:00">Wed 03 November 2021</time>
-                <span>•</span>
-                <a href="../category/threat-hunting.html">threat-hunting</a>
+                <time datetime="2020-05-01T17:07:00+08:00">Fri 01 May 2020</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This writeup is part 2 out of multiple parts. You could read <a href="threat-hunting-from-home-cyber-corp-wmi-persistence">Part 1 here</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3 here</a>.</p>
-<h2 id="checking-dns-requests">Checking DNS Requests</h2>
-<blockquote>
-<p>Question 6. Specify the domain name of the resource from which the files mentioned in question 5 were supposedly downloaded as a result of malicious code execution.</p>
-</blockquote>
-<p>This one is easy. Using the same date range from the previous question, I changed the query to <code>event_type:DNSReq</code> (where "DNSReq" is short for "DNS Requests").</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-01" src="../images/cyber-corp-case-2-writeup-part-2-01.png" /></p>
-<p>We could easily see a DNS record being queried, which is our answer to this question.</p>
-<h2 id="finding-the-encoded-executable-code">Finding the encoded executable code</h2>
-<blockquote>
-<p>Question 7. The first file downloaded (as a result of executing the code in question 5) contained encoded executable code (PE), which after downloading was recorded in the registry. Specify an MD5 hash of the original representation of that code (PE).</p>
-</blockquote>
-<p>I changed the query to <code>registry</code> hoping to see what events it will give me. Surprisingly, the very first one seems to be what we need. </p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-02" src="../images/cyber-corp-case-2-writeup-part-2-02.png" /></p>
-<p>Looking at this log I saw that it has a base64 encoded data under <code>reg_value_data</code> which is partially listed below:</p>
-<blockquote>
-<p>H4sIAAAAAAAEAO1YX0wcRRz+7XEUCuWOkhCJGl3IRiGpV...</p>
-</blockquote>
-<p>I sent this data to <a href="https://gchq.github.io/CyberChef">CyberChef</a> for decoding. Thankfully the <code>rule_name</code> field also informed me that the data is "gzipped", this allowed me to pick the correct recipes for decoding. The output is a malicious executable based on the <code>MZ</code> "magic-number" at the beginning of the file.</p>
-<p>I downloaded the decoded data and then got the SHA256 hash of that file. This gave me the answer to the question.</p>
-<h2 id="side-quest-investigating-the-malware">Side Quest: Investigating the malware</h2>
-<p>I wanted to learn more about the malicious executable from the previous question so I decided to reverse engineer it, even though it was not part of the challenge.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-03" src="../images/cyber-corp-case-2-writeup-part-2-03.png" /></p>
-<p>Some interesting things about the file include the imported functions from kernel32 listed below:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-04" src="../images/cyber-corp-case-2-writeup-part-2-04.png" /></p>
-<p>And also a string for <code>rundll32.exe</code>. Looking for the usage of this string from within the code reveals this code segment:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-06" src="../images/cyber-corp-case-2-writeup-part-2-06.png" /></p>
-<p>Stepping through the code I was able to figure out that this executable is executing a process hollowing technique (<a href="https://attack.mitre.org/techniques/T1055/012/">T1055.012</a>). What it does is that it injects the code pointed to by <code>unk_180003000</code> into <code>rundll32.exe</code> and it would run that code instead of the original rundll32 code. You can find out more technical info about it <a href="https://airbus-cyber-security.com/following-process-hollowing-ollydbg/">here</a>. </p>
-<p>And of course, a screenshot of the technique using my visualization tool <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;Ck</a>.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-13" src="../images/cyber-corp-case-2-writeup-part-2-13.png" /></p>
-<h2 id="the-second-downloaded-file">The second downloaded file</h2>
-<blockquote>
-<p>Question 8. The second file downloaded (as a result of code execution, which we talked about in question 5) was a script, that was set up to autostart via WMI Subscription. Specify the SHA256 hash of this script.</p>
-</blockquote>
-<p>I already knew of the script that is set to start via WMI subscription from a previous question, and that is <code>C:\\Users\\john.goldberg\\AppData\\Roaming\\Microsoft\\Office\\MSO1033.ps1</code>. So I immediately crafted my query to the one below:</p>
-<blockquote>
-<p>"MSO1033.ps1" AND event_type:FileCreate</p>
-</blockquote>
-<p>While the above query shows events where the <code>MSO1033.ps1</code> was being created. There was no associated hash in the logs. This forced me to look elsewhere by updating the query to:</p>
-<blockquote>
-<p>"MSO1033.ps1" AND (event_type:FileCreate OR event_type:FileOpen)</p>
-</blockquote>
-<p>And from here it showed me an event associated with <code>MSO1033.ps1</code> that also has a sha256 hash.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-07" src="../images/cyber-corp-case-2-writeup-part-2-07.png" /></p>
-<h2 id="the-most-difficult-question">The most difficult question</h2>
-<blockquote>
-<p>Question 9. The script, mentioned in question 8, spawned one of the legitimate system processes and injected into its memory a malicious code that was read and decoded from the registry (this code was mentioned in question 7). This malicious code migrated through a chain of code injections to the address space of another legitimate process, where it continued to run without further migration.
-For this answer, provide the next data, separated by a comma without spaces:</p>
-<ul>
-<li>
-<p>PID of the initial legitimate system process, which was spawned by the script and where this script launched in-memory execution of malicious code;</p>
-</li>
-<li>
-<p>PID of the target process, to which malicious code migrated from the initial process and in the context of which attacker performed different post-exploitation activity</p>
-</li>
-</ul>
-</blockquote>
-<p>Out of all the questions in this challenge, this is the question that took me a long time to figure out. The question has a lot of threads of information that it is easy to fall into a trap of chasing a lead that doesn't go anywhere. </p>
-<p>When all of my ideas were exhausted, I decided to give in and look for a hint. Thankfully, Vikas from the CyberDefender's Discord group shared one.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-08" src="../images/cyber-corp-case-2-writeup-part-2-08.png" /></p>
-<p>Initially the line "if you happen to see the PS script there are mentions of PID spoofing" did not immediately register with me, but after thinking about it some more I realized that it meant that the "PID spoofing" is written inside the script itself! This script is <code>MSO1033.ps1</code> which was part of the previous questions.</p>
-<p>And so I updated my query with the one below:</p>
-<blockquote>
-<p>"MSO1033.ps1" AND event_type:ScriptExecution AND enrich.ioa.max_severity:*</p>
-</blockquote>
-<p>Which showed the following results:</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-09" src="../images/cyber-corp-case-2-writeup-part-2-09.png" /></p>
-<p>The reason why the following events are interesting is that they contain the script inside the <code>script_text</code> value. Since the script is too long the events are split into 7 events as indicated by the <code>[1 of 7]</code> in the description. I then copied all the <code>script_text</code> entries and placed them into one file so I can easily review the code.</p>
-<p>The hint mentioned something about <code>pid spoofing</code> so I searched for the word <code>spoof</code> in the code and found this part right here.</p>
-<div class="codehilite"><pre><span></span><code><span class="no">[int]</span><span class="nv">$ppid</span> <span class="p">=</span> <span class="nb">Get-Process</span> <span class="n">-Name</span> <span class="s2">&quot;winlogon&quot;</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-expand</span> <span class="n">ID</span>
-<span class="nv">$spawnTo</span> <span class="p">=</span> <span class="s2">&quot;c:\Windows\System32\dwm.exe&quot;</span>
-<span class="nv">$currdir</span> <span class="p">=</span> <span class="s2">&quot;c:\Windows\System32&quot;</span>
-<span class="nv">$cmdline</span> <span class="p">=</span> <span class="s2">&quot;dwm.exe&quot;</span>
-<span class="nv">$sInfo</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">StartupInfo</span>
-<span class="nv">$sInfoEx</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">STARTUPINFOEX</span>
-<span class="nv">$pInfo</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">PROCESS_INFORMATION</span>
-<span class="nv">$SecAttr</span> <span class="p">=</span> <span class="nb">New-Object</span> <span class="n">SECURITY_ATTRIBUTES</span>
-<span class="nv">$SecAttr</span><span class="p">.</span><span class="n">nLength</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">SizeOf</span><span class="p">(</span><span class="nv">$SecAttr</span><span class="p">)</span>
-<span class="nv">$sInfo</span><span class="p">.</span><span class="n">cb</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">SizeOf</span><span class="p">(</span><span class="nv">$sInfoEx</span><span class="p">)</span>
-<span class="nv">$lpSize</span> <span class="p">=</span> <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span>
-<span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">StartupInfo</span> <span class="p">=</span> <span class="nv">$sInfo</span>
-<span class="nv">$hSpoofParent</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">OpenProcess</span><span class="p">(</span><span class="n">0x1fffff</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="nv">$ppid</span><span class="p">)</span>
-<span class="nv">$lpValue</span> <span class="p">=</span> <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span>
-<span class="nv">$lpValue</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">AllocHGlobal</span><span class="p">(</span><span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Size</span><span class="p">)</span>
-<span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">WriteIntPtr</span><span class="p">(</span><span class="nv">$lpValue</span><span class="p">,</span> <span class="nv">$hSpoofParent</span><span class="p">)</span>
-<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">InitializeProcThreadAttributeList</span><span class="p">(</span><span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">,</span> <span class="n">1</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="no">[ref]</span><span class="nv">$lpSize</span><span class="p">)</span>
-<span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">lpAttributeList</span> <span class="p">=</span> <span class="no">[System.Runtime.InteropServices.Marshal]</span><span class="p">::</span><span class="n">AllocHGlobal</span><span class="p">(</span><span class="nv">$lpSize</span><span class="p">)</span>
-<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">InitializeProcThreadAttributeList</span><span class="p">(</span><span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">lpAttributeList</span><span class="p">,</span> <span class="n">1</span><span class="p">,</span> <span class="n">0</span><span class="p">,</span> <span class="no">[ref]</span><span class="nv">$lpSize</span><span class="p">)</span>
-<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">UpdateProcThreadAttribute</span><span class="p">(</span><span class="nv">$sInfoEx</span><span class="p">.</span><span class="n">lpAttributeList</span><span class="p">,</span> 
-                                                 <span class="n">0</span><span class="p">,</span> 
-                                                 <span class="n">0x00020000</span><span class="p">,</span>
-                                                 <span class="nv">$lpValue</span><span class="p">,</span> 
-                                                 <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Size</span><span class="p">,</span> 
-                                                 <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">,</span> 
-                                                 <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">)</span> 
-<span class="nv">$result1</span> <span class="p">=</span> <span class="no">[Kernel32]</span><span class="p">::</span><span class="n">CreateProcess</span><span class="p">(</span><span class="nv">$spawnTo</span><span class="p">,</span> 
-                                     <span class="nv">$cmdline</span><span class="p">,</span> 
-                                     <span class="no">[ref]</span><span class="nv">$SecAttr</span><span class="p">,</span> 
-                                     <span class="no">[ref]</span><span class="nv">$SecAttr</span><span class="p">,</span> 
-                                     <span class="n">0</span><span class="p">,</span>
-                                     <span class="n">0x08080004</span><span class="p">,</span>
-                                     <span class="no">[IntPtr]</span><span class="p">::</span><span class="n">Zero</span><span class="p">,</span> 
-                                     <span class="nv">$currdir</span><span class="p">,</span> 
-                                     <span class="no">[ref]</span> <span class="nv">$sInfoEx</span><span class="p">,</span> 
-                                     <span class="no">[ref]</span> <span class="nv">$pInfo</span><span class="p">)</span>
-</code></pre></div>
-
-<p>Reading the code we could see a couple of interesting things:</p>
-<ul>
-<li>A call to <code>CreateProcess</code> function with a reference to <code>$spawnTo</code></li>
-<li><code>$spawnTo</code> set to <code>c:\Windows\System32\dwm.exe</code></li>
-<li>The line with <code>$hSpoofParent</code> using the variable <code>$ppid</code></li>
-<li><code>$ppid</code> is set to a process with the name <code>winlogon</code></li>
-</ul>
-<p>My research on the above findings pointed me to the Parent PID Spoofing technique (<a href="https://attack.mitre.org/techniques/T1134/004/">T1134.004</a>). This is used for evading detection by spoofing the PID to a different process. What is happening, in this case, is that <code>dwm.exe</code> would now appear to be a child process of <code>winlogon.exe</code> instead of the PowerShell script. Brilliant!</p>
-<p>Also, not shown in the snippet above, the registry key for <code>AppXs42fd12c3po92dynnq2r142fs12qhvsmvv</code> is also read and decoded. This means that our executable file that contains the <code>rundll32.exe</code> string is also involved in this. Later on, it will be revealed what this is for.</p>
-<p>Now that we know what the script does, we can now search for any mention of <code>winlogon.exe</code> and <code>dwm.exe</code> using the query below:</p>
-<blockquote>
-<p>(winlogon.exe OR dwm.exe) AND enrich.ioa.max_severity:* AND event_type:ProcessCreate</p>
-</blockquote>
-<p>This, however, showed more than one result.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-10" src="../images/cyber-corp-case-2-writeup-part-2-10.png" /></p>
-<p>Which among these is the PID pair that the challenge author is looking for? </p>
-<p>Looking at all the multiple events, it seems that the script has been executed multiple times so it's hard to determine which is the correct event. All of them were executed successfully, but I found that only one of them was able to create the <code>rundll32.exe</code> process.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-12" src="../images/cyber-corp-case-2-writeup-part-2-12.png" /></p>
-<p>The process id of the <code>dwm.exe</code> in the screenshot above shows <code>8876</code>. Using this information, we can go back to the previous query and find exactly which PID pairs that we need to answer the question.</p>
-<h2 id="getting-the-malicious-ip">Getting the malicious IP</h2>
-<blockquote>
-<p>Question 10. The malicious code run by the script is a Reverse Shell. Identify the IP address and port number of its command center.</p>
-</blockquote>
-<p>Aha! So the malicious code that we inspected before, the one that does process hollowing, is now running inside <code>rundll32.exe</code> and is running as a reverse shell! </p>
-<p>I already knew the process ID of our malicious <code>rundll32.exe</code> so we include that in our query: </p>
-<blockquote>
-<p>8344 AND event_type:NetworkConnection</p>
-</blockquote>
-<p>This will reveal an event with the process chain of <code>dwm.exe</code> &gt; <code>rundll32.exe</code> which also establishes a connection to an external IP. This is our answer to this question.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-2-11" src="../images/cyber-corp-case-2-writeup-part-2-11.png" /></p>
-<h2 id="understanding-the-sequence-of-events">Understanding the sequence of events</h2>
-<p>For the benefit of everyone (including me), I have outlined the timeline of events below to serve as a reference just in case you get confused and overwhelmed:</p>
-<ul>
-<li>Jun 22, 2021 @ 07:25:47.000 - WMI Subscription</li>
-<li>Jun 22, 2021 @ 07:41:15.000 - <code>MSO1033.ps1</code> (7324) was executed</li>
-<li>Jun 22, 2021 @ 07:41:55.000 - <code>winlogon.exe</code> (1160) is now the spoofed parent process of <code>dwm.exe</code> (8876) instead of <code>MSO1033.ps1</code></li>
-<li>Jun 22, 2021 @ 07:41:56.000 - <code>dwm.exe</code> (8876) creates the process <code>rundll32.exe</code> (8344), which is hollowed out and now runs as a reverse shell</li>
-<li>Jun 22, 2021 @ 07:41:56.000 - <code>rundll32.exe</code> (8344) establishes connection to malicious IP</li>
-</ul>
-<hr />
-<p>Hopefully, I was able to make everything clear. Expect the next part of this write-up very soon. </p>
-<p>The next couple of questions deals with lateral movement and interactions with the domain controller so it would be very interesting to go through my findings in detail.</p>
+            <p>Our latest game, HistoHunters, has grown into a really big project that compilation now takes a really long time. Longer than no sane programmer wants it to be. It has gotten so bad that changing a single file would take about a minute for recompilation! </p>
+<p>Thankfully, I have managed to shorten this wait time through the use of <a href="https://coffeebraingames.wordpress.com/2018/01/21/reducing-compile-time-in-unity-using-assembly-definition-files/">assembly definitions</a>. If you have a big Unity project and compile times are slow, this is the solution to that. Just for kicks I also purchased an SSD and that also helped reduce compile times (Not much as the assembly definitions though).</p>
+<p>However, in spite of these changes compiling still takes a few seconds to reload scripts. This seems to be the lowest it could go. While this is definitely better, I can't help but feel that the seconds spent waiting is wasted.</p>
+<p><img alt="making-unity-beep-after-scripts-finish-reloading-02" src="../images/making-unity-beep-after-scripts-finish-reloading-02.jpg" /></p>
+<p>I recently got the idea of having Unity inform …</p>
+            <a href="../making-unity-beep-after-scripts-finish-reloading.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/threat-hunting.html" class="tag">threat-hunting</a>
-            <a href="../tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+            <a href="../tag/dev.html" class="tag">dev</a>
+            <a href="../tag/unity.html" class="tag">unity</a>
         </div>
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/emacs.html" class="article-category-label">emacs</a>
             <h2 class="post-title">
-                <a href="../threat-hunting-from-home-cyber-corp-wmi-persistence.html">Cyber Corp Case 2 Writeup - Part 1</a>
+                <a href="../opening-unity-script-files-in-emacs.html">Opening Unity Script Files in Emacs</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2021-10-30T12:00:00+08:00">Sat 30 October 2021</time>
-                <span>•</span>
-                <a href="../category/threat-hunting.html">threat-hunting</a>
+                <time datetime="2018-01-24T14:32:00+08:00">Wed 24 January 2018</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>The <a href="https://cyberdefenders.org/labs/75">second case of the CyberCorp challenge</a> on <a href="https://cyberdefenders.org/">CyberDefenders.org</a> is all about threat hunting. Created by <a href="https://twitter.com/BlackMatter23">@BlackMatter23</a> and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.</p>
-<p>This writeup is part one out of multiple parts as I will be detailing my thought process and the steps I took for each question.</p>
-<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
-<h2 id="understanding-wmi-persistence">Understanding WMI Persistence</h2>
-<blockquote>
-<p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
-</blockquote>
-<p>So the question tells us that the attacker used WMI subscription to gain persistence in our network.</p>
-<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="https://github.com/accidentalrebel/vATTACK">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
-<p><img alt="cyber-corp-case-2-writeup-01" src="../images/cyber-corp-case-2-writeup-01.png" /></p>
-<h2 id="testing-wmi-persistence-in-my-homelab">Testing WMI Persistence in my homelab</h2>
-<p>Now that I understand the concept I then checked <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md">the technique's entry</a> in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about Atomic Red Team is that they have easy-to-follow step-by-step instructions on how to emulate Mitre ATT&amp;CK techniques.</p>
-<p>I took the code on the page and ran it in <a href="building-my-virtual-cybersecurity-home-lab">my homelab</a>. I then fired up Windows Event Viewer and looked for entries with event log ID "5681 (WMI activity)". The entry that I found contains the information below:</p>
-<div class="codehilite"><pre><span></span><code><span class="k">Namespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">//</span><span class="p">.</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">subscription</span><span class="err">;</span><span class="w"> </span><span class="n">Eventfilter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AtomicRedTeam</span><span class="o">-</span><span class="n">WMIPersistence</span><span class="o">-</span><span class="n">Example</span><span class="w"> </span><span class="p">(</span><span class="n">refer</span><span class="w"> </span><span class="k">to</span><span class="w"> </span><span class="n">its</span><span class="w"> </span><span class="n">activate</span><span class="w"> </span><span class="n">eventid</span><span class="p">:</span><span class="mi">5859</span><span class="p">)</span><span class="err">;</span><span class="w"> </span><span class="n">Consumer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CommandLineEventConsumer</span><span class="o">=</span><span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span><span class="w"> </span><span class="n">PossibleCause</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Binding</span><span class="w"> </span><span class="n">EventFilter</span><span class="p">:</span><span class="w"> </span>
-<span class="n">instance</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">__EventFilter</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">CreatorSID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">,</span><span class="w"> </span><span class="mi">158</span><span class="p">,</span><span class="w"> </span><span class="mi">195</span><span class="p">,</span><span class="w"> </span><span class="mi">131</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">242</span><span class="p">,</span><span class="w"> </span><span class="mi">87</span><span class="p">,</span><span class="w"> </span><span class="mi">184</span><span class="p">,</span><span class="w"> </span><span class="mi">137</span><span class="p">,</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">134</span><span class="p">,</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="err">;</span>
-<span class="w">    </span><span class="n">EventNamespace</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;root\\CimV2&quot;</span><span class="err">;</span>
-<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span>
-<span class="w">    </span><span class="n">Query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SELECT * FROM __InstanceModificationEvent WITHIN 60 WHERE TargetInstance ISA &#39;Win32_PerfFormattedData_PerfOS_System&#39; AND TargetInstance.SystemUpTime &gt;= 240 AND TargetInstance.SystemUpTime &lt; 325&quot;</span><span class="err">;</span>
-<span class="w">    </span><span class="n">QueryLanguage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;WQL&quot;</span><span class="err">;</span>
-<span class="p">}</span><span class="err">;</span>
-<span class="n">Perm</span><span class="p">.</span><span class="w"> </span><span class="n">Consumer</span><span class="p">:</span><span class="w"> </span>
-<span class="n">instance</span><span class="w"> </span><span class="k">of</span><span class="w"> </span><span class="n">CommandLineEventConsumer</span>
-<span class="p">{</span>
-<span class="w">    </span><span class="n">CommandLineTemplate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;C:\\Windows\\System32\\notepad.exe&quot;</span><span class="err">;</span>
-<span class="w">    </span><span class="n">CreatorSID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">21</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">96</span><span class="p">,</span><span class="w"> </span><span class="mi">158</span><span class="p">,</span><span class="w"> </span><span class="mi">195</span><span class="p">,</span><span class="w"> </span><span class="mi">131</span><span class="p">,</span><span class="w"> </span><span class="mi">63</span><span class="p">,</span><span class="w"> </span><span class="mi">242</span><span class="p">,</span><span class="w"> </span><span class="mi">87</span><span class="p">,</span><span class="w"> </span><span class="mi">184</span><span class="p">,</span><span class="w"> </span><span class="mi">137</span><span class="p">,</span><span class="w"> </span><span class="mi">245</span><span class="p">,</span><span class="w"> </span><span class="mi">68</span><span class="p">,</span><span class="w"> </span><span class="mi">134</span><span class="p">,</span><span class="w"> </span><span class="mi">233</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">}</span><span class="err">;</span>
-<span class="w">    </span><span class="n">Name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AtomicRedTeam-WMIPersistence-Example&quot;</span><span class="err">;</span>
-<span class="p">}</span><span class="err">;</span>
-</code></pre></div>
-
-<p>Since I have Sysmon logging enabled, I also double-checked the logs using the Sysmon event IDs below:</p>
-<ul>
-<li>Event ID 19: WmiEvent (WmiEventFilter activity detected)</li>
-<li>Event ID 20: WmiEvent (WmiEventConsumer activity detected)</li>
-<li>Event ID 21: WmiEvent (WmiEventConsumerToFilter activity</li>
-</ul>
-<p><img alt="cyber-corp-case-2-writeup-02" src="../images/cyber-corp-case-2-writeup-02.png" /></p>
-<p>As we can see, Sysmon separates the WMIEvents into the different types of WmiEvent activities.</p>
-<h2 id="building-the-query-for-the-kibana-search">Building the Query for the Kibana search</h2>
-<p>Now that I know what the important IOCs are, I could now create the query to answer the first question of the challenge.</p>
-<ul>
-<li>5861</li>
-<li>("QueryLanguage = " AND "Consumer = ")</li>
-</ul>
-<p>When the above information is combined, I get the query <code>5861 OR ("QueryLanguage = " AND "Consumer = ")</code>. Putting this in the Kibana search shows us the one and only entry:</p>
-<p><img alt="cyber-corp-case-2-writeup-03" src="../images/cyber-corp-case-2-writeup-03.png" /></p>
-<p>From there we could easily see the name of the WMI Event Consumer.</p>
-<h2 id="looking-for-the-wmi-subscriber">Looking for the WMI subscriber</h2>
-<blockquote>
-<p>Question 2. In the previous step, you looked for traces of the attacker's persistence in the compromised system through a WMI subscription mechanism. Now find the process that installed the WMI subscription. Answer the question by specifying the PID of that process and the name of its executable file, separated by a comma without spaces.</p>
-</blockquote>
-<p>Reading the question above, I knew that I needed to look for a process that has happened prior to the WMI subscription. And so, I've set the date range to reflect this.</p>
-<p><img alt="cyber-corp-case-2-writeup-04" src="../images/cyber-corp-case-2-writeup-04.png" /></p>
-<p>I wasn't so sure what to look for next so I just looked out for anything suspicious. Thankfully there is the <code>enrich.ioa.*</code> set of fields where enrichment is done that indicate suspiciousness. I've set a filter to show entries that have <code>enrich.ioa.max_severity</code> to <code>exists</code>. This means it'll only show events that are either <code>high</code>, <code>medium</code>, or <code>low</code>.</p>
-<p>These showed some very interesting events:</p>
-<p><img alt="cyber-corp-case-2-writeup-05" src="../images/cyber-corp-case-2-writeup-05.png" /></p>
-<p>It seems like <code>winword.exe</code> is connecting to an external IP. Very suspicious. Searching the IP <code>188.135.15.49</code> on VirusTotal reveals that it is indeed malicious.</p>
-<p><img alt="cyber-corp-case-2-writeup-06" src="../images/cyber-corp-case-2-writeup-06.png" /></p>
-<p>If we look at more of the events we will find that there are a lot of malicious activity with the <code>proc_cmdline</code> that contains the value:</p>
-<blockquote>
-<p>"C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE" /n "C:!Work\Marketing\Docs\OPEC\OPEC crude oil production.docx" /o ""</p>
-</blockquote>
-<p>Having seen all of that we can now safely assume that this is the process that we are looking for. Entering the <code>proc_id</code> along with the proc's file name satisfies question number 2.</p>
-<h2 id="looking-for-the-extracted-archive">Looking for the extracted archive</h2>
-<blockquote>
-<p>Question 3. The process described in the previous question was used to open a file extracted from the archive that the user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.</p>
-</blockquote>
-<p>The question said something about a file being opened, and so I added the filters <code>event_type: FileOpen</code> and <code>proc_file_path: C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE</code> to see what files were opened using Word.exe prior to the WMI subscription. This however showed a lot of files.</p>
-<p><img alt="cyber-corp-case-2-writeup-07" src="../images/cyber-corp-case-2-writeup-07.png" /></p>
-<p>The question also mentioned that the opened file was extracted from an archive received by email. So I added the query <code>*zip* OR *rar*</code> to find out if there are any "zip" or "rar" files that were processed.</p>
-<p>Sure enough, there was, and one particular really stood out. </p>
-<blockquote>
-<p>Process 'c:\program files (x86)\microsoft office\office16\outlook.exe' created file 'c:\users\john.goldberg\appdata\local\microsoft\windows\inetcache\content.outlook\dfn3sfep\report.zip'</p>
-</blockquote>
-<p>This tells us that the archive <code>report.zip</code> was opened via email using the program <code>outlook.exe</code>.</p>
-<p>But what was the generated file when the archive was opened? Looking through the results we could also see one entry that had the <code>enrich.chain</code> with the value of: </p>
-<blockquote>
-<p>'c:\windows\explorer.exe' ➔ 'c:\program files (x86)\microsoft office\office16\winword.exe' ➔ 'c:\users\john.goldberg\appdata\local\temp\temp1_report.zip\market forecast emea.docx'`. </p>
-</blockquote>
-<p>"Market forecaste emea.docx" was opened via "winword.exe" and we could also see that the temporary folder for it is <code>temp1_report.zip</code>. Entering the hash for this "docx" file was the correct answer for this question.</p>
-<h2 id="finding-the-actual-malicious-file">Finding the actual malicious file</h2>
-<blockquote>
-<p>Question 4. The file mentioned in question 3, is not malicious in and of itself, but when it is opened, another file is downloaded from the Internet that already contains the malicious code. Answer the question by specifying the address, from which this file was downloaded, and the SHA256 hash of the downloaded file, separated by commas without spaces.</p>
-</blockquote>
-<p>If we think about it, we can make the date range smaller by starting our range from when the Zip is extracted and from when the WMI subscription happened. </p>
-<p><img alt="cyber-corp-case-2-writeup-08" src="../images/cyber-corp-case-2-writeup-08.png" /></p>
-<p>There are three "action" keywords specified in the question that I knew I could filter for. This led me to use the query below:</p>
-<blockquote>
-<p>event_type:NetworkConnection OR event_type:FileOpen OR event_type:FileCreate</p>
-</blockquote>
-<p>What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signify another file is downloaded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.</p>
-<p>As you can see in the image below, we have a series of events that shows us the three events that we are looking for in the previous paragraph. But because their timestamps are the same, they are all jumbled.</p>
-<p><img alt="cyber-corp-case-2-writeup-09" src="../images/cyber-corp-case-2-writeup-09.png" /></p>
-<p>The way to see if the events happened in the order that we want (Network Connection &gt; FileCreate &gt; FileOpen), then what we can do is to view the surrounding documents on one of the events and see from there. From the image below, we see that the ordering of the events is indeed correct.</p>
-<p><img alt="cyber-corp-case-2-writeup-10" src="../images/cyber-corp-case-2-writeup-10.png" /></p>
-<p>The above tells us two of the answers that we need to answer the 4th question. The IP on the network connection and the hash of the file that was opened.</p>
-<h2 id="finding-the-tricky-technique">Finding the tricky technique</h2>
-<blockquote>
-<p>Question 5. The malicious code from the file, mentioned in question 4, directly installed a WMI subscription, which we started our hunting with, and also downloaded several files from the Internet to the compromised host. For file downloading, the attacker used a tricky technique that gave him the opportunity to hide the real process, which initiated the corresponding network activity. Specify the SHA256 hash of the operating system component whose functionality was used by the attacker to download files from the Internet.</p>
-</blockquote>
-<p>So the event that the question is looking for happened after the WMI subscription. I've updated the date range to reflect this.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-1-11" src="../images/cyber-corp-case-2-writeup-part-1-11.png" /></p>
-<p>Initially, I tried doing the same approach as I did before where I would pick up certain "action" keywords from the question. Something similar to the query below:</p>
-<blockquote>
-<p>(event_type:NetworkConnection OR event_type:FileCreate) AND enrich.ioa.max_severity:*</p>
-</blockquote>
-<p>Sadly, no matter where I looked it doesn't seem to be what the question is looking for.</p>
-<p>And so, I had to start my search from scratch but this time only focusing on any entries after the WMI subscription that have an existing value in <code>enrich.ioa.max_severity</code>. This approach worked and it showed me this very interesting entry marked as <code>win_unusual_ie_com_dll_host_process</code>.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-1-12" src="../images/cyber-corp-case-2-writeup-part-1-12.png" /></p>
-<p>So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it to use "iexplore.exe" in downloading several files from the internet. This technique is unfamiliar to me and researching about it only showed <a href="https://cyberpolygon.com/materials/hunting-for-advanced-tactics-techniques-and-procedures-ttps/">an article from Cyber Polygon</a>. I'll try to explore this in the future, but at least for now. I have the answer to the question.</p>
-<hr />
-<p>This is part 1 of my write-up for this challenge. Expect the next part which would have the answer to the question that a lot of people have difficulty answering, which is #9. Until then!</p>
-<p>Edit: <a href="cyber-corp-case-2-writeup-part-2">Part 2</a> and <a href="cyber-corp-case-2-writeup-part-3">Part 3</a> is now out.</p>
+            <p><img alt="01" src="https://i.imgur.com/9XWvvi0.png" /></p>
+<p>I've recently embarked on a mission to fully integrate <a href="https://www.gnu.org/software/emacs/">Emacs</a> with my Unity game development environment. One feature that I wanted to have is the ability to open Unity scripts and text-based files in Emacs instead of MonoDevelop. This is an easy task for supported external editors but for those who aren't (Like Emacs), doing something like this is a bit tricky.</p>
+<p>Setting <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Invoking-emacsclient.html">emacsclient</a> as the external editor works in opening the files but the line number is not passed at all (Or is not received by emacs. <a href="https://forum.unity.com/threads/external-editor-arguments-issue.350473/">Seems to be a bug</a>). This means that opening files in the Project Window works but you would not be able to to jump to lines that have errors from the Console. This, of course, is unacceptable.</p>
+<p><img alt="02" src="https://i.imgur.com/8gcVuom.png" /></p>
+<p>I've tried a number of different solutions. A lot of them are hacky but clever. There was this one option of setting a <a href="https://github.com/bbbscarter/EmacsProxy">Sublime Text …</a></p>
+            <a href="../opening-unity-script-files-in-emacs.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/threat-hunting.html" class="tag">threat-hunting</a>
-            <a href="../tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+            <a href="../tag/emacs-unity.html" class="tag">emacs unity</a>
         </div>
     </article>
     <article class="post-item">
         <header class="article-header">
+            <a href="../category/postmortem.html" class="article-category-label">postmortem</a>
             <h2 class="post-title">
-                <a href="../new-tool-preview-vattack.html">New Tool Preview: vATT&CK</a>
+                <a href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html">Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates</a>
             </h2>
             <div class="article-meta">
-                <time datetime="2021-10-18T20:33:00+08:00">Mon 18 October 2021</time>
-                <span>•</span>
-                <a href="../category/tools.html">tools</a>
+                <time datetime="2017-12-10T23:33:00+08:00">Sun 10 December 2017</time>
             </div>
         </header>
 
         <div class="article-content">
-            <p>I have released a new cybersecurity-related tool called <a href="https://github.com/accidentalrebel/vATTACK">vATT&amp;CK (Visual ATT&amp;CK)</a>. It is a relationship visualizer for the Mitre ATT&amp;CK framework.</p>
-<p><img alt="new-tool-preview-vattack-01" src="../images/new-tool-preview-vattack-01.png" /></p>
-<p>What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action <a href="https://www.youtube.com/watch?v=xCc7aAqbSNI">here</a>.</p>
-<p>Each node will be colored depending on it's category. The color legends is as follows:</p>
+            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
+<p><strong>TL;DR</strong></p>
 <ul>
-<li>Pink - Related subtechniques</li>
-<li>Orange - Malware that uses the searched technique</li>
-<li>Red - Groups that uses the searched technique</li>
-<li>Blue - Tools that use the searched technique</li>
-<li>Yellow - Mitigations</li>
+<li>We used a risk adjusted estimation system that produces near accurate estimates we can confidently rely on.</li>
 </ul>
-<p>This tool is still in development. I plan to add a number of improvements such as:</p>
-<ul>
-<li>Ability to click on nodes and then update the visual map</li>
-<li>Ability to search not just by technique, but also by other categories</li>
-</ul>
-<p>I also plan on releasing a live demo of the tool very soon in the hopes of getting feedback from the community. </p>
-<p>For now, if you are interested in the project, you could visit the <a href="https://github.com/accidentalrebel/vATTACK">tool's Github project page</a> or contact me for any comments or suggestions.</p>
+<hr />
+<p>I usually dreaded being asked how long a programming task will take. I always seem to have the knack to overshoot no matter how hard I try. This is an all too common scenario that programmers face and is something that is considered to be a difficult, if not impossible, problem to solve.</p>
+<p><img alt="01" src="https://i.imgur.com/KqCZUHl.jpg" /></p>
+<p>This all changed when I was introduced to a helpful system that helps in producing estimates that are "accurate enough". I don't think it has a name yet but my colleagues who introduced me to it says that they got it from a <a href="https://www.gamasutra.com/view/feature/181992/waterfall_game_development_done_.php">Gamasutra article</a> by Eric Preisz of Garage Games. Since then I've used this system …</p>
+            <a href="../chef-wars-postmortem--what-went-right-risk-adjusted-estimates.html" class="read-more">Read more &rarr;</a>
         </div>
 
         <div class="tags">
-            <a href="../tag/tools.html" class="tag">tools</a>
-            <a href="../tag/cybersecurity.html" class="tag">cybersecurity</a>
+            <a href="../tag/chefwars.html" class="tag">chefwars</a>
+            <a href="../tag/gamedev.html" class="tag">gamedev</a>
+            <a href="../tag/mindcake.html" class="tag">mindcake</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/postmortem.html" class="article-category-label">postmortem</a>
+            <h2 class="post-title">
+                <a href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html">Chef Wars Postmortem -- What went wrong: Optimizing too early and too late</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-12-06T00:02:00+08:00">Wed 06 December 2017</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
+<p><strong>TLDR</strong></p>
+<ul>
+<li>There is more to the saying that "premature optimization is the root of all evil".</li>
+<li>Instead of asking WHEN to optimize, it is more important to ask WHAT and HOW to optimize.</li>
+</ul>
+<hr />
+<p>It is a well known adage among programmers that premature optimization is the root of all evil. If this is true then I must have been very close to the devil himself.</p>
+<p>During the early months of development on Chef Wars I did my best to optimize my code as much as possible. We were making a big game and I wanted to have a stable foundation to build our game on. I obsessed over lots of things from the interconnection of the various systems to folder structures. I was happy with all that I've built …</p>
+            <a href="../chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/chefwars.html" class="tag">chefwars</a>
+            <a href="../tag/gamedev.html" class="tag">gamedev</a>
+            <a href="../tag/mindcake.html" class="tag">mindcake</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/postmortem.html" class="article-category-label">postmortem</a>
+            <h2 class="post-title">
+                <a href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html">Chef Wars Postmortem -- What went right: Having a Universe File</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-12-05T12:56:00+08:00">Tue 05 December 2017</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p><strong>Note: This is from a <a href="http://www.accidentalrebel.com/tags/chefwars_postmortem/">series of articles</a> that outlines the things I've learned while making <a href="http://mindcakegames.com/">Chef Wars</a> for 2+ years.</strong></p>
+<p><strong>TLDR</strong></p>
+<ul>
+<li>All data in our game is contained in one excel file we call the "Universe".</li>
+<li>Prototypes can be done on the Universe excel file itself</li>
+<li>Iteration is easier as we only need to change one file.</li>
+<li>We made a system that downloads changes from our server so players don't need to update their builds.</li>
+</ul>
+<hr />
+<p>Before we started development on Chef Wars, Cliff, my co-founder and game designer for the team, already had pages of spreadsheets containing important values in the game. It's kinda like a game design document but in the form of tables, columns, and rows. This "Universe" file contained everything from stats, dialogue, competitions, locations, chefs, and enemies just to name a few. </p>
+<p><img alt="01" src="https://i.imgur.com/rVZqbaH.png" /></p>
+<div class="codehilite"><pre><span></span><code><span class="o">*</span><span class="nx">This</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="nx">definitely</span><span class="w"> </span><span class="nx">gives</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">hint</span><span class="w"> </span><span class="nx">on</span><span class="w"> </span><span class="nx">what</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="nx">of</span><span class="w"> </span><span class="nx">guy</span><span class="w"> </span><span class="nx">Cliff</span><span class="w"> </span><span class="k">is …</span></code></pre></div>
+            <a href="../chef-wars-postmortem--what-went-right-having-a-universe-file.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/chefwars.html" class="tag">chefwars</a>
+            <a href="../tag/gamedev.html" class="tag">gamedev</a>
+            <a href="../tag/mindcake.html" class="tag">mindcake</a>
+            <span class="tag">+1 more</span>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/emacs.html" class="article-category-label">emacs</a>
+            <h2 class="post-title">
+                <a href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html">Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-09-23T13:08:00+08:00">Sat 23 September 2017</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>One of the problems I was having with my Emacs environment under WSL <em>(Windows Subsystem for Linux, aka. Bash On Windows)</em> is that I could not copy text from WSL Emacs to other Windows applications. Copy and pasting from Windows to Emacs works without any problems so it's weird it does not work the other way around.</p>
+<p>I tried a lot of solutions from Google but none of them seem to work. There was an emacs package called <a href="https://github.com/rolandwalker/simpleclip">simpleclip</a> that worked but the results were not consistent.</p>
+<p>I then realized that a temporary solution would be to make use of Windows' clip.exe command line utility which can bme seen below.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-set-clipboard-data</span><span class="w"> </span><span class="p">(</span><span class="nv">str-val</span><span class="p">)</span>
+<span class="w">  </span><span class="s">&quot;Puts text in Windows clipboard. Copying to Windows from WSL does </span>
+<span class="s">not work on my end so this one is a temporary solution.</span>
+
+<span class="s">This function is called from within the simpleclip package when copy </span>
+<span class="s">or bgcopy …</span></code></pre></div>
+            <a href="../temp-solution-for-when-copying-does-not-work-in-emacs-under-windows-subsystem-for-linux.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/emacs-windows-linux.html" class="tag">emacs windows linux</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/org-mode.html" class="article-category-label">org-mode</a>
+            <h2 class="post-title">
+                <a href="../converting-org-journal-entry-to-org-page-post.html">Converting org-journal entry to org-page post</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>Since my recent switch from Wordpress to <a href="https://github.com/kelvinh/org-page">org-page</a> I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-org-journal-entry-to-org-page-post</span><span class="w"> </span><span class="p">()</span>
+<span class="w">  </span><span class="s">&quot;Copy the org-journal entry at point and then convert it to a org-page new post buffer.&quot;</span>
+<span class="w">  </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">  </span><span class="p">(</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">eq</span><span class="w"> </span><span class="ss">&#39;org-journal-mode</span><span class="w"> </span><span class="nv">major-mode</span><span class="p">)</span>
+<span class="w">      </span><span class="p">(</span><span class="k">let</span><span class="w"> </span><span class="p">((</span><span class="nv">headline-text</span><span class="w"> </span><span class="p">(</span><span class="nf">nth</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="p">(</span><span class="nv">org-heading-components</span><span class="p">)))</span>
+<span class="w">        </span><span class="p">(</span><span class="nv">entry-text</span><span class="w"> </span><span class="p">(</span><span class="nv">org-get-entry</span><span class="p">)))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">funcall-interactively</span><span class="w"> </span><span class="ss">&#39;op/new-post</span><span class="w"> </span><span class="s">&quot;blog&quot;</span><span class="w"> </span><span class="p">(</span><span class="nf">concat</span><span class="w"> </span><span class="p">(</span><span class="nf">buffer-name</span><span class="p">)</span><span class="w"> </span><span class="s">&quot;-&quot;</span><span class="w"> </span><span class="nv">headline-text</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">insert</span><span class="w"> </span><span class="nv">entry-text</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">message</span><span class="w"> </span><span class="s">&quot;This function can only be called inside org-journal-mode.&quot;</span><span class="p">))</span><span class="w"> </span><span class="p">)</span>
+</code></pre></div>
+
+<p>The function is simple and uses functions from org-mode and org-page.</p>
+<ul>
+<li>First, it checks if the current buffer is in org-journal-mode</li>
+<li>Then it gets the headline text and entry texts</li>
+<li>It then calls op/new-post. It does it interactively so that it will trigger the prompts needed to …</li></ul>
+            <a href="../converting-org-journal-entry-to-org-page-post.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/emacs-org-mode.html" class="tag">emacs org-mode</a>
+        </div>
+    </article>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/emacs.html" class="article-category-label">emacs</a>
+            <h2 class="post-title">
+                <a href="../minifying-buffer-contents-in-emacs.html">Converting org-journal entry to org-page post</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
+            </div>
+        </header>
+
+        <div class="article-content">
+            <p>I needed a way to minify JSON files from Emacs so I made the short function below.</p>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="nb">defun</span><span class="w"> </span><span class="nv">arebel-minify-buffer-contents</span><span class="p">()</span>
+<span class="w">    </span><span class="s">&quot;Minifies the buffer contents by removing whitespaces.&quot;</span>
+<span class="w">    </span><span class="p">(</span><span class="k">interactive</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">delete-whitespace-rectangle</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">point-max</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="nv">mark-whole-buffer</span><span class="p">)</span>
+<span class="w">    </span><span class="p">(</span><span class="nf">goto-char</span><span class="w"> </span><span class="p">(</span><span class="nf">point-min</span><span class="p">))</span>
+<span class="w">    </span><span class="p">(</span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="nf">search-forward</span><span class="w"> </span><span class="s">&quot;\n&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)</span><span class="w"> </span><span class="p">(</span><span class="nf">replace-match</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="w"> </span><span class="no">nil</span><span class="w"> </span><span class="no">t</span><span class="p">)))</span>
+</code></pre></div>
+
+<p>The function is very simple. First it deletes the whitespaces for the whole current buffer then removes every newline.</p>
+<p>This effectively turns this:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span>
+<span class="w">            </span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                    </span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span>
+<span class="w">                    </span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span>
+<span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+
+
+<span class="w">                          </span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span>
+<span class="w">                        </span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]</span>
+<span class="w">                    </span><span class="p">},</span>
+<span class="w">                    </span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup&quot;</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>To this:</p>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span><span class="nt">&quot;glossary&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;example glossary&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDiv&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;title&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;S&quot;</span><span class="p">,</span><span class="nt">&quot;GlossList&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;GlossEntry&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;ID&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;SortAs&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;GlossTerm&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Standard Generalized Markup Language&quot;</span><span class="p">,</span><span class="nt">&quot;Acronym&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;SGML&quot;</span><span class="p">,</span><span class="nt">&quot;Abbrev&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;ISO 8879:1986&quot;</span><span class="p">,</span><span class="nt">&quot;GlossDef&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">&quot;para&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;A meta-markup language, used to create markup languages such as DocBook.&quot;</span><span class="p">,</span><span class="nt">&quot;GlossSeeAlso&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;GML&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;XML&quot;</span><span class="p">]},</span><span class="nt">&quot;GlossSee&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;markup …</span></code></pre></div>
+            <a href="../minifying-buffer-contents-in-emacs.html" class="read-more">Read more &rarr;</a>
+        </div>
+
+        <div class="tags">
+            <a href="../tag/emacs.html" class="tag">emacs</a>
         </div>
     </article>
 
@@ -385,26 +326,39 @@ For this answer, provide the next data, separated by a comma without spaces:</p>
         <a href="../author/accidentalrebel3.html">3</a>
         <a href="../author/accidentalrebel4.html">4</a>
         <span class="current">5</span>
-        <a href="../author/accidentalrebel6.html">6</a>
-        <a href="../author/accidentalrebel7.html">7</a>
-        <a href="../author/accidentalrebel8.html">8</a>
-        <a href="../author/accidentalrebel9.html">9</a>
-        <a href="../author/accidentalrebel10.html">10</a>
-        <a href="../author/accidentalrebel11.html">11</a>
-        <a href="../author/accidentalrebel12.html">12</a>
-        <a href="../author/accidentalrebel13.html">13</a>
-        <a href="../author/accidentalrebel14.html">14</a>
-        <a href="../author/accidentalrebel15.html">15</a>
-        <a href="../author/accidentalrebel16.html">16</a>
 
-    <a href="../author/accidentalrebel6.html">Next &raquo;</a>
 </nav>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="../theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="../theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

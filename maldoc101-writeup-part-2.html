@@ -4,12 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Maldoc101 Writeup (Part 2) | AccidentalRebel.com</title>
-    
+
+<meta name="description" content="This is part 2 of my writeup for the Maldoc101 challenge. Check out part 1 for the beginning of the analysis. The next couple of lines does the same...">
+
+    <link rel="canonical" href="./maldoc101-writeup-part-2.html">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="./theme/css/main.css">
-    
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="./maldoc101-writeup-part-2.html">
@@ -21,38 +34,62 @@
     <meta property="twitter:url" content="./maldoc101-writeup-part-2.html">
     <meta property="twitter:title" content="Maldoc101 Writeup (Part 2)">
     <meta property="twitter:description" content="This is part 2 of my writeup for the Maldoc101 challenge. Check out part 1 for the beginning of the analysis. The next couple of lines does the same concatenating technique similar to the previous steps. deaknaugthein = roubhaol.kaizseah.ControlTipText giakfeiw = deulsaocthuul + gooykadheoj + roubhaol.paerwagyouqumeid.ControlTipText + deaknaugthein queegthaen = giakfeiw + roubhaol.joefwoefcheaw At the end of the code above queegthaen now contains the value Win32_Process + s + tar + tu + P. Or when combined creates the string Win32_ProcessstartuP which probably refers to this WMI class in the Microsoft docs. Note: This writeup appears to be incomplete. For the complete analysis, please refer to part 1 of this series.">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Maldoc101 Writeup (Part 2)",
+        "datePublished": "2021-03-14T08:34:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "./maldoc101-writeup-part-2.html",
+        "description": "This is part 2 of my writeup for the Maldoc101 challenge. Check out part 1 for the beginning of the analysis. The next couple of lines does the same..."
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
+            { "@type": "ListItem", "position": 2, "name": "malware_analysis", "item": "./category/malware_analysis.html" },
+            { "@type": "ListItem", "position": 3, "name": "Maldoc101 Writeup (Part 2)" }
+        ]
+    }
+    </script>
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">AccidentalRebel.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="./archives.html">Archives</a></li>
                     <li><a href="./categories.html">Categories</a></li>
                     <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
 <article>
     <header class="article-header">
+        <a href="./category/malware_analysis.html" class="article-category-label">malware_analysis</a>
         <h1>Maldoc101 Writeup (Part 2)</h1>
         <div class="article-meta">
             <time datetime="2021-03-14T08:34:00+08:00">Sun 14 March 2021</time>
-            <span>•</span>
-            <a href="./category/malware_analysis.html">malware_analysis</a>
         </div>
     </header>
 
@@ -94,12 +131,37 @@ queegthaen = giakfeiw + roubhaol.joefwoefcheaw
     </script>
     <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="./theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];

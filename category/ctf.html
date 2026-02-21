@@ -4,42 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ctf | AccidentalRebel.com</title>
-    
+
+    <meta name="description" content="SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.">
+
+    <link rel="canonical" href="../">
+
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
-    
+
     <link rel="stylesheet" href="../theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": "..",
+        "sameAs": ["https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="../" class="site-title">AccidentalRebel.com</a>
+                <a href="../" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="../archives.html">Archives</a></li>
                     <li><a href="../categories.html">Categories</a></li>
                     <li><a href="../tags.html">Tags</a></li>
+                            <li><a href="../category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="../pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
 <article>
     <header class="article-header">
         <h1>Category: ctf</h1>
     </header>
 
     <div class="article-content">
+        <div class="post-item">
+            <h2 class="post-title">
+                <a href="../emprisa-maldoc-writeup..html">Emprisa Maldoc Writeup</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2021-04-30T05:58:00+08:00">Fri 30 April 2021</time>
+            </div>
+            <div class="post-summary">
+                <blockquote>
+<p>This is a writeup for <a href="the-emprisa-maldoc-challenge">Emprisa maldoc challenge</a> that I made for <a href="https://cyberdefenders.org/">CyberDefenders.org</a>. You can play it <a href="https://cyberdefenders.org/labs/56">here</a>.</p>
+</blockquote>
+<p>The very first thing that I do when confronted with a malicious document is to run it in a malware lab. This particular document, however, would not exhibit anything malicious on recent versions of Word.</p>
+<p>A quick search of the hash on malware sandboxes would reveal that the document makes use of the <a href="https://nvd.nist.gov/vuln/detail/CVE-2017-18822">CVE-2017-18822 vulnerability</a>. This is a vulnerability that became known and was promptly patched around November of 2017.</p>
+<p>The above details give us a hint on how to trigger the document, which is to run the maldoc on a version of Microsoft Word that doesn't have the patches that fix the vulnerability. The easiest way to do this is to boot up a new VM with a fresh install of Windows 7 and with updates disabled.</p>
+<p>This new environment …</p>
+            </div>
+            <div class="tags">
+                <a href="../tag/maldoc.html" class="tag">maldoc</a>
+                <a href="../tag/writeup.html" class="tag">writeup</a>
+            </div>
+        </div>
         <div class="post-item">
             <h2 class="post-title">
                 <a href="../the-emprisa-maldoc-challenge.html">The Emprisa Maldoc Challenge</a>
@@ -102,12 +137,37 @@
         </div>
     </div>
 </article>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="../theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">AccidentalRebel</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering.</span>
+                <ul class="footer-links">
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
     <script src="../theme/js/main.js"></script>
-    
-    <!-- Google Analytics -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
