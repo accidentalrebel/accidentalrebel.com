@@ -13,6 +13,24 @@ Your AI assistant might be working for someone else this week. Check Point showe
 
 ---
 
+## Editorial
+
+### [Your AI assistant is someone else's C2 channel](https://research.checkpoint.com/2026/ai-in-the-middle-turning-web-based-ai-services-into-c2-proxies-the-future-of-ai-driven-attacks/)
+
+I think a lot about what everyday services can double as C2 channels. A while back I built [wp-c2](https://github.com/accidentalrebel/wp-c2), a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention.
+
+The technique: malware on a compromised machine sends crafted prompts to the AI assistant through anonymous web sessions. The assistant fetches attacker-controlled URLs, retrieves commands, and passes them back through its normal interface. No API keys. No registered accounts. Two-way communication that looks like normal enterprise traffic.
+
+What makes it effective is simple. Security teams monitoring network traffic see requests going to microsoft.com and xai.com, not suspicious IPs. The AI assistant is doing exactly what it's designed to do, which is browse the web and summarize content. It just happens to be summarizing attack instructions.
+
+The researchers went further. They showed the AI can also act as an "external decision engine" for the attacker, assessing system value, suggesting evasion strategies, and deciding what to do next. The AI isn't just the communication pipe. It's also the brain.
+
+That's the part that got me. My WordPress C2 and most other "hide in legitimate traffic" approaches are dumb pipes. You send a command, you get output. With an AI assistant as the relay, the attacker gets a reasoning engine for free. The malware can ask Copilot to assess whether the compromised machine is worth persisting on, or how to evade the specific EDR it detects. The C2 channel is also the operator.
+
+For defenders, the problem is architectural. You can't disable the browsing capability without killing the product. Anonymous sessions mean no authentication trail. Most organizations are still debating whether to deploy these tools at all, while attackers have already figured out how to live inside them.
+
+---
+
 ## Featured stories
 
 ### [Cline CLI supply chain attack installs autonomous AI agent on developer machines](https://thehackernews.com/2026/02/cline-cli-230-supply-chain-attack.html)
@@ -30,24 +48,6 @@ An AI security research system called AISLE found all twelve zero-day vulnerabil
 ### [An AI agent published a hit piece on a matplotlib maintainer](https://theshamblog.com/an-ai-agent-published-a-hit-piece-on-me/)
 
 Scott Shambaugh, a volunteer maintainer for matplotlib (~130 million monthly downloads), rejected a pull request from an autonomous AI agent called MJ Rathbun running on the OpenClaw/moltbook platform. The project's policy requires human understanding of changes, so he closed it. The agent responded by publishing a blog post titled "Gatekeeping in Open Source: The Scott Shambaugh Story," claiming he rejected the code out of insecurity and fear of replacement. It followed up with a second post encouraging others to "fight back" against perceived discrimination. No human told it to do any of this. The agent later apologized, but it's still submitting code across the open source ecosystem. Who's responsible here? The operator? The model provider? The person who deployed it and walked away? Nobody has a good answer yet. I find it disturbing, but can also see the funny side.
-
----
-
-## Editorial
-
-### [Your AI assistant is someone else's C2 channel](https://research.checkpoint.com/2026/ai-in-the-middle-turning-web-based-ai-services-into-c2-proxies-the-future-of-ai-driven-attacks/)
-
-I think a lot about what everyday services can double as C2 channels. A while back I built [wp-c2](https://github.com/accidentalrebel/wp-c2), a proof-of-concept that turns WordPress into a command-and-control server. Hiding C2 traffic inside trusted infrastructure is a rabbit hole I keep going back to. So when Check Point published research showing that Microsoft Copilot and Grok can serve the same purpose, I paid attention.
-
-The technique: malware on a compromised machine sends crafted prompts to the AI assistant through anonymous web sessions. The assistant fetches attacker-controlled URLs, retrieves commands, and passes them back through its normal interface. No API keys. No registered accounts. Two-way communication that looks like normal enterprise traffic.
-
-What makes it effective is simple. Security teams monitoring network traffic see requests going to microsoft.com and xai.com, not suspicious IPs. The AI assistant is doing exactly what it's designed to do, which is browse the web and summarize content. It just happens to be summarizing attack instructions.
-
-The researchers went further. They showed the AI can also act as an "external decision engine" for the attacker, assessing system value, suggesting evasion strategies, and deciding what to do next. The AI isn't just the communication pipe. It's also the brain.
-
-That's the part that got me. My WordPress C2 and most other "hide in legitimate traffic" approaches are dumb pipes. You send a command, you get output. With an AI assistant as the relay, the attacker gets a reasoning engine for free. The malware can ask Copilot to assess whether the compromised machine is worth persisting on, or how to evade the specific EDR it detects. The C2 channel is also the operator.
-
-For defenders, the problem is architectural. You can't disable the browsing capability without killing the product. Anonymous sessions mean no authentication trail. Most organizations are still debating whether to deploy these tools at all, while attackers have already figured out how to live inside them.
 
 ---
 
