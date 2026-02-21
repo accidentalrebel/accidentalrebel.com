@@ -31,45 +31,54 @@ I have two bookmarklets. The assign one is trivial, so I'll share the closing sc
 
 ```javascript
 javascript:(function(){
-  const comment = prompt('Closing comment:');
-  if (!comment) return;
+  /* Opens the status change dialog */
+  document.getElementsByClassName(
+    "ext-details-header-item fxs-fxclick ext-dialog-target-caseStatus"
+  )[0].click();
 
-  // Clicks the assign-to-me button
-  const assignBtn = document.querySelector('[data-testid="assign-to-me"]');
-  if (assignBtn) assignBtn.click();
+  setTimeout(function(){
+    var mouseup_event = document.createEvent("MouseEvents");
+    mouseup_event.initEvent("mouseup", true, true);
+    var change_event = document.createEvent("HTMLEvents");
+    change_event.initEvent("change", true, true);
+    var dialog = document.getElementsByClassName("fxs-messagebox")[0];
 
-  // Waits for assignment, then sets status to closed
-  setTimeout(() => {
-    const statusDropdown = document.querySelector('[data-testid="incident-status"]');
-    if (statusDropdown) {
-      statusDropdown.click();
-      setTimeout(() => {
-        const closedOption = [...document.querySelectorAll('button, [role="option"]')]
-          .find(el => el.textContent.includes('Closed'));
-        if (closedOption) closedOption.click();
-      }, 300);
-    }
+    /* Selects "Closed" from the status list */
+    dialog.getElementsByClassName("fxc-listView-itemcontent")[2].click();
 
-    // Adds the closing comment
-    setTimeout(() => {
-      const commentBox = document.querySelector('[data-testid="comment-input"], textarea');
-      if (commentBox) {
-        commentBox.focus();
-        commentBox.value = comment;
-        commentBox.dispatchEvent(new Event('input', { bubbles: true }));
-      }
+    /* Prompts for closing reason and fills the textarea */
+    var text_area = dialog.getElementsByClassName(
+      "azc-textarea azc-formControl azc-input azc-validation-border "
+      + "msportalfx-tooltip-overflow msportalfx-font-regular"
+    )[0];
+    var reason = prompt("Closing reason", "");
+    text_area.value = reason;
+    text_area.dispatchEvent(change_event);
 
-      // Saves
-      setTimeout(() => {
-        const saveBtn = document.querySelector('[data-testid="save-button"]');
-        if (saveBtn) saveBtn.click();
-      }, 300);
-    }, 600);
-  }, 500);
+    /* Opens the classification dropdown, defaults to False Positive */
+    dialog.getElementsByClassName(
+      "azc-formControl azc-input fxc-dropdown-open "
+      + "msportalfx-tooltip-overflow azc-validation-border fxc-dropdown-input"
+    )[0].dispatchEvent(mouseup_event);
+    var classifications = dialog.getElementsByClassName(
+      "fxc-dropdown-option msportalfx-tooltip-overflow fxs-portal-hover"
+    );
+    var pick = prompt("Classification (1-4)", "2");
+    classifications[parseInt(pick) - 1].dispatchEvent(mouseup_event);
+
+    /* Clicks OK after a delay */
+    setTimeout(function(){
+      dialog.getElementsByClassName(
+        "fxc-base fxc-simplebutton"
+      )[0].click();
+    }, 1000);
+  }, 1000);
 })();
 ```
 
-It's not sophisticated. There's no API calls, no network access, no external dependencies. It just clicks the buttons I was already clicking, in the order I was already clicking them. The `setTimeout` chains are ugly but necessary because the UI renders asynchronously.
+To use as a bookmarklet, collapse this to a single line and save it as the URL of a browser bookmark.
+
+It's not sophisticated. There's no API calls, no network access, no external dependencies. It opens the status dialog, selects "Closed", prompts me for a reason and classification, then clicks OK. The same thing I was doing manually, just without the clicking around. The `setTimeout` calls are ugly but necessary because the portal renders asynchronously.
 
 One caveat though. If Microsoft changes Sentinel's layout or element structure (which they do), the script breaks. So you want someone on the team who can fix it. Thankfully, the script is simple enough that updating a selector takes a few minutes.
 
