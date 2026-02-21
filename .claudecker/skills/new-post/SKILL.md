@@ -5,6 +5,12 @@ description: |
   Use when: (1) user provides a draft .md file to publish, (2) user says "new post"
   or "publish this", (3) user wants to convert notes/drafts into a blog post.
   Accepts a file path argument.
+allowed-tools:
+  - Read
+  - Write
+  - Bash
+  - Glob
+  - Skill
 ---
 
 # New Blog Post
@@ -14,8 +20,10 @@ Convert draft markdown to a published Pelican blog post.
 ## Workflow
 
 1. Read the draft file (argument or ask user)
-2. Extract title from first H1 or filename
-3. Generate metadata header:
+2. Apply **/humanizer** to remove AI writing patterns (filler phrases, em-dash overuse, promotional language, etc.)
+3. Apply **/arebel-voice** to add the AccidentalRebel personality (direct, practical, shows "why it matters", specific numbers, honest about limitations)
+4. Extract title from first H1 or filename
+5. Generate metadata header:
    ```
    Title: <title>
    Date: <YYYY-MM-DD HH:MM>
@@ -23,10 +31,10 @@ Convert draft markdown to a published Pelican blog post.
    Tags: <from content, see tags below>
    Category: <programming|security|gamedev|tools>
    ```
-4. Write to `/workspace/content/<slug>.md`
-5. Delete original draft
-6. Build: `source venv/bin/activate && make html`
-7. Report result
+6. Write to `/workspace/content/<slug>.md`
+7. Delete original draft
+8. Build: `source venv/bin/activate && make html`
+9. Report result
 
 ## Tags
 
