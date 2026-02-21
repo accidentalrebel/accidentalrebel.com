@@ -2,34 +2,34 @@ Title: About
 Slug: about
 # Hey, I'm Karlo.
 
-Most people online know me as **AccidentalRebel**. I lead L2 security operations for a 24/7 SOC and head a content engineering squad at [TryHackMe](https://tryhackme.com), where we build hands-on security training used by 3M+ people worldwide.
+Most people online know me as **AccidentalRebel**. I work in security, build tools, and write about what I find.
 
-Before cybersecurity, I spent 10+ years building software — games, web apps, dev tools. That engineering background shapes how I approach detection engineering, malware analysis, and working with Microsoft Sentinel day to day.
+By day, I lead L2 security operations for a 24/7 SOC and run a content engineering team at [TryHackMe](https://tryhackme.com), where we build hands-on security training used by 3M+ people worldwide. Before cybersecurity, I spent 10+ years as a software engineer — games, web apps, dev tools, low-level systems. I think like an attacker, but I build for defenders.
+
+## What I Do
+
+I sit at the intersection of **security** and **AI**. That means:
+
+- **Detection engineering and threat hunting** — building and tuning detections in Microsoft Sentinel, investigating what the automated systems miss
+- **Security tool development** — I don't just use tools, I build them. [VGL4NT](https://github.com/accidentalrebel/vgl4nt) (ML-based malware classification), [shcode2exe](https://github.com/accidentalrebel/shcode2exe) (shellcode analysis), [Claudecker](https://github.com/accidentalrebel/claudecker) (AI agent containment), and others
+- **AI x Security** — exploring how AI changes both sides of the security equation, from AI-powered detection to AI as an attack surface
 
 ## What I Write About
 
-This blog is where I think out loud. I write about the things I'm actively working on or learning:
+Every week I publish a [Cybersecurity x AI News Roundup](/category/cybersecurity-x-ai-news-roundup.html) — curated analysis of where AI and security collide, with editorial commentary drawn from hands-on experience. No hype, no vendor pitches, just what matters and why.
 
-- AI applications in security
-- Developer tools and workflows
-- Malware analysis and reverse engineering
-- Detection engineering and threat hunting
-- x64 Assembly and low-level programming
-- Security tool development
-- CTF writeups
+I also write deep dives on malware analysis, reverse engineering, and the tools I build along the way. If you've taken a room at TryHackMe, we may have already crossed paths.
 
-I also write training content professionally at TryHackMe, so if you've taken a room there, we may have already crossed paths.
+## Background
 
-## Certifications
+- **Computer Engineer** by training — the hardware-to-software full stack
+- **10+ years in software engineering** before pivoting to security
+- **SANS GIAC GSLC** certified
+- **CISSP** (in progress, May 2026)
 
-- SANS GIAC GSLC
-- CISSP (in progress, May 2026)
+## Let's Talk
 
-## Elsewhere
+I'm always up for conversations about security engineering, AI in security, or interesting problems that need building.
 
 - [LinkedIn](https://www.linkedin.com/in/juan-karlo-licudine/)
 - [GitHub](https://github.com/accidentalrebel)
-
-## Say Hi
-
-I'm always up for a good conversation about security, AI, or interesting problems. [Reach out on LinkedIn](https://www.linkedin.com/in/juan-karlo-licudine/) — happy to connect.
