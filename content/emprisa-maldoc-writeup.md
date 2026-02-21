@@ -1,8 +1,8 @@
 Title: Emprisa Maldoc Writeup
 Date: 2021-04-30 05:58
 Slug: emprisa-maldoc-writeup.
-Tags: writeup
-Category: maldoc, writeup, ctf
+Tags: maldoc, writeup
+Category: ctf
 Image: emprisa-maldoc-writeup-01.png
 
 > This is a writeup for [Emprisa maldoc challenge](the-emprisa-maldoc-challenge) that I made for [CyberDefenders.org](https://cyberdefenders.org/). You can play it [here](https://cyberdefenders.org/labs/56).

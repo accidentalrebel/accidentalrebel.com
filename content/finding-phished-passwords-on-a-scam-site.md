@@ -1,8 +1,8 @@
 Title: Finding phished passwords on a scam site
 Date: 2021-05-01 20:56
 Slug: finding-phished-passwords-on-a-scam-site
-Tags: phishing
-Category: phishing, threat-hunting, osint
+Tags: phishing, threat-hunting, osint
+Category: security
 Image: finding-phished-passwords-from-a-scam-site-01.png
 
 Since my last post about [my investigations of a Facebook phishing site](investigating-an-fb-phishing-site), I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.
