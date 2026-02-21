@@ -2,6 +2,10 @@
 
 {% block title %}{{ category }} | {{ SITENAME }}{% endblock %}
 
+{% block extra_head %}
+<meta name="robots" content="noindex">
+{% endblock %}
+
 {% block content %}
 <article>
     <header class="article-header">
