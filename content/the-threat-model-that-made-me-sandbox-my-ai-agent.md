@@ -161,22 +161,13 @@ CLAUDE_PROFILE=work ./claudecker.sh run /path/to/project
 
 **Gap:** If you forget to set the profile, you're on the default volume, shared across all unprofilied sessions.
 
-## The honest gaps
 
-I don't want to oversell this. There are real limitations I haven't solved.
+## Isolation without crippling the tool
 
-**Docker is not a VM.** Container escapes exist. Docker provides process isolation, not hardware isolation. For most threat scenarios, the friction is enough. For nation-state adversaries, it isn't. I'm okay with that trade-off for daily coding work.
+After mapping out these threats and building mitigations for each one, the pattern is clear. An AI coding agent needs shell access, file access, and network access to be useful. That's what makes it powerful. You can't take those away without crippling it.
 
-**X11 mounting is a trust escalation.** Browser-based OAuth requires X11 socket forwarding. Mounting `/tmp/.X11-unix` into the container grants it potential access to keylogging and screen capture on the host display. I haven't found a better solution. Claude Code's URL-based auth flow means I rarely need it, but the mount is always there.
+Browsers figured this out with tabs. Package managers figured it out with install scripts. CI/CD figured it out with disposable containers. The answer isn't restricting what the agent can do. It's controlling the environment it does it in.
 
-**No skill signature verification.** Claude Code skills are `git clone`d at runtime from GitHub. If a skill repo gets compromised, the malicious code runs inside my container on next startup. I'm trusting GitHub account security for this, which is a known weak point.
+That's what Claudecker does. The agent gets full shell access, full file access, and configurable network access, but all inside a container where the blast radius is limited to the project directory. It can do everything it needs to do. It just can't touch anything it shouldn't.
 
-**The accumulated permissions problem.** Claude Code's own permission system (`settings.local.json`) accumulates tool approvals across sessions. Over time, the allow list grows broader than intended. `Bash(sudo:*)` sitting in my permissions file undermines the non-root user policy I set up in the container. I need to audit and reset this regularly.
-
-## Is this paranoia or prudence?
-
-I've covered the [growing attack surface of developer tools]({filename}/developer-tools-are-the-new-attack-surface.md) and how [AI agents themselves are becoming targets]({filename}/ai-agents-under-attack.md). The threats aren't theoretical anymore. Malicious VS Code extensions have already stolen source code from 1.5 million installs. Exposed Ollama servers are being actively exploited. LLMs have demonstrated autonomous multi-stage network attacks in research settings.
-
-AI coding agents are the most powerful tools most developers have ever used. They're also the most privileged. I'd rather spend a few extra seconds on container startup than find out the hard way what an uncontained agent can do.
-
-The implementation details are in the [companion post]({filename}/running-ai-agents-in-a-box.md). The [session retrospective skill]({filename}/building-a-session-retrospective-skill-for-claude-code.md) is another Claude Code workflow I built, focused on capturing lessons from each coding session.
+For the implementation details behind Claudecker, see the [companion post]({filename}/running-ai-agents-in-a-box.md). I also cover the [growing attack surface of developer tools]({filename}/developer-tools-are-the-new-attack-surface.md) and how [AI agents are becoming targets]({filename}/ai-agents-under-attack.md) in my security roundups.
