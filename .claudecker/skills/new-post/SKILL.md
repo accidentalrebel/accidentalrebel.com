@@ -30,7 +30,9 @@ Convert draft markdown to a published Pelican blog post.
    Slug: <kebab-case-title>
    Tags: <from content, see tags below>
    Category: <programming|security|gamedev|tools>
+   Summary: <meta description, under 160 chars>
    ```
+   **Summary rules:** Include the primary keyword someone would search for. Write in the author's direct voice. No filler ("discover how to", "this article covers", "in this post"). Make it compelling enough to click from a Google search result.
 6. Write to `/workspace/content/<slug>.md`
 7. Delete original draft
 8. Build: `source venv/bin/activate && make html`
