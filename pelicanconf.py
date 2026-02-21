@@ -26,7 +26,7 @@ LINKS = ()
 SOCIAL = (('LinkedIn', 'https://www.linkedin.com/in/juan-karlo-licudine/'),
           ('GitHub', 'https://github.com/accidentalrebel'))
 
-BLURB = "SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering."
+BLURB = "Defense-first security engineer who builds tools and thinks like an attacker — now focused on where AI and security collide."
 
 DEFAULT_PAGINATION = 10
 
