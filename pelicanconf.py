@@ -23,7 +23,8 @@ AUTHOR_FEED_RSS = None
 LINKS = ()
 
 # Social widget
-SOCIAL = (('LinkedIn', 'https://www.linkedin.com/in/juan-karlo-licudine/'),
+SOCIAL = (('Email', 'mailto:karlo@accidentalrebel.com'),
+          ('LinkedIn', 'https://www.linkedin.com/in/juan-karlo-licudine/'),
           ('GitHub', 'https://github.com/accidentalrebel'))
 
 BLURB = "Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide."
