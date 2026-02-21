@@ -67,6 +67,7 @@ body {
     border-image: linear-gradient(to bottom, transparent, var(--color-accent), transparent) 1;
     padding-left: calc(var(--spacing-unit) * 2);
     padding-right: calc(var(--spacing-unit) * 2);
+    min-width: 0;
 }
 
 /* Sidebar */
@@ -365,7 +366,7 @@ h3 {
     background-color: #1a1b26;
     border-radius: 8px;
     margin-bottom: calc(var(--spacing-unit) * 1.5);
-    overflow: hidden;
+    overflow-x: auto;
 }
 
 .codehilite pre {
