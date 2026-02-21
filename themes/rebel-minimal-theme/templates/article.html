@@ -120,6 +120,22 @@
 </section>
 {% endif %}
 
+{% if BUTTONDOWN_USERNAME %}
+<section class="newsletter-cta">
+    <h3>Get posts like this in your inbox</h3>
+    <p>Security research, malware analysis, and tools — no spam.</p>
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/{{ BUTTONDOWN_USERNAME }}"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+    >
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+{% endif %}
+
 {% if SITEURL and article.status != "draft" %}
 <section class="comments">
     <script src="https://giscus.app/client.js"

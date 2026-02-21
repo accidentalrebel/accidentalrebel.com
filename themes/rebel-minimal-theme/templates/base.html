@@ -79,6 +79,20 @@
                             {% endfor %}
                         </ul>
                         {% endif %}
+                        {% if BUTTONDOWN_USERNAME %}
+                        <div class="sidebar-newsletter">
+                            <h4>Newsletter</h4>
+                            <form
+                                action="https://buttondown.com/api/emails/embed-subscribe/{{ BUTTONDOWN_USERNAME }}"
+                                method="post"
+                                target="popupwindow"
+                                class="sidebar-newsletter-form"
+                            >
+                                <input type="email" name="email" placeholder="your@email.com" required />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                        {% endif %}
                     </div>
                 </aside>
             </div>

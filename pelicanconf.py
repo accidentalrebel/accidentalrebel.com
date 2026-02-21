@@ -70,3 +70,5 @@ TWITTER_CARD_SITE_ID = 'https://twitter.com/accidentalrebel'  # The site's Twitt
 TWITTER_CARD_CREATOR = '@accidentalrebel'  # Your twitter handle like @monkmartinez
 TWITTER_CARD_CREATOR_ID = 'accidentalrebel'  # The site creator's id
 GRAVARTAR_URL = ''
+
+BUTTONDOWN_USERNAME = 'accidentalrebel'
