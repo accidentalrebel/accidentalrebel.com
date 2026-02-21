@@ -13,18 +13,19 @@
             <div class="article-meta">
                 <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
                 {% if article.readtime %}
-                <span>•</span>
+                <span>&bull;</span>
                 <span>{{ article.readtime.minutes }} min read</span>
                 {% endif %}
                 {% if article.category %}
-                <span>•</span>
+                <span>&bull;</span>
                 <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
                 {% endif %}
             </div>
         </header>
 
         <div class="article-content">
-            {{ article.content }}
+            {{ article.summary }}
+            <a href="{{ SITEURL }}/{{ article.url }}" class="read-more">Read more &rarr;</a>
         </div>
 
         {% if article.tags %}

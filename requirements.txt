@@ -2,3 +2,4 @@ pelican
 markdown
 invoke
 ghp-import
+pelican-sitemap

@@ -13,6 +13,7 @@ So I built the [session-retrospective](https://github.com/accidentalrebel/claude
 ## What it does
 
 The skill analyzes the current Claude session and generates a markdown summary covering:
+
 - What we set out to do
 - Problems encountered and how they were solved
 - Mistakes made and corrections

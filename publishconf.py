@@ -18,8 +18,11 @@ RELATIVE_URLS = True
 FEED_ALL_ATOM = 'feeds/all.atom.xml'
 CATEGORY_FEED_ATOM = 'feeds/{slug}.atom.xml'
 
-STATIC_PATHS = ['images', 'extras/CNAME']
-EXTRA_PATH_METADATA = {'extras/CNAME': {'path': 'CNAME'},}
+STATIC_PATHS = ['images', 'extras/CNAME', 'extras/robots.txt']
+EXTRA_PATH_METADATA = {
+    'extras/CNAME': {'path': 'CNAME'},
+    'extras/robots.txt': {'path': 'robots.txt'},
+}
 
 SUMMARY_MAX_LENGTH = 150
 DELETE_OUTPUT_DIRECTORY = True

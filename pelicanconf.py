@@ -20,20 +20,20 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
-# Blogroll
-LINKS = (('My dev blog', 'http://www.accidentalrebel.com/'),
-         ('My maker blog', 'https://www.rebelmaker.me/'))
+LINKS = ()
 
 # Social widget
-SOCIAL = (('Twitter', 'https://www.twitter.com/accidentalrebel'),
-          ('Github','https://github.com/accidentalrebel'),
-          ('YouTube', 'https://www.youtube.com/user/AccidentalRebelGames'))
+SOCIAL = (('LinkedIn', 'https://www.linkedin.com/in/juan-karlo-licudine/'),
+          ('GitHub', 'https://github.com/accidentalrebel'))
 
-BLURB = "Karlo is a programmer for 10+ years who switched to cyber security. He is currently working as a L2 SOC Analyst and is focusing on malware reverse engineering and development."
+BLURB = "SOC leader and content engineer at TryHackMe. Writing about AI, security tools, malware analysis, and reverse engineering."
 
-DEFAULT_PAGINATION = 3
+DEFAULT_PAGINATION = 10
 
 DISPLAY_CATEGORIES_ON_MENU = False
+DISPLAY_PAGES_ON_MENU = True
+
+MENUITEMS = (('Newsletter', '/category/newsletter.html'),)
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True
@@ -49,8 +49,13 @@ MARKDOWN = {
         }
     }
 
-PLUGIN_PATHS = ['plugins'] #, '../twitter_card/']
-# PLUGINS = ['twitter_card',]
+PLUGINS = ['sitemap']
+
+SITEMAP = {
+    'format': 'xml',
+    'priorities': { 'articles': 0.7, 'indexes': 0.5, 'pages': 0.3 },
+    'changefreqs': { 'articles': 'monthly', 'indexes': 'daily', 'pages': 'monthly' }
+}
 
 #=============
 # Twitter Card

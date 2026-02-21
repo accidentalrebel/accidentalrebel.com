@@ -2,11 +2,13 @@
 
 {% block title %}{{ article.title }} | {{ SITENAME }}{% endblock %}
 
+{% block canonical %}{{ article.url }}{% endblock %}
+
+{% block meta_description %}
+<meta name="description" content="{{ article.summary|striptags|truncate(160) }}">
+{% endblock %}
+
 {% block extra_head %}
-    {% if article.description %}
-    <meta name="description" content="{{ article.description }}">
-    {% endif %}
-    
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
     <meta property="og:url" content="{{ SITEURL }}/{{ article.url }}">
@@ -28,6 +30,33 @@
     {% if article.og_image %}
     <meta property="twitter:image" content="{{ SITEURL }}/{{ article.og_image }}">
     {% endif %}
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "{{ article.title }}",
+        "datePublished": "{{ article.date.isoformat() }}",
+        {% if article.modified %}"dateModified": "{{ article.modified.isoformat() }}",{% endif %}
+        "author": { "@type": "Person", "name": "{{ AUTHOR }}" },
+        "publisher": { "@type": "Person", "name": "{{ AUTHOR }}" },
+        "url": "{{ SITEURL }}/{{ article.url }}",
+        "description": "{{ article.summary|striptags|truncate(160) }}"
+        {% if article.og_image %},"image": "{{ SITEURL }}/{{ article.og_image }}"{% endif %}
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ SITEURL }}/" },
+            { "@type": "ListItem", "position": 2, "name": "{{ article.category }}", "item": "{{ SITEURL }}/{{ article.category.url }}" },
+            { "@type": "ListItem", "position": 3, "name": "{{ article.title }}" }
+        ]
+    }
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -37,15 +66,15 @@
         <div class="article-meta">
             <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
             {% if article.modified %}
-            <span>•</span>
+            <span>&bull;</span>
             <span>Updated: {{ article.locale_modified }}</span>
             {% endif %}
             {% if article.readtime %}
-            <span>•</span>
+            <span>&bull;</span>
             <span>{{ article.readtime.minutes }} min read</span>
             {% endif %}
             {% if article.category %}
-            <span>•</span>
+            <span>&bull;</span>
             <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
             {% endif %}
         </div>
@@ -78,7 +107,7 @@
             <div class="article-meta">
                 <time>{{ related.locale_date }}</time>
                 {% if related.category %}
-                <span>•</span>
+                <span>&bull;</span>
                 <a href="{{ SITEURL }}/{{ related.category.url }}">{{ related.category }}</a>
                 {% endif %}
             </div>

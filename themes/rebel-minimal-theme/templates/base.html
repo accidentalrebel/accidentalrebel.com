@@ -4,30 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
-    
+
+    {% block meta_description %}
+    <meta name="description" content="{{ BLURB }}">
+    {% endblock %}
+
+    <link rel="canonical" href="{{ SITEURL }}/{% block canonical %}{% endblock %}">
+
     {% if FEED_ALL_ATOM %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}" type="application/atom+xml" rel="alternate" title="{{ SITENAME }} Atom Feed" />
     {% endif %}
     {% if FEED_ALL_RSS %}
     <link href="{{ FEED_DOMAIN }}/{{ FEED_ALL_RSS }}" type="application/rss+xml" rel="alternate" title="{{ SITENAME }} RSS Feed" />
     {% endif %}
-    
+
     <link rel="stylesheet" href="{{ SITEURL }}/theme/css/main.css">
-    
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "{{ AUTHOR }}",
+        "url": "{{ SITEURL }}",
+        "sameAs": [{% for name, link in SOCIAL %}"{{ link }}"{% if not loop.last %}, {% endif %}{% endfor %}]
+    }
+    </script>
+
     {% block extra_head %}{% endblock %}
 </head>
 <body>
+    <div class="rebel-stripe"></div>
     <div class="progress-bar" id="progress"></div>
-    
+
     <header>
-        <div class="container">
+        <div class="container-wide">
             <nav>
-                <a href="{{ SITEURL }}/" class="site-title">{{ SITENAME }}</a>
+                <a href="{{ SITEURL }}/" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
                     <li><a href="{{ SITEURL }}/archives.html">Archives</a></li>
                     <li><a href="{{ SITEURL }}/categories.html">Categories</a></li>
                     <li><a href="{{ SITEURL }}/tags.html">Tags</a></li>
+                    {% if MENUITEMS %}
+                        {% for title, link in MENUITEMS %}
+                            <li><a href="{{ SITEURL }}{{ link }}">{{ title }}</a></li>
+                        {% endfor %}
+                    {% endif %}
                     {% if DISPLAY_PAGES_ON_MENU %}
                         {% for p in pages %}
                             <li><a href="{{ SITEURL }}/{{ p.url }}">{{ p.title }}</a></li>
@@ -38,22 +60,50 @@
         </div>
     </header>
 
-    <!-- Comic strip divider -->
-    <div class="comic-container">
-        <div class="comic-strip"></div>
-    </div>
-
     <main>
-        <div class="container">
-            {% block content %}{% endblock %}
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
+                    {% block content %}{% endblock %}
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="{{ SITEURL }}/theme/images/avatar.png" alt="{{ AUTHOR }}" class="sidebar-avatar">
+                        <h3 class="sidebar-name">{{ AUTHOR }}</h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">{{ BLURB }}</p>
+                        {% if SOCIAL %}
+                        <ul class="sidebar-social">
+                            {% for name, link in SOCIAL %}
+                            <li><a href="{{ link }}" target="_blank" rel="noopener">{{ name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </aside>
+            </div>
         </div>
     </main>
 
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; {{ AUTHOR }}. {{ BLURB }}</span>
+                {% if SOCIAL %}
+                <ul class="footer-links">
+                    {% for name, link in SOCIAL %}
+                    <li><a href="{{ link }}" target="_blank" rel="noopener">{{ name }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </footer>
+
     <script src="{{ SITEURL }}/theme/js/main.js"></script>
     {% block extra_scripts %}{% endblock %}
-    
+
     {% if GOOGLE_ANALYTICS %}
-    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ GOOGLE_ANALYTICS }}"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
