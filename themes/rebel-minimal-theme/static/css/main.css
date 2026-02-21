@@ -204,6 +204,21 @@ article {
     margin-bottom: calc(var(--spacing-unit) * 4);
 }
 
+.article-category-label {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.25rem;
+}
+
+.article-category-label:hover {
+    text-decoration: underline;
+}
+
 .article-header {
     margin-bottom: calc(var(--spacing-unit) * 2);
 }

@@ -7,6 +7,9 @@
     {% for article in articles_page.object_list %}
     <article class="post-item">
         <header class="article-header">
+            {% if article.category %}
+            <a href="{{ SITEURL }}/{{ article.category.url }}" class="article-category-label">{{ article.category }}</a>
+            {% endif %}
             <h2 class="post-title">
                 <a href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a>
             </h2>
@@ -15,10 +18,6 @@
                 {% if article.readtime %}
                 <span>&bull;</span>
                 <span>{{ article.readtime.minutes }} min read</span>
-                {% endif %}
-                {% if article.category %}
-                <span>&bull;</span>
-                <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
                 {% endif %}
             </div>
         </header>

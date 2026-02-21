@@ -62,6 +62,9 @@
 {% block content %}
 <article>
     <header class="article-header">
+        {% if article.category %}
+        <a href="{{ SITEURL }}/{{ article.category.url }}" class="article-category-label">{{ article.category }}</a>
+        {% endif %}
         <h1>{{ article.title }}</h1>
         <div class="article-meta">
             <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }}</time>
@@ -72,10 +75,6 @@
             {% if article.readtime %}
             <span>&bull;</span>
             <span>{{ article.readtime.minutes }} min read</span>
-            {% endif %}
-            {% if article.category %}
-            <span>&bull;</span>
-            <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category }}</a>
             {% endif %}
         </div>
     </header>
