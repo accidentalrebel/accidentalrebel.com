@@ -22,6 +22,12 @@
             </div>
         </header>
 
+        {% if article.image %}
+        <a href="{{ SITEURL }}/{{ article.url }}" class="post-image-link">
+            <img src="{{ SITEURL }}/images/{{ article.image }}" alt="{{ article.title }}" class="post-image" loading="lazy">
+        </a>
+        {% endif %}
+
         <div class="article-content">
             {{ article.summary }}
             <a href="{{ SITEURL }}/{{ article.url }}" class="read-more">Read more &rarr;</a>

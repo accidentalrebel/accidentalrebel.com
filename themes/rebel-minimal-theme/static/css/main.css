@@ -415,6 +415,20 @@ h3 {
     border-radius: 8px;
 }
 
+.post-image-link {
+    display: block;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: var(--spacing-unit);
+}
+
+.post-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
 .article-content a,
 .article-meta a {
     color: var(--color-accent);
