@@ -5,9 +5,7 @@ Tags: security, ai, claude-code, docker, tools
 Category: Security
 Summary: AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.
 
-I wrote previously about [Claudecker]({filename}/running-ai-agents-in-a-box.md), my Docker wrapper for Claude Code. That post covered how it works. This one covers why I built it.
-
-TLDR: AI coding agents have shell access to your machine. They can run commands, modify files, and reach the network. I wanted to map out the threat model before letting one anywhere near my projects.
+> **TLDR:** AI coding agents have shell access to your machine. They can run commands, modify files, and reach the network. I wanted to map out the threat model before letting one anywhere near my projects.
 
 ## What you're actually running
 
