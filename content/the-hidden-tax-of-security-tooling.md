@@ -1,5 +1,5 @@
 Title: The hidden tax of security tooling: why your analysts are clicking instead of analyzing
-Date: 2026-02-21 10:00
+Date: 2026-02-23 20:00
 Slug: the-hidden-tax-of-security-tooling
 Tags: security, tools
 Category: security
