@@ -3,6 +3,7 @@ Date: 2021-02-26 07:34
 Slug: introducing-shcode2exe
 Tags: re, tools, malware_analysis
 Category: Tools
+Summary: shcode2exe converts raw shellcode blobs or strings into debuggable executables targeting 32 or 64-bit Windows, with no Wine dependency when running on Linux.
 
 **[Edit: shcode2exe is [now part of Remnux](https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe)]**
 

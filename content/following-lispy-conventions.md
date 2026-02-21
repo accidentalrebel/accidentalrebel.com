@@ -1,8 +1,9 @@
 Title: #4 - Following Lispy conventions
 Date: 2020-05-15 07:00
 Slug: following-lispy-conventions
-Tags: dev, game_engine, 
+Tags: dev, game_engine,
 Category: Misc
+Summary: Applying Scheme naming conventions (?, !, %, *) to a game engine's scripting API and how it improved code readability with minimal effort.
 
    ![following-lispy-conventions-01]({attach}/images/following-lispy-conventions-01.png)
 

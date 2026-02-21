@@ -3,6 +3,7 @@ Date: 2017-04-19 13:17
 Slug: converting-org-journal-entry-to-org-page-post
 Tags: emacs org-mode
 Category: Misc
+Summary: An Emacs Lisp function that converts an org-journal entry at point into a new org-page blog post, avoiding manual copy-paste between buffers.
 
 Since my recent switch from Wordpress to [org-page](https://github.com/kelvinh/org-page) I wanted a way to convert my org-journal entries to org-page posts. Instead of copying each entry by hand and pasting to an org-page new page buffer I decided to make an elisp code that would do it automatically which can be seen below:
 

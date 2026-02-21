@@ -1,8 +1,9 @@
 Title: #5 - Switching from C/C++ to C
 Date: 2020-05-19 17:59
 Slug: switching-from-c-c---to-c
-Tags: dev, game_engine, 
+Tags: dev, game_engine,
 Category: Misc
+Summary: Dropping C++ from my custom game engine in favor of pure C, and the cross-platform bugs that surfaced when C++ features I didn't notice were being used.
 
    After the recent changes to the [lisp side of my engine]({filename}/following-lispy-conventions.md), I took some time to review the C/C++ side. You'll notice that I have written C/C++ and that's because my codebase uses both of them. 
 

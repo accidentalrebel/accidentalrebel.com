@@ -3,6 +3,7 @@ Date: 2017-12-05 12:56
 Slug: chef-wars-postmortem--what-went-right-having-a-universe-file
 Tags: chefwars, gamedev, mindcake, postmortem
 Category: Misc
+Summary: How keeping all Chef Wars game data in a single "Universe" spreadsheet made prototyping, iteration, and live patching faster across two years of development.
 
 **Note: This is from a [series of articles](http://www.accidentalrebel.com/tags/chefwars_postmortem/) that outlines the things I've learned while making [Chef Wars](http://mindcakegames.com/) for 2+ years.**
 

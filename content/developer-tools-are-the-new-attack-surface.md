@@ -4,6 +4,7 @@ Slug: developer-tools-are-the-new-attack-surface
 Tags: ai, security, cybersecurity-x-ai
 Category: Cybersecurity x AI News Roundup
 Image: developer-tools-are-the-new-attack-surface.png
+Summary: VS Code AI extensions with 1.5M installs stealing source code, 175K Ollama servers exposed globally, and AI running autonomous multi-stage network attacks.
 
 ![Developer Tools Are the New Attack Surface]({attach}/images/developer-tools-are-the-new-attack-surface.png)
 *Image made by Gemini*

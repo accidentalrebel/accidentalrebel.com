@@ -3,6 +3,7 @@ Date: 2023-05-20 06:46
 Slug: classifying-more-with-less-new-vgl4nt-update
 Tags: packers malware machine_learning ml update vgl4nt
 Image: adding-automation-to-blue-jupyter-malware-notebook-01.png
+Summary: How I doubled VGL4NT's malware packer classification capacity without extra GPU by using task decomposition to run multiple specialized models in parallel.
 
 ## TLDR: 
 * Packed malware machine learning classifier can only previously identify 10 packers

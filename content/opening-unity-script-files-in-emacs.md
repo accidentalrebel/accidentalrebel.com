@@ -3,6 +3,7 @@ Date: 2018-01-24 14:32
 Slug: opening-unity-script-files-in-emacs
 Tags: emacs unity
 Category: Misc
+Summary: How to open Unity script files in Emacs with correct line numbers using the OnOpenAssetAttribute callback and emacsclient.
 
 ![01](https://i.imgur.com/9XWvvi0.png)
 

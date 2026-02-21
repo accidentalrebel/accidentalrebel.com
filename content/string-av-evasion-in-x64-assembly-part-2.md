@@ -3,6 +3,7 @@ Date: 2022-07-09 12:11
 Slug: string-av-evasion-in-x64-assembly-part-2
 Tags: evasion, assembly, av
 Image: string-anti-virus-evasion-in-x64-assembly-part-2-07.png
+Summary: How to hide API call strings from antivirus detection using LoadLibrary and GetProcAddress for runtime DLL loading, with a full x64 assembly implementation.
 
 In [my last blog post](string-av-evasion-in-x64-assembly-part-1), I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.
 

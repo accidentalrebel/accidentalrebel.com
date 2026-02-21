@@ -3,6 +3,7 @@ Date: 2020-10-01 07:19
 Slug: my-experience-manufacturing-printed-circuit-boards
 Tags: pcbs, electronics
 Category: Misc
+Summary: First-time experience ordering custom PCBs from PCBWay using the ESPBoy gerber files — the process, quality, and what comes next for future board designs.
 
    I've done a lot of electronics projects already, all of them were painstakingly hand-soldered on a perfboard. I actually like this approach for quick prototyping, and plus, I've also grown fond of how "raw" it looks like. In spite of this, I've always been curious and interested in having my own printed PCB. I remember designing one for my [TIRO vibrating watch](https://hackaday.io/project/164144-tiro-vibrating-watch/log/161430-current-state-and-next-steps) but I never pushed through with it because I wasn't confident with what I've made.
    

@@ -4,6 +4,7 @@ Slug: your-ai-assistant-might-be-working-for-someone-else
 Tags: ai, security, cybersecurity-x-ai
 Category: Cybersecurity x AI News Roundup
 Image: your-ai-assistant-might-be-working-for-someone-else.png
+Summary: Copilot and Grok repurposed as C2 channels, Cline supply chain attack installed AI agents on 4,000 dev machines, and AI found 12 zero-days in OpenSSL.
 
 ![Your AI Assistant Might Be Working for Someone Else]({attach}/images/your-ai-assistant-might-be-working-for-someone-else.png)
 *Image made by Gemini*

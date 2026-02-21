@@ -4,6 +4,7 @@ Slug: finding-phished-passwords-on-a-scam-site
 Tags: phishing, threat-hunting, osint
 Category: Security
 Image: finding-phished-passwords-from-a-scam-site-01.png
+Summary: How I found a publicly accessible victims.txt file storing phished Facebook credentials on a 000webhost server and what happened when I reported it.
 
 Since my last post about [my investigations of a Facebook phishing site](investigating-an-fb-phishing-site), I have received several messages from friends asking me to check out other suspected phishing/scam sites. One of the most alarming out of them was this one where I was able to find the file where the scammer stores the phished usernames and passwords.
 

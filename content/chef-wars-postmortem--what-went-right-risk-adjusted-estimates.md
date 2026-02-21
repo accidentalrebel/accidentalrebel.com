@@ -3,6 +3,7 @@ Date: 2017-12-10 23:33
 Slug: chef-wars-postmortem--what-went-right-risk-adjusted-estimates
 Tags: chefwars, gamedev, mindcake, postmortem
 Category: Misc
+Summary: A risk-adjusted estimation system that pairs time estimates with confidence levels to produce reliable schedules — used to ship Chef Wars on time.
 
 **Note: This is from a [series of articles](http://www.accidentalrebel.com/tags/chefwars_postmortem/) that outlines the things I've learned while making [Chef Wars](http://mindcakegames.com/) for 2+ years.**
 

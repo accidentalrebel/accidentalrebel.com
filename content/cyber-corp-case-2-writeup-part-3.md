@@ -4,6 +4,7 @@ Slug: cyber-corp-case-2-writeup-part-3
 Tags: threat-hunting, cyberdefenders
 Category: Threat Hunting
 Image: cyber-corp-case-2-writeup-part-3-10.png
+Summary: CyberCorp Case 2 part 3 — certutil download, LSASS dumping, WMI lateral movement to a domain controller, and tracking the second reverse shell C2 address.
 
 The [second case of the CyberCorp challenge](https://cyberdefenders.org/labs/75) on [CyberDefenders.org](https://cyberdefenders.org/) is all about threat hunting. Created by [@BlackMatter23](https://twitter.com/BlackMatter23) and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.
 

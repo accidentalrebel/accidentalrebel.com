@@ -3,6 +3,7 @@ Date: 2020-06-16 05:58
 Slug: chicken-scheme-ffi-examples
 Tags: programming, dev, research, code
 Category: Misc
+Summary: Practical Chicken Scheme FFI examples covering foreign-lambda, struct accessors, inline C code, memory management, and enum bindings for C interop.
 
    I'm currently working on refactoring the FFI implementation for [the Rebel Game Engine](https://github.com/accidentalrebel/rebel-game-engine). It was previously written using the [Bind chicken egg](http://wiki.call-cc.org/eggref/5/bind) but I wanted to have more control over the implementation by using the low level foreign functions. 
    

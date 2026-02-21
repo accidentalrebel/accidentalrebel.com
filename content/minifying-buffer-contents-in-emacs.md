@@ -1,8 +1,9 @@
 Title: Converting org-journal entry to org-page post
 Date: 2017-04-19 13:17
 Slug: minifying-buffer-contents-in-emacs
-Tags: emacs 
+Tags: emacs
 Category: Misc
+Summary: A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.
 
 I needed a way to minify JSON files from Emacs so I made the short function below.
 

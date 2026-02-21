@@ -4,6 +4,7 @@ Slug: making-a-rat
 Tags: malware, dev
 Category: Malware Analysis
 Image: making-a-rat-01.png
+Summary: Building RATwurst, a RAT in C and Python, with runtime DLL loading, socket comms, anti-sandbox checks, and basic AV evasion — for educational purposes only.
 
 A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.
 

@@ -3,6 +3,7 @@ Date: 2017-12-06 00:02
 Slug: chef-awrs-postmortem--what-went-wrong-optimizing-too-early-and-too-late
 Tags: chefwars, gamedev, mindcake, postmortem
 Category: Misc
+Summary: Lessons from Chef Wars on premature optimization: why asking WHAT and HOW to optimize matters more than asking WHEN, after making both mistakes in production.
 
 **Note: This is from a [series of articles](http://www.accidentalrebel.com/tags/chefwars_postmortem/) that outlines the things I've learned while making [Chef Wars](http://mindcakegames.com/) for 2+ years.**
 

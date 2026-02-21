@@ -3,6 +3,7 @@ Date: 2026-02-01 12:00
 Slug: building-a-session-retrospective-skill-for-claude-code
 Tags: claude-code, tools, ai, programming
 Category: Misc
+Summary: A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.
 
 I've been using Claude Code for a while now, and I noticed a pattern: at the end of a productive session, I'd have this vague sense of "we figured out some useful stuff" but no concrete record of what those lessons actually were.
 

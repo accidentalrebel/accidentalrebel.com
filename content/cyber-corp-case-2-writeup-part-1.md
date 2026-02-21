@@ -4,6 +4,7 @@ Slug: threat-hunting-from-home-cyber-corp-wmi-persistence
 Tags: threat-hunting, cyberdefenders
 Category: Threat Hunting
 Image: cyber-corp-case-2-writeup-01.png
+Summary: CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.
 
 The [second case of the CyberCorp challenge](https://cyberdefenders.org/labs/75) on [CyberDefenders.org](https://cyberdefenders.org/) is all about threat hunting. Created by [@BlackMatter23](https://twitter.com/BlackMatter23) and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.
 

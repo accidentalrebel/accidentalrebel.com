@@ -4,6 +4,7 @@ Slug: cyber-corp-case-2-writeup-part-2
 Tags: threat-hunting, cyberdefenders
 Category: Threat Hunting
 Image: cyber-corp-case-2-writeup-part-2-03.png
+Summary: CyberCorp Case 2 part 2 — decoding a base64 gzipped registry payload, tracing PID spoofing in PowerShell, and identifying the reverse shell C2 IP.
 
 The [second case of the CyberCorp challenge](https://cyberdefenders.org/labs/75) on [CyberDefenders.org](https://cyberdefenders.org/) is all about threat hunting. Created by [@BlackMatter23](https://twitter.com/BlackMatter23) and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.
 

@@ -3,6 +3,7 @@ Date: 2022-07-08 12:11
 Slug: string-av-evasion-in-x64-assembly-part-1
 Tags: evasion, assembly, av
 Image: string-anti-virus-evasion-in-x64-assembly-part-1-04.png
+Summary: How to hide strings from antivirus detection by placing them on the stack instead of the .data segment, demonstrated in C and x64 Windows assembly.
 
 One of the features I implemented for my [Remote Access Tool](https://github.com/accidentalrebel/RATwurst) was an anti-virus evasion capability in the form of strings obfuscation. It wouldn't fool an EDR or a reverse engineer but it was quick to implement so I added it. 
 

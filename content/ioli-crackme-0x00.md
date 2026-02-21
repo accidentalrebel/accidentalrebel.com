@@ -3,6 +3,7 @@ Date: 2021-02-16 21:55
 Slug: ioli-crackme-0x00
 Tags: re, crackme
 Category: Reverse Engineering
+Summary: IOLI Crackme 0x00 walkthrough — finding the hardcoded password in IDA Pro and patching the binary to accept any input by changing a jz opcode to jmp.
 
 I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.
 

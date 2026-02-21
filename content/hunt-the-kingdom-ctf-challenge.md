@@ -1,8 +1,9 @@
 Title: Hunt the Kingdom CTF Challenge
 Date: 2020-10-05 11:13
 Slug: hunt-the-kingdom-ctf-challenge
-Tags: ctf, cybersecurity, 
+Tags: ctf, cybersecurity,
 Category: CTF
+Summary: How I won the GuideM Hunt the Kingdom blue team CTF — strategy, preparation, and the high-stakes final minutes that came down to four unsolved questions.
 FacebookImage: https://www.accidentalrebel.com/images/hunt-the-kingdom-ctf-challenge-04.PNG
 
 > TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more

@@ -4,6 +4,7 @@ Slug: new-tool-preview-vattack
 Tags: tools, cybersecurity
 Category: Tools
 Image: new-tool-preview-vattack-01.png
+Summary: vATT&CK is a visual relationship mapper for MITRE ATT&CK that shows linked malware, threat groups, mitigations, and subtechniques in a single interactive graph.
 
 I have released a new cybersecurity-related tool called [vATT&CK (Visual ATT&CK)](https://github.com/accidentalrebel/vATTACK). It is a relationship visualizer for the Mitre ATT&CK framework.
 

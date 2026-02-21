@@ -4,6 +4,7 @@ Slug: the-emprisa-maldoc-challenge
 Tags: maldoc, ctf
 Category: CTF
 Image: the-emprisa-maldoc-challenge-01.png
+Summary: How I turned a real-world malicious document exploit into the Emprisa Maldoc CTF on CyberDefenders — 14 questions targeting intermediate maldoc analysts.
 
 I was inspired to make my own CTF challenge after finishing [Maldoc101]({filename}/maldoc101-writeup-part-1.md) found at [Cyberdefenders.org](https://cyberdefenders.org/). The challenge I made is called [Emprisa Maldoc](https://cyberdefenders.org/labs/56) and it is now up on their website. 
 

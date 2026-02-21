@@ -3,6 +3,7 @@ Date: 2020-08-01 11:07
 Slug: study-notes--mac-spoofing
 Tags: spoofing, cybersecurity
 Category: Misc
+Summary: Study notes on MAC spoofing — what it is, legitimate versus illegitimate uses, and how to change your MAC address using ifconfig or macchanger on Linux.
 
 	Study notes are my personal research notes on certain topics that interests me.
 

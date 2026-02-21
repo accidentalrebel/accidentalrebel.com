@@ -4,6 +4,7 @@ Slug: investigating-an-fb-phishing-site
 Tags: phishing, threat-hunting, osint
 Category: Security
 Image: checking-the-fb-phishing-site-01.png
+Summary: OSINT into a Facebook phishing campaign spreading via friend-tagging — separate hosting domains, Vietnamese code traces, and possible Phishing-as-a-Service.
 
 Last April 21, people were posting warnings about a suspicious Facebook post where your account will supposedly get hacked when you click it. From the discussions, I gathered that it is a classic phishing site scam. A very effective one too, because as soon as an account gets compromised the attacker logs in and tags the friends in the account allowing it to spread further. The news of this got big that even the PH CERT issued [a security advisory on it](https://www.facebook.com/Ncertgovph/posts/1879686332199270).
 

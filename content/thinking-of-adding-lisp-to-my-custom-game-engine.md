@@ -1,8 +1,9 @@
 Title: #1 - Thinking of adding Lisp to my custom game engine
 Date: 2020-05-03 11:19
 Slug: thinking-of-adding-lisp-to-my-custom-game-engine
-Tags: dev, lisp, engine, 
+Tags: dev, lisp, engine,
 Category: Misc
+Summary: Exploring Chibi-Scheme as a scripting layer for a custom C game engine, and why adding Lisp scripting means rethinking the object-oriented architecture.
 FacebookImage: https://www.accidentalrebel.com/images/thinking-of-adding-lisp-to-my-custom-game-engine-01.jpg
 
    I've long wondered if I should add a scripting language to [my game engine](https://github.com/accidentalrebel/Rebel-Game-Engine). I know that most game engines could do without such a feature but I just recently came across [Chibi-Scheme](https://github.com/ashinn/chibi-scheme), a library that allows the use of Scheme lisp scripting for C programs. 

@@ -1,8 +1,9 @@
 Title: #2 - Implemented basic Scheme scripting for Rebel Game Engine
 Date: 2020-05-07 21:35
 Slug: implemented-basic-scheme-scripting-for-rebel-game-engine
-Tags: lisp, game_engine, dev, 
+Tags: lisp, game_engine, dev,
 Category: Misc
+Summary: Adding Chicken Scheme scripting to a C game engine — switching to a functional design, wiring up the FFI, and navigating garbage collector memory management.
 
    When I first learned about [Chibi](http://synthcode.com/wiki/chibi-scheme), an embeddable scheme that allows scripting on C programs, I immediately tried it out on my game engine. I was able to make it work with my existing APIs but I kept on running against segfaults and memory issues. The community was helpful in answering my questions as I tried to track down the cause of the bug, but I eventually gave up out of frustration.
 

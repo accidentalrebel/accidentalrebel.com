@@ -4,6 +4,7 @@ Slug: building-my-virtual-cybersecurity-home-lab
 Tags: malware, dev
 Category: Malware Analysis
 Image: building-my-virtual-cybersecurity-home-lab-01.png
+Summary: How I built a virtual cybersecurity home lab with pfSense, Metasploitable, Kali, Splunk, Snort, and a dedicated malware analysis network using Remnux.
 
 I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. 
 

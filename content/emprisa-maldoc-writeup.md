@@ -4,6 +4,7 @@ Slug: emprisa-maldoc-writeup.
 Tags: maldoc, writeup
 Category: CTF
 Image: emprisa-maldoc-writeup-01.png
+Summary: Writeup for the Emprisa Maldoc CTF — analyzing a CVE-2017-18822 exploit using rtfdump, speakeasy shellcode emulation, and EQNEDT32 process debugging.
 
 > This is a writeup for [Emprisa maldoc challenge](the-emprisa-maldoc-challenge) that I made for [CyberDefenders.org](https://cyberdefenders.org/). You can play it [here](https://cyberdefenders.org/labs/56).
 
