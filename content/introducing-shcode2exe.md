@@ -2,7 +2,7 @@ Title: Introducing shcode2exe
 Date: 2021-02-26 07:34
 Slug: introducing-shcode2exe
 Tags: re, tools, malware_analysis
-Category: tools
+Category: Tools
 
 **[Edit: shcode2exe is [now part of Remnux](https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe)]**
 

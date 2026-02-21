@@ -2,7 +2,7 @@ Title: Maldoc101 Writeup (Part 2)
 Date: 2021-03-14 08:34
 Slug: maldoc101-writeup-part-2
 Tags: re, malware_analysis, malware
-Category: malware_analysis
+Category: Malware Analysis
 
 This is part 2 of my writeup for the Maldoc101 challenge. Check out [part 1]({filename}/maldoc101-writeup-part-1.md) for the beginning of the analysis.
 

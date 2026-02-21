@@ -2,7 +2,7 @@ Title: IOLI Crackme 0x00
 Date: 2021-02-16 21:55
 Slug: ioli-crackme-0x00
 Tags: re, crackme
-Category: re 
+Category: Reverse Engineering
 
 I am re-familiarizing myself with reverse engineering again by going through some simple crackme challenges. This one is called the IOLI Crackmes by pof. The goal is to find the correct password and also to patch it so that it can accept any input and still show that it's correct.
 

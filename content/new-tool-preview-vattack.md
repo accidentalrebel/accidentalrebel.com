@@ -2,7 +2,7 @@ Title: New Tool Preview: vATT&CK
 Date: 2021-10-18 20:33
 Slug: new-tool-preview-vattack
 Tags: tools, cybersecurity
-Category: tools
+Category: Tools
 Image: new-tool-preview-vattack-01.png
 
 I have released a new cybersecurity-related tool called [vATT&CK (Visual ATT&CK)](https://github.com/accidentalrebel/vATTACK). It is a relationship visualizer for the Mitre ATT&CK framework.

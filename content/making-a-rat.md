@@ -2,7 +2,7 @@ Title: Making a RAT
 Date: 2021-07-13 14:56
 Slug: making-a-rat
 Tags: malware, dev
-Category: malware
+Category: Malware Analysis
 Image: making-a-rat-01.png
 
 A Remote Access Tool (RAT) is used to remotely access a computer. It has legitimate uses but it can also be used for malicious purposes. I've seen it used in malware I've analyzed and I've always been curious as to how it works.

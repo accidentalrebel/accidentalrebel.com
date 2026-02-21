@@ -2,7 +2,7 @@ Title: The Emprisa Maldoc Challenge
 Date: 2021-04-04 16:37
 Slug: the-emprisa-maldoc-challenge
 Tags: maldoc, ctf
-Category: ctf
+Category: CTF
 Image: the-emprisa-maldoc-challenge-01.png
 
 I was inspired to make my own CTF challenge after finishing [Maldoc101]({filename}/maldoc101-writeup-part-1.md) found at [Cyberdefenders.org](https://cyberdefenders.org/). The challenge I made is called [Emprisa Maldoc](https://cyberdefenders.org/labs/56) and it is now up on their website. 

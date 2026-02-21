@@ -2,7 +2,7 @@ Title: Study notes: MAC Spoofing
 Date: 2020-08-01 11:07
 Slug: study-notes--mac-spoofing
 Tags: spoofing, cybersecurity
-Category: cybersecurity
+Category: Misc
 
 	Study notes are my personal research notes on certain topics that interests me.
 

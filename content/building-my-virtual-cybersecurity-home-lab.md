@@ -2,7 +2,7 @@ Title: Building my Virtual Cybersecurity Home Lab
 Date: 2021-09-05 20:33
 Slug: building-my-virtual-cybersecurity-home-lab
 Tags: malware, dev
-Category: malware
+Category: Malware Analysis
 Image: building-my-virtual-cybersecurity-home-lab-01.png
 
 I have recently realized that one part of cybersecurity that I am lacking basic knowledge on is networking. I honestly did not think it was important when I was starting. It was the reason why I skipped Network+ so I could take Security+ directly. 

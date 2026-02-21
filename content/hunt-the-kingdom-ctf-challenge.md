@@ -2,7 +2,7 @@ Title: Hunt the Kingdom CTF Challenge
 Date: 2020-10-05 11:13
 Slug: hunt-the-kingdom-ctf-challenge
 Tags: ctf, cybersecurity, 
-Category: ctf
+Category: CTF
 FacebookImage: https://www.accidentalrebel.com/images/hunt-the-kingdom-ctf-challenge-04.PNG
 
 > TLDR: Participated in a blue team CTF, had a lot of fun, looking forward for more

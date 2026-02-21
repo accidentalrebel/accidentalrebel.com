@@ -2,7 +2,7 @@ Title: Cyber Corp Case 2 Writeup - Part 3
 Date: 2021-11-06 11:10
 Slug: cyber-corp-case-2-writeup-part-3
 Tags: threat-hunting, cyberdefenders
-Category: threat-hunting
+Category: Threat Hunting
 Image: cyber-corp-case-2-writeup-part-3-10.png
 
 The [second case of the CyberCorp challenge](https://cyberdefenders.org/labs/75) on [CyberDefenders.org](https://cyberdefenders.org/) is all about threat hunting. Created by [@BlackMatter23](https://twitter.com/BlackMatter23) and his team, this challenge is based on a real-world attack so it is perfect for gaining practical experience in threat hunting.

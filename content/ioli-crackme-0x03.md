@@ -2,7 +2,7 @@ Title: IOLI Crackme 0x03
 Date: 2021-03-22 20:03
 Slug: ioli-crackme-0x03
 Tags: re, crackme
-Category: re 
+Category: Reverse Engineering
 Image: ioli-crackme-0x03-03.png
 
 I am continuing my reverse engineering review by tackling the *IOLI crackmes* by [@pof](https://twitter.com/pof). These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for [0x00]({filename}/ioli-crackme-0x00.md), [0x01]({filename}/ioli-crackme-0x01.md), and [0x02]({filename}/ioli-crackme-0x02.md).

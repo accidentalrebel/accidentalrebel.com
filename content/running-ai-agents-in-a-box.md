@@ -2,7 +2,7 @@ Title: Running AI agents in a box because I don't trust them
 Date: 2026-01-30 10:00
 Slug: running-ai-agents-in-a-box
 Tags: docker, ai, claude-code, security, tools
-Category: programming
+Category: Tools
 
 I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine.
 

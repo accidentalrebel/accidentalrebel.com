@@ -2,7 +2,7 @@ Title: CovidScammers writeup (Defcon RTV CTF)
 Date: 2020-08-13 16:58
 Slug: covidscammers-writeup--defcon-rtv-ctf
 Tags: ctf, writeup, malware_analysis, defcon
-Category: ctf
+Category: CTF
 
    I joined the [Defcon Red Team Village CTF](https://ctf.threatsims.com) because I was curious about it and I wanted to test out the skills that I have gained playing with CTF sites like [overthewire.org](https://overthewire.org/wargames/) and [vulnhub](https://www.vulnhub.com/). I knew that the challenges won't be easy, but thankfully, I was able to join up with other newbies who were willing to give it a go and learn with each other.
 

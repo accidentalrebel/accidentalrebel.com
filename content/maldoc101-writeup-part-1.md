@@ -2,7 +2,7 @@ Title: Maldoc101 Writeup (Part 1)
 Date: 2021-03-13 08:34
 Slug: maldoc101-writeup-part-1
 Tags: re, malware_analysis, malware
-Category: malware_analysis
+Category: Malware Analysis
 
 This is part 1 out of 2 of my writeup for the Maldoc101 challenge made by Josh Stroschein ([@jstrosch](https://twitter.com/jstrosch)) and is currently playable at [Cyberdefenders.Org](https://cyberdefenders.org/labs/51). I've done some maldoc analysis before but this is the first time I'm writing about my approach.
 
