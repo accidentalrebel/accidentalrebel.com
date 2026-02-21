@@ -3,7 +3,6 @@ Date: 2026-02-21 10:00
 Slug: the-hidden-tax-of-security-tooling
 Tags: security, tools
 Category: security
-Status: draft
 
 I automated Sentinel ticket management with two browser bookmarks. One assigns the incident to me. The other closes it, prompting for a closing comment and handling the status change, classification, and save in one click.
 
@@ -27,7 +26,7 @@ SOC leaders don't push back on this because analyst activity looks like producti
 
 ## The bookmarklets
 
-I have two bookmarklets. The assign one is trivial, so I'll share the closing script since it has more steps. It's saved as a browser bookmark and runs on the Sentinel incident page:
+I have two bookmarklets. The assign one is trivial, so I'll share the closing script since it has more steps. The analyst clicks on an incident ticket first to open it, then clicks the bookmark:
 
 ```javascript
 javascript:(function(){

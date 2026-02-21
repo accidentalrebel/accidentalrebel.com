@@ -375,11 +375,13 @@ h3 {
     max-height: none;
 }
 
-.codehilite code {
+.codehilite code,
+.article-content .codehilite code {
     background: transparent;
     padding: 0;
     border-radius: 0;
     font-size: inherit;
+    color: #c0caf5;
 }
 
 /* Pygments syntax highlighting — always dark (Tokyo Night inspired) */
