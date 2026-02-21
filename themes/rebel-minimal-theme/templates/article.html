@@ -20,9 +20,7 @@
     {% if article.summary %}
     <meta property="og:description" content="{{ article.summary|striptags }}">
     {% endif %}
-    {% if article.og_image %}
-    <meta property="og:image" content="{{ SITEURL }}/{{ article.og_image }}">
-    {% endif %}
+    <meta property="og:image" content="{{ SITEURL }}/images/{% if article.image %}{{ article.image }}{% else %}default-og.png{% endif %}">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
@@ -31,9 +29,7 @@
     {% if article.summary %}
     <meta property="twitter:description" content="{{ article.summary|striptags }}">
     {% endif %}
-    {% if article.og_image %}
-    <meta property="twitter:image" content="{{ SITEURL }}/{{ article.og_image }}">
-    {% endif %}
+    <meta property="twitter:image" content="{{ SITEURL }}/images/{% if article.image %}{{ article.image }}{% else %}default-og.png{% endif %}">
 
     <script type="application/ld+json">
     {
@@ -45,8 +41,8 @@
         "author": { "@type": "Person", "name": "{{ AUTHOR }}" },
         "publisher": { "@type": "Person", "name": "{{ AUTHOR }}" },
         "url": "{{ SITEURL }}/{{ article.url }}",
-        "description": "{{ article.summary|striptags|truncate(160) }}"
-        {% if article.og_image %},"image": "{{ SITEURL }}/{{ article.og_image }}"{% endif %}
+        "description": "{{ article.summary|striptags|truncate(160) }}",
+        "image": "{{ SITEURL }}/images/{% if article.image %}{{ article.image }}{% else %}default-og.png{% endif %}"
     }
     </script>
 
