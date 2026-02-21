@@ -313,7 +313,7 @@ Save the draft to the working directory:
 3. If exists, append `_N` (start at 1, increment until unique)
 4. Write the Markdown file to the current working directory
 
-After saving, tell the user: "Draft saved to `<filename>`. Run `/new-post <filename>` to convert to a Pelican blog post."
+After saving, tell the user: "Draft saved to `<filename>`. Run `/new-post <filename>` to convert to a Pelican blog post, then `/send-newsletter` to email it to subscribers."
 
 ---
 
