@@ -3,6 +3,10 @@ Date: 2026-02-23 20:00
 Slug: the-hidden-tax-of-security-tooling
 Tags: security, tools
 Category: security
+Image: the-hidden-tax-of-security-tooling.png
+
+![The hidden tax of security tooling]({attach}/images/the-hidden-tax-of-security-tooling.png)
+*Image by Gemini*
 
 I automated Sentinel ticket management with two browser bookmarks. One assigns the incident to me. The other closes it, prompting for a closing comment and handling the status change, classification, and save in one click.
 
