@@ -5,7 +5,7 @@ Tags: maldoc, ctf
 Category: ctf
 Image: the-emprisa-maldoc-challenge-01.png
 
-I was inspired to make my own CTF challenge after finishing [Maldoc101]({filename}/maldoc101-writeup-part-1) found at [Cyberdefenders.org](https://cyberdefenders.org/). The challenge I made is called [Emprisa Maldoc](https://cyberdefenders.org/labs/56) and it is now up on their website. 
+I was inspired to make my own CTF challenge after finishing [Maldoc101]({filename}/maldoc101-writeup-part-1.md) found at [Cyberdefenders.org](https://cyberdefenders.org/). The challenge I made is called [Emprisa Maldoc](https://cyberdefenders.org/labs/56) and it is now up on their website. 
 
 Emprisa is based on a malicious document that I downloaded blindly from a malware sandbox. It used a relatively old but still interesting exploit that is still in use today. After researching more about it I came across a tool that can generate a malicious doc using the same exact exploit. This is when I got the idea to turn it into a challenge.
 
