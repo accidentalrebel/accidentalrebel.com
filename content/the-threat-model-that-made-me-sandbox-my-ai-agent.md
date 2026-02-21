@@ -164,10 +164,30 @@ CLAUDE_PROFILE=work ./claudecker.sh run /path/to/project
 
 ## Isolation without crippling the tool
 
-After mapping out these threats and building mitigations for each one, the pattern is clear. An AI coding agent needs shell access, file access, and network access to be useful. That's what makes it powerful. You can't take those away without crippling it.
+An AI coding agent needs shell access, file access, and network access to be useful. That's what makes it powerful. But this is where we have to exercise a balance between capability and security.
 
 Browsers figured this out with tabs. Package managers figured it out with install scripts. CI/CD figured it out with disposable containers. The answer isn't restricting what the agent can do. It's controlling the environment it does it in.
 
 That's what Claudecker does. The agent gets full shell access, full file access, and configurable network access, but all inside a container where the blast radius is limited to the project directory. It can do everything it needs to do. It just can't touch anything it shouldn't.
 
-For the implementation details behind Claudecker, see the [companion post]({filename}/running-ai-agents-in-a-box.md). I also cover the [growing attack surface of developer tools]({filename}/developer-tools-are-the-new-attack-surface.md) and how [AI agents are becoming targets]({filename}/ai-agents-under-attack.md) in my security roundups.
+I'm choosing to cripple some of it because there are still too many unknowns. The eight threats I've listed here are just the ones I've identified so far. New ones show up every week. Until the threat landscape settles (if it ever does), I'd rather have too much isolation than too little.
+
+## What you can do today
+
+Claudecker isn't publicly available. It's deeply integrated into my personal workflow and not something anyone else can pick up and run. But you don't need my tool to act on this threat model. Here are five things you can do right now:
+
+1. **Run your AI agent in a container.** You don't need Claudecker for this. A basic Docker container with your project directory mounted already gives you most of the mitigation table above. The agent gets filesystem isolation, credential separation, and a throwaway environment. That alone covers T1, T4, and T8.
+
+2. **Enable Claude Code's built-in sandbox.** Run `/sandbox` in a session. It's not as strict as a container, but it restricts file writes to the working directory and routes network traffic through a domain-approving proxy. It's there, it's free, and most people don't know about it. [Documentation here](https://code.claude.com/docs/en/sandboxing).
+
+3. **Audit your `settings.local.json`.** Open `.claude/settings.local.json` in your project directory and look at what you've approved. You might find `Bash(sudo:*)` or other broad patterns you don't remember approving. Clean it up.
+
+4. **Review what skills and MCP servers your agent loads.** Each one is third-party code running with your agent's permissions. Check what's installed, where it came from, and whether you still need it. A skill or MCP server you forgot about is an unmonitored attack surface. If you find one you rely on, consider forking it into your own repo. Writing your own skills is even better. It doesn't scale, but at least you know exactly what's running.
+
+5. **Turn off network access when you don't need it.** If you're just refactoring code or writing tests, the agent doesn't need the internet. Codex CLI disables network by default. If you're running in Docker, [`--network none`](https://docs.docker.com/engine/network/drivers/none/) disables all network access with no extra configuration.
+
+None of these require building anything. They're just decisions.
+
+---
+
+For the implementation details behind Claudecker, see the [companion post]({filename}/running-ai-agents-in-a-box.md).
