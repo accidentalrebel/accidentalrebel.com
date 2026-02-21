@@ -1,5 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - tools</title><link href="https://www.accidentalrebel.com/" rel="alternate"/><link href="https://www.accidentalrebel.com/feeds/tools.atom.xml" rel="self"/><id>https://www.accidentalrebel.com/</id><updated>2021-10-18T20:33:00+08:00</updated><entry><title>New Tool Preview: vATT&amp;CK</title><link href="https://www.accidentalrebel.com/new-tool-preview-vattack.html" rel="alternate"/><published>2021-10-18T20:33:00+08:00</published><updated>2021-10-18T20:33:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-10-18:/new-tool-preview-vattack.html</id><summary type="html">&lt;p&gt;I have released a new cybersecurity-related tool called &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;vATT&amp;amp;CK (Visual ATT&amp;amp;CK)&lt;/a&gt;. It is a relationship visualizer for the Mitre ATT&amp;amp;CK framework.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>AccidentalRebel.com - Tools</title><link href="https://www.accidentalrebel.com/" rel="alternate"/><link href="https://www.accidentalrebel.com/feeds/tools.atom.xml" rel="self"/><id>https://www.accidentalrebel.com/</id><updated>2026-01-30T10:00:00+08:00</updated><entry><title>Running AI agents in a box because I don't trust them</title><link href="https://www.accidentalrebel.com/running-ai-agents-in-a-box.html" rel="alternate"/><published>2026-01-30T10:00:00+08:00</published><updated>2026-01-30T10:00:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2026-01-30:/running-ai-agents-in-a-box.html</id><summary type="html">&lt;p&gt;I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine.&lt;/p&gt;
+&lt;p&gt;Being in Cyber Security, I've developed a healthy paranoia about software that can execute arbitrary commands. AI coding assistants are powerful, but they're also unpredictable. They can run shell commands, modify files, and access the network. I wanted all of that contained.&lt;/p&gt;
+&lt;h2 id="the-setup"&gt;The setup&lt;/h2&gt;
+&lt;p&gt;Claudecker is my personal tool that wraps Docker to run Claude Code CLI and Codex CLI in an isolated container. Point it at any project directory and it mounts that directory into the container. The AI can do whatever it wants inside the container, but it can't touch the rest of my system.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./claudecker.sh&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;/path/to/project
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I built a Docker wrapper for Claude Code and OpenAI Codex. The main reason is simple: I don't trust AI agents running loose on my machine.&lt;/p&gt;
+&lt;p&gt;Being in Cyber Security, I've developed a healthy paranoia about software that can execute arbitrary commands. AI coding assistants are powerful, but they're also unpredictable. They can run shell commands, modify files, and access the network. I wanted all of that contained.&lt;/p&gt;
+&lt;h2 id="the-setup"&gt;The setup&lt;/h2&gt;
+&lt;p&gt;Claudecker is my personal tool that wraps Docker to run Claude Code CLI and Codex CLI in an isolated container. Point it at any project directory and it mounts that directory into the container. The AI can do whatever it wants inside the container, but it can't touch the rest of my system.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./claudecker.sh&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;/path/to/project
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Each run starts with a fresh environment. Skills get reinstalled, settings reset to defaults. Only authentication tokens persist across restarts. This "clean slate" approach means I don't accumulate cruft or unexpected state changes.&lt;/p&gt;
+&lt;h2 id="the-paranoid-feature-network-lockdown"&gt;The paranoid feature: network lockdown&lt;/h2&gt;
+&lt;p&gt;The feature I'm most pleased with is the network lockdown toggle. It uses iptables to control the container's OUTPUT chain policy.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./claudecker.sh&lt;span class="w"&gt; &lt;/span&gt;lockdown
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This drops all outbound traffic except localhost and already-established connections. The AI can still work on code, but it can't phone home, download packages, or exfiltrate anything. I toggle this on when working on sensitive projects.&lt;/p&gt;
+&lt;p&gt;The implementation is straightforward. Just flipping between DROP and ACCEPT policies. The container needs NET_ADMIN capability for this to work, which is a trade-off I'm comfortable with since it's scoped to network operations.&lt;/p&gt;
+&lt;h2 id="trade-offs-from-containerization"&gt;Trade-offs from containerization&lt;/h2&gt;
+&lt;p&gt;Isolation comes with friction. I had to solve several problems that wouldn't exist if I just ran the CLI directly on my host.&lt;/p&gt;
+&lt;h3 id="browser-authentication-needs-x11"&gt;Browser authentication needs X11&lt;/h3&gt;
+&lt;p&gt;Claude and Codex authentication use browser-based OAuth flows. Inside a container, there's no browser. I ended up mounting the X11 socket and forwarding the DISPLAY variable:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nt"&gt;volumes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;/tmp/.X11-unix:/tmp/.X11-unix:rw&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;On Linux this works if you have DISPLAY set. On macOS you need XQuartz. For headless environments, there's a fallback where I manually copy the auth.json file from a machine where you've already logged in.&lt;/p&gt;
+&lt;p&gt;Thankfully, Claude Code and Codex CLI makes it easier by providing you a URL to visit, which will give you a code to enter back. This means I rarely need to use browser authentication, but at least the option is there.&lt;/p&gt;
+&lt;h3 id="ssh-agent-forwarding-is-annoying"&gt;SSH agent forwarding is annoying&lt;/h3&gt;
+&lt;p&gt;Getting SSH keys into the container without copying them required some workarounds. Docker's socket permissions don't always cooperate, so I ended up using socat to proxy the SSH agent socket:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;sudo&lt;span class="w"&gt; &lt;/span&gt;socat&lt;span class="w"&gt; &lt;/span&gt;UNIX-LISTEN:/tmp/ssh-agent-forwarded,fork,mode&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="m"&gt;600&lt;/span&gt;,user&lt;span class="o"&gt;=&lt;/span&gt;node&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;          &lt;/span&gt;UNIX-CONNECT:/ssh-agent&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The container tries direct socket access first, falls back to socat if that fails. Limited sudo permissions ensure the node user can only run specific commands.&lt;/p&gt;
+&lt;h3 id="port-forwarding-for-web-apps"&gt;Port forwarding for web apps&lt;/h3&gt;
+&lt;p&gt;If you're developing a web app and want to access it from your host browser, you need to expose ports explicitly:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;./claudecker.sh&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;--port&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3000&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;/path/to/project
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This maps the container's port to the host. Without this flag, localhost:3000 inside the container isn't reachable from outside.&lt;/p&gt;
+&lt;h2 id="project-specific-dependencies"&gt;Project-specific dependencies&lt;/h2&gt;
+&lt;p&gt;Different projects need different tools. A C project needs gcc and cmake. A Python ML project needs different libraries. I didn't want to bloat the base image with everything.&lt;/p&gt;
+&lt;p&gt;The solution: a &lt;code&gt;.claudecker&lt;/code&gt; file in the project directory.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;# .claudecker
+build-essential
+cmake
+gcc
+python3-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;On first run, the script hashes the file contents, generates a Dockerfile, and builds a custom image tagged with that hash. Subsequent runs use the cached image. Projects with identical &lt;code&gt;.claudecker&lt;/code&gt; files share the same image.&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;claudecker-custom:a1b2c3d4e5f6
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;This content-based approach means I'm not rebuilding images unnecessarily, and cleanup is straightforward with &lt;code&gt;clean-custom&lt;/code&gt; and &lt;code&gt;clean-all-custom&lt;/code&gt; commands.&lt;/p&gt;
+&lt;h2 id="skills-system"&gt;Skills system&lt;/h2&gt;
+&lt;p&gt;A new and recent addition: Claudecker now supports Claude Skills, which are custom prompts that extend its capabilities. I implemented two types:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;GitHub skills get cloned on container startup. The &lt;a href="https://github.com/blader/humanizer"&gt;Humanizer skill&lt;/a&gt;, for example, comes from a public repo and helps remove AI-isms from text.&lt;/li&gt;
+&lt;li&gt;Local skills are baked into the Docker image. I keep these in a &lt;code&gt;local-skills/&lt;/code&gt; directory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The build process copies these into the image, and the entrypoint installs them into Claude's skills directory. This way I can version-control project-specific skills alongside the code.&lt;/p&gt;
+&lt;h2 id="multi-ai-orchestration-with-pal-mcp"&gt;Multi-AI orchestration with PAL MCP&lt;/h2&gt;
+&lt;p&gt;I also integrated PAL MCP Server, which lets Claude Code collaborate with other AI models (Gemini, GPT, Grok, local Ollama models). I export my API keys before running:&lt;/p&gt;
+&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nb"&gt;export&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nv"&gt;OPENROUTER_API_KEY&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;your-key&amp;quot;&lt;/span&gt;
+./claudecker.sh&lt;span class="w"&gt; &lt;/span&gt;run&lt;span class="w"&gt; &lt;/span&gt;/path/to/project
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Inside Claude Code, I can ask it to use other models for second opinions, code review, or extended reasoning. The MCP server handles the routing.&lt;/p&gt;
+&lt;p&gt;This obviously requires network access, so it doesn't work in lockdown mode. Trade-offs.&lt;/p&gt;
+&lt;h2 id="wheres-the-code"&gt;Where's the code?&lt;/h2&gt;
+&lt;p&gt;I planned to release this publicly but decided against it for now. There are rough edges:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The docker-compose volumes are duplicated in the docker run command for custom images. If you change one, you have to change the other. I left a warning comment but it's still error-prone.&lt;/li&gt;
+&lt;li&gt;The firewall whitelist script exists but isn't fully tested across different network configurations.&lt;/li&gt;
+&lt;li&gt;Some features assume specific host setups (X11, SSH agent running, etc.) and fail ungracefully when those assumptions don't hold.&lt;/li&gt;
+&lt;li&gt;Error handling is minimal in places.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I use this daily for my own work, but it's not polished enough for others to pick up without reading through the scripts first. Maybe later.&lt;/p&gt;
+&lt;h2 id="current-limitations"&gt;Current limitations&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Network lockdown state doesn't persist across container restarts. Restart the container and you're back to full network access.&lt;/li&gt;
+&lt;li&gt;Custom image builds happen automatically but failures silently fall back to the base image. You might not notice a package didn't install.&lt;/li&gt;
+&lt;li&gt;X11 forwarding is a security surface I'm not entirely comfortable with, but I haven't found a better solution for browser auth.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="what-i-actually-use-it-for"&gt;What I actually use it for&lt;/h2&gt;
+&lt;p&gt;Most days I run Claude Code in lockdown mode for general coding tasks. When I need it to fetch documentation or install packages, I toggle lockdown off, let it do its thing, then toggle it back on.&lt;/p&gt;
+&lt;p&gt;For security research projects, the isolation gives me peace of mind. The AI can analyze suspicious code, suggest modifications, even run tests, all without access to my actual filesystem or network.&lt;/p&gt;
+&lt;p&gt;It's not perfect containment. Docker isn't a security boundary the way a VM is. But it's enough friction that an AI agent can't accidentally (or intentionally) do something I'd regret.&lt;/p&gt;
+&lt;p&gt;For now, this setup works for my needs. The paranoia tax is a few extra seconds on startup and occasional friction with browser auth. Worth it.&lt;/p&gt;</content><category term="Tools"/><category term="docker"/><category term="ai"/><category term="claude-code"/><category term="security"/><category term="tools"/></entry><entry><title>New Tool Preview: vATT&amp;CK</title><link href="https://www.accidentalrebel.com/new-tool-preview-vattack.html" rel="alternate"/><published>2021-10-18T20:33:00+08:00</published><updated>2021-10-18T20:33:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-10-18:/new-tool-preview-vattack.html</id><summary type="html">&lt;p&gt;I have released a new cybersecurity-related tool called &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;vATT&amp;amp;CK (Visual ATT&amp;amp;CK)&lt;/a&gt;. It is a relationship visualizer for the Mitre ATT&amp;amp;CK framework.&lt;/p&gt;
 &lt;p&gt;&lt;img alt="new-tool-preview-vattack-01" src="https://www.accidentalrebel.com/images/new-tool-preview-vattack-01.png" /&gt;&lt;/p&gt;
 &lt;p&gt;What the tool does is that it makes a visual map of the searched technique and all the related information. You can watch a video of the tool in action &lt;a href="https://www.youtube.com/watch?v=xCc7aAqbSNI"&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Each node will be colored depending on it's category. The color legends is as follows:&lt;/p&gt;
@@ -32,7 +126,7 @@
 &lt;li&gt;Ability to search not just by technique, but also by other categories&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;I also plan on releasing a live demo of the tool very soon in the hopes of getting feedback from the community. &lt;/p&gt;
-&lt;p&gt;For now, if you are interested in the project, you could visit the &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;tool's Github project page&lt;/a&gt; or contact me for any comments or suggestions.&lt;/p&gt;</content><category term="tools"/><category term="tools"/><category term="cybersecurity"/></entry><entry><title>Introducing shcode2exe</title><link href="https://www.accidentalrebel.com/introducing-shcode2exe.html" rel="alternate"/><published>2021-02-26T07:34:00+08:00</published><updated>2021-02-26T07:34:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-02-26:/introducing-shcode2exe.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;[Edit: shcode2exe is &lt;a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe"&gt;now part of Remnux&lt;/a&gt;]&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;For now, if you are interested in the project, you could visit the &lt;a href="https://github.com/accidentalrebel/vATTACK"&gt;tool's Github project page&lt;/a&gt; or contact me for any comments or suggestions.&lt;/p&gt;</content><category term="Tools"/><category term="tools"/><category term="cybersecurity"/></entry><entry><title>Introducing shcode2exe</title><link href="https://www.accidentalrebel.com/introducing-shcode2exe.html" rel="alternate"/><published>2021-02-26T07:34:00+08:00</published><updated>2021-02-26T07:34:00+08:00</updated><author><name>AccidentalRebel</name></author><id>tag:www.accidentalrebel.com,2021-02-26:/introducing-shcode2exe.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;[Edit: shcode2exe is &lt;a href="https://docs.remnux.org/discover-the-tools/dynamically+reverse-engineer+code/shellcode#shcode-2-exe"&gt;now part of Remnux&lt;/a&gt;]&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;I've been playing around with &lt;a href="https://remnux.org/"&gt;Remnux&lt;/a&gt; and encountered a problem trying to get one of the tools to run properly. The tool is &lt;a href="https://github.com/repnz/shellcode2exe"&gt;shellcode2exe&lt;/a&gt;, it is used to compile binary shellcode to a file so it can easily be debugged by a debugger.&lt;/p&gt;
 &lt;p&gt;When I checked out the code, I was surprised to find out how simple it is. Basically, what happens is that the inputted shellcode is added to a barebones assembly file using the &lt;code&gt;incbin&lt;/code&gt; assembly instruction. From there, the file is then automatically compiled and linked.&lt;/p&gt;
 &lt;p&gt;One big problem with the tool is that it needs to use &lt;a href="https://www.winehq.org/"&gt;Wine&lt;/a&gt; if it needs to run on Linux. I don't want such a huge dependency especially for my own malware analysis lab so I decided to write my own version which have led to the creation of &lt;code&gt;shcode2exe&lt;/code&gt;.&lt;/p&gt;
@@ -87,4 +181,4 @@
 
 &lt;h2 id="next-steps"&gt;Next steps&lt;/h2&gt;
 &lt;p&gt;I decided to reach out to the people behind Remnux to ask if they could consider my tool as a replacement on their platform. It would be great if they would, but it's okay too if they don't, I made it for my own use anyway. (Update 2021-02-07: It's now &lt;a href="https://github.com/REMnux/salt-states/issues/169"&gt;under review&lt;/a&gt;)&lt;/p&gt;
-&lt;p&gt;For more information about the tool and it's code, go to &lt;a href="https://github.com/accidentalrebel/shcode2exe"&gt;it's Github page&lt;/a&gt;. If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at &lt;a href="https://twitter.com/accidentalrebel"&gt;@accidentalrebel&lt;/a&gt;.&lt;/p&gt;</content><category term="tools"/><category term="re"/><category term="tools"/><category term="malware_analysis"/></entry></feed>
+&lt;p&gt;For more information about the tool and it's code, go to &lt;a href="https://github.com/accidentalrebel/shcode2exe"&gt;it's Github page&lt;/a&gt;. If you have any comments or suggestions on how to improve it, feel free to tell me via Github issues or dm me at &lt;a href="https://twitter.com/accidentalrebel"&gt;@accidentalrebel&lt;/a&gt;.&lt;/p&gt;</content><category term="Tools"/><category term="re"/><category term="tools"/><category term="malware_analysis"/></entry></feed>
