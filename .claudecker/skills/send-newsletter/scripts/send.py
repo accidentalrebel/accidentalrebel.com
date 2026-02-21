@@ -13,6 +13,7 @@ def main():
     parser = argparse.ArgumentParser(description="Send newsletter via Buttondown API")
     parser.add_argument("--subject", required=True, help="Email subject line")
     parser.add_argument("--body-file", required=True, help="Path to markdown file with email body")
+    parser.add_argument("--strip-headers", action="store_true", help="Remove Pelican front matter before sending")
     parser.add_argument("--dry-run", action="store_true", help="Print payload without sending")
     args = parser.parse_args()
 
@@ -23,6 +24,15 @@ def main():
 
     with open(args.body_file, "r") as f:
         body = f.read()
+
+    if args.strip_headers:
+        lines = body.split("\n")
+        for i, line in enumerate(lines):
+            if line.strip() == "":
+                body = "\n".join(lines[i + 1:])
+                break
+
+    body = body.replace("{attach}/images/", "https://www.accidentalrebel.com/images/")
 
     if not body.strip():
         print("ERROR: Body file is empty", file=sys.stderr)

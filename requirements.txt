@@ -3,3 +3,4 @@ markdown
 invoke
 ghp-import
 pelican-sitemap
+requests

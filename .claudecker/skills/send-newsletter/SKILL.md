@@ -8,38 +8,35 @@ description: |
 
 # Send Newsletter
 
-Send a markdown email to all Buttondown subscribers via the API.
+Send the latest Cybersecurity x AI News Roundup post as a Buttondown newsletter.
 
 ## Prerequisites
 
 - `BUTTONDOWN_API_KEY` environment variable must be set
-- `requests` Python package must be installed
+- `requests` Python package installed (`pip install requests`)
 
 ## Workflow
 
-1. **Get the content** — ask the user for the markdown file path (or use the file they provide)
-2. **Read the file** and display a preview (first 20 lines + total length)
-3. **Confirm subject line** — suggest one from the file's H1 heading if present, let user edit
-4. **Dry run first** — run `scripts/send.py --dry-run` to show the payload
-5. **Confirm send** — ask "Send this to all subscribers?" before actually sending
-6. **Send** — run `scripts/send.py --subject "<subject>" --body-file <path>`
+1. **Find the latest post** — grep `content/` for `Category: Cybersecurity x AI News Roundup`,
+   sort by `Date:` header, pick the most recent. Show the user the title and date.
+2. **Confirm** — ask the user if this is the post they want to send.
+   If the user specifies a different file, use that instead.
+3. **Extract subject** — use the `Title:` from the Pelican front matter.
+4. **Dry run** — run `scripts/send.py --strip-headers --dry-run` to preview.
+5. **Confirm send** — ask "Send this to all subscribers?"
+6. **Send** — run `scripts/send.py --strip-headers --subject "<subject>" --body-file <path>`
 
 ## Send Script
 
-Use `scripts/send.py` in this skill's directory:
-
 ```
-python3 scripts/send.py --subject "Subject" --body-file content.md
-python3 scripts/send.py --subject "Subject" --body-file content.md --dry-run
+python3 scripts/send.py --subject "Subject" --body-file post.md --strip-headers
+python3 scripts/send.py --subject "Subject" --body-file post.md --strip-headers --dry-run
 ```
 
-## Extracting Subject from Content
-
-If the markdown starts with `# Title`, use that as the suggested subject (strip the `#`).
-Otherwise ask the user to provide one.
+`--strip-headers` removes Pelican front matter (everything before the first blank line).
 
 ## Error Handling
 
-- Missing `BUTTONDOWN_API_KEY` → tell user to set it: `export BUTTONDOWN_API_KEY=your-token`
+- Missing `BUTTONDOWN_API_KEY` → tell user: `export BUTTONDOWN_API_KEY=your-token`
 - Empty body file → warn and abort
-- API error → show the status code and response body
+- API error → show status code and response body
