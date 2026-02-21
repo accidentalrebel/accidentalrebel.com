@@ -8,6 +8,7 @@ This is a Pelican-based static blog for AccidentalRebel.com focusing on cybersec
 
 - **master**: Source content (Markdown files, configuration, images)
 - **gh-pages**: Generated HTML output for GitHub Pages deployment
+- **draft/***: Local-only draft branches. A pre-push hook blocks pushing any branch starting with `draft/` to remote. To publish: merge into master, remove `Status: draft` from the post metadata, then push.
 
 ## Key Information
 
