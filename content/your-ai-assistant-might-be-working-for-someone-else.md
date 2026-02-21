@@ -3,6 +3,10 @@ Date: 2026-02-20 10:00
 Slug: your-ai-assistant-might-be-working-for-someone-else
 Tags: ai, security, cybersecurity-x-ai
 Category: Cybersecurity x AI News Roundup
+Image: your-ai-assistant-might-be-working-for-someone-else.png
+
+![Your AI Assistant Might Be Working for Someone Else]({attach}/images/your-ai-assistant-might-be-working-for-someone-else.png)
+*Image made by Gemini*
 
 Your AI assistant might be working for someone else this week. Check Point showed that Copilot and Grok can be quietly repurposed as C2 channels. A supply chain attack on Cline installed autonomous agents on developer machines. And an AI found twelve zero-days in OpenSSL that humans missed for decades. Hard to tell where "AI tool" ends and "attack tool" begins anymore.
 
