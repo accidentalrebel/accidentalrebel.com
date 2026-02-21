@@ -28,11 +28,9 @@ Generate a weekly news roundup blog post covering the intersection of AI and cyb
 5. Deduplicate by URL, then **trace to primary sources** (see "Source Tracing" below)
 6. **PAL consensus** — use consensus to rank and suggest classifications (see "Article Selection" below)
 7. **Interactive article review** — present each candidate one-by-one with consensus suggestions for user final approval
-8. Generate draft from user-approved articles only, in **plain voice** (focus on accuracy)
-9. Apply **/humanizer** to remove AI patterns
-10. Apply **/accidentalrebel-voice** to add the final personality
-11. Save draft to working directory (see "Output" below)
-12. Tell the user to run `/new-post <draft-file>` to convert to Pelican format
+8. Generate draft from user-approved articles only, using **/wwcd** to frame each write-up through a consultant lens (see "Consultant Framing" below)
+9. Save draft to working directory (see "Output" below)
+10. Tell the user to run `/new-post <draft-file>` to convert to Pelican format
 
 ---
 
@@ -236,19 +234,18 @@ If the user wants swaps, apply the changes, show the updated summary, and ask ag
 
 ---
 
-## Voice Pipeline
+## Consultant Framing
 
-After generating the draft content:
+When generating draft content (step 8), use **/wwcd** to frame each write-up from a consultant perspective:
 
-### Step 1: /humanizer
-Removes AI writing patterns (filler phrases, promotional language, em-dash overuse, etc.)
+- **What it means for practitioners** — not just "what happened" but "what should you do about it"
+- **Business implications** — how does this affect organizations, budgets, hiring, strategy
+- **Positioning angle** — frame insights the way a consultant briefing a client would
+- **Practical takeaways** — actionable advice, not just news reporting
 
-### Step 2: /accidentalrebel-voice
-Applies the final personality:
-- Direct and practical tone
-- Shows the "why it matters"
-- Specific numbers (CVEs, versions, percentages)
-- Honest about limitations
+Invoke /wwcd with the draft content and ask it to reframe through a consulting lens. This changes the *angle* of each write-up, not the selection of articles.
+
+**Note:** Voice styling (humanizer + arebel-voice) is handled by `/new-post`, not here. Keep the draft focused on accurate, well-framed content.
 
 ---
 
