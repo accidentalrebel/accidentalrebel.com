@@ -4,7 +4,6 @@ Slug: the-threat-model-that-made-me-sandbox-my-ai-agent
 Tags: security, ai, claude-code, docker, tools
 Category: Security
 Summary: AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.
-Status: draft
 
 I wrote previously about [Claudecker]({filename}/running-ai-agents-in-a-box.md), my Docker wrapper for Claude Code. That post covered how it works. This one covers why I built it.
 
