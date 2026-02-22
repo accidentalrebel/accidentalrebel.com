@@ -409,8 +409,15 @@ h3 {
 .article-content img {
     max-width: 100%;
     height: auto;
-    margin: var(--spacing-unit) 0;
+    margin: var(--spacing-unit) auto;
     border-radius: 8px;
+    display: block;
+}
+
+.article-content iframe {
+    display: block;
+    max-width: 100%;
+    margin: var(--spacing-unit) auto;
 }
 
 .post-image-link {

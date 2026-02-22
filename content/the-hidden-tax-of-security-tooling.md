@@ -83,7 +83,11 @@ javascript:(function(){
 
 To use as a bookmarklet, collapse this to a single line and save it as the URL of a browser bookmark.
 
+![Edit bookmark dialog showing the Close Ticket bookmarklet]({attach}/images/editbookmark.png)
+
 It's not sophisticated. There's no API calls, no network access, no external dependencies. It opens the status dialog, selects "Closed", prompts me for a reason and classification, then clicks OK. The same thing I was doing manually, just without the clicking around. The `setTimeout` calls are ugly but necessary because the portal renders asynchronously.
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rCi5JlfY73U?si=GaQJQVLYIXe3fYKu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 One caveat though. If Microsoft changes Sentinel's layout or element structure (which they do), the script breaks. So you want someone on the team who can fix it. Thankfully, the script is simple enough that updating a selector takes a few minutes.
 
