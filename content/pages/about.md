@@ -4,7 +4,7 @@ Slug: about
 
 Most people online know me as **AccidentalRebel**. I help security teams work smarter, specifically at the intersection of **SOC operations** and **AI**.
 
-I've spent the last few years leading L2 operations in a 24/7 SOC and leading the team behind TryHackMe's [SOC Simulator](https://tryhackme.com/soc-sim), a gamified training environment where SOC teams investigate realistic incidents using Splunk, Elastic, or Sentinel. It's used by teams at Google, KPMG, and others to cut investigation time and improve escalation accuracy. Over 3M+ people learn hands-on security on [TryHackMe](https://tryhackme.com). Before that, 10+ years as a software engineer building games, web apps, dev tools, and low-level systems. I think like an attacker, but I build for defenders.
+I've spent the last few years leading L2 operations in a 24/7 SOC and leading the team behind TryHackMe's [SOC Simulator](https://tryhackme.com/soc-sim), a gamified training environment where SOC teams investigate realistic incidents using Splunk, Elastic, or Sentinel. It's used by teams at Google, KPMG, and others to cut investigation time and improve escalation accuracy across [TryHackMe](https://tryhackme.com)'s 3M+ user base. Before that, 10+ years as a software engineer building games, web apps, dev tools, and low-level systems. I think like an attacker, but I build for defenders.
 
 ## What I Work On
 

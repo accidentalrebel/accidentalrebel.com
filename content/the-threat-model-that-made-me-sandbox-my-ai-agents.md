@@ -86,7 +86,7 @@ Here's how each control currently implemented in Claudecker maps to the threats 
 | Ephemeral containers (`--rm`) | | | ✅ | | | ✅ | | |
 | Non-root user + scoped sudo | | | | | | | ✅ | |
 | iptables allowlist firewall | | ✅ | | | ✅ | | | |
-| Lockdown toggle (kill switch) | | ✅ | | | ✅ | | | |
+| Network lockdown (domain allowlist) | | ✅ | | | ✅ | | | |
 | SSH agent forwarding (no key files) | | | | ✅ | | | | |
 | Volume isolation per profile | | | | | | | | ✅ |
 | Runtime settings rebuild | | | | | | ✅ | | |
@@ -98,33 +98,29 @@ Some of these are strong mitigations. Others are just friction. I want to be hon
 
 The most basic control. Claude Code runs inside a Docker container. The only host directory mounted is the project itself. The agent can't read `~/.ssh/` or `~/.aws/` because those paths don't exist inside the container.
 
-```bash
+ ```bash
 ./claudecker.sh run /path/to/project
 ```
 
 The container runs as the unprivileged `node` user, not root. Sudo is locked down to five specific commands, all related to firewall management and SSH socket setup.
 
-**Strength: strong.** The agent literally cannot access host files outside the mounted project directory.
-
-**Gap:** The project directory itself is fully accessible. If you have `.env` files or secrets in your project tree, the agent can read them.
+- **Strength: strong.** The agent literally cannot access host files outside the mounted project directory.
+- **Gap:** The project directory itself is fully accessible. If you have `.env` files or secrets in your project tree, the agent can read them.
 
 ### Network firewall (mitigates T2, T3, T5)
 
-This is the control I'm most pleased with. An iptables-based firewall that restricts outbound traffic to a whitelist of domains.
+By default, Claudecker containers have full outbound access. The container is isolated from inbound traffic, but the agent can reach anything on the internet.
 
-The allowlist includes only what's needed: Anthropic's API, GitHub, npm registry, PyPI, and Ubuntu package repos. Everything else is dropped. The agent can't POST your source code to an arbitrary endpoint because it can't reach arbitrary endpoints.
-
-For sensitive work, there's a harder lockdown that kills all outbound traffic except localhost:
+For sensitive work, there's a lockdown mode that activates an iptables-based firewall restricting outbound traffic to a whitelist of domains:
 
 ```bash
 ./claudecker.sh lockdown
 ```
 
-This drops everything. The agent can still read and write code, run tests, do anything local. It just can't talk to the outside world.
+The allowlist includes only what's needed: Anthropic's API, GitHub, npm registry, PyPI, and Ubuntu package repos. Everything else is dropped. The agent can't POST your source code to an arbitrary endpoint because it can't reach arbitrary endpoints. Claude Code still works because it can reach its API. Package installs still work. But exfiltration to an attacker-controlled domain gets blocked.
 
-**Strength: medium to strong.** The allowlist approach prevents exfiltration to arbitrary domains. The full lockdown is as close to airtight as you get without pulling the network cable.
-
-**Gap:** The allowlist is resolved via DNS at container startup. CDN IP rotation means a domain might resolve to a new IP mid-session that gets blocked. Also, IPv6 isn't firewalled, so if the container has IPv6 connectivity, that's an open channel. I need to fix that.
+- **Strength: medium to strong.** The allowlist approach prevents exfiltration to arbitrary domains while keeping the agent functional.
+- **Gap:** The allowlist is resolved via DNS at container startup. CDN IP rotation means a domain might resolve to a new IP mid-session that gets blocked. Also, IPv6 isn't firewalled, so if the container has IPv6 connectivity, that's an open channel. I need to fix that.
 
 ### Ephemeral containers (mitigates T3, T6)
 
@@ -132,19 +128,17 @@ Every session starts fresh. The container is created with `--rm`, so it's destro
 
 Settings are rebuilt at runtime by layering defaults with user overrides. The runtime file lives at `/tmp/` and is never written back to persistent storage. A compromised session can't permanently alter the configuration.
 
-**Strength: strong for persistence prevention.** A malicious modification to settings or installed packages doesn't survive a restart.
-
-**Gap:** The config volume (auth tokens, MCP configs) does persist. If an attacker modifies something in that volume, it carries over.
+- **Strength: strong for persistence prevention.** A malicious modification to settings or installed packages doesn't survive a restart.
+- **Gap:** The config volume (auth tokens, MCP configs) does persist. If an attacker modifies something in that volume, it carries over.
 
 ### SSH agent forwarding, not key storage (mitigates T4)
 
-SSH private keys never touch the container filesystem. Instead, the host's SSH agent socket is mounted in, and a `socat` relay proxies it to the container's `node` user.
+SSH private keys never touch the container filesystem. Instead, the host's SSH agent socket is forwarded into the container, so the agent can authenticate without the key material being present.
 
 The agent can use the keys to authenticate (git push, git pull), but it can't read the key material. Even if the agent reads every file in the container, the private key bytes aren't there.
 
-**Strength: strong against key theft.** The key material is genuinely inaccessible.
-
-**Gap:** The agent socket itself still allows signing operations. A compromised session could push to any repo the key has access to. You're protecting the key, not the access.
+- **Strength: strong against key theft.** The key material is genuinely inaccessible.
+- **Gap:** The agent socket itself still allows signing operations. A compromised session could push to any repo the key has access to. You're protecting the key, not the access.
 
 ### Profile-based volume isolation (mitigates T8)
 
@@ -154,10 +148,8 @@ When I set `CLAUDE_PROFILE=work`, the Docker volume storing auth tokens and conf
 CLAUDE_PROFILE=work ./claudecker.sh run /path/to/project
 ```
 
-**Strength: strong.** Profiles are fully isolated at the volume level.
-
-**Gap:** If you forget to set the profile, you're on the default volume, shared across all unprofilied sessions.
-
+- **Strength: strong.** Profiles are fully isolated at the volume level.
+- **Gap:** If you forget to set the profile, you're on the default volume, shared across all unprofilied sessions.
 
 ## Isolation without crippling the tool
 
@@ -167,7 +159,7 @@ Browsers figured this out with tabs. Package managers figured it out with instal
 
 That's what Claudecker does. The agent gets full shell access, full file access, and configurable network access, but all inside a container where the blast radius is limited to the project directory. It can do everything it needs to do. It just can't touch anything it shouldn't.
 
-I'm choosing to cripple some of it because there are still too many unknowns. The eight threats I've listed here are just the ones I've identified so far. New ones show up every week. Until the threat landscape settles (if it ever does), I'd rather have too much isolation than too little.
+I'm choosing tighter controls now because there are still too many unknowns. The eight threats I've listed here are just the ones I've identified so far. New ones show up every week. Until the threat landscape settles (if it ever does), I'd rather have too much isolation than too little. You can always loosen restrictions. You can't undo a breach.
 
 ## What you can do today
 
@@ -184,7 +176,3 @@ Claudecker isn't publicly available. It's deeply integrated into my personal wor
 5. **Turn off network access when you don't need it.** If you're just refactoring code or writing tests, the agent doesn't need the internet. Codex CLI disables network by default. If you're running in Docker, [`--network none`](https://docs.docker.com/engine/network/drivers/none/) disables all network access with no extra configuration.
 
 None of these require building anything. They're just decisions.
-
----
-
-For the implementation details behind Claudecker, see the [companion post]({filename}/running-ai-agents-in-a-box.md).
