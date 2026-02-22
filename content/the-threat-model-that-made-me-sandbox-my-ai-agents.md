@@ -3,6 +3,7 @@ Date: 2026-02-23 20:00
 Slug: the-threat-model-that-made-me-sandbox-my-ai-agents
 Tags: security, ai, claude-code, docker, tools
 Category: Security
+Status: draft
 Summary: AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.
 
 > **TLDR:** AI coding agents have shell access to your machine. They can run commands, modify files, and reach the network. I wanted to map out the threat model before letting one anywhere near my projects.
@@ -98,7 +99,7 @@ Some of these are strong mitigations. Others are just friction. I want to be hon
 
 The most basic control. Claude Code runs inside a Docker container. The only host directory mounted is the project itself. The agent can't read `~/.ssh/` or `~/.aws/` because those paths don't exist inside the container.
 
- ```bash
+```bash
 ./claudecker.sh run /path/to/project
 ```
 
