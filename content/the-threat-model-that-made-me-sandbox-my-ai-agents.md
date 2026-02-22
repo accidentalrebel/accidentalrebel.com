@@ -1,5 +1,5 @@
 Title: The threat model that made me sandbox my AI agents
-Date: 2026-02-21 10:00
+Date: 2026-02-23 20:00
 Slug: the-threat-model-that-made-me-sandbox-my-ai-agents
 Tags: security, ai, claude-code, docker, tools
 Category: Security
