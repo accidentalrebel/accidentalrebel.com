@@ -461,6 +461,10 @@ h3 {
     border-radius: 0 8px 8px 0;
 }
 
+.article-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
 /* Tags — accent-tinted on hover */
 .tags {
     display: flex;
