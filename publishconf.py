@@ -27,6 +27,8 @@ EXTRA_PATH_METADATA = {
 
 SUMMARY_MAX_LENGTH = 150
 DELETE_OUTPUT_DIRECTORY = True
+DRAFT_SAVE_AS = ''
+DRAFT_PAGE_SAVE_AS = ''
 
 # Following items are often useful when publishing
 
