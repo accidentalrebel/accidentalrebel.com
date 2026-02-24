@@ -1,0 +1,14 @@
+# ----------------------------------------
+# Events: Event name
+# Account: AccidentalRebel
+# Property: Accidental Rebel - GA4
+# ----------------------------------------
+# 
+# All Users
+# Start date: 20250228
+# End date: 20260221
+Event name,Event count,Total users,Event count per active user,Total revenue
+page_view,5084,3905,1.3025877530105048,0
+session_start,4220,3905,1.0812195746861388,0
+first_visit,3918,3900,1.0046153846153847,0
+user_engagement,2562,1579,1.6391554702495201,0

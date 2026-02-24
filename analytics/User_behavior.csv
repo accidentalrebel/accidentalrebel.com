@@ -1,0 +1,1259 @@
+# ----------------------------------------
+# User behavior
+# Account: AccidentalRebel
+# Property: Accidental Rebel - GA4
+# ----------------------------------------
+#  
+# Start date: 20250228
+# End date: 20260221
+Active users,New users,Average engagement time per active user,Event count
+3919,3918,43.079101811686655,15784
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Page title and screen class,Views,Active users,Event count,Bounce rate
+AccidentalRebel.com,2618,1972,8077,0.6406327236777064
+Malware sandbox evasion in x64 assembly by checking ram size - Part 2 | AccidentalRebel.com,84,73,276,0.8051948051948052
+Building my Virtual Cybersecurity Home Lab | AccidentalRebel.com,83,71,265,0.6410256410256411
+Categories | AccidentalRebel.com,77,73,211,0.68
+Malware sandbox evasion in x64 assembly by checking ram size - Part 1 | AccidentalRebel.com,73,61,230,0.8225806451612904
+malware | AccidentalRebel.com,72,73,228,0.9726027397260274
+electronics | AccidentalRebel.com,70,69,214,0.9855072463768116
+Classifying Malware Packers Using Machine Learning | AccidentalRebel.com,68,49,210,0.75
+Building a session retrospective skill for Claude Code | AccidentalRebel.com,63,48,209,0.5263157894736842
+Making a RAT | AccidentalRebel.com,59,50,197,0.5925925925925926
+Emprisa Maldoc Writeup | AccidentalRebel.com,58,43,178,0.7017543859649122
+Making a RAT,57,44,195,0.5925925925925926
+Chicken-Scheme FFI Examples | AccidentalRebel.com,52,38,188,0.603448275862069
+Talking about Mitre's Malware Behavior Catalog | AccidentalRebel.com,51,37,172,0.6842105263157895
+Tags | AccidentalRebel.com,50,50,149,0.92
+Running AI agents in a box because I don't trust them | AccidentalRebel.com,48,39,164,0.6785714285714286
+Building my Virtual Cybersecurity Home Lab,43,31,134,0.5853658536585366
+dev | AccidentalRebel.com,43,42,133,0.9047619047619048
+Cyber Corp Case 2 Writeup - Part 2 | AccidentalRebel.com,42,28,115,0.7777777777777778
+Converting a malware dropper to x64 assembly | AccidentalRebel.com,35,33,124,0.5945945945945946
+Archives | AccidentalRebel.com,34,34,84,0.42857142857142855
+Cyber Corp Case 2 Writeup - Part 1 | AccidentalRebel.com,34,22,97,0.625
+The Emprisa Maldoc Challenge | AccidentalRebel.com,33,31,94,0.8181818181818182
+#2 - Implemented basic Scheme scripting for Rebel Game Engine | AccidentalRebel.com,31,30,100,0.6
+game_engine | AccidentalRebel.com,31,31,94,0.967741935483871
+malware_analysis | AccidentalRebel.com,30,30,90,0.9666666666666667
+Chicken-Scheme FFI Examples,29,17,93,0.46153846153846156
+Cyber Corp Case 2 Writeup - Part 3 | AccidentalRebel.com,29,25,79,0.7407407407407407
+Emprisa Maldoc Writeup,29,19,90,0.2608695652173913
+Hunt the Kingdom CTF Challenge | AccidentalRebel.com,28,25,90,0.6428571428571429
+IOLI Crackme 0x00 | AccidentalRebel.com,25,25,80,0.6
+cybersecurity | AccidentalRebel.com,23,23,70,1
+emacs | AccidentalRebel.com,23,23,70,1
+lisp | AccidentalRebel.com,23,23,71,0.9565217391304348
+#1 - Thinking of adding Lisp to my custom game engine | AccidentalRebel.com,22,17,66,0.6111111111111112
+Classifying Malware Packers Using Machine Learning,22,12,63,0.5416666666666666
+Introducing shcode2exe | AccidentalRebel.com,22,20,76,0.6818181818181818
+tools | AccidentalRebel.com,22,22,69,0.9545454545454546
+IOLI Crackme 0x01 | AccidentalRebel.com,21,21,69,0.8571428571428571
+IOLI Crackme 0x02 | AccidentalRebel.com,21,18,63,0.8095238095238095
+engine | AccidentalRebel.com,21,21,63,0.9047619047619048
+misc | AccidentalRebel.com,21,21,65,0.9523809523809523
+IOLI Crackme 0x04 | AccidentalRebel.com,20,18,65,0.8
+Introducing shcode2exe,20,17,64,0.35294117647058826
+threat-hunting | AccidentalRebel.com,20,17,57,0.8235294117647058
+Investigating an FB phishing site | AccidentalRebel.com,19,19,62,0.8421052631578947
+Converting a malware dropper to x64 assembly,18,15,61,0.4666666666666667
+assembly | AccidentalRebel.com,18,18,56,1
+Cyber Corp Case 2 Writeup - Part 1,17,9,52,0.4666666666666667
+Malware sandbox evasion in x64 assembly by checking ram size - Part 1,17,7,45,0.7777777777777778
+Talking about Mitre's Malware Behavior Catalog,17,17,64,0.65
+evasion | AccidentalRebel.com,17,17,52,1
+postmortem | AccidentalRebel.com,17,17,51,1
+#4 - Following Lispy conventions | AccidentalRebel.com,16,15,47,0.7058823529411765
+#5 - Switching from C/C++ to C | AccidentalRebel.com,16,13,44,0.6
+My experience with manufacturing printed circuit boards | AccidentalRebel.com,16,16,53,0.8125
+IOLI Crackme 0x03 | AccidentalRebel.com,15,12,45,0.7142857142857143
+CovidScammers writeup (Defcon RTV CTF) | AccidentalRebel.com,14,12,39,0.7692307692307693
+IOLI Crackme 0x03,14,11,40,0.6
+Maldoc101 Writeup (Part 1) | AccidentalRebel.com,14,12,42,0.8333333333333334
+#3 - Rebel Game Engine now works on different platforms | AccidentalRebel.com,13,11,35,0.8181818181818182
+Making Unity beep after scripts finish reloading | AccidentalRebel.com,13,13,42,0.9230769230769231
+String anti-virus evasion in x64 assembly (Part 1),13,9,38,0.3333333333333333
+String anti-virus evasion in x64 assembly (Part 1) | AccidentalRebel.com,13,13,40,0.8461538461538461
+av | AccidentalRebel.com,13,13,39,1
+Classifying More With Less: New VGL4NT Update,12,8,35,0.2
+Classifying More With Less: New VGL4NT Update | AccidentalRebel.com,12,12,37,0.8333333333333334
+Opening Unity Script Files in Emacs | AccidentalRebel.com,12,12,37,1
+Your AI Assistant Might Be Working for Someone Else | AccidentalRebel.com,12,6,28,0.7142857142857143
+org-mode | AccidentalRebel.com,11,11,33,1
+Converting org-journal entry to org-page post | AccidentalRebel.com,10,10,31,1
+IOLI Crackme 0x04,10,5,27,0.14285714285714285
+New Tool Preview: vATT&CK | AccidentalRebel.com,10,10,31,1
+phishing | AccidentalRebel.com,10,10,31,1
+re | AccidentalRebel.com,10,10,31,0.8
+writeup | AccidentalRebel.com,10,10,30,1
+IOLI Crackme 0x01,9,8,28,0.2222222222222222
+String anti-virus evasion in x64 assembly (Part 2) | AccidentalRebel.com,9,9,28,0.7777777777777778
+IOLI Crackme 0x00,8,8,22,0.4444444444444444
+Study notes: MAC Spoofing | AccidentalRebel.com,8,8,24,1
+artificial_intelligence | AccidentalRebel.com,8,8,24,1
+machine_learning | AccidentalRebel.com,8,8,24,0.75
+packers malware machine_learning ml update vgl4nt | AccidentalRebel.com,8,8,25,1
+Adding Automation to Blue-Jupyter Malware Notebook | AccidentalRebel.com,7,7,23,1
+CovidScammers writeup (Defcon RTV CTF),7,6,28,0.5555555555555556
+Maldoc101 Writeup (Part 1),7,5,20,0.5
+ctf | AccidentalRebel.com,7,7,21,1
+Investigating an FB phishing site,6,6,23,0.3333333333333333
+Malware sandbox evasion in x64 assembly by checking ram size - Part 2,6,7,17,0.625
+My experience with manufacturing printed circuit boards,6,5,20,0.2
+programming | AccidentalRebel.com,6,6,17,0.8333333333333334
+Adding Automation to Blue-Jupyter Malware Notebook,5,4,15,0.4
+Chef Wars Postmortem -- What Went Right: Risk Adjusted Technical Estimates | AccidentalRebel.com,5,5,15,1
+Chef Wars Postmortem -- What went wrong: Optimizing too early and too late | AccidentalRebel.com,5,5,15,1
+Cyber Corp Case 2 Writeup - Part 2,5,3,11,0.2
+Cyber Corp Case 2 Writeup - Part 3,5,3,13,0.2857142857142857
+IOLI Crackme 0x02,5,3,12,0
+Opening Unity Script Files in Emacs,5,5,16,0.6
+crackme | AccidentalRebel.com,5,5,13,0.6
+Chef Wars Postmortem -- What went right: Having a Universe File | AccidentalRebel.com,4,4,12,1
+Finding phished passwords on a scam site | AccidentalRebel.com,4,4,13,0.75
+Hunt the Kingdom CTF Challenge,4,4,15,0.75
+Maldoc101 Writeup (Part 2) | AccidentalRebel.com,4,4,12,1
+Posts for crackme,4,3,12,0
+Temp Solution For When Text Copying Does Not Work in Emacs Under Windows Subsytem for Linux | AccidentalRebel.com,4,4,12,1
+defcon | AccidentalRebel.com,4,4,11,0.75
+emacs unity | AccidentalRebel.com,4,4,12,1
+gamedev | AccidentalRebel.com,4,4,11,0.75
+#5 - Switching from C/C++ to C,3,2,6,0
+Making Unity beep after scripts finish reloading,3,3,10,0.6666666666666666
+analysis | AccidentalRebel.com,3,3,9,1
+code | AccidentalRebel.com,3,3,9,1
+cyberdefenders | AccidentalRebel.com,3,3,9,1
+emacs org-mode | AccidentalRebel.com,3,3,9,1
+emacs windows linux | AccidentalRebel.com,3,3,9,1
+maldoc | AccidentalRebel.com,3,3,9,1
+mbc | AccidentalRebel.com,3,3,9,1
+mitre | AccidentalRebel.com,3,3,9,1
+pcbs | AccidentalRebel.com,3,3,9,1
+research | AccidentalRebel.com,3,3,9,1
+reverse-engineering | AccidentalRebel.com,3,3,9,1
+sandbox | AccidentalRebel.com,3,3,10,0.6666666666666666
+spoofing | AccidentalRebel.com,3,3,9,1
+x64 | AccidentalRebel.com,3,3,9,1
+#1 - Thinking of adding Lisp to my custom game engine,2,2,6,0
+#2 - Implemented basic Scheme scripting for Rebel Game Engine,2,2,5,0.5
+#4 - Following Lispy conventions,2,2,5,0
+About | AccidentalRebel.com,2,2,5,0.5
+Cybersecurity x AI News Roundup | AccidentalRebel.com,2,2,7,0.5
+Posts for cybersecurity,2,2,7,1
+String anti-virus evasion in x64 assembly (Part 2),2,2,8,0
+The Emprisa Maldoc Challenge,2,2,5,0
+ai | AccidentalRebel.com,2,2,6,1
+claude-code | AccidentalRebel.com,2,2,6,1
+docker | AccidentalRebel.com,2,2,6,1
+"maldoc, writeup, ctf | AccidentalRebel.com",2,2,7,0.5
+mindcake | AccidentalRebel.com,2,2,6,1
+"phishing, threat-hunting, osint | AccidentalRebel.com",2,2,6,1
+unity | AccidentalRebel.com,2,2,6,1
+Chef Wars Postmortem -- What went right: Having a Universe File,1,1,4,1
+Construyendo mi laboratorio virtual de ciberseguridad en casa | AccidentalRebel.com,1,1,4,0
+Finding phished passwords on a scam site,1,1,4,0
+Posts for assembly,1,1,1,0
+Posts for game_engine,1,1,1,0
+Posts for gamedev,1,1,2,0
+Posts for malware_analysis,1,1,4,0
+Posts for tools,1,1,3,1
+chefwars | AccidentalRebel.com,1,1,3,1
+cybersecurity-x-ai | AccidentalRebel.com,1,1,3,1
+security | AccidentalRebel.com,1,1,3,1
+Artículo de Emprisa Maldoc | AccidentalRebel.com,0,0,2,1
+Bir RAT Yapımı | AccidentalRebel.com,0,1,1,0
+Bài viết về vụ án Cyber ​​Corp 2 - Phần 1 | AccidentalRebel.com,0,1,1,0
+Claude Code のためのセッション振り返りスキルの構築 | AccidentalRebel.com,0,1,1,0
+Construire mon laboratoire de cybersécurité virtuel à domicile,0,1,1,0
+Construyendo mi Laboratorio Virtual de Ciberseguridad para el Hogar | AccidentalRebel.com,0,1,1,0
+CovidScammers 관련 기사 (Defcon RTV CTF) | AccidentalRebel.com,0,1,1,0
+Créer mon laboratoire de cybersécurité virtuel à domicile | AccidentalRebel.com,0,1,1,0
+Cyber​​ Corp 案例 2 撰写 - 第一部分,0,1,1,0
+Eine RAT bauen | AccidentalRebel.com,0,1,1,0
+Emacs에서 Unity 스크립트 파일 열기,0,1,1,0
+Emprisa Maldoc 文章 |AccidentalRebel.com,0,1,1,0
+Emprisa Maldoc 文章 |意外反叛网站,0,1,2,1
+Emprisa Maldoc 쓰기 | AccidentalRebel.com,0,1,2,0
+Evasión de antivirus de cadenas en ensamblado x64 (Parte 2) | AccidentalRebel.com,0,1,1,0
+Faire un RAT,0,1,2,0
+Investigando um site de phishing no Facebook | AccidentalRebel.com,0,1,1,0
+Maldoc101 작성 (1부) | AccidentalRebel.com,0,1,1,0
+Posty dla crackme,0,1,1,0
+RATの作成 | AccidentalRebel.com,0,1,1,0
+Redacción de Maldoc de la empresa,0,1,2,1
+Redação da Emprisa Maldoc | AccidentalRebel.com,0,1,1,0
+Tai nạnRebel.com,0,1,2,0
+Tránh né chống vi-rút chuỗi trong x64 assembly (Phần 1),0,1,2,0
+shcode2exe の紹介,0,1,1,0
+shcode2exe 简介 | AccidentalRebel.com,0,1,2,1
+"Обзор дела Cyber ​​Corp, часть 2 | AccidentalRebel.com",0,1,2,1
+Описание дела Cyber ​​Corp 2 — Часть 1 | AccidentalRebel.com,0,1,3,0.5
+Описание дела Cyber ​​Corp 2 — Часть 2 | AccidentalRebel.com,0,1,5,0.3333333333333333
+Описание дела Cyber ​​Corp 2 — Часть 3 | AccidentalRebel.com,0,1,7,0.3333333333333333
+Представляем shcode2exe | AccidentalRebel.com,0,1,3,0.5
+Преобразование вредоносного дроппера в сборку x64,0,1,1,0
+Рецензия Эмприсы Малдок,0,1,1,0
+Эмприса Малдок Написание | AccidentalRebel.com,0,1,1,0
+意外叛逆者网站,0,2,2,0
+我制造印刷电路板的经验 | AccidentalRebel.com,0,1,1,0
+通过检查 RAM 大小来逃避 x64 程序集中的恶意软件沙盒攻击 - 第一部分,0,1,1,0
+아이올리 크랙미 0x00,0,2,3,1
+클로드 코드에게 세션 회고 스킬을 가르치기 | AccidentalRebel.com,0,1,1,0
+
+#  
+# Start date: 20250228
+# End date: 20260221
+First user source / medium,Active users
+(direct) / (none),2670
+wake-up-network.com / referral,543
+google / organic,445
+bing / organic,58
+github.com / referral,48
+cyberdefenders.org / referral,36
+linkedin.com / referral,26
+chatgpt.com / referral,13
+chsasank.com / referral,12
+duckduckgo / organic,9
+yandex.ru / referral,7
+chatgpt.com / (not set),3
+t.co / referral,3
+claude.ai / referral,2
+cn.bing.com / referral,2
+ecs.wgtn.ac.nz / referral,2
+facebook.com / referral,2
+gemini.google.com / referral,2
+m.baidu.com / referral,2
+m.facebook.com / referral,2
+perplexity.ai / referral,2
+7porn.top / referral,1
+ahmid.qchjs.com / referral,1
+astimvnc.online / referral,1
+copilot.microsoft.com / referral,1
+cvtblog.online / referral,1
+dysmg.ciarustde.online / referral,1
+eavuinsr.online / referral,1
+ecosia.org / organic,1
+ejujl.laitrcus.online / referral,1
+encmbtia.online / referral,1
+fiuagts.online / referral,1
+hieuag.online / referral,1
+hprnc.com / referral,1
+icons-search.com / referral,1
+l.instagram.com / referral,1
+m365.cloud.microsoft / referral,1
+mxrau.ratraiser.online / referral,1
+news.ycombinator.com / referral,1
+nfiux.labguamec.online / referral,1
+out.reddit.com / referral,1
+phimarshcer.online / referral,1
+qwant.com / organic,1
+reddit.com / referral,1
+research.keabase.com / referral,1
+search.brave.com / referral,1
+shellsharks.com / referral,1
+ya.ru / referral,1
+yahoo.com / referral,1
+youtube.com / referral,1
+zt4.top / referral,1
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Session source / medium,Sessions
+(direct) / (none),2735
+google / organic,562
+wake-up-network.com / referral,543
+github.com / referral,71
+bing / organic,70
+cyberdefenders.org / referral,56
+linkedin.com / referral,44
+chatgpt.com / referral,16
+duckduckgo / organic,14
+chsasank.com / referral,13
+t.co / referral,11
+yandex.ru / referral,7
+chatgpt.com / (not set),5
+ecs.wgtn.ac.nz / referral,4
+search.brave.com / referral,4
+cn.bing.com / referral,3
+gemini.google.com / referral,3
+claude.ai / referral,2
+facebook.com / referral,2
+m.baidu.com / referral,2
+m.facebook.com / referral,2
+mail.google.com / referral,2
+out.reddit.com / referral,2
+7porn.top / referral,1
+ahmid.qchjs.com / referral,1
+astimvnc.online / referral,1
+chat.deepseek.com / referral,1
+copilot.microsoft.com / referral,1
+cvtblog.online / referral,1
+dysmg.ciarustde.online / referral,1
+eavuinsr.online / referral,1
+ecosia.org / organic,1
+ejujl.laitrcus.online / referral,1
+encmbtia.online / referral,1
+fiuagts.online / referral,1
+hieuag.online / referral,1
+hprnc.com / referral,1
+icons-search.com / referral,1
+l.instagram.com / referral,1
+m365.cloud.microsoft / referral,1
+mxrau.ratraiser.online / referral,1
+news.ycombinator.com / referral,1
+nfiux.labguamec.online / referral,1
+perplexity.ai / referral,1
+phimarshcer.online / referral,1
+qwant.com / organic,1
+reddit.com / referral,1
+research.keabase.com / referral,1
+shellsharks.com / referral,1
+ya.ru / referral,1
+yahoo / organic,1
+yahoo.com / referral,1
+youtube.com / referral,1
+zt4.top / referral,1
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Nth day,new,returning
+0000,4,1
+0001,3,1
+0002,3,0
+0003,11,0
+0004,13,0
+0005,6,1
+0006,5,1
+0007,4,2
+0008,1,0
+0009,3,0
+0010,5,0
+0011,7,0
+0012,3,0
+0013,2,0
+0014,2,0
+0015,1,1
+0016,7,1
+0017,9,2
+0018,7,0
+0019,2,0
+0020,2,0
+0021,1,0
+0022,3,0
+0023,3,1
+0024,3,1
+0025,4,2
+0026,0,0
+0027,4,0
+0028,5,0
+0029,3,1
+0030,0,0
+0031,0,0
+0032,2,0
+0033,4,1
+0034,8,0
+0035,2,0
+0036,4,0
+0037,2,1
+0038,2,0
+0039,0,0
+0040,9,0
+0041,4,0
+0042,11,1
+0043,5,0
+0044,4,0
+0045,8,1
+0046,7,2
+0047,12,1
+0048,4,0
+0049,2,0
+0050,4,0
+0051,3,1
+0052,4,0
+0053,4,1
+0054,6,0
+0055,6,0
+0056,4,0
+0057,3,0
+0058,4,1
+0059,5,2
+0060,4,1
+0061,7,0
+0062,2,0
+0063,4,0
+0064,3,0
+0065,4,1
+0066,9,2
+0067,3,0
+0068,7,1
+0069,5,0
+0070,0,1
+0071,6,2
+0072,6,2
+0073,8,2
+0074,5,0
+0075,7,3
+0076,5,2
+0077,9,1
+0078,3,0
+0079,5,0
+0080,2,0
+0081,0,0
+0082,6,2
+0083,3,0
+0084,4,1
+0085,4,0
+0086,4,0
+0087,1,0
+0088,1,0
+0089,3,0
+0090,5,0
+0091,4,0
+0092,3,0
+0093,0,0
+0094,5,0
+0095,4,1
+0096,2,0
+0097,8,0
+0098,4,0
+0099,2,0
+0100,7,1
+0101,4,0
+0102,3,0
+0103,4,0
+0104,1,0
+0105,9,2
+0106,5,2
+0107,3,0
+0108,10,0
+0109,20,0
+0110,3,0
+0111,8,0
+0112,1,0
+0113,1,0
+0114,0,0
+0115,6,2
+0116,2,1
+0117,1,0
+0118,7,2
+0119,6,0
+0120,1,0
+0121,5,0
+0122,15,0
+0123,15,1
+0124,2,0
+0125,5,0
+0126,9,0
+0127,7,0
+0128,27,0
+0129,2,1
+0130,1,0
+0131,3,0
+0132,2,0
+0133,3,0
+0134,6,0
+0135,5,1
+0136,0,2
+0137,2,0
+0138,4,0
+0139,6,1
+0140,2,0
+0141,2,0
+0142,2,0
+0143,2,0
+0144,4,1
+0145,1,2
+0146,3,0
+0147,21,1
+0148,7,0
+0149,2,0
+0150,2,0
+0151,2,1
+0152,5,0
+0153,1,0
+0154,3,1
+0155,4,0
+0156,6,0
+0157,6,0
+0158,2,1
+0159,7,1
+0160,6,0
+0161,32,0
+0162,4,0
+0163,0,0
+0164,2,0
+0165,453,0
+0166,94,0
+0167,2,0
+0168,1,0
+0169,1,0
+0170,4,0
+0171,1,0
+0172,0,0
+0173,1,0
+0174,3,0
+0175,2,0
+0176,3,0
+0177,3,1
+0178,3,0
+0179,5,0
+0180,4,1
+0181,1,1
+0182,4,0
+0183,13,1
+0184,3,1
+0185,2,0
+0186,4,0
+0187,3,2
+0188,3,0
+0189,1,0
+0190,2,1
+0191,0,0
+0192,8,1
+0193,3,0
+0194,7,3
+0195,2,0
+0196,1,1
+0197,1,0
+0198,4,0
+0199,2,0
+0200,6,0
+0201,2,0
+0202,5,1
+0203,1,0
+0204,3,1
+0205,4,0
+0206,1,0
+0207,1,0
+0208,7,0
+0209,5,1
+0210,1,0
+0211,5,1
+0212,3,0
+0213,6,1
+0214,4,0
+0215,10,0
+0216,0,0
+0217,5,0
+0218,7,1
+0219,5,0
+0220,4,0
+0221,3,0
+0222,8,0
+0223,7,0
+0224,7,1
+0225,6,1
+0226,8,1
+0227,6,0
+0228,7,1
+0229,3,0
+0230,3,1
+0231,23,0
+0232,8,1
+0233,6,0
+0234,11,0
+0235,9,0
+0236,9,1
+0237,26,2
+0238,33,0
+0239,10,0
+0240,4,0
+0241,10,0
+0242,9,0
+0243,18,1
+0244,10,0
+0245,11,1
+0246,21,0
+0247,35,1
+0248,9,0
+0249,31,0
+0250,21,0
+0251,26,0
+0252,23,1
+0253,8,0
+0254,7,0
+0255,10,0
+0256,6,0
+0257,13,0
+0258,16,0
+0259,17,0
+0260,18,0
+0261,10,0
+0262,17,0
+0263,13,1
+0264,7,0
+0265,7,0
+0266,17,0
+0267,16,0
+0268,25,0
+0269,8,0
+0270,12,0
+0271,12,0
+0272,16,0
+0273,28,1
+0274,16,0
+0275,10,0
+0276,14,0
+0277,16,1
+0278,15,0
+0279,11,2
+0280,17,0
+0281,10,0
+0282,13,0
+0283,15,0
+0284,18,0
+0285,18,0
+0286,13,0
+0287,20,0
+0288,21,0
+0289,23,0
+0290,14,0
+0291,13,0
+0292,14,0
+0293,18,0
+0294,17,1
+0295,19,0
+0296,14,0
+0297,11,0
+0298,21,0
+0299,11,1
+0300,13,0
+0301,16,0
+0302,21,0
+0303,21,0
+0304,17,0
+0305,13,0
+0306,19,0
+0307,16,0
+0308,21,0
+0309,16,0
+0310,14,1
+0311,17,0
+0312,15,1
+0313,18,0
+0314,18,2
+0315,13,0
+0316,17,0
+0317,6,0
+0318,13,1
+0319,19,2
+0320,18,0
+0321,13,1
+0322,11,0
+0323,19,0
+0324,17,1
+0325,15,0
+0326,16,1
+0327,14,0
+0328,23,0
+0329,34,0
+0330,30,0
+0331,21,0
+0332,57,1
+0333,61,0
+0334,29,0
+0335,37,0
+0336,19,1
+0337,43,1
+0338,17,4
+0339,25,5
+0340,10,0
+0341,14,3
+0342,27,1
+0343,32,5
+0344,19,0
+0345,27,0
+0346,28,3
+0347,39,0
+0348,48,2
+0349,24,1
+0350,8,0
+0351,32,1
+0352,21,2
+0353,10,0
+0354,32,1
+0355,21,1
+0356,26,2
+0357,19,0
+0358,29,2
+
+# How does activity on your platforms compare?
+# Start date: 20250228
+# End date: 20260221
+Platform,Key events
+
+
+#  
+# Start date: 20250228
+# End date: 20260221
+City,Active users
+Lanzhou,1174
+Santa Clara,274
+Clifton,269
+Singapore,128
+Columbus,76
+Shanghai,50
+Boardman,48
+Hangzhou,31
+San Jose,30
+Council Bluffs,27
+Ashburn,23
+Beijing,21
+Abu Dhabi,18
+Montreal,17
+Burnaby,15
+New York,15
+Lhasa,14
+Hong Kong,13
+The Dalles,13
+London,12
+Newark,12
+North Charleston,12
+Moscow,11
+Phoenix,11
+Guangzhou,10
+Marshall,10
+Tel Aviv-Yafo,10
+Bucharest,9
+Qingdao,9
+Saint Petersburg,9
+Zhuhai,9
+Amman,8
+Hanoi,8
+Ho Chi Minh City,8
+Smithfield,8
+Warsaw,8
+Bayingolin Mongol Autonomous Prefecture,7
+Bengaluru,7
+Frankfurt am Main,7
+Istanbul,7
+Mumbai,7
+Paris,7
+Rivas-Vaciamadrid,7
+Seoul,7
+Wellington,7
+Changzhou,6
+Chengdu,6
+Chongqing,6
+Flint Hill,6
+Indianapolis,6
+Jiaxing,6
+Kuala Lumpur,6
+Suzhou,6
+Wuhan,6
+Amsterdam,5
+Dhaka,5
+Dubai,5
+Dublin,5
+Karachi,5
+Pune,5
+Reston,5
+Shenzhen,5
+Shibuya,5
+Aspen,4
+Auckland,4
+Bangkok,4
+Berlin,4
+Chennai,4
+Dallas,4
+Islamabad,4
+Los Angeles,4
+Manila,4
+Melbourne,4
+Nairobi,4
+Oslo Municipality,4
+San Diego,4
+Sydney,4
+Austin,3
+Baltimore,3
+Beirut,3
+Boston,3
+Chandler,3
+Chula Vista,3
+Cluj-Napoca,3
+Delhi,3
+Franklin,3
+Incheon,3
+Indore,3
+Jinan,3
+Kyiv,3
+Lagos,3
+Madrid,3
+Milan,3
+Murfreesboro,3
+Old Orchard Beach,3
+Omaha,3
+Perth,3
+Riyadh,3
+San Antonio,3
+San Francisco,3
+Scottsdale,3
+Seongnam-si,3
+Shinjuku City,3
+Sunnyvale,3
+Tver,3
+Vienna,3
+Zaandam,3
+Accra,2
+Ahmedabad,2
+Alexandria,2
+Angers,2
+Ankara,2
+Antipolo,2
+Arlington,2
+Barendrecht,2
+Bath,2
+Buenos Aires,2
+Cairo,2
+Cape Town,2
+Casablanca,2
+Changhua City,2
+Chicago,2
+City of Meycauayan,2
+Coimbatore,2
+Curtea de Arges,2
+Dalian,2
+Des Moines,2
+Forest City,2
+Gebze,2
+Haarlem,2
+Hachioji,2
+Hamburg,2
+Havre,2
+Helsinki,2
+Honolulu,2
+Hyderabad,2
+Ili,2
+Iloilo City,2
+Imus,2
+Jakarta,2
+Kalamazoo,2
+Kitchener,2
+Klin,2
+Krakow,2
+Marrakesh,2
+Mexico City,2
+New Delhi,2
+Ottawa,2
+Porto Alegre,2
+Quezon City,2
+Rawalpindi,2
+Riga,2
+Rostov-on-Don,2
+Santa Cruz De La Sierra,2
+Santa Fe,2
+Sao Paulo,2
+Seattle,2
+Secaucus,2
+Setagaya City,2
+Sundbyberg,2
+Taguig,2
+Tashkent,2
+The Hague,2
+Toronto,2
+Tunis,2
+Valenzuela,2
+Vancouver,2
+Venice,2
+Yaounde,2
+Zapopan,2
+Zurich,2
+13337,1
+30460,1
+97469,1
+Aalborg,1
+Aberdeen Proving Ground,1
+Abuja,1
+Acharnes,1
+Adana,1
+Agadir,1
+Agra,1
+Alesund Municipality,1
+Algiers,1
+Almeria,1
+Altoona,1
+Alvarado,1
+Annecy-le-Vieux,1
+Ansan-si,1
+Antananarivo,1
+Antwerp,1
+Arjunimorgaon,1
+Ashdod,1
+Asuncion,1
+Athens,1
+Atlanta,1
+Ayr,1
+Baden,1
+Baghdad,1
+Baku,1
+Ballwin,1
+Bandar Seri Begawan,1
+Banja Luka,1
+Bari,1
+Barnaul,1
+Bartlesville,1
+Bayreuth,1
+Be'er Sheva,1
+Beitou District,1
+Bekasi Regency,1
+Bel Aire,1
+Belgrade,1
+Bellevue,1
+Beni-Mellal,1
+Bergen Municipality,1
+Best,1
+Beuningen,1
+Bhandara,1
+Bhubaneswar,1
+Biggleswade,1
+Bilbao,1
+Binangonan,1
+Birmingham,1
+Blackpool,1
+Blagoevgrad,1
+Blagoveshchensk,1
+Blountstown,1
+Bologna,1
+Boulogne-Billancourt,1
+Brampton,1
+Bratislava,1
+Breckenridge,1
+Breda,1
+Bremen,1
+Brescia,1
+Bright,1
+Brookfield,1
+Brown Deer,1
+Brunswick,1
+Brussels,1
+Budapest,1
+Bunkyo City,1
+Cabazon,1
+Cagayan de Oro,1
+Calamba,1
+Caloocan,1
+Canberra,1
+Canyon Lake,1
+Cape Girardeau,1
+Cebu City,1
+Centurion,1
+Chambersburg,1
+Changchun,1
+Charlottetown,1
+Chesterfield Township,1
+Chhatrapati Sambhajinagar,1
+Cincinnati,1
+Cinisello Balsamo,1
+City Of Manila,1
+Ciudad Apodaca,1
+Clamart,1
+Cologne,1
+Colombo,1
+Copenhagen,1
+Corinth,1
+Cotonou,1
+Coventry,1
+Cuba,1
+Curico,1
+Daejeon,1
+Dakar,1
+Dammam,1
+Davao City,1
+Da’an District,1
+Dehradun,1
+Detroit,1
+Di An,1
+Dnipro,1
+Domodedovo,1
+Dudelange,1
+Dusseldorf,1
+Eagle Mountain,1
+Eagleville,1
+East Farmingdale,1
+East Kilbride,1
+East Moline,1
+Eger,1
+Eguilles,1
+El Prat de Llobregat,1
+Elk City,1
+Elkridge,1
+Entebbe,1
+Erbil,1
+Erie,1
+Espoo,1
+Ezeiza,1
+Faiyum,1
+Falkenstein,1
+Farmington Hills,1
+Farsund Municipality,1
+Florence,1
+Florida,1
+Fort Worth,1
+Fridley,1
+Frisco,1
+Fryazino,1
+Fuzhou,1
+Geldrop,1
+Gelsenkirchen,1
+Giza,1
+Glastonbury,1
+Gonzalez,1
+Gothenburg,1
+Greenwood,1
+Guayaquil,1
+Gumi-si,1
+Haldia,1
+Hampstead,1
+Hampton,1
+Happy Valley,1
+Hellertown,1
+Helsingborg,1
+Hengstdijk,1
+Henlow,1
+Hoboken,1
+Horse Pasture,1
+Houston,1
+Howrah,1
+Huntington,1
+Indio,1
+Istres,1
+Jackson Township,1
+Jeddah,1
+Jinhua,1
+Johannesburg,1
+Karabuk,1
+Karlskoga,1
+Kathmandu,1
+Katowice,1
+Kazan,1
+Kefar Sava,1
+Kfar Yona,1
+Khlong Nueng,1
+Khon Kaen,1
+Kochi,1
+Kolhapur,1
+Kozhikode,1
+Kranj,1
+Krasnoyarsk,1
+Kuwait City,1
+Lahore,1
+Lake in the Hills,1
+Lakeport,1
+Lakeside,1
+Lancaster,1
+Laredo,1
+Leander,1
+Ledbury,1
+Leesburg,1
+Leisure City,1
+Lens,1
+Leonberg,1
+Lille,1
+Linares,1
+Linganore-Bartonsville,1
+Linhares,1
+Linter,1
+Liuzhou,1
+Liverpool,1
+Lochristi,1
+Lockport,1
+Lodeve,1
+Lome,1
+Long Eaton,1
+Long Khanh,1
+Louisville,1
+Loveland,1
+Lower Hutt,1
+Lubuk Begalung,1
+Luton,1
+Macau,1
+Madinah,1
+Madison,1
+Magnitogorsk,1
+Maintal,1
+Manaus,1
+Mankweng,1
+Maputo,1
+Maribor,1
+Marica,1
+Marseille,1
+Martigues,1
+Medan,1
+Medellin,1
+Medfield,1
+Melnik,1
+Memphis,1
+Merlo,1
+Mesquite,1
+Miami,1
+Mijdrecht,1
+Milton Keynes,1
+Minato City,1
+Mississauga,1
+Mississippi Mills,1
+Moneta,1
+Moody,1
+Mueang Khon Kaen District,1
+Munich,1
+Municipality of Pallini,1
+Mykolaiv,1
+Mysuru,1
+Mytishchi,1
+Naaldwijk,1
+Namyangju-si,1
+Napier,1
+New Cairo City,1
+Newcastle upon Tyne,1
+Newnan,1
+Nice,1
+Nikaia,1
+Ningbo,1
+Ninohe,1
+North Bergen,1
+North Highlands,1
+North Richland Hills,1
+Nottuln,1
+Novo Mesto,1
+Novosibirsk,1
+Nuestra Senora de La Paz,1
+Oakton,1
+Omsk,1
+Orlando,1
+Oshawa,1
+Palma,1
+Patiala,1
+Pernik,1
+Perugia,1
+Petah Tikva,1
+Petaling Jaya,1
+Phan Thiet,1
+Philadelphia,1
+Phnom Penh,1
+Piraeus,1
+Pittsburgh,1
+Plasencia,1
+Port Orange,1
+Port Said,1
+Portland,1
+Powder Springs,1
+Poznan,1
+Prague,1
+Princeton,1
+Prineville,1
+Provo,1
+Pruszkow,1
+Puchong,1
+Puyan Township,1
+Quanzhou,1
+Ramnicu Valcea,1
+Randburg,1
+Ravena,1
+Recife,1
+Redlands,1
+Reggio Emilia,1
+Rehovot,1
+Reykjavik,1
+Richmond,1
+Rio das Pedras,1
+Riverside,1
+Rose Hill,1
+Roswell,1
+Rowlett,1
+Ryazan,1
+Sai Ma,1
+Saint-Raphael,1
+Sainte-Agathe-des-Monts,1
+Salvador,1
+Sammamish,1
+San Carlos,1
+San Luis Potosi,1
+San Miguel de Tucuman,1
+Sanaa,1
+Sandefjord,1
+Sanford,1
+Santa Maria,1
+Santiago De Los Caballeros,1
+Santiago de Queretaro,1
+Sapporo,1
+Seeb,1
+Sharjah,1
+Sheffield,1
+Siheung-si,1
+Slim River,1
+Sochi,1
+Sofia,1
+Sollentuna,1
+Solna,1
+Son Tay,1
+Sonipat,1
+Sontra,1
+South Jordan,1
+South Tangerang,1
+Spanaway,1
+St. Catharines,1
+Stary Oskol,1
+Steger,1
+Stourport-on-Severn,1
+Stow,1
+Stuttgart,1
+Sucha Beskidzka,1
+Sulaymaniyah,1
+Surabaya,1
+Surrey,1
+Suzano,1
+Tabriz,1
+Taguig City,1
+Taiping,1
+Tallinn,1
+Tangail,1
+Targoviste,1
+Teaneck,1
+Tehran,1
+Tetouan,1
+The Woodlands,1
+Three Forks,1
+Tianzhong Township,1
+Toledo,1
+Tulsa,1
+Udon Thani,1
+Ulaanbaatar,1
+University Park,1
+Valdemoro,1
+Vantaa,1
+Vaughan,1
+Velloor,1
+Vernier,1
+Vientiane,1
+Vilnius,1
+Vilvoorde,1
+Virginia Beach,1
+Viseu,1
+Viterbo,1
+Vogelwaarde,1
+Wadowice,1
+Walnut Islands,1
+Washington,1
+Waterbury,1
+Waterloo,1
+West Monroe,1
+Wilmington,1
+Winnipeg,1
+Woodbridge,1
+Yangon,1
+Yantai,1
+Yonkers,1
+Zeist,1
+Zhumadian,1
+Zlin,1
+Zoetermeer,1
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Audience name,Active users
+All Users,3919

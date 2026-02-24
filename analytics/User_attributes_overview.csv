@@ -1,0 +1,861 @@
+# ----------------------------------------
+# User attributes overview
+# Account: AccidentalRebel
+# Property: Accidental Rebel - GA4
+# ----------------------------------------
+#  
+# Start date: 20250228
+# End date: 20260221
+Country ID,Active users
+AE,23
+AR,6
+AT,3
+AU,12
+AZ,1
+BA,1
+BD,7
+BE,4
+BG,3
+BJ,1
+BN,1
+BO,3
+BR,13
+CA,51
+CH,3
+CL,2
+CM,2
+CN,1749
+CO,1
+CR,1
+CZ,3
+DE,38
+DK,2
+DO,1
+DZ,1
+EC,1
+EE,1
+EG,7
+ES,19
+FI,4
+FR,28
+GB,32
+GH,2
+GR,5
+HK,18
+HR,1
+HU,2
+ID,7
+IE,3
+IL,16
+IN,53
+IQ,4
+IR,2
+IS,1
+IT,14
+JO,10
+JP,20
+KE,4
+KH,2
+KR,18
+KW,1
+LA,1
+LB,3
+LK,1
+LT,2
+LU,2
+LV,4
+MA,6
+MG,1
+MM,1
+MN,1
+MO,1
+MX,7
+MY,9
+MZ,1
+NG,4
+NL,29
+NO,10
+NP,2
+NZ,13
+OM,1
+PE,1
+PH,28
+PK,12
+PL,15
+PT,1
+PY,1
+RO,20
+RS,1
+RU,43
+SA,6
+SE,17
+SG,166
+SI,4
+SK,1
+SN,1
+SY,1
+TG,1
+TH,7
+TN,2
+TR,15
+TW,10
+UA,5
+UG,1
+US,1230
+UZ,2
+VN,20
+YE,1
+ZA,6
+
+# Start date: 20250228
+# End date: 20260221
+Country,Active users
+CN,1749
+US,1230
+SG,166
+IN,53
+CA,51
+RU,43
+DE,38
+
+#  
+# Start date: 20250228
+# End date: 20260221
+City,Active users
+Lanzhou,1174
+Santa Clara,274
+Clifton,269
+Singapore,128
+Columbus,76
+Shanghai,50
+Boardman,48
+Hangzhou,31
+San Jose,30
+Council Bluffs,27
+Ashburn,23
+Beijing,21
+Abu Dhabi,18
+Montreal,17
+Burnaby,15
+New York,15
+Lhasa,14
+Hong Kong,13
+The Dalles,13
+London,12
+Newark,12
+North Charleston,12
+Moscow,11
+Phoenix,11
+Guangzhou,10
+Marshall,10
+Tel Aviv-Yafo,10
+Bucharest,9
+Qingdao,9
+Saint Petersburg,9
+Zhuhai,9
+Amman,8
+Hanoi,8
+Ho Chi Minh City,8
+Smithfield,8
+Warsaw,8
+Bayingolin Mongol Autonomous Prefecture,7
+Bengaluru,7
+Frankfurt am Main,7
+Istanbul,7
+Mumbai,7
+Paris,7
+Rivas-Vaciamadrid,7
+Seoul,7
+Wellington,7
+Changzhou,6
+Chengdu,6
+Chongqing,6
+Flint Hill,6
+Indianapolis,6
+Jiaxing,6
+Kuala Lumpur,6
+Suzhou,6
+Wuhan,6
+Amsterdam,5
+Dhaka,5
+Dubai,5
+Dublin,5
+Karachi,5
+Pune,5
+Reston,5
+Shenzhen,5
+Shibuya,5
+Aspen,4
+Auckland,4
+Bangkok,4
+Berlin,4
+Chennai,4
+Dallas,4
+Islamabad,4
+Los Angeles,4
+Manila,4
+Melbourne,4
+Nairobi,4
+Oslo Municipality,4
+San Diego,4
+Sydney,4
+Austin,3
+Baltimore,3
+Beirut,3
+Boston,3
+Chandler,3
+Chula Vista,3
+Cluj-Napoca,3
+Delhi,3
+Franklin,3
+Incheon,3
+Indore,3
+Jinan,3
+Kyiv,3
+Lagos,3
+Madrid,3
+Milan,3
+Murfreesboro,3
+Old Orchard Beach,3
+Omaha,3
+Perth,3
+Riyadh,3
+San Antonio,3
+San Francisco,3
+Scottsdale,3
+Seongnam-si,3
+Shinjuku City,3
+Sunnyvale,3
+Tver,3
+Vienna,3
+Zaandam,3
+Accra,2
+Ahmedabad,2
+Alexandria,2
+Angers,2
+Ankara,2
+Antipolo,2
+Arlington,2
+Barendrecht,2
+Bath,2
+Buenos Aires,2
+Cairo,2
+Cape Town,2
+Casablanca,2
+Changhua City,2
+Chicago,2
+City of Meycauayan,2
+Coimbatore,2
+Curtea de Arges,2
+Dalian,2
+Des Moines,2
+Forest City,2
+Gebze,2
+Haarlem,2
+Hachioji,2
+Hamburg,2
+Havre,2
+Helsinki,2
+Honolulu,2
+Hyderabad,2
+Ili,2
+Iloilo City,2
+Imus,2
+Jakarta,2
+Kalamazoo,2
+Kitchener,2
+Klin,2
+Krakow,2
+Marrakesh,2
+Mexico City,2
+New Delhi,2
+Ottawa,2
+Porto Alegre,2
+Quezon City,2
+Rawalpindi,2
+Riga,2
+Rostov-on-Don,2
+Santa Cruz De La Sierra,2
+Santa Fe,2
+Sao Paulo,2
+Seattle,2
+Secaucus,2
+Setagaya City,2
+Sundbyberg,2
+Taguig,2
+Tashkent,2
+The Hague,2
+Toronto,2
+Tunis,2
+Valenzuela,2
+Vancouver,2
+Venice,2
+Yaounde,2
+Zapopan,2
+Zurich,2
+13337,1
+30460,1
+97469,1
+Aalborg,1
+Aberdeen Proving Ground,1
+Abuja,1
+Acharnes,1
+Adana,1
+Agadir,1
+Agra,1
+Alesund Municipality,1
+Algiers,1
+Almeria,1
+Altoona,1
+Alvarado,1
+Annecy-le-Vieux,1
+Ansan-si,1
+Antananarivo,1
+Antwerp,1
+Arjunimorgaon,1
+Ashdod,1
+Asuncion,1
+Athens,1
+Atlanta,1
+Ayr,1
+Baden,1
+Baghdad,1
+Baku,1
+Ballwin,1
+Bandar Seri Begawan,1
+Banja Luka,1
+Bari,1
+Barnaul,1
+Bartlesville,1
+Bayreuth,1
+Be'er Sheva,1
+Beitou District,1
+Bekasi Regency,1
+Bel Aire,1
+Belgrade,1
+Bellevue,1
+Beni-Mellal,1
+Bergen Municipality,1
+Best,1
+Beuningen,1
+Bhandara,1
+Bhubaneswar,1
+Biggleswade,1
+Bilbao,1
+Binangonan,1
+Birmingham,1
+Blackpool,1
+Blagoevgrad,1
+Blagoveshchensk,1
+Blountstown,1
+Bologna,1
+Boulogne-Billancourt,1
+Brampton,1
+Bratislava,1
+Breckenridge,1
+Breda,1
+Bremen,1
+Brescia,1
+Bright,1
+Brookfield,1
+Brown Deer,1
+Brunswick,1
+Brussels,1
+Budapest,1
+Bunkyo City,1
+Cabazon,1
+Cagayan de Oro,1
+Calamba,1
+Caloocan,1
+Canberra,1
+Canyon Lake,1
+Cape Girardeau,1
+Cebu City,1
+Centurion,1
+Chambersburg,1
+Changchun,1
+Charlottetown,1
+Chesterfield Township,1
+Chhatrapati Sambhajinagar,1
+Cincinnati,1
+Cinisello Balsamo,1
+City Of Manila,1
+Ciudad Apodaca,1
+Clamart,1
+Cologne,1
+Colombo,1
+Copenhagen,1
+Corinth,1
+Cotonou,1
+Coventry,1
+Cuba,1
+Curico,1
+Daejeon,1
+Dakar,1
+Dammam,1
+Davao City,1
+Da’an District,1
+Dehradun,1
+Detroit,1
+Di An,1
+Dnipro,1
+Domodedovo,1
+Dudelange,1
+Dusseldorf,1
+Eagle Mountain,1
+Eagleville,1
+East Farmingdale,1
+East Kilbride,1
+East Moline,1
+Eger,1
+Eguilles,1
+El Prat de Llobregat,1
+Elk City,1
+Elkridge,1
+Entebbe,1
+Erbil,1
+Erie,1
+Espoo,1
+Ezeiza,1
+Faiyum,1
+Falkenstein,1
+Farmington Hills,1
+Farsund Municipality,1
+Florence,1
+Florida,1
+Fort Worth,1
+Fridley,1
+Frisco,1
+Fryazino,1
+Fuzhou,1
+Geldrop,1
+Gelsenkirchen,1
+Giza,1
+Glastonbury,1
+Gonzalez,1
+Gothenburg,1
+Greenwood,1
+Guayaquil,1
+Gumi-si,1
+Haldia,1
+Hampstead,1
+Hampton,1
+Happy Valley,1
+Hellertown,1
+Helsingborg,1
+Hengstdijk,1
+Henlow,1
+Hoboken,1
+Horse Pasture,1
+Houston,1
+Howrah,1
+Huntington,1
+Indio,1
+Istres,1
+Jackson Township,1
+Jeddah,1
+Jinhua,1
+Johannesburg,1
+Karabuk,1
+Karlskoga,1
+Kathmandu,1
+Katowice,1
+Kazan,1
+Kefar Sava,1
+Kfar Yona,1
+Khlong Nueng,1
+Khon Kaen,1
+Kochi,1
+Kolhapur,1
+Kozhikode,1
+Kranj,1
+Krasnoyarsk,1
+Kuwait City,1
+Lahore,1
+Lake in the Hills,1
+Lakeport,1
+Lakeside,1
+Lancaster,1
+Laredo,1
+Leander,1
+Ledbury,1
+Leesburg,1
+Leisure City,1
+Lens,1
+Leonberg,1
+Lille,1
+Linares,1
+Linganore-Bartonsville,1
+Linhares,1
+Linter,1
+Liuzhou,1
+Liverpool,1
+Lochristi,1
+Lockport,1
+Lodeve,1
+Lome,1
+Long Eaton,1
+Long Khanh,1
+Louisville,1
+Loveland,1
+Lower Hutt,1
+Lubuk Begalung,1
+Luton,1
+Macau,1
+Madinah,1
+Madison,1
+Magnitogorsk,1
+Maintal,1
+Manaus,1
+Mankweng,1
+Maputo,1
+Maribor,1
+Marica,1
+Marseille,1
+Martigues,1
+Medan,1
+Medellin,1
+Medfield,1
+Melnik,1
+Memphis,1
+Merlo,1
+Mesquite,1
+Miami,1
+Mijdrecht,1
+Milton Keynes,1
+Minato City,1
+Mississauga,1
+Mississippi Mills,1
+Moneta,1
+Moody,1
+Mueang Khon Kaen District,1
+Munich,1
+Municipality of Pallini,1
+Mykolaiv,1
+Mysuru,1
+Mytishchi,1
+Naaldwijk,1
+Namyangju-si,1
+Napier,1
+New Cairo City,1
+Newcastle upon Tyne,1
+Newnan,1
+Nice,1
+Nikaia,1
+Ningbo,1
+Ninohe,1
+North Bergen,1
+North Highlands,1
+North Richland Hills,1
+Nottuln,1
+Novo Mesto,1
+Novosibirsk,1
+Nuestra Senora de La Paz,1
+Oakton,1
+Omsk,1
+Orlando,1
+Oshawa,1
+Palma,1
+Patiala,1
+Pernik,1
+Perugia,1
+Petah Tikva,1
+Petaling Jaya,1
+Phan Thiet,1
+Philadelphia,1
+Phnom Penh,1
+Piraeus,1
+Pittsburgh,1
+Plasencia,1
+Port Orange,1
+Port Said,1
+Portland,1
+Powder Springs,1
+Poznan,1
+Prague,1
+Princeton,1
+Prineville,1
+Provo,1
+Pruszkow,1
+Puchong,1
+Puyan Township,1
+Quanzhou,1
+Ramnicu Valcea,1
+Randburg,1
+Ravena,1
+Recife,1
+Redlands,1
+Reggio Emilia,1
+Rehovot,1
+Reykjavik,1
+Richmond,1
+Rio das Pedras,1
+Riverside,1
+Rose Hill,1
+Roswell,1
+Rowlett,1
+Ryazan,1
+Sai Ma,1
+Saint-Raphael,1
+Sainte-Agathe-des-Monts,1
+Salvador,1
+Sammamish,1
+San Carlos,1
+San Luis Potosi,1
+San Miguel de Tucuman,1
+Sanaa,1
+Sandefjord,1
+Sanford,1
+Santa Maria,1
+Santiago De Los Caballeros,1
+Santiago de Queretaro,1
+Sapporo,1
+Seeb,1
+Sharjah,1
+Sheffield,1
+Siheung-si,1
+Slim River,1
+Sochi,1
+Sofia,1
+Sollentuna,1
+Solna,1
+Son Tay,1
+Sonipat,1
+Sontra,1
+South Jordan,1
+South Tangerang,1
+Spanaway,1
+St. Catharines,1
+Stary Oskol,1
+Steger,1
+Stourport-on-Severn,1
+Stow,1
+Stuttgart,1
+Sucha Beskidzka,1
+Sulaymaniyah,1
+Surabaya,1
+Surrey,1
+Suzano,1
+Tabriz,1
+Taguig City,1
+Taiping,1
+Tallinn,1
+Tangail,1
+Targoviste,1
+Teaneck,1
+Tehran,1
+Tetouan,1
+The Woodlands,1
+Three Forks,1
+Tianzhong Township,1
+Toledo,1
+Tulsa,1
+Udon Thani,1
+Ulaanbaatar,1
+University Park,1
+Valdemoro,1
+Vantaa,1
+Vaughan,1
+Velloor,1
+Vernier,1
+Vientiane,1
+Vilnius,1
+Vilvoorde,1
+Virginia Beach,1
+Viseu,1
+Viterbo,1
+Vogelwaarde,1
+Wadowice,1
+Walnut Islands,1
+Washington,1
+Waterbury,1
+Waterloo,1
+West Monroe,1
+Wilmington,1
+Winnipeg,1
+Woodbridge,1
+Yangon,1
+Yantai,1
+Yonkers,1
+Zeist,1
+Zhumadian,1
+Zlin,1
+Zoetermeer,1
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Gender,Active users
+
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Interests,Active users
+
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Age,Active users
+
+
+#  
+# Start date: 20250228
+# End date: 20260221
+Language,Active users
+English,3125
+Chinese,540
+Spanish,59
+Russian,53
+French,25
+Korean,20
+Portuguese,11
+Italian,9
+Japanese,9
+Romanian,8
+Vietnamese,8
+German,7
+Polish,7
+Turkish,6
+Dutch,4
+Swedish,4
+Arabic,3
+Thai,3
+Czech,2
+Danish,2
+Latvian,2
+Malay,2
+Norwegian Bokmål,2
+Slovenian,2
+Azerbaijani,1
+Catalan,1
+Finnish,1
+Hebrew,1
+Serbian,1
+Ukrainian,1
+
+#  
+# Start date: 20251024
+# End date: 20260220
+Cohort,Average 120d value
+0000,0
+0001,0
+0002,0
+0003,0
+0004,0
+0005,0
+0006,0
+0007,0
+0008,0
+0009,0
+0010,0
+0011,0
+0012,0
+0013,0
+0014,0
+0015,0
+0016,0
+0017,0
+0018,0
+0019,0
+0020,0
+0021,0
+0022,0
+0023,0
+0024,0
+0025,0
+0026,0
+0027,0
+0028,0
+0029,0
+0030,0
+0031,0
+0032,0
+0033,0
+0034,0
+0035,0
+0036,0
+0037,0
+0038,0
+0039,0
+0040,0
+0041,0
+0042,0
+0043,0
+0044,0
+0045,0
+0046,0
+0047,0
+0048,0
+0049,0
+0050,0
+0051,0
+0052,0
+0053,0
+0054,0
+0055,0
+0056,0
+0057,0
+0058,0
+0059,0
+0060,0
+0061,0
+0062,0
+0063,0
+0064,0
+0065,0
+0066,0
+0067,0
+0068,0
+0069,0
+0070,0
+0071,0
+0072,0
+0073,0
+0074,0
+0075,0
+0076,0
+0077,0
+0078,0
+0079,0
+0080,0
+0081,0
+0082,0
+0083,0
+0084,0
+0085,0
+0086,0
+0087,0
+0088,0
+0089,0
+0090,0
+0091,0
+0092,0
+0093,0
+0094,0
+0095,0
+0096,0
+0097,0
+0098,0
+0099,0
+0100,0
+0101,0
+0102,0
+0103,0
+0104,0
+0105,0
+0106,0
+0107,0
+0108,0
+0109,0
+0110,0
+0111,0
+0112,0
+0113,0
+0114,0
+0115,0
+0116,0
+0117,0
+0118,0
+0119,0
