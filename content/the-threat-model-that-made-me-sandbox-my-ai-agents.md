@@ -3,14 +3,14 @@ Date: 2026-02-24 20:00
 Slug: the-threat-model-that-made-me-sandbox-my-ai-agents
 Tags: security, ai, claude-code, docker, tools
 Category: Security
-Status: draft
+Image: the-threat-model-that-made-me-sandbox-my-ai-agents.png
 Summary: AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.
 
 > **TLDR:** AI coding agents have shell access to your machine. They can run commands, modify files, and reach the network. I mapped 8 threats that come with that access and built a container sandbox to contain them.
 
 ## What you're actually running
 
-When you launch Claude Code or Codex CLI, you're giving an LLM a terminal. Both tools have built-in safety controls. Claude Code prompts before executing shell commands, restricts file writes to the working directory, and offers an optional OS-level sandbox. Codex goes further with sandboxing enabled by default and network access disabled out of the box.
+When you launch Claude Code or Codex CLI, you're giving an LLM a terminal. Both tools have built-in safety controls. Claude Code prompts before executing shell commands, scopes its file editing tools to the working directory, and offers an optional OS-level sandbox. Codex goes further with sandboxing enabled by default and network access disabled out of the box.
 
 These are real protections. But they depend on user discipline. Pre-approve `Bash(*)` in your settings (common), click "allow" without reading the command (I do this constantly, because who has time to review every shell command?), or run in `bypassPermissions` mode for convenience, and you're back to an LLM with unrestricted shell access. I wanted isolation that doesn't break when someone (read: me) gets careless or clicks through a prompt on autopilot.
 
@@ -22,7 +22,9 @@ With these threats in mind, I built [Claudecker]({filename}/running-ai-agents-in
 
 It worked and I kept using it. But as I kept covering [AI security incidents in my news roundups]({filename}/your-ai-assistant-might-be-working-for-someone-else.md), I realized I should sit down and map out what Claudecker is actually protecting against. Not theoretical nation-state attacks, but realistic scenarios for a developer running AI agents daily. And I run them a lot. I try every new CLI tool, every new model, every new MCP server that shows up on my feed. I'm exactly the kind of user who needs guardrails.
 
-Below is the threat model I came up with. The goal isn't to be exhaustive. It's to name the specific things that could go wrong when an AI agent has shell access to a developer's machine, and what Claudecker actually mitigates (more details in the next section).
+![Threat model diagram]({attach}/images/the-threat-model-that-made-me-sandbox-my-ai-agents.png)
+
+Above is the threat model I came up with. The goal isn't to be exhaustive. It's to name the specific things that could go wrong when an AI agent has shell access to a developer's machine, and what Claudecker actually mitigates (more details in the next section).
 
 | # | Threat | What goes wrong |
 |---|--------|-----------------|
@@ -84,7 +86,7 @@ Here's how each control currently implemented in Claudecker maps to the threats 
 | Control | T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 |
 |---------|----|----|----|----|----|----|----|----|
 | Docker container isolation | ✅ | | | ✅ | | | | |
-| Ephemeral containers (`--rm`) | | | ✅ | | | ✅ | | |
+| Ephemeral containers (`--rm`) | | | | | | ✅ | | |
 | Non-root user + scoped sudo | | | | | | | ✅ | |
 | iptables allowlist firewall | | ✅ | | | ✅ | | | |
 | Network lockdown (domain allowlist) | | ✅ | | | ✅ | | | |
@@ -110,9 +112,9 @@ The container runs as the unprivileged `node` user, not root. Sudo is locked dow
 
 ### Network firewall (mitigates T2, T3, T5)
 
-By default, Claudecker containers have full outbound access. The container is isolated from inbound traffic, but the agent can reach anything on the internet.
+By default, Claudecker containers have full outbound access. The container isn't reachable from the internet (no published ports), but the agent can reach anything on the internet.
 
-For sensitive work, there's a lockdown mode that activates an iptables-based firewall restricting outbound traffic to a whitelist of domains:
+For sensitive work, there's a lockdown mode that activates an iptables-based firewall restricting outbound traffic to IPs resolved from a list of allowed domains:
 
 ```bash
 ./claudecker.sh lockdown
@@ -164,7 +166,7 @@ I'm choosing tighter controls now because new threats keep showing up weekly. Th
 
 ## What you can do today
 
-Claudecker isn't publicly available. It's deeply integrated into my personal workflow and not something anyone else can pick up and run. But you don't need my tool to act on this threat model. Here are five things you can do right now:
+Claudecker isn't publicly available. It's deeply integrated into my personal workflow and not something anyone else can pick up and run. But you don't need my tool to act on this threat model. Here are four things you can do right now:
 
 1. **Run your AI agent in a container.** You don't need Claudecker for this. A basic Docker container with your project directory mounted already gives you most of the mitigation table above. The agent gets filesystem isolation, credential separation, and a throwaway environment. That alone covers T1, T4, and T8.
 
@@ -173,7 +175,5 @@ Claudecker isn't publicly available. It's deeply integrated into my personal wor
 3. **Audit your `settings.local.json`.** Open `.claude/settings.local.json` in your project directory and look at what you've approved. You might find `Bash(sudo:*)` or other broad patterns you don't remember approving. Clean it up.
 
 4. **Review what skills and MCP servers your agent loads.** Each one is third-party code running with your agent's permissions. Check what's installed, where it came from, and whether you still need it. A skill or MCP server you forgot about is an unmonitored attack surface. If you find one you rely on, consider forking it into your own repo. Writing your own skills is even better. It doesn't scale, but at least you know exactly what's running.
-
-5. **Turn off network access when you don't need it.** If you're just refactoring code or writing tests, the agent doesn't need the internet. Codex CLI disables network by default. If you're running in Docker, [`--network none`](https://docs.docker.com/engine/network/drivers/none/) disables all network access with no extra configuration.
 
 None of these require building anything. They're just decisions.
