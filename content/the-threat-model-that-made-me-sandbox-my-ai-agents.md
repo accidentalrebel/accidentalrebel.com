@@ -1,12 +1,12 @@
 Title: The threat model that made me sandbox my AI agents
-Date: 2026-02-23 20:00
+Date: 2026-02-24 20:00
 Slug: the-threat-model-that-made-me-sandbox-my-ai-agents
 Tags: security, ai, claude-code, docker, tools
 Category: Security
 Status: draft
 Summary: AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.
 
-> **TLDR:** AI coding agents have shell access to your machine. They can run commands, modify files, and reach the network. I wanted to map out the threat model before letting one anywhere near my projects.
+> **TLDR:** AI coding agents have shell access to your machine. They can run commands, modify files, and reach the network. I mapped 8 threats that come with that access and built a container sandbox to contain them.
 
 ## What you're actually running
 
@@ -22,7 +22,7 @@ With these threats in mind, I built [Claudecker]({filename}/running-ai-agents-in
 
 It worked and I kept using it. But as I kept covering [AI security incidents in my news roundups]({filename}/your-ai-assistant-might-be-working-for-someone-else.md), I realized I should sit down and map out what Claudecker is actually protecting against. Not theoretical nation-state attacks, but realistic scenarios for a developer running AI agents daily. And I run them a lot. I try every new CLI tool, every new model, every new MCP server that shows up on my feed. I'm exactly the kind of user who needs guardrails.
 
-Below is the threat model I came up with. The goal isn't to be exhaustive. It's to name the specific things that could go wrong when an AI agent has shell access to a developer's machine, and the ones which I was able to mitigate with Claudecker (more details in the next section).
+Below is the threat model I came up with. The goal isn't to be exhaustive. It's to name the specific things that could go wrong when an AI agent has shell access to a developer's machine, and what Claudecker actually mitigates (more details in the next section).
 
 | # | Threat | What goes wrong |
 |---|--------|-----------------|
@@ -79,7 +79,7 @@ If you're working on multiple projects, credentials from one project session sho
 
 ## What Claudecker protects against
 
-Here's how each control currently implemented in Claudecker maps to the threats above:
+Here's how each control currently implemented in Claudecker maps to the threats above (✅ = mitigated by this control):
 
 | Control | T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 |
 |---------|----|----|----|----|----|----|----|----|
@@ -154,13 +154,13 @@ CLAUDE_PROFILE=work ./claudecker.sh run /path/to/project
 
 ## Isolation without crippling the tool
 
-An AI coding agent needs shell access, file access, and network access to be useful. That's what makes it powerful. But this is where we have to exercise a balance between capability and security.
+An AI coding agent needs shell access, file access, and network access to be useful. That's what makes it powerful. But I had to balance capability against security.
 
 Browsers figured this out with tabs. Package managers figured it out with install scripts. CI/CD figured it out with disposable containers. The answer isn't restricting what the agent can do. It's controlling the environment it does it in.
 
 That's what Claudecker does. The agent gets full shell access, full file access, and configurable network access, but all inside a container where the blast radius is limited to the project directory. It can do everything it needs to do. It just can't touch anything it shouldn't.
 
-I'm choosing tighter controls now because there are still too many unknowns. The eight threats I've listed here are just the ones I've identified so far. New ones show up every week. Until the threat landscape settles (if it ever does), I'd rather have too much isolation than too little. You can always loosen restrictions. You can't undo a breach.
+I'm choosing tighter controls now because new threats keep showing up weekly. The eight I've listed here are just the ones I've identified so far. I'd rather have too much isolation than too little. You can always loosen restrictions. You can't undo a breach.
 
 ## What you can do today
 
