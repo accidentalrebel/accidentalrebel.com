@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ai | AccidentalRebel.com</title>
+    <title>AccidentalRebel.com - Articles by AccidentalRebel</title>
 
     <meta name="description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
 
@@ -23,7 +23,15 @@
     }
     </script>
 
-<meta name="robots" content="noindex">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="../">
+    <meta property="og:title" content="AccidentalRebel.com">
+    <meta property="og:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="og:image" content="../images/default-og.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AccidentalRebel.com">
+    <meta property="twitter:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="twitter:image" content="../images/default-og.png">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -49,92 +57,39 @@
         <div class="container-wide">
             <div class="layout">
                 <div class="content">
-<article>
-    <header class="article-header">
-        <h1>Tag: ai</h1>
-    </header>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="../category/misc.html" class="article-category-label">Misc</a>
+            <h2 class="post-title">
+                <a href="../minifying-buffer-contents-in-emacs.html">Converting org-journal entry to org-page post</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
+            </div>
+        </header>
 
-    <div class="article-content">
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../the-threat-model-that-made-me-sandbox-my-ai-agents.html">The threat model that made me sandbox my AI agents</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2026-02-24T20:00:00+08:00">Tue 24 February 2026</time>
-                <span>•</span>
-                <a href="../category/security.html">Security</a>
-            </div>
-            <div class="post-summary">
-                <p>AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.</p>
-            </div>
+
+        <div class="article-content">
+            <p>A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.</p>
+            <a href="../minifying-buffer-contents-in-emacs.html" class="read-more">Read more &rarr;</a>
         </div>
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../your-ai-assistant-might-be-working-for-someone-else.html">Your AI Assistant Might Be Working for Someone Else</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2026-02-20T10:00:00+08:00">Fri 20 February 2026</time>
-                <span>•</span>
-                <a href="../category/cybersecurity-x-ai-news-roundup.html">Cybersecurity x AI News Roundup</a>
-            </div>
-            <div class="post-summary">
-                <p>Copilot and Grok repurposed as C2 channels, Cline supply chain attack installed AI agents on 4,000 dev machines, and AI found 12 zero-days in OpenSSL.</p>
-            </div>
+
+        <div class="tags">
+            <a href="../tag/emacs.html" class="tag">emacs</a>
         </div>
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../ai-agents-under-attack.html">AI Agents Under Attack</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2026-02-07T10:00:00+08:00">Sat 07 February 2026</time>
-                <span>•</span>
-                <a href="../category/cybersecurity-x-ai-news-roundup.html">Cybersecurity x AI News Roundup</a>
-            </div>
-            <div class="post-summary">
-                <p>AI security roundup: Claude finds 500+ vulns in open-source libs, LLMs conduct autonomous network breaches, and AI agent attack surfaces keep expanding.</p>
-            </div>
-        </div>
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../building-a-session-retrospective-skill-for-claude-code.html">Building a session retrospective skill for Claude Code</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2026-02-01T12:00:00+08:00">Sun 01 February 2026</time>
-                <span>•</span>
-                <a href="../category/misc.html">Misc</a>
-            </div>
-            <div class="post-summary">
-                <p>A Claude Code skill that reads the session JSONL history and generates a human-readable markdown retrospective covering problems, decisions, and key takeaways.</p>
-            </div>
-        </div>
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../developer-tools-are-the-new-attack-surface.html">Developer Tools Are the New Attack Surface</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2026-01-31T10:00:00+08:00">Sat 31 January 2026</time>
-                <span>•</span>
-                <a href="../category/cybersecurity-x-ai-news-roundup.html">Cybersecurity x AI News Roundup</a>
-            </div>
-            <div class="post-summary">
-                <p>VS Code AI extensions with 1.5M installs stealing source code, 175K Ollama servers exposed globally, and AI running autonomous multi-stage network attacks.</p>
-            </div>
-        </div>
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../running-ai-agents-in-a-box.html">Running AI agents in a box because I don't trust them</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2026-01-30T10:00:00+08:00">Fri 30 January 2026</time>
-                <span>•</span>
-                <a href="../category/tools.html">Tools</a>
-            </div>
-            <div class="post-summary">
-                <p>Claudecker is my Docker wrapper for Claude Code that isolates AI agents from my host with network lockdown, per-project custom images, and SSH agent forwarding.</p>
-            </div>
-        </div>
-    </div>
-</article>
+    </article>
+
+<nav class="pagination">
+        <a href="../author/accidentalrebel5.html">&laquo; Previous</a>
+
+        <a href="../index.html">1</a>
+        <a href="../author/accidentalrebel2.html">2</a>
+        <a href="../author/accidentalrebel3.html">3</a>
+        <a href="../author/accidentalrebel4.html">4</a>
+        <a href="../author/accidentalrebel5.html">5</a>
+        <span class="current">6</span>
+
+</nav>
                 </div>
                 <aside class="sidebar">
                     <div class="sidebar-sticky">

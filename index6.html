@@ -3,27 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Security | AccidentalRebel.com</title>
+    <title>AccidentalRebel.com</title>
 
     <meta name="description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
 
-    <link rel="canonical" href="../">
+    <link rel="canonical" href="./">
 
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
 
-    <link rel="stylesheet" href="../theme/css/main.css">
+    <link rel="stylesheet" href="./theme/css/main.css">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "AccidentalRebel",
-        "url": "..",
+        "url": ".",
         "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
     }
     </script>
 
-<meta name="robots" content="noindex">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="./">
+    <meta property="og:title" content="AccidentalRebel.com">
+    <meta property="og:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="og:image" content="./images/default-og.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="AccidentalRebel.com">
+    <meta property="twitter:description" content="Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.">
+    <meta property="twitter:image" content="./images/default-og.png">
 </head>
 <body>
     <div class="rebel-stripe"></div>
@@ -32,14 +40,14 @@
     <header>
         <div class="container-wide">
             <nav>
-                <a href="../" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="../archives.html">Archives</a></li>
-                    <li><a href="../categories.html">Categories</a></li>
-                    <li><a href="../tags.html">Tags</a></li>
-                            <li><a href="../category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
-                            <li><a href="../pages/about.html">About</a></li>
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
@@ -49,66 +57,43 @@
         <div class="container-wide">
             <div class="layout">
                 <div class="content">
-<article>
-    <header class="article-header">
-        <h1>Category: Security</h1>
-    </header>
+    <article class="post-item">
+        <header class="article-header">
+            <a href="./category/misc.html" class="article-category-label">Misc</a>
+            <h2 class="post-title">
+                <a href="./minifying-buffer-contents-in-emacs.html">Converting org-journal entry to org-page post</a>
+            </h2>
+            <div class="article-meta">
+                <time datetime="2017-04-19T13:17:00+08:00">Wed 19 April 2017</time>
+            </div>
+        </header>
 
-    <div class="article-content">
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../the-threat-model-that-made-me-sandbox-my-ai-agents.html">The threat model that made me sandbox my AI agents</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2026-02-24T20:00:00+08:00">Tue 24 February 2026</time>
-            </div>
-            <div class="post-summary">
-                <p>AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.</p>
-            </div>
-            <div class="tags">
-                <a href="../tag/security.html" class="tag">security</a>
-                <a href="../tag/ai.html" class="tag">ai</a>
-                <a href="../tag/claude-code.html" class="tag">claude-code</a>
-            </div>
+
+        <div class="article-content">
+            <p>A short Emacs Lisp function to minify buffer contents by stripping all whitespace and newlines, useful for compacting JSON files.</p>
+            <a href="./minifying-buffer-contents-in-emacs.html" class="read-more">Read more &rarr;</a>
         </div>
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../finding-phished-passwords-on-a-scam-site.html">Finding phished passwords on a scam site</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-05-01T20:56:00+08:00">Sat 01 May 2021</time>
-            </div>
-            <div class="post-summary">
-                <p>How I found a publicly accessible victims.txt file storing phished Facebook credentials on a 000webhost server and what happened when I reported it.</p>
-            </div>
-            <div class="tags">
-                <a href="../tag/phishing.html" class="tag">phishing</a>
-                <a href="../tag/threat-hunting.html" class="tag">threat-hunting</a>
-                <a href="../tag/osint.html" class="tag">osint</a>
-            </div>
+
+        <div class="tags">
+            <a href="./tag/emacs.html" class="tag">emacs</a>
         </div>
-        <div class="post-item">
-            <h2 class="post-title">
-                <a href="../investigating-an-fb-phishing-site.html">Investigating an FB phishing site</a>
-            </h2>
-            <div class="article-meta">
-                <time datetime="2021-04-24T05:58:00+08:00">Sat 24 April 2021</time>
-            </div>
-            <div class="post-summary">
-                <p>OSINT into a Facebook phishing campaign spreading via friend-tagging — separate hosting domains, Vietnamese code traces, and possible Phishing-as-a-Service.</p>
-            </div>
-            <div class="tags">
-                <a href="../tag/phishing.html" class="tag">phishing</a>
-                <a href="../tag/threat-hunting.html" class="tag">threat-hunting</a>
-                <a href="../tag/osint.html" class="tag">osint</a>
-            </div>
-        </div>
-    </div>
-</article>
+    </article>
+
+<nav class="pagination">
+        <a href="./index5.html">&laquo; Previous</a>
+
+        <a href="./index.html">1</a>
+        <a href="./index2.html">2</a>
+        <a href="./index3.html">3</a>
+        <a href="./index4.html">4</a>
+        <a href="./index5.html">5</a>
+        <span class="current">6</span>
+
+</nav>
                 </div>
                 <aside class="sidebar">
                     <div class="sidebar-sticky">
-                        <img src="../theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
                         <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
                         <p class="sidebar-realname">Juan Karlo Licudine</p>
                         <p class="sidebar-bio">Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.</p>
@@ -148,7 +133,7 @@
         </div>
     </footer>
 
-    <script src="../theme/js/main.js"></script>
+    <script src="./theme/js/main.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>

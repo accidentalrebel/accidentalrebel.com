@@ -409,8 +409,15 @@ h3 {
 .article-content img {
     max-width: 100%;
     height: auto;
-    margin: var(--spacing-unit) 0;
+    margin: var(--spacing-unit) auto;
     border-radius: 8px;
+    display: block;
+}
+
+.article-content iframe {
+    display: block;
+    max-width: 100%;
+    margin: var(--spacing-unit) auto;
 }
 
 .post-image-link {
@@ -452,6 +459,10 @@ h3 {
     color: var(--color-text-muted);
     background-color: var(--color-bg-subtle);
     border-radius: 0 8px 8px 0;
+}
+
+.article-content blockquote p:last-child {
+    margin-bottom: 0;
 }
 
 /* Tags — accent-tinted on hover */
