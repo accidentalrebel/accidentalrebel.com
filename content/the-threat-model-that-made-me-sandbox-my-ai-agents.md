@@ -85,7 +85,7 @@ Here's how each control currently implemented in Claudecker maps to the threats 
 
 | Control | T1 | T2 | T3 | T4 | T5 | T6 | T7 | T8 |
 |---------|----|----|----|----|----|----|----|----|
-| Docker container isolation | ✅ | | | ✅ | | | | |
+| Docker container isolation | ✅ | | ✅ | ✅ | | | | |
 | Ephemeral containers (`--rm`) | | | | | | ✅ | | |
 | Non-root user + scoped sudo | | | | | | | ✅ | |
 | iptables allowlist firewall | | ✅ | | | ✅ | | | |
@@ -97,7 +97,7 @@ Here's how each control currently implemented in Claudecker maps to the threats 
 
 Some of these are strong mitigations. Others are just friction. I want to be honest about which is which.
 
-### Container isolation (mitigates T1, T4)
+### Container isolation (mitigates T1, T3, T4)
 
 The most basic control. Claude Code runs inside a Docker container. The only host directory mounted is the project itself. The agent can't read `~/.ssh/` or `~/.aws/` because those paths don't exist inside the container.
 
