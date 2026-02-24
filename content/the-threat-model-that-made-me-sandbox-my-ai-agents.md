@@ -53,11 +53,11 @@ We've already seen this pattern in the news where [malicious VS Code AI extensio
 
 When an agent runs `npm install` or `pip install`, it pulls packages from public registries. If one of those packages is compromised, the malicious code executes with the agent's permissions on your host. This isn't unique to AI agents, but agents make it worse because they install packages autonomously without you reviewing each one.
 
-This already happened. A [supply chain attack on Cline CLI]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) compromised the npm publish token and installed autonomous AI agents on roughly 4,000 developer machines. The attacker used prompt injection against Cline's own AI issue triage to steal the token.
+This already happened. A [supply chain attack on Cline CLI]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) compromised the npm publish token. The poisoned package was downloaded roughly 4,000 times in an 8-hour window before it was pulled, installing an autonomous AI agent on each machine. The attacker used prompt injection against Cline's own AI issue triage to steal the token.
 
 ### T4: Credential theft
 
-SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already [targeting AI agent configuration files and gateway tokens]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) specifically.
+SSH keys, API tokens, cloud credentials, browser cookies. Your home directory is full of secrets. An agent running on your host can read all of them. Even if the agent itself is trustworthy, a compromised skill or MCP server it loads might not be. Infostealers are already [picking up AI agent configuration files and gateway tokens]({filename}/your-ai-assistant-might-be-working-for-someone-else.md) through broad file-grabbing routines, and dedicated targeting is likely next.
 
 Claude Code's own [sandboxing documentation](https://docs.anthropic.com/en/docs/claude-code/security#sandboxing) acknowledges this: "Without network isolation, a compromised agent could exfiltrate sensitive files like SSH keys."
 
@@ -71,7 +71,7 @@ A compromised session could modify the agent's own configuration to persist acro
 
 ### T7: Privilege escalation
 
-If the agent can run `sudo`, the non-root user boundary means nothing. And it's easier to end up there than you'd think. Claude Code scopes permissions to specific command patterns, so approving `sudo apt install curl` doesn't automatically approve `sudo rm -rf /`. But hit "Allow for session" and every `sudo` that matches the pattern goes through without a prompt for the rest of the session. Hit "Don't ask again" and it's written to `settings.local.json` permanently. One careless click with a broad pattern and you've handed the agent root.
+If the agent can run `sudo`, the non-root user boundary means nothing. And it's easier to end up there than you'd think. Claude Code scopes permissions to specific command patterns, so approving `sudo apt install curl` doesn't automatically approve `sudo rm -rf /`. But approve a command once and select "Don't ask again," and it's written to `settings.local.json` as a permanent allow rule for that project. Every future `sudo` matching that pattern goes through without a prompt. One careless click with a broad pattern and you've handed the agent root.
 
 ### T8: Cross-project contamination
 
