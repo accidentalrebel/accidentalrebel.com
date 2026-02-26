@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .slide {
+    width: 1080px; height: 1080px;
+    background: #0D1117;
+    position: relative; overflow: hidden;
+    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .scanlines {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+    pointer-events: none; z-index: 10;
+  }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(88,166,255,0.3); border-left: 2px solid rgba(88,166,255,0.3); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(88,166,255,0.3); border-right: 2px solid rgba(88,166,255,0.3); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+  .headline {
+    position: absolute; top: 72px; left: 72px; right: 72px;
+    font-size: 52px; font-weight: 800; color: #FFFFFF; line-height: 1.15; z-index: 5;
+  }
+
+  .threat-list {
+    position: absolute; top: 250px; left: 72px; right: 72px; z-index: 5;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .threat-row {
+    display: flex; align-items: center; gap: 20px;
+    padding: 24px 28px; border-radius: 12px;
+    background: rgba(248,81,73,0.04); border: 1.5px solid rgba(248,81,73,0.15);
+  }
+  .threat-id {
+    font-size: 18px; font-weight: 800; color: #F85149;
+    background: rgba(248,81,73,0.1); border-radius: 6px;
+    padding: 6px 12px; flex-shrink: 0; letter-spacing: 1px;
+  }
+  .threat-content { flex: 1; }
+  .threat-name { font-size: 24px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
+  .threat-desc { font-size: 18px; font-weight: 400; color: rgba(255,255,255,0.4); }
+
+  .page-indicator {
+    position: absolute; top: 190px; left: 72px;
+    font-size: 16px; font-weight: 600; color: rgba(248,81,73,0.4); letter-spacing: 1px; z-index: 5;
+  }
+
+  .subtitle {
+    position: absolute; bottom: 80px; left: 72px; right: 72px;
+    font-size: 26px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+  }
+  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #58A6FF; z-index: 5; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="scanlines"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+  <div class="series-marker">02 / 08</div>
+
+  <div class="headline">8 Threats From<br>Shell Access</div>
+  <div class="page-indicator">1 of 2</div>
+
+  <div class="threat-list">
+    <div class="threat-row">
+      <span class="threat-id">T1</span>
+      <div class="threat-content">
+        <div class="threat-name">Host filesystem access</div>
+        <div class="threat-desc">Agent reads files outside the project directory</div>
+      </div>
+    </div>
+    <div class="threat-row">
+      <span class="threat-id">T2</span>
+      <div class="threat-content">
+        <div class="threat-name">Data exfiltration</div>
+        <div class="threat-desc">Agent sends code or secrets to external endpoints</div>
+      </div>
+    </div>
+    <div class="threat-row">
+      <span class="threat-id">T3</span>
+      <div class="threat-content">
+        <div class="threat-name">Supply chain injection</div>
+        <div class="threat-desc">Compromised package executes on the host</div>
+      </div>
+    </div>
+    <div class="threat-row">
+      <span class="threat-id">T4</span>
+      <div class="threat-content">
+        <div class="threat-name">Credential theft</div>
+        <div class="threat-desc">Agent reads SSH keys, API tokens, cloud credentials</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subtitle">I mapped these before letting an AI agent touch my code.</div>
+  <div class="accent-line"></div>
+</div>
+</body>
+</html>

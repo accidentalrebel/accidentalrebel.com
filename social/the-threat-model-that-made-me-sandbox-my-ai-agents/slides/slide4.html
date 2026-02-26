@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .slide {
+    width: 1080px; height: 1080px;
+    background: #0D1117;
+    position: relative; overflow: hidden;
+    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .scanlines {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+    pointer-events: none; z-index: 10;
+  }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(88,166,255,0.3); border-left: 2px solid rgba(88,166,255,0.3); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(88,166,255,0.3); border-right: 2px solid rgba(88,166,255,0.3); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+  .headline {
+    position: absolute; top: 72px; left: 72px; right: 72px;
+    font-size: 52px; font-weight: 800; color: #FFFFFF; line-height: 1.15; z-index: 5;
+  }
+  .step-badge {
+    position: absolute; top: 80px; right: 72px;
+    padding: 8px 18px; border-radius: 20px; font-size: 16px; font-weight: 600;
+    color: #3FB950; border: 1px solid rgba(63,185,80,0.3);
+    background: rgba(63,185,80,0.06); z-index: 5;
+  }
+  .time-badge {
+    position: absolute; top: 150px; left: 72px;
+    padding: 6px 16px; border-radius: 16px; font-size: 15px; font-weight: 600;
+    color: rgba(255,173,31,0.7); border: 1px solid rgba(255,173,31,0.2);
+    background: rgba(255,173,31,0.04); z-index: 5;
+  }
+
+  .code-block {
+    position: absolute; top: 260px; left: 72px; right: 72px;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 28px 32px; z-index: 5;
+  }
+  .code-comment {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 18px; color: rgba(255,255,255,0.25); margin-bottom: 14px;
+  }
+  .code-line {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 22px; color: rgba(255,255,255,0.6); margin-bottom: 10px; line-height: 1.6;
+  }
+  .code-danger {
+    background: rgba(248,81,73,0.08); border: 1px solid rgba(248,81,73,0.2);
+    border-radius: 6px; padding: 2px 6px; color: #F85149;
+  }
+
+  .action-text {
+    position: absolute; top: 650px; left: 72px; right: 72px; z-index: 5;
+    font-size: 22px; font-weight: 500; color: rgba(255,255,255,0.5); line-height: 1.7;
+  }
+
+  .subtitle {
+    position: absolute; bottom: 120px; left: 72px; right: 72px;
+    font-size: 26px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+  }
+  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #58A6FF; z-index: 5; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="scanlines"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+  <div class="series-marker">04 / 08</div>
+  <div class="step-badge">Step 1</div>
+
+  <div class="headline">Audit Your Permissions</div>
+  <div class="time-badge">Time to apply: 5 minutes</div>
+
+  <div class="code-block">
+    <div class="code-comment">// .claude/settings.local.json</div>
+    <div class="code-line">{</div>
+    <div class="code-line">&nbsp;&nbsp;"allowedTools": [</div>
+    <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;"Edit",</div>
+    <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;"Read",</div>
+    <div class="code-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-danger">"Bash(sudo:*)"</span></div>
+    <div class="code-line">&nbsp;&nbsp;]</div>
+    <div class="code-line">}</div>
+  </div>
+
+  <div class="action-text">Look for broad patterns you approved and forgot about.<br>Clean up anything that gives more access than needed.</div>
+
+  <div class="subtitle">You might find Bash(sudo:*) you don't remember approving.</div>
+  <div class="accent-line"></div>
+</div>
+</body>
+</html>

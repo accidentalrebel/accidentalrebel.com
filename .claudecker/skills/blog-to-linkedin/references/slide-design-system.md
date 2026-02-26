@@ -2,6 +2,8 @@
 
 Every slide must follow this exact structure and design system for visual consistency.
 
+All sizes are optimized for 1080x1080 slides viewed on mobile phones. Prefer larger text over fitting more content.
+
 ## Base HTML Structure
 
 ```html
@@ -28,11 +30,11 @@ Every slide must follow this exact structure and design system for visual consis
   .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; text-transform: uppercase; z-index: 5; }
   .headline {
     position: absolute; left: 72px; right: 72px;
-    font-size: 42px; font-weight: 800; color: #FFFFFF; line-height: 1.2; letter-spacing: -0.5px; z-index: 5;
+    font-size: 52px; font-weight: 800; color: #FFFFFF; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
   }
   .subtitle {
-    position: absolute; bottom: 120px; left: 72px; right: 72px;
-    font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+    position: absolute; bottom: 80px; left: 72px; right: 72px;
+    font-size: 26px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
   }
   .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #1DA1F2; z-index: 5; }
 </style>
@@ -65,7 +67,7 @@ Every slide must follow this exact structure and design system for visual consis
 
 - **Margins**: 72px on all sides — all content stays within this boundary
 - **Headline placement**: Cover slides use `bottom:200px`, all other slides use `top:72px`
-- **Subtitle**: Always at `bottom:120px`
+- **Subtitle**: Always at `bottom:80px`
 - **Visual content zone**: Between headline and subtitle (roughly 240px-800px vertical)
 - **Center visuals**: Use `position:absolute; top:50%; left:50%; transform:translate(-50%, -N%)` for centered elements
 
@@ -73,12 +75,16 @@ Every slide must follow this exact structure and design system for visual consis
 
 | Element | Size | Weight | Color |
 |---------|------|--------|-------|
-| Headline | 42px | 800 | `#FFFFFF` |
-| Subtitle | 20px | 400 | `rgba(255,255,255,0.5)` |
+| Headline | 52-54px | 800 | `#FFFFFF` |
+| Subtitle | 26px | 400 | `rgba(255,255,255,0.5)` |
+| Body/feature text | 22-24px | 500-600 | varies |
+| Code/mono (main) | 22-26px | - | use `'SF Mono', 'Fira Code', 'Consolas', monospace` |
+| Code/mono (output) | 18-19px | - | use `'SF Mono', 'Fira Code', 'Consolas', monospace` |
+| Item names (threats, tools) | 24px | 700 | varies |
+| Item descriptions | 18px | 400 | varies |
+| Labels (step/time badges) | 15-16px | 600-700 | varies |
+| Container/section labels | 16px | 700 | varies |
 | Series marker | 13px | 600 | `rgba(255,255,255,0.25)` |
-| Labels | 15-18px | 600-700 | varies |
-| Small text | 12-14px | 500-700 | varies |
-| Code/mono | 17px | - | use `'SF Mono', 'Fira Code', 'Consolas', monospace` |
 
 ## Color System
 
@@ -131,20 +137,20 @@ Use proper SVG icons for status (circled X for fail, circled checkmark for pass)
 ### Stat callouts
 ```css
 .big-number { font-size: 96px; font-weight: 900; color: highlight; line-height: 1; }
-.big-label { font-size: 20px; font-weight: 600; color: rgba(highlight, 0.6); }
+.big-label { font-size: 26px; font-weight: 600; color: rgba(highlight, 0.6); }
 ```
 
 ### Stat row (multiple stats side by side)
 ```css
 .stats { display: flex; gap: 40px; }
 .stat-value { font-size: 28px; font-weight: 800; color: highlight; }
-.stat-label { font-size: 13px; font-weight: 500; color: rgba(highlight, 0.5); }
+.stat-label { font-size: 16px; font-weight: 500; color: rgba(highlight, 0.5); }
 .stat-divider { width: 1px; background: rgba(255,255,255,0.08); }
 ```
 
 ### Pill tags
 ```css
-.tag { padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.12); }
+.tag { padding: 8px 18px; border-radius: 20px; font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.12); }
 ```
 
 ### Timeline

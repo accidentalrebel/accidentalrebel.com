@@ -8,10 +8,12 @@ description: Convert a blog post into LinkedIn-ready content — a text post and
 
 # Blog to LinkedIn
 
-Convert a completed blog post into three outputs:
+Convert a completed blog post into three outputs, with a review checkpoint between planning and rendering:
+
 1. A ready-to-paste **LinkedIn text post**
 2. A **carousel slide plan** with image generation prompts
-3. **Rendered HTML slides** — one self-contained HTML file per slide
+3. **STOP — display outputs 1 and 2 to the user and wait for approval before continuing**
+4. **Rendered HTML slides** — one self-contained HTML file per slide
 
 ## Input
 
@@ -109,9 +111,19 @@ Each prompt must specify:
 
 Refer to [references/example.md](references/example.md) for a complete example transformation showing the full carousel plan with image prompts.
 
+## Review Checkpoint
+
+After generating the text post and carousel plan:
+
+1. Save `linkedin.md` to `social/<slug>/`
+2. Display the full text post and carousel plan in the conversation
+3. **STOP and ask the user to review.** Do not generate any HTML slides until the user approves or requests changes.
+
+If the user requests changes, revise the plan and re-display. Only proceed to Output 3 after explicit approval (e.g., "looks good", "go ahead", "make the slides").
+
 ## Output 3: Rendered HTML Slides
 
-After finalizing the carousel plan, render each slide as a self-contained HTML file. Save to `social/<slug>/slides/slide1.html`, `slide2.html`, etc.
+After user approval, render each slide as a self-contained HTML file. Save to `social/<slug>/slides/slide1.html`, `slide2.html`, etc.
 
 **IMPORTANT**: Read [references/slide-design-system.md](references/slide-design-system.md) before generating any slides. It contains the exact base structure, component patterns, and design tokens that every slide must follow.
 

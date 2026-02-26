@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .slide {
+    width: 1080px; height: 1080px;
+    background: #0D1117;
+    position: relative; overflow: hidden;
+    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .scanlines {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+    pointer-events: none; z-index: 10;
+  }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(88,166,255,0.3); border-left: 2px solid rgba(88,166,255,0.3); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(88,166,255,0.3); border-right: 2px solid rgba(88,166,255,0.3); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+
+  .visual {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -55%);
+    z-index: 2;
+  }
+  .glow {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -55%);
+    width: 300px; height: 300px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(63,185,80,0.12) 0%, transparent 70%);
+    z-index: 1;
+  }
+
+  .headline {
+    position: absolute; bottom: 200px; left: 72px; right: 72px;
+    font-size: 54px; font-weight: 800; color: #FFFFFF; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
+  }
+  .subtitle {
+    position: absolute; bottom: 120px; left: 72px; right: 72px;
+    font-size: 26px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+  }
+  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #58A6FF; z-index: 5; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="scanlines"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+  <div class="series-marker">01 / 08</div>
+
+  <div class="glow"></div>
+  <div class="visual">
+    <svg width="200" height="220" viewBox="0 0 200 220" fill="none">
+      <!-- Shield -->
+      <path d="M100 10 L20 50 L20 120 C20 170 55 208 100 220 C145 208 180 170 180 120 L180 50 Z" stroke="#3FB950" stroke-width="2.5" fill="rgba(63,185,80,0.06)"/>
+      <!-- Checklist lines -->
+      <path d="M65 90 L75 100 L95 80" stroke="#3FB950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="105" y1="90" x2="140" y2="90" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M65 120 L75 130 L95 110" stroke="#3FB950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="105" y1="120" x2="135" y2="120" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M65 150 L75 160 L95 140" stroke="#3FB950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="105" y1="150" x2="145" y2="150" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="80" cy="180" r="4" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
+      <line x1="105" y1="180" x2="130" y2="180" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <div class="headline">4 Things You Can Do<br>Today to Secure Your<br>AI Agent</div>
+  <div class="subtitle">No custom tooling required.</div>
+  <div class="accent-line"></div>
+</div>
+</body>
+</html>
