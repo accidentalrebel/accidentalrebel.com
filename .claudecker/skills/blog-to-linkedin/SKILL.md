@@ -8,13 +8,23 @@ description: Convert a blog post into LinkedIn-ready content — a text post and
 
 # Blog to LinkedIn
 
-Convert a completed blog post into two outputs:
+Convert a completed blog post into three outputs:
 1. A ready-to-paste **LinkedIn text post**
 2. A **carousel slide plan** with image generation prompts
+3. **Rendered HTML slides** — one self-contained HTML file per slide
 
 ## Input
 
 Accept a blog post as a file path (read the markdown) or full text pasted into the conversation.
+
+## Saving Output
+
+Derive `<slug>` from the post's `Slug:` metadata field, or from the source filename (minus `.md`) if no slug is set. Save all output to `social/<slug>/`:
+
+- `linkedin.md` — text post + carousel plan (header linking back to source post)
+- `slides/slide1.html`, `slides/slide2.html`, etc. — rendered HTML slides
+
+Show the full text post and carousel plan in the conversation as well.
 
 ## Output 1: LinkedIn Text Post
 
@@ -98,6 +108,22 @@ Each prompt must specify:
 - Exclusions (no photorealism, no clutter)
 
 Refer to [references/example.md](references/example.md) for a complete example transformation showing the full carousel plan with image prompts.
+
+## Output 3: Rendered HTML Slides
+
+After finalizing the carousel plan, render each slide as a self-contained HTML file. Save to `social/<slug>/slides/slide1.html`, `slide2.html`, etc.
+
+### HTML Slide Requirements
+
+- **Dimensions**: Single `div` at 1080x1080px, centered on page
+- **Background**: Solid color from visual identity + CSS `repeating-linear-gradient` for scan-line/texture effects
+- **Icons/diagrams/charts**: Inline SVG (`<path>`, `<rect>`, `<circle>`, `<text>`) — no external images or libraries
+- **Text**: `position: absolute` with pixel coordinates. System font stack (`-apple-system, 'Segoe UI', Arial`)
+- **Colors**: Reuse the 4-5 colors defined in the visual identity block across all slides
+- **No dependencies**: Everything inline — no CDN links, no external fonts, no JS libraries
+- **Static by default**: No animations unless requested
+
+The user opens each HTML file in a browser and screenshots at 1080x1080.
 
 ## Content Principles
 
