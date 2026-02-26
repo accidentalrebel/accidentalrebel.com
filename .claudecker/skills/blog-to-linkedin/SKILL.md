@@ -50,7 +50,7 @@ Show the full text post and carousel plan in the conversation as well.
 
 **Close:** "Full technical breakdown at accidentalrebel.com" or similar. Plain URL only.
 
-**Voice rules:**
+**Voice:** Apply the `arebel-voice-skill` when writing the text post. Read its SKILL.md for the full voice guidelines before drafting. Key points:
 - Direct, practitioner-grounded. "I found X" not "It was discovered that X"
 - No buzzwords: no "landscape", "leverage", "crucial", "robust", "ecosystem"
 - No engagement bait: no "You won't believe..." or "Here's why you should care..."
@@ -131,7 +131,7 @@ After user approval, render each slide as a self-contained HTML file. Save to `s
 
 - Use a `<style>` block with CSS classes — NOT inline styles
 - Every slide gets: scanlines overlay, corner brackets (TL+BR), series marker (`"01 / 08"`), accent line
-- 72px margins on all sides, 42px headline, 20px subtitle at bottom
+- 72px margins on all sides, 52px headline, 26px subtitle at bottom
 - Inline SVG with stroke outlines for icons — no external images or libraries
 - No CDN links, no external fonts, no JS libraries
 - Flexbox for layouts (pipelines, grids, stat rows)
