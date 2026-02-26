@@ -125,7 +125,40 @@ After finalizing the carousel plan, render each slide as a self-contained HTML f
 - Flexbox for layouts (pipelines, grids, stat rows)
 - Subtle backgrounds at `rgba(color, 0.04-0.08)`, borders at `rgba(color, 0.1-0.25)`
 
-The user opens each HTML file in a browser and screenshots at 1080x1080.
+### Visual QA Loop
+
+After generating all slides, screenshot each one and visually review for issues (overlapping elements, text overflow, clipped content). Fix and re-screenshot until clean.
+
+**Setup** (run once per session — system libs are pre-installed via `.claudecker/requirements.txt`, but npm packages are not):
+```bash
+npm install playwright && npx playwright install chromium
+```
+
+**Screenshot all slides:**
+```javascript
+const { chromium } = require('playwright');
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.setViewportSize({ width: 1080, height: 1080 });
+  const dir = 'social/<slug>/slides';
+  for (let i = 1; i <= N; i++) {
+    await page.goto(`file://${process.cwd()}/${dir}/slide${i}.html`);
+    await page.locator('.slide').screenshot({ path: `${dir}/slide${i}.png` });
+  }
+  await browser.close();
+})();
+```
+
+Review each PNG using the Read tool (which renders images visually). Check for:
+- Text overlapping other text or visuals
+- Elements clipped by the 1080x1080 boundary
+- Diagram components misaligned or colliding
+- Unreadable text (too small, too low contrast)
+
+If issues found: fix the HTML, re-screenshot that slide, re-review. Repeat until all slides pass.
+
+**Fallback**: If Playwright/Chromium is unavailable (missing system libs), ask the user to screenshot manually and paste back for review.
 
 ## Content Principles
 
