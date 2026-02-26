@@ -113,15 +113,17 @@ Refer to [references/example.md](references/example.md) for a complete example t
 
 After finalizing the carousel plan, render each slide as a self-contained HTML file. Save to `social/<slug>/slides/slide1.html`, `slide2.html`, etc.
 
-### HTML Slide Requirements
+**IMPORTANT**: Read [references/slide-design-system.md](references/slide-design-system.md) before generating any slides. It contains the exact base structure, component patterns, and design tokens that every slide must follow.
 
-- **Dimensions**: Single `div` at 1080x1080px, centered on page
-- **Background**: Solid color from visual identity + CSS `repeating-linear-gradient` for scan-line/texture effects
-- **Icons/diagrams/charts**: Inline SVG (`<path>`, `<rect>`, `<circle>`, `<text>`) — no external images or libraries
-- **Text**: `position: absolute` with pixel coordinates. System font stack (`-apple-system, 'Segoe UI', Arial`)
-- **Colors**: Reuse the 4-5 colors defined in the visual identity block across all slides
-- **No dependencies**: Everything inline — no CDN links, no external fonts, no JS libraries
-- **Static by default**: No animations unless requested
+### Key rules (details in reference)
+
+- Use a `<style>` block with CSS classes — NOT inline styles
+- Every slide gets: scanlines overlay, corner brackets (TL+BR), series marker (`"01 / 08"`), accent line
+- 72px margins on all sides, 42px headline, 20px subtitle at bottom
+- Inline SVG with stroke outlines for icons — no external images or libraries
+- No CDN links, no external fonts, no JS libraries
+- Flexbox for layouts (pipelines, grids, stat rows)
+- Subtle backgrounds at `rgba(color, 0.04-0.08)`, borders at `rgba(color, 0.1-0.25)`
 
 The user opens each HTML file in a browser and screenshots at 1080x1080.
 

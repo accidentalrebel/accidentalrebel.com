@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .slide {
+    width: 1080px; height: 1080px;
+    background: #0F1419;
+    position: relative; overflow: hidden;
+    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .scanlines {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+    pointer-events: none; z-index: 10;
+  }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(29,161,242,0.3); border-left: 2px solid rgba(29,161,242,0.3); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(29,161,242,0.3); border-right: 2px solid rgba(29,161,242,0.3); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+  .headline {
+    position: absolute; top: 72px; left: 72px; right: 72px;
+    font-size: 40px; font-weight: 800; color: #FFFFFF; line-height: 1.2; z-index: 5;
+  }
+
+  .timeline { position: absolute; top: 380px; left: 72px; right: 72px; z-index: 5; }
+  .timeline-line {
+    position: absolute; top: 24px; left: 40px; right: 40px;
+    height: 2px; background: rgba(255,255,255,0.1);
+  }
+  .timeline-markers {
+    display: flex; justify-content: space-between; position: relative; padding: 0 40px;
+  }
+  .marker { display: flex; flex-direction: column; align-items: center; }
+  .marker-dot {
+    width: 14px; height: 14px; border-radius: 50%; position: relative; z-index: 2; margin-bottom: 16px;
+  }
+  .marker-dot.blue { background: #1DA1F2; box-shadow: 0 0 12px rgba(29,161,242,0.4); }
+  .marker-dot.red { background: #E0245E; box-shadow: 0 0 12px rgba(224,36,94,0.4); }
+  .marker-dot.gray { background: rgba(255,255,255,0.2); }
+  .marker-date { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .marker-date.blue { color: #1DA1F2; }
+  .marker-date.red { color: #E0245E; }
+  .marker-date.gray { color: rgba(255,255,255,0.3); }
+  .marker-label { font-size: 14px; font-weight: 500; text-align: center; max-width: 160px; line-height: 1.4; }
+  .marker-label.blue { color: rgba(29,161,242,0.7); }
+  .marker-label.red { color: rgba(224,36,94,0.7); }
+  .marker-label.gray { color: rgba(255,255,255,0.2); }
+
+  .penalty-box {
+    position: absolute; top: 580px; left: 50%; transform: translateX(-50%);
+    border: 2px solid #FFAD1F; border-radius: 12px;
+    padding: 24px 48px; text-align: center;
+    background: rgba(255,173,31,0.04); z-index: 5;
+  }
+  .penalty-label {
+    font-size: 13px; font-weight: 700; color: rgba(255,173,31,0.5);
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .penalty-value { font-size: 32px; font-weight: 900; color: #FFAD1F; }
+  .penalty-detail { font-size: 15px; font-weight: 500; color: rgba(255,173,31,0.5); margin-top: 4px; }
+
+  .detail {
+    position: absolute; top: 740px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 32px; z-index: 5;
+  }
+  .detail-item { display: flex; align-items: center; gap: 8px; }
+  .detail-icon { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2); }
+  .detail-text { font-size: 14px; color: rgba(255,255,255,0.35); }
+
+  .subtitle {
+    position: absolute; bottom: 120px; left: 72px; right: 72px;
+    font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+  }
+  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #1DA1F2; z-index: 5; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="scanlines"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+  <div class="series-marker">07 / 08</div>
+
+  <div class="headline">EU AI Act: This Is a<br>Compliance Requirement</div>
+
+  <div class="timeline">
+    <div class="timeline-line"></div>
+    <div class="timeline-markers">
+      <div class="marker">
+        <div class="marker-dot blue"></div>
+        <div class="marker-date blue">Aug 2025</div>
+        <div class="marker-label blue">GPAI<br>obligations</div>
+      </div>
+      <div class="marker">
+        <div class="marker-dot red"></div>
+        <div class="marker-date red">Aug 2026</div>
+        <div class="marker-label red">High-risk AI<br>deadline</div>
+      </div>
+      <div class="marker">
+        <div class="marker-dot gray"></div>
+        <div class="marker-date gray">Dec 2027</div>
+        <div class="marker-label gray">Possible delay<br>(Omnibus)</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="penalty-box">
+    <div class="penalty-label">Maximum Penalty</div>
+    <div class="penalty-value">EUR 15M or 3% global turnover</div>
+    <div class="penalty-detail">Incident reporting: 2-15 days</div>
+  </div>
+
+  <div class="detail">
+    <div class="detail-item">
+      <div class="detail-icon"></div>
+      <span class="detail-text">High-risk AI must defend against "adversarial examples"</span>
+    </div>
+  </div>
+
+  <div class="subtitle">Article 15: Accuracy, robustness, and cybersecurity.</div>
+  <div class="accent-line"></div>
+</div>
+</body>
+</html>

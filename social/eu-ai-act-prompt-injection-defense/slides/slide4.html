@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .slide {
+    width: 1080px; height: 1080px;
+    background: #0F1419;
+    position: relative; overflow: hidden;
+    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .scanlines {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+    pointer-events: none; z-index: 10;
+  }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(29,161,242,0.3); border-left: 2px solid rgba(29,161,242,0.3); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(29,161,242,0.3); border-right: 2px solid rgba(29,161,242,0.3); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+  .headline {
+    position: absolute; top: 72px; left: 72px; right: 72px;
+    font-size: 42px; font-weight: 800; color: #FFFFFF; line-height: 1.2; z-index: 5;
+  }
+
+  .chart { position: absolute; top: 260px; left: 72px; right: 72px; z-index: 5; }
+  .bar-row { display: flex; align-items: center; margin-bottom: 24px; }
+  .bar-label {
+    width: 220px; font-size: 17px; font-weight: 600; color: rgba(255,255,255,0.7);
+    text-align: right; padding-right: 24px; flex-shrink: 0;
+  }
+  .bar-track {
+    flex: 1; height: 40px; background: rgba(255,255,255,0.04);
+    border-radius: 6px; position: relative; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; background: linear-gradient(90deg, #E0245E, #ff4d6a);
+    border-radius: 6px; position: relative;
+  }
+  .bar-value {
+    position: absolute; right: -56px; top: 50%; transform: translateY(-50%);
+    font-size: 18px; font-weight: 800; color: #FFAD1F; width: 50px; text-align: left;
+  }
+
+  .subtitle {
+    position: absolute; bottom: 155px; left: 72px; right: 72px;
+    font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+  }
+  .source {
+    position: absolute; bottom: 120px; left: 72px; right: 72px;
+    font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.35); line-height: 1.5; z-index: 5;
+  }
+  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #1DA1F2; z-index: 5; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="scanlines"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+  <div class="series-marker">04 / 08</div>
+
+  <div class="headline">All Major Products<br>Bypassed</div>
+
+  <div class="chart">
+    <div class="bar-row">
+      <div class="bar-label">Emoji smuggling</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-value">100%</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Upside-down text</div>
+      <div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-value">100%</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Bidi text</div>
+      <div class="bar-track"><div class="bar-fill" style="width:99%"><span class="bar-value">99%</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Number substitution</div>
+      <div class="bar-track"><div class="bar-fill" style="width:95%"><span class="bar-value">95%</span></div></div>
+    </div>
+    <div class="bar-row">
+      <div class="bar-label">Unicode tags</div>
+      <div class="bar-track"><div class="bar-fill" style="width:90%"><span class="bar-value">90%</span></div></div>
+    </div>
+  </div>
+
+  <div class="subtitle">12 attack methods tested against 6 guardrails.</div>
+  <div class="source">Source: Mindgard / Lancaster University, 2025</div>
+  <div class="accent-line"></div>
+</div>
+</body>
+</html>

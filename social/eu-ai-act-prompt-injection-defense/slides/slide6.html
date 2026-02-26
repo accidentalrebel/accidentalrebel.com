@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  .slide {
+    width: 1080px; height: 1080px;
+    background: #0F1419;
+    position: relative; overflow: hidden;
+    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+  }
+  .scanlines {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
+    pointer-events: none; z-index: 10;
+  }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(29,161,242,0.3); border-left: 2px solid rgba(29,161,242,0.3); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(29,161,242,0.3); border-right: 2px solid rgba(29,161,242,0.3); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+  .headline {
+    position: absolute; top: 72px; left: 72px; right: 72px;
+    font-size: 42px; font-weight: 800; color: #FFFFFF; line-height: 1.2; z-index: 5;
+  }
+
+  .pipeline {
+    position: absolute; top: 340px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 0; z-index: 5;
+  }
+  .pipe-box {
+    width: 160px; height: 80px; border-radius: 14px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-size: 15px; font-weight: 700; color: #FFFFFF;
+  }
+  .pipe-box.default { background: rgba(255,255,255,0.04); border: 1.5px solid rgba(255,255,255,0.12); }
+  .pipe-box.highlight {
+    background: rgba(255,173,31,0.08); border: 2px solid #FFAD1F;
+    box-shadow: 0 0 24px rgba(255,173,31,0.12);
+  }
+  .arrow-conn { width: 40px; height: 2px; background: #1DA1F2; position: relative; }
+  .arrow-conn::after {
+    content: ''; position: absolute; right: -1px; top: -4px;
+    border: 5px solid transparent; border-left: 7px solid #1DA1F2;
+  }
+
+  .layer-stack {
+    position: absolute; top: 180px; left: 50%; transform: translateX(-62px);
+    display: flex; flex-direction: column; gap: 4px; z-index: 5;
+  }
+  .layer {
+    display: flex; align-items: center; gap: 8px;
+    padding: 4px 12px; border-radius: 4px;
+    background: rgba(255,173,31,0.06); border-left: 2px solid rgba(255,173,31,0.3);
+  }
+  .layer-text { font-size: 12px; font-weight: 500; color: rgba(255,173,31,0.7); }
+  .layer-num { font-size: 10px; font-weight: 700; color: rgba(255,173,31,0.4); width: 16px; }
+
+  .stack-connector {
+    position: absolute; top: 328px; left: 50%; transform: translateX(-1px);
+    width: 2px; height: 12px; background: rgba(255,173,31,0.3); z-index: 5;
+  }
+
+  .stats {
+    position: absolute; top: 480px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 40px; z-index: 5;
+  }
+  .stat-item { text-align: center; }
+  .stat-value { font-size: 28px; font-weight: 800; color: #FFAD1F; }
+  .stat-label { font-size: 13px; font-weight: 500; color: rgba(255,173,31,0.5); margin-top: 4px; }
+  .stat-divider { width: 1px; background: rgba(255,255,255,0.08); }
+
+  .subtitle {
+    position: absolute; bottom: 120px; left: 72px; right: 72px;
+    font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+  }
+  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #1DA1F2; z-index: 5; }
+</style>
+</head>
+<body>
+<div class="slide">
+  <div class="scanlines"></div>
+  <div class="corner-tl"></div>
+  <div class="corner-br"></div>
+  <div class="series-marker">06 / 08</div>
+
+  <div class="headline">The Fix: a 7-Layer<br>Normalizer</div>
+
+  <div class="layer-stack">
+    <div class="layer"><span class="layer-num">1</span><span class="layer-text">Zero-width chars</span></div>
+    <div class="layer"><span class="layer-num">2</span><span class="layer-text">Homoglyphs</span></div>
+    <div class="layer"><span class="layer-num">3</span><span class="layer-text">Hex encoding</span></div>
+    <div class="layer"><span class="layer-num">4</span><span class="layer-text">Base64</span></div>
+    <div class="layer"><span class="layer-num">5</span><span class="layer-text">Separated chars</span></div>
+    <div class="layer"><span class="layer-num">6</span><span class="layer-text">Leetspeak</span></div>
+    <div class="layer"><span class="layer-num">7</span><span class="layer-text">ROT13</span></div>
+  </div>
+  <div class="stack-connector"></div>
+
+  <div class="pipeline">
+    <div class="pipe-box default"><span>User Input</span></div>
+    <div class="arrow-conn"></div>
+    <div class="pipe-box highlight">
+      <span style="color:#FFAD1F">Normalizer</span>
+      <span style="font-size:10px;color:rgba(255,173,31,0.5);margin-top:2px">7 layers</span>
+    </div>
+    <div class="arrow-conn"></div>
+    <div class="pipe-box default"><span>Classifier</span></div>
+    <div class="arrow-conn"></div>
+    <div class="pipe-box default"><span>LLM</span></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-value">20/20</div>
+      <div class="stat-label">caught</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-value">0</div>
+      <div class="stat-label">false positives</div>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+      <div class="stat-value">&lt;1ms</div>
+      <div class="stat-label">added latency</div>
+    </div>
+  </div>
+
+  <div class="subtitle">Strip encoding tricks before the classifier sees them.</div>
+  <div class="accent-line"></div>
+</div>
+</body>
+</html>
