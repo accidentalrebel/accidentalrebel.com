@@ -1,8 +1,8 @@
 Title: AI Agents Under Attack
 Date: 2026-02-07 10:00
 Slug: ai-agents-under-attack
-Tags: ai, security, cybersecurity-x-ai
-Category: Cybersecurity x AI News Roundup
+Tags: ai, security, cybersecurity-x-ai, ai-attack-surface, ai-agent-risk, ai-threat-intel
+Category: Cybersecurity x AI
 Image: ai-agents-under-attack.webp
 Summary: AI security roundup: Claude finds 500+ vulns in open-source libs, LLMs conduct autonomous network breaches, and AI agent attack surfaces keep expanding.
 

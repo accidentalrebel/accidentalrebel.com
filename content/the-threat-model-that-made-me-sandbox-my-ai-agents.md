@@ -1,7 +1,7 @@
 Title: The threat model that made me sandbox my AI agents
 Date: 2026-02-24 20:00
 Slug: the-threat-model-that-made-me-sandbox-my-ai-agents
-Tags: security, ai, claude-code, docker, tools
+Tags: security, ai, claude-code, docker, tools, ai-attack-surface, ai-agent-risk, ai-deployment-security
 Category: Security
 Image: the-threat-model-that-made-me-sandbox-my-ai-agents.png
 Summary: AI coding agents have shell access to your machine. I mapped out the threats before letting one touch my code, then built Claudecker to contain them.

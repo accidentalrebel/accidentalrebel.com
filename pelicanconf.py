@@ -27,7 +27,7 @@ SOCIAL = (('Email', 'mailto:karlo@accidentalrebel.com'),
           ('LinkedIn', 'https://www.linkedin.com/in/juan-karlo-licudine/'),
           ('GitHub', 'https://github.com/accidentalrebel'))
 
-BLURB = "Defense-first security engineer who builds tools and thinks like an attacker. Now focused on where AI and security collide."
+BLURB = "Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find."
 
 DEFAULT_PAGINATION = 10
 
@@ -37,7 +37,7 @@ SUMMARY_MAX_LENGTH = 50
 DISPLAY_CATEGORIES_ON_MENU = False
 DISPLAY_PAGES_ON_MENU = True
 
-MENUITEMS = (('Newsletter', '/category/cybersecurity-x-ai-news-roundup.html'),)
+MENUITEMS = (('Newsletter', '/category/cybersecurity-x-ai.html'),)
 
 # Uncomment following line if you want document-relative URLs when developing
 #RELATIVE_URLS = True

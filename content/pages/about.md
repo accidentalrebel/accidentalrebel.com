@@ -16,7 +16,7 @@ I've spent the last few years leading L2 operations in a 24/7 SOC and leading th
 
 ## What I Write About
 
-Every week I publish a [Cybersecurity x AI News Roundup](/category/cybersecurity-x-ai-news-roundup.html), curated analysis of where AI and security collide. No hype, no vendor pitches, just what matters and why.
+Every week I publish the [Cybersecurity x AI](/category/cybersecurity-x-ai.html) brief — practitioner analysis of how AI systems get attacked and what defenders need to know. No hype, no vendor pitches, just what matters and why.
 
 I also write deep dives on [malware analysis](/category/malware-analysis.html), [reverse engineering](/category/reverse-engineering.html), and the tools I build along the way.
 

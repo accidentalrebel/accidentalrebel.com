@@ -1,7 +1,7 @@
 Title: Running AI agents in a box because I don't trust them
 Date: 2026-01-30 10:00
 Slug: running-ai-agents-in-a-box
-Tags: docker, ai, claude-code, security, tools
+Tags: docker, ai, claude-code, security, tools, ai-deployment-security
 Category: Tools
 Summary: Claudecker is my Docker wrapper for Claude Code that isolates AI agents from my host with network lockdown, per-project custom images, and SSH agent forwarding.
 
