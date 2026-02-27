@@ -175,38 +175,43 @@ After user approval, render each slide as a self-contained HTML file. Save to `s
 
 ### Visual QA Loop
 
-After generating all slides, screenshot each one and visually review for issues (overlapping elements, text overflow, clipped content). Fix and re-screenshot until clean.
+After generating all slides, screenshot each one and visually review for issues. Fix and re-screenshot until clean.
 
-**Setup** (run once per session — system libs are pre-installed via `.claudecker/requirements.txt`, but npm packages are not):
-```bash
-npm install playwright && npx playwright install chromium
-```
+**Screenshot all slides** (Python Playwright is pre-installed via pip — no setup needed):
+```python
+from playwright.sync_api import sync_playwright
+import os
 
-**Screenshot all slides:**
-```javascript
-const { chromium } = require('playwright');
-(async () => {
-  const browser = await chromium.launch();
-  const page = await browser.newPage();
-  await page.setViewportSize({ width: 1080, height: 1350 });
-  const dir = 'social/<slug>/slides';
-  for (let i = 1; i <= N; i++) {
-    await page.goto(`file://${process.cwd()}/${dir}/slide${i}.html`);
-    await page.locator('.slide').screenshot({ path: `${dir}/slide${i}.png` });
-  }
-  await browser.close();
-})();
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page(viewport={"width": 1080, "height": 1350})
+    slide_dir = f"social/<slug>/slides"
+    for i in range(1, N + 1):
+        path = os.path.abspath(f"{slide_dir}/slide{i}.html")
+        page.goto(f"file://{path}")
+        page.locator(".slide").screenshot(path=f"{slide_dir}/slide{i}.png")
+    browser.close()
 ```
 
 Review each PNG using the Read tool (which renders images visually). Check for:
 - Text overlapping other text or visuals
-- Elements clipped by the 1080x1350 boundary
+- Elements clipped by the slide boundary
 - Diagram components misaligned or colliding
 - Unreadable text (too small, too low contrast)
+- **Excessive empty space** — if the content only fills the top portion and the bottom half is blank, the slide height needs to shrink
 
 If issues found: fix the HTML, re-screenshot that slide, re-review. Repeat until all slides pass.
 
-**Fallback**: If Playwright/Chromium is unavailable (missing system libs), ask the user to screenshot manually and paste back for review.
+### Slide Height Adjustment
+
+The default slide height is 1350px (4:5 portrait at 1080px wide). After the first QA pass, evaluate whether the content fills the slides well. If most slides have a large blank area below the concluding line, reduce the slide height to better fit the content:
+
+1. Estimate where the lowest content element sits across all slides (excluding the bottom-anchored subtitle and accent line)
+2. Pick a new height that leaves ~150-200px of breathing room below the last content element, while keeping the subtitle and accent line anchored near the bottom
+3. Update the `.slide` height, reposition `.subtitle`, `.accent-line`, and `.corner-br` to match
+4. Re-screenshot and re-review
+
+Common reduced heights: 1200px, 1080px (square), or anywhere in between. The goal is every slide feeling well-filled, not cramped.
 
 ## Content Principles
 

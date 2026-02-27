@@ -2,7 +2,7 @@
 
 Every slide must follow this exact structure and design system for visual consistency.
 
-All sizes are optimized for 1080x1350 portrait slides (4:5 ratio) viewed on mobile phones. Prefer larger text over fitting more content. The extra vertical space compared to square slides gives room to breathe — use it for spacing, not cramming.
+Default dimensions: 1080x1350 portrait (4:5 ratio). The height may be reduced after QA if content doesn't fill the slides (see "Slide Height Adjustment" in SKILL.md). Width is always 1080px. When reducing height, reposition bottom-anchored elements (`.subtitle`, `.accent-line`, `.corner-br`) proportionally.
 
 ## Base HTML Structure
 
