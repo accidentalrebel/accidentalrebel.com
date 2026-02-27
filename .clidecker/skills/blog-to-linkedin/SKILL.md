@@ -82,12 +82,25 @@ Visual Identity:
 - Style: Clean, minimal, white-dominant with red accents
 - Typography direction: Clean sans-serif, bold headlines top-left
 - Recurring motif: Minimal — thin red lines, subtle geometric touches
-- Layout grid: Headline top-left, visual center, detail text bottom
 - Dimensions: 1080x1350 (4:5 portrait — LinkedIn recommended)
 - Constraints: No photorealism, no clutter, professional, white/red palette
 ```
 
 Use the blog's white-and-red color scheme for all carousels. Add variety through layout, visual weight, and selective use of the subtle gray background — not through changing the palette.
+
+### Content-First Slide Philosophy
+
+Core slides are **text-forward**. The primary content is readable text — headlines, short paragraphs, and icon-bulleted lists. Diagrams and illustrations are the exception, not the default.
+
+Each core slide follows this vertical flow:
+1. **Big headline** (top) — the one thing this slide communicates
+2. **Supporting paragraph** — 1-2 sentences of context below the headline
+3. **Icon-bulleted list** — 2-4 scannable items, each with a small inline SVG icon
+4. **Concluding statement** (bottom) — a bold takeaway or transition line
+
+This is modeled on high-performing LinkedIn carousels where every slide is readable at a glance — big text, clear hierarchy, list-like structure. Think "slide as a page of notes" not "slide as an infographic."
+
+**When to use visuals:** Cover slides may include a simple centered icon. A single core slide per carousel may use a diagram or stat callout if the point is inherently visual (e.g., a before/after, a flow, a big number). But the default for core slides is text + list.
 
 ### Per-Slide Format
 
@@ -97,28 +110,42 @@ For each slide, provide:
 |-------|-------------|
 | **Slide N (Role)** | Number and role: Cover, Core, or Closing |
 | **Headline** | Short bold statement — the one thing this slide communicates |
-| **Key detail** | 1-3 sentences or bullets. Heavily distilled from blog |
-| **Visual suggestion** | Brief note on visual type: diagram, icon, stat callout |
-| **Image prompt** | Full prompt for image generation LLM (see below) |
+| **Supporting text** | 1-2 sentences of context that frames the headline |
+| **List items** | 2-4 bullet points (icon + text), scannable at a glance. Omit if slide is a stat callout or diagram |
+| **Concluding line** | Bold takeaway or transition at the bottom of the slide |
+| **Visual note** | _(Optional)_ Only if this slide uses a diagram, stat callout, or icon instead of the standard text layout |
+
+### Slide Text Writing Rules
+
+The slide plan text is the **final rendered text** — it will appear on screen exactly as written. Apply all voice and content rules when writing it, not after.
+
+**Voice (same rules as the text post):**
+- Direct, practitioner-grounded. "I found X" not "It was discovered that X"
+- No buzzwords: no "landscape", "leverage", "crucial", "robust", "ecosystem"
+- No engagement bait: no "You won't believe..." or "Here's why you should care..."
+- No fluff padding. Every sentence earns its place
+- Write as a practitioner sharing findings with peers, not a marketer promoting content
+
+**Content framing:**
+- Risk language, not implementation: "Agents can exfiltrate your code" not "The agent uses subprocess.run to execute shell commands"
+- Organizational risk for security leadership, not tutorial-level detail
+- Each slide must stand alone — if someone screenshots one slide, it delivers value on its own
+
+**Slide-specific text constraints:**
+- **Headlines:** 3-6 words. Bold claim or topic label. No full sentences
+- **Supporting text:** 1-2 sentences max. Context, not explanation. If it runs long, cut it or move detail to a list item
+- **List items:** Fragments or single sentences. Concrete and specific — names, numbers, real examples. No vague generalities ("various security risks")
+- **Concluding line:** One sentence. A takeaway the reader walks away with, or a transition to the next slide. Bold and direct
+
+**Writing process:** Draft all slide text, then review the full carousel for voice consistency. Run `/arebel-voice` on the slide text the same way you would on the text post. Fix any buzzwords, passive constructions, or padding before presenting the plan.
 
 ### Slide Structure
 
-- **Slide 1 (Cover):** Title + subtitle. Create curiosity or state a bold claim. Make someone start swiping.
-- **Slides 2-N (Core):** One point per slide. Each stands alone — someone swiping fast gets value from any single slide. Prioritize: surprising findings, actionable insights, risk-relevant facts. Cut filler.
+- **Slide 1 (Cover):** Title + subtitle. Create curiosity or state a bold claim. May include a simple centered icon. Make someone start swiping.
+- **Slides 2-N (Core):** One point per slide, text-forward layout. Each stands alone — someone swiping fast gets value from any single slide. Use the headline → paragraph → icon-list → concluding line structure. Prioritize: surprising findings, actionable insights, risk-relevant facts. Cut filler.
 - **Final slide (Closing):** CTA. "Full breakdown at accidentalrebel.com" + "Juan Karlo Licudine / @accidentalrebel"
 
-### Image Prompt Requirements
-
-Each prompt must specify:
-- Dimensions (1080x1350)
-- Background color (from visual identity)
-- Accent colors used in this slide
-- What visual elements appear and where
-- What text overlays to render and their position
-- Style consistency note ("Consistent with series" or "Matching carousel style")
-- Exclusions (no photorealism, no clutter)
-
-Refer to [references/example.md](references/example.md) for a complete example transformation showing the full carousel plan with image prompts.
+Refer to [references/example.md](references/example.md) for a complete example transformation showing the full carousel plan.
 
 ## Review Checkpoint
 
@@ -183,8 +210,11 @@ If issues found: fix the HTML, re-screenshot that slide, re-review. Repeat until
 
 ## Content Principles
 
+These apply to **both** the LinkedIn text post and all carousel slide text:
+
 - **Risk language, not implementation:** "Agents can exfiltrate your code" not "The agent uses subprocess.run to execute shell commands"
 - **Each slide is a screenshot candidate:** If someone shares just one slide, it should still make sense and deliver value
 - **Sequential story:** The carousel tells a coherent narrative when swiped through
 - **No filler slides:** If a point doesn't earn its own slide, fold it into another or cut it
 - **Authentic voice:** Practitioner sharing what they found, not thought leader pontificating
+- **No emojis** in any output — text post or slides

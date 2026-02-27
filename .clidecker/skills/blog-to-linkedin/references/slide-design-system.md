@@ -71,15 +71,19 @@ All sizes are optimized for 1080x1350 portrait slides (4:5 ratio) viewed on mobi
 - **Margins**: 72px on all sides — all content stays within this boundary
 - **Headline placement**: Cover slides use `bottom:280px`, all other slides use `top:72px`
 - **Subtitle**: Always at `bottom:80px`
-- **Visual content zone**: Between headline and subtitle (roughly 240px–1050px vertical) — the portrait format gives significantly more room here than square
-- **Center visuals**: Use `position:absolute; top:50%; left:50%; transform:translate(-50%, -N%)` for centered elements
+- **Content zone**: Between headline and subtitle (roughly 180px–1050px vertical)
+- **Default layout is text-forward**: headline → supporting paragraph → icon-bulleted list → concluding statement. Use the `.content` container starting at `top:180px` to flow these elements naturally
+- **Center visuals sparingly**: Use `position:absolute; top:50%; left:50%; transform:translate(-50%, -N%)` only for the rare diagram or stat callout slide
 
 ## Typography
 
 | Element | Size | Weight | Color |
 |---------|------|--------|-------|
 | Headline | 52-54px | 800 | `#24292f` |
-| Subtitle | 28px | 400 | `#656d76` |
+| Supporting text | 28px | 500 | `#24292f` |
+| Icon-list item text | 26px | 400 | `#24292f` |
+| Concluding statement | 28px | 700 | `#24292f` |
+| Subtitle (bottom) | 28px | 400 | `#656d76` |
 | Body/feature text | 22-24px | 500-600 | varies |
 | Code/mono (main) | 22-26px | - | use `'SF Mono', 'Fira Code', 'Consolas', monospace` |
 | Code/mono (output) | 18-19px | - | use `'SF Mono', 'Fira Code', 'Consolas', monospace` |
@@ -124,7 +128,50 @@ The palette is white-dominant with red (`#dc2626`) as the primary accent. Keep i
 
 ## Component Patterns
 
-### Pipeline (flow diagrams)
+### Primary: Text-forward layout (default for core slides)
+
+The default core slide layout. Most slides should use this structure — text is the visual.
+
+```css
+/* Content container — flows top to bottom within margins */
+.content { position: absolute; top: 180px; left: 72px; right: 72px; z-index: 5; }
+
+/* Supporting paragraph below headline */
+.supporting-text { font-size: 28px; font-weight: 500; color: #24292f; line-height: 1.55; margin-bottom: 48px; }
+
+/* Icon-bulleted list */
+.icon-list { display: flex; flex-direction: column; gap: 28px; margin-bottom: 48px; }
+.icon-list-item { display: flex; align-items: flex-start; gap: 20px; }
+.icon-list-item svg { flex-shrink: 0; margin-top: 4px; }
+.icon-list-item .item-text { font-size: 26px; font-weight: 400; color: #24292f; line-height: 1.45; }
+
+/* Concluding statement — bold takeaway at the bottom */
+.concluding { font-size: 28px; font-weight: 700; color: #24292f; line-height: 1.4; }
+```
+
+**Vertical flow:** headline (top:72px) → `.content` container starting at ~180px → supporting-text → icon-list → concluding statement. The subtitle and accent-line remain anchored at the bottom.
+
+Icon-list icons: use small inline SVGs (20-24px) in accent red (`#dc2626`) or muted gray (`#656d76`). Keep icons simple — chevrons, checkmarks, arrows, shields. The icon is a visual bullet, not a feature illustration.
+
+### Secondary: Visual patterns (use sparingly)
+
+These patterns are available for the occasional slide that benefits from a visual element. Limit to 1-2 visual slides per carousel — most slides should use the text-forward layout above.
+
+#### Stat callout
+```css
+.big-number { font-size: 96px; font-weight: 900; color: #dc2626; line-height: 1; }
+.big-label { font-size: 26px; font-weight: 600; color: #656d76; }
+```
+
+#### Stat row (multiple stats side by side)
+```css
+.stats { display: flex; gap: 40px; }
+.stat-value { font-size: 28px; font-weight: 800; color: #dc2626; }
+.stat-label { font-size: 16px; font-weight: 500; color: #656d76; }
+.stat-divider { width: 1px; background: #d0d7de; }
+```
+
+#### Pipeline (flow diagrams)
 ```css
 .pipeline { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -30%); display: flex; align-items: center; gap: 0; z-index: 5; }
 .pipe-box { width: 160-200px; height: 80-100px; border-radius: 14-16px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -134,16 +181,7 @@ The palette is white-dominant with red (`#dc2626`) as the primary accent. Keep i
 .arrow-connector::after { /* triangle arrowhead via border trick */ }
 ```
 
-### Bar chart
-```css
-.bar-row { display: flex; align-items: center; margin-bottom: 24px; }
-.bar-label { width: 220px; text-align: right; padding-right: 24px; color: #24292f; }
-.bar-track { flex: 1; height: 40px; background: #f6f8fa; border-radius: 6px; overflow: hidden; }
-.bar-fill { height: 100%; background: linear-gradient(90deg, #dc2626, #ef4444); border-radius: 6px; }
-.bar-value { position: absolute; right: -56px; /* outside the bar */ }
-```
-
-### Grid rows (pass/fail lists)
+#### Grid rows (pass/fail lists)
 ```css
 .grid-row { display: flex; align-items: center; gap: 16px; padding: 14px 20px; border-radius: 10px; }
 .grid-row.fail { background: rgba(220,38,38,0.04); border: 1.5px solid rgba(220,38,38,0.25); }
@@ -151,39 +189,17 @@ The palette is white-dominant with red (`#dc2626`) as the primary accent. Keep i
 ```
 Use proper SVG icons for status (circled X for fail, circled checkmark for pass).
 
-### Stat callouts
-```css
-.big-number { font-size: 96px; font-weight: 900; color: #dc2626; line-height: 1; }
-.big-label { font-size: 26px; font-weight: 600; color: #656d76; }
-```
-
-### Stat row (multiple stats side by side)
-```css
-.stats { display: flex; gap: 40px; }
-.stat-value { font-size: 28px; font-weight: 800; color: #dc2626; }
-.stat-label { font-size: 16px; font-weight: 500; color: #656d76; }
-.stat-divider { width: 1px; background: #d0d7de; }
-```
-
-### Pill tags
+#### Pill tags
 ```css
 .tag { padding: 8px 18px; border-radius: 20px; font-size: 17px; font-weight: 600; color: #656d76; border: 1px solid #d0d7de; }
 ```
 
-### Timeline
-```css
-.timeline-line { height: 2px; background: #d0d7de; }
-.marker-dot { width: 14px; height: 14px; border-radius: 50%; }
-.marker-dot.active { background: #dc2626; box-shadow: 0 0 12px rgba(220,38,38,0.3); }
-.marker-dot.inactive { background: #d0d7de; }
-```
-
-### Penalty/callout box
+#### Callout box
 ```css
 .callout-box { border: 2px solid #dc2626; border-radius: 12px; padding: 24px 48px; text-align: center; background: rgba(220,38,38, 0.03); }
 ```
 
-### Content card (use the extra portrait height)
+#### Content card
 ```css
 .content-card { background: #f6f8fa; border: 1px solid #d0d7de; border-radius: 12px; padding: 32px; }
 ```
@@ -191,6 +207,34 @@ Use proper SVG icons for status (circled X for fail, circled checkmark for pass)
 ## SVG Icons
 
 Use inline SVG with `stroke` outlines (not filled). Typical size: 22-28px viewBox.
+
+### Icon-list bullet icons (20-24px, used in text-forward layouts)
+
+Use these as visual bullets in icon-lists. Pick icons that relate to the list item's meaning. Keep them simple — they're bullets, not illustrations.
+
+```html
+<!-- Chevron-right (generic bullet) -->
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round">
+  <path d="M9 6l6 6-6 6"/>
+</svg>
+
+<!-- Checkmark (positive/included) -->
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M5 12l5 5L19 7"/>
+</svg>
+
+<!-- Warning triangle (risk/threat) -->
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 3L2 21h20L12 3zM12 9v5M12 17h.01"/>
+</svg>
+
+<!-- Arrow-right (flow/consequence) -->
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round">
+  <path d="M5 12h14M13 6l6 6-6 6"/>
+</svg>
+```
+
+### Larger icons (for diagrams, cover slides, feature callouts)
 
 ```html
 <!-- Shield -->
