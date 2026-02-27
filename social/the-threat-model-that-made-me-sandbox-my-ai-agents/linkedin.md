@@ -5,19 +5,19 @@
 ## Text Post
 
 ```
-I gave an AI coding agent a terminal and then mapped what could go wrong.
+I run AI coding agents daily and I realised I need guardrails.
 
-8 threats. Not theoretical — based on real incidents and patterns I see running these tools daily. Data exfiltration, credential theft, lateral network movement, supply chain attacks through compromised MCP servers, cross-project contamination.
+I try every new CLI tool, every new model, every new MCP server that shows up on my feed. I click "allow" without reading the command (because who has time to review every shell prompt?) and pre-approve Bash(*) for convenience.
 
-The part that surprised me: most of the risk isn't from the AI being malicious. It's from the environment being wide open. Your agent can read your SSH keys, reach internal APIs, and install packages autonomously. One compromised dependency executes with your permissions. One prompt injection and your source code is one curl away from an attacker's server.
+The tools have real safety controls. But those controls assume a disciplined user. Nobody is that user.
 
-After mapping the threats, I built a containerized sandbox — Docker wrapper with network lockdown, per-project isolation, and ephemeral sessions. It adds friction. It's worth it.
+So I mapped what can actually go wrong when an LLM has shell access and the human in the loop is on autopilot. 8 threats, all based on real incidents. Credential theft, data exfiltration, supply chain attacks, lateral movement.
 
-But you don't need my tool. Four things you can do today: audit your agent's permission settings, enable the built-in sandbox, run agents in containers, and review what MCP servers and skills you've installed. None require building anything.
+My answer to this is a Docker wrapper with per-project isolation, network lockdown, and ephemeral sessions. The agent keeps full capability. It just can't reach anything outside the box.
 
 Full threat model at accidentalrebel.com
 
-#AISecurity #ThreatModeling #AgentSecurity #DevSecOps #LLMSecurity
+#AISecurity #ThreatModeling #AgentSecurity #DevSecOps
 ```
 
 ## Carousel Plan
