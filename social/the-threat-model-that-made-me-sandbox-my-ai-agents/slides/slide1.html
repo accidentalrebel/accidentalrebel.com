@@ -6,7 +6,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: #f6f8fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
   .slide {
-    width: 1080px; height: 1350px;
+    width: 1080px; height: 1080px;
     background: #ffffff;
     position: relative; overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -20,31 +20,26 @@
     pointer-events: none; z-index: 2;
   }
   .corner-tl { position: absolute; top: 48px; left: 48px; width: 48px; height: 48px; border-top: 4px solid rgba(220,38,38,0.4); border-left: 4px solid rgba(220,38,38,0.4); z-index: 5; }
-  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 48px; height: 48px; border-bottom: 4px solid rgba(220,38,38,0.4); border-right: 4px solid rgba(220,38,38,0.4); z-index: 5; }
+  .corner-br { position: absolute; bottom: 40px; right: 40px; width: 48px; height: 48px; border-bottom: 4px solid rgba(220,38,38,0.4); border-right: 4px solid rgba(220,38,38,0.4); z-index: 5; }
   .series-marker { position: absolute; top: 56px; right: 72px; font-size: 20px; font-weight: 600; color: rgba(36,41,47,0.3); letter-spacing: 3px; text-transform: uppercase; z-index: 5; }
-  .accent-line { position: absolute; bottom: 110px; left: 72px; width: 60px; height: 3px; background: #dc2626; z-index: 5; }
-
-  .cover-visual {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -58%);
-    z-index: 3;
-  }
-  .glow {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -58%);
-    width: 400px; height: 400px;
-    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
-    z-index: 1;
-  }
   .headline {
-    position: absolute; left: 72px; right: 72px; bottom: 280px;
-    font-size: 52px; font-weight: 800; color: #24292f; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
+    position: absolute; left: 72px; right: 72px; bottom: 220px;
+    font-size: 54px; font-weight: 800; color: #24292f; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
   }
   .subtitle {
-    position: absolute; bottom: 80px; left: 72px; right: 72px;
+    position: absolute; bottom: 64px; left: 72px; right: 72px;
     font-size: 28px; font-weight: 400; color: #656d76; line-height: 1.5; z-index: 5;
+  }
+  .accent-line { position: absolute; bottom: 120px; left: 72px; width: 60px; height: 3px; background: #dc2626; z-index: 5; }
+  .cover-icon {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -65%);
+    z-index: 5;
+  }
+  .cover-glow {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -65%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
+    z-index: 3;
   }
 </style>
 </head>
@@ -53,30 +48,30 @@
   <div class="dot-texture"></div>
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
-  <div class="series-marker">01 / 03</div>
+  <div class="series-marker">01 / 07</div>
 
-  <div class="glow"></div>
-  <div class="cover-visual">
+  <div class="cover-glow"></div>
+  <div class="cover-icon">
     <svg width="260" height="300" viewBox="0 0 260 300" fill="none" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));">
-      <rect x="10" y="30" width="240" height="180" rx="12" stroke="#24292f" stroke-width="2.5" fill="#ffffff"/>
-      <line x1="10" y1="62" x2="250" y2="62" stroke="#d0d7de" stroke-width="1.5"/>
-      <circle cx="32" cy="46" r="5" fill="#d0d7de"/>
-      <circle cx="50" cy="46" r="5" fill="#d0d7de"/>
-      <circle cx="68" cy="46" r="5" fill="#d0d7de"/>
-      <line x1="32" y1="86" x2="140" y2="86" stroke="#d0d7de" stroke-width="2" stroke-linecap="round"/>
-      <line x1="32" y1="110" x2="180" y2="110" stroke="#d0d7de" stroke-width="2" stroke-linecap="round"/>
-      <line x1="32" y1="134" x2="120" y2="134" stroke="#d0d7de" stroke-width="2" stroke-linecap="round"/>
-      <line x1="32" y1="158" x2="160" y2="158" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
-      <line x1="32" y1="182" x2="90" y2="182" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
-      <g transform="translate(155, 220)">
-        <path d="M40 5L75 65H5L40 5z" stroke="#dc2626" stroke-width="2.5" fill="rgba(220,38,38,0.06)"/>
-        <line x1="40" y1="28" x2="40" y2="46" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="40" cy="55" r="2.5" fill="#dc2626"/>
-      </g>
+      <!-- Terminal window -->
+      <rect x="20" y="30" width="220" height="160" rx="12" stroke="#24292f" stroke-width="3" fill="#ffffff"/>
+      <rect x="20" y="30" width="220" height="36" rx="12" fill="#f6f8fa" stroke="#24292f" stroke-width="3"/>
+      <rect x="20" y="54" width="220" height="2" fill="#d0d7de"/>
+      <circle cx="44" cy="48" r="6" fill="#d0d7de"/>
+      <circle cx="64" cy="48" r="6" fill="#d0d7de"/>
+      <circle cx="84" cy="48" r="6" fill="#d0d7de"/>
+      <!-- Terminal cursor line -->
+      <text x="44" y="100" font-family="monospace" font-size="20" fill="#656d76">$ _</text>
+      <text x="44" y="130" font-family="monospace" font-size="20" fill="#656d76">$ curl ...</text>
+      <text x="44" y="160" font-family="monospace" font-size="20" fill="#dc2626">! threat</text>
+      <!-- Warning triangle -->
+      <path d="M130 220 L170 280 L90 280 Z" stroke="#dc2626" stroke-width="3.5" fill="rgba(220,38,38,0.05)" stroke-linejoin="round"/>
+      <line x1="130" y1="245" x2="130" y2="262" stroke="#dc2626" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="130" cy="271" r="2.5" fill="#dc2626"/>
     </svg>
   </div>
 
-  <div class="headline">Eight threats from giving<br>AI agents shell access</div>
+  <div class="headline">8 Threats From AI Agents With Shell Access</div>
   <div class="accent-line"></div>
   <div class="subtitle">I mapped them. Then I built a sandbox.</div>
 </div>

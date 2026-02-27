@@ -71,6 +71,7 @@ Default dimensions: 1080x1350 portrait (4:5 ratio). The height may be reduced af
 - **Margins**: 72px on all sides — all content stays within this boundary
 - **Headline placement**: Cover slides use `bottom:280px`, all other slides use `top:72px`
 - **Subtitle**: Always at `bottom:80px`
+- **Accent line vs. subtitle text**: When a slide has visible subtitle text, move the accent line directly above the text (e.g. `bottom:120px` at 1080px height) so it doesn't overlap the words. On slides with an empty subtitle div, the default `bottom:110px` is fine
 - **Content zone**: Between headline and subtitle (roughly 180px–1050px vertical)
 - **Default layout is text-forward**: headline → supporting paragraph → icon-bulleted list → concluding statement. Use the `.content` container starting at `top:180px` to flow these elements naturally
 - **Center visuals sparingly**: Use `position:absolute; top:50%; left:50%; transform:translate(-50%, -N%)` only for the rare diagram or stat callout slide

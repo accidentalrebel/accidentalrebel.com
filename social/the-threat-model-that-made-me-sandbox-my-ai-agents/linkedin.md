@@ -1,31 +1,30 @@
-# LinkedIn Content
+# LinkedIn: The threat model that made me sandbox my AI agents
 
-Source: `content/the-threat-model-that-made-me-sandbox-my-ai-agents.md`
-
----
+> Source: `content/the-threat-model-that-made-me-sandbox-my-ai-agents.md`
 
 ## Text Post
 
-I gave an AI coding agent shell access to my machine, then sat down and mapped everything that could go wrong.
+```
+I gave an AI coding agent a terminal and then mapped what could go wrong.
 
-Eight specific threats. Not theoretical — based on incidents already happening in the wild. Data exfiltration, credential theft, lateral movement, supply chain injection through compromised MCP servers.
+8 threats. Not theoretical — based on real incidents and patterns I see running these tools daily. Data exfiltration, credential theft, lateral network movement, supply chain attacks through compromised MCP servers, cross-project contamination.
 
-The first real MCP supply chain attack already happened. Compromised npm publish token, poisoned package downloaded 4,000 times in 8 hours, autonomous AI agent installed on each machine. An agent on your network is one curl away from infrastructure it has no business touching. Most setups have zero isolation between the agent and your host system.
+The part that surprised me: most of the risk isn't from the AI being malicious. It's from the environment being wide open. Your agent can read your SSH keys, reach internal APIs, and install packages autonomously. One compromised dependency executes with your permissions. One prompt injection and your source code is one curl away from an attacker's server.
 
-After mapping the threats, I built a containerized sandbox. Docker wrapper with network lockdown, ephemeral sessions, no host filesystem access. The agent gets full capability inside a container where the blast radius is limited to the project directory.
+After mapping the threats, I built a containerized sandbox — Docker wrapper with network lockdown, per-project isolation, and ephemeral sessions. It adds friction. It's worth it.
 
-You don't need my tool to act on this. Audit your settings.local.json for broad permissions you forgot you approved. Enable the built-in sandbox. Run your agent in a container. Review every MCP server and skill your agent loads.
+But you don't need my tool. Four things you can do today: audit your agent's permission settings, enable the built-in sandbox, run agents in containers, and review what MCP servers and skills you've installed. None require building anything.
 
-Full threat model and mitigation matrix at accidentalrebel.com
+Full threat model at accidentalrebel.com
 
-#AISecurity #ThreatModeling #AgentSecurity #CyberSecurity #LLMSecurity
+#AISecurity #ThreatModeling #AgentSecurity #DevSecOps #LLMSecurity
+```
 
----
-
-## Carousel Plan (3 slides — test run)
+## Carousel Plan
 
 ### Visual Identity
 
+```
 - Background: #ffffff (white)
 - Accent color: #dc2626 (red)
 - Text color: #24292f (dark gray)
@@ -37,30 +36,84 @@ Full threat model and mitigation matrix at accidentalrebel.com
 - Motif: Minimal — thin red lines, subtle geometric touches
 - Dimensions: 1080x1350
 - Constraints: No photorealism, no clutter, professional, white/red palette
+```
 
 ---
 
 ### Slide 1 (Cover)
 
-**Headline:** "8 Threats From Giving AI Agents Shell Access"
-**Key detail:** "I mapped them. Then I built a sandbox."
-**Visual suggestion:** Large stylized terminal icon with a red warning triangle overlay. Clean, bold, high-contrast.
-**Image prompt:** "Clean minimal slide, 1080x1350 portrait, white (#ffffff) background. Center: large stylized terminal window (240px) with thin dark gray (#24292f) strokes, a red (#dc2626) warning triangle overlaid on the terminal. Faint radial gradient glow behind terminal: rgba(220,38,38,0.06). Bottom-left at 280px from bottom: bold 52px dark (#24292f) text 'Eight threats from giving AI agents shell access'. Below that: 28px gray (#656d76) text 'I mapped them. Then I built a sandbox.' Red accent line 60x3px above subtitle. Corner brackets faint red rgba(220,38,38,0.25). Series marker top-right '01 / 03'. No photorealism, no clutter."
+**Headline:** 8 Threats From AI Agents With Shell Access
+**Supporting text:** I mapped them. Then I built a sandbox.
+**Visual note:** Simple centered terminal icon with red warning triangle — cover slide visual.
 
 ---
 
 ### Slide 2 (Core)
 
-**Headline:** "One curl away from your infrastructure"
-**Key detail:** AI agents have shell access, network access, and your credentials. The first MCP supply chain attack already happened — 4,000 installs in 8 hours.
-**Visual suggestion:** Three threat cards stacked vertically: data exfiltration, credential theft, lateral movement. Each with a small icon and one-line description.
-**Image prompt:** "Clean minimal slide, 1080x1350 portrait, white (#ffffff) background. Top-left: bold 52px dark (#24292f) headline 'One curl away from your infrastructure'. Below headline, vertically stacked, three content cards on light gray (#f6f8fa) backgrounds with #d0d7de borders, rounded 12px. Each card: left-side small SVG icon (stroke #dc2626), right-side 24px dark text name + 18px gray description. Card 1: outbound arrow icon, 'Data exfiltration' / 'Agent sends your code to any endpoint'. Card 2: key icon, 'Credential theft' / 'SSH keys, API tokens, cloud creds — all readable'. Card 3: network icon, 'Lateral movement' / 'One curl to internal services'. Below cards: red-bordered callout box with '4,000 installs in 8 hours' in 28px bold red, 'First real MCP supply chain attack' in 18px gray below. Subtitle bottom: '3 of 8 mapped threats'. Series marker '02 / 03'. Corner brackets, accent line. No photorealism."
+**Headline:** Your Agent Has a Terminal
+**Supporting text:** Most developers hand agents shell access and never think about what that means.
+**List items:**
+- Runs arbitrary shell commands on your machine
+- Reads and modifies any file your user account can reach
+- Makes network requests to internal infrastructure
+**Concluding line:** Most setups have zero isolation between the agent and your host.
 
 ---
 
-### Slide 3 (Closing)
+### Slide 3 (Core)
 
-**Headline:** "Full threat model at accidentalrebel.com"
-**Key detail:** Karlo Licudine / @accidentalrebel
-**Visual suggestion:** Centered text, clean close. Faint shield watermark behind.
-**Image prompt:** "Clean minimal slide, 1080x1350 portrait, white (#ffffff) background. Center vertically: bold 44px dark (#24292f) text 'Full threat model' on first line, 'and mitigation matrix' on second line. Below: 'accidentalrebel.com' in 36px red (#dc2626). Thin gray (#d0d7de) horizontal divider 120px wide. Below divider: 'Karlo Licudine' in 24px dark text, '@accidentalrebel' in 20px gray (#656d76). Faint shield SVG watermark centered behind all text at opacity 0.03, 300px tall, stroke #dc2626. Corner brackets, accent line, series marker '03 / 03'. No photorealism, no clutter."
+**Headline:** What Can Go Wrong
+**Supporting text:** Four threats from giving an agent access to your files and network.
+**List items:**
+- Host filesystem escape — reads SSH keys, cloud creds, other projects
+- Data exfiltration — one curl sends your source code to an external endpoint
+- Supply chain injection — compromised packages execute with your permissions
+- Credential theft — infostealers already target AI agent config files and tokens
+**Concluding line:** Stolen cloud credentials are how $50K AWS bills happen overnight.
+
+---
+
+### Slide 4 (Core)
+
+**Headline:** It Gets Worse
+**Supporting text:** Four more threats from the environment around the agent.
+**List items:**
+- Lateral movement — one curl to internal APIs, databases, admin panels
+- Settings persistence — compromised session alters agent config permanently
+- Privilege escalation — one careless sudo approval and the agent has root
+- Cross-project contamination — client secrets leak into personal sessions
+**Concluding line:** Most of these happen without the agent being malicious.
+
+---
+
+### Slide 5 (Core)
+
+**Headline:** The Fix: Container Isolation
+**Supporting text:** After mapping the threats, I built a sandbox. It adds friction. It's worth it.
+**List items:**
+- Docker wrapper — only the project directory is mounted
+- Network lockdown — domain allowlist, everything else dropped
+- Ephemeral sessions — destroyed on exit, rebuilt on launch
+- Per-project profiles — no cross-contamination
+**Concluding line:** Contain the agent. Assume it will be compromised.
+
+---
+
+### Slide 6 (Core)
+
+**Headline:** What You Can Do Today
+**Supporting text:** You don't need my tool. Four things you can act on right now.
+**List items:**
+- Audit your settings.local.json — check what you've approved
+- Enable the built-in sandbox (/sandbox in Claude Code)
+- Run agents in Docker containers
+- Review installed MCP servers and skills
+**Concluding line:** None of these require building anything. They're just decisions.
+
+---
+
+### Slide 7 (Closing)
+
+**Headline:** Full threat model at accidentalrebel.com
+**Supporting text:** Juan Karlo Licudine / @accidentalrebel
+**Visual note:** Clean close — centered text, red URL, author name. No list.

@@ -24,7 +24,7 @@
   .series-marker { position: absolute; top: 56px; right: 72px; font-size: 20px; font-weight: 600; color: rgba(36,41,47,0.3); letter-spacing: 3px; text-transform: uppercase; z-index: 5; }
   .headline {
     position: absolute; left: 72px; right: 72px; top: 72px;
-    font-size: 52px; font-weight: 800; color: #24292f; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
+    font-size: 48px; font-weight: 800; color: #24292f; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
   }
   .subtitle {
     position: absolute; bottom: 64px; left: 72px; right: 72px;
@@ -36,7 +36,7 @@
   .icon-list { display: flex; flex-direction: column; gap: 28px; margin-bottom: 48px; }
   .icon-list-item { display: flex; align-items: flex-start; gap: 20px; }
   .icon-list-item svg { flex-shrink: 0; margin-top: 4px; }
-  .icon-list-item .item-text { font-size: 26px; font-weight: 400; color: #24292f; line-height: 1.45; }
+  .item-text { font-size: 26px; font-weight: 400; color: #24292f; line-height: 1.45; }
   .concluding { font-size: 28px; font-weight: 700; color: #24292f; line-height: 1.4; }
 </style>
 </head>
@@ -45,29 +45,33 @@
   <div class="dot-texture"></div>
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
-  <div class="series-marker">02 / 07</div>
+  <div class="series-marker">05 / 07</div>
 
-  <div class="headline">Your Agent Has a Terminal</div>
+  <div class="headline">The Fix: Container Isolation</div>
 
   <div class="content">
-    <div class="supporting-text">Most developers hand agents shell access and never think about what that means.</div>
+    <div class="supporting-text">After mapping the threats, I built a sandbox. It adds friction. It's worth it.</div>
 
     <div class="icon-list">
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Runs arbitrary shell commands on your machine</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg>
+        <span class="item-text">Docker wrapper — only the project directory is mounted</span>
       </div>
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Reads and modifies any file your user account can reach</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg>
+        <span class="item-text">Network lockdown — domain allowlist, everything else dropped</span>
       </div>
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Makes network requests to internal infrastructure</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg>
+        <span class="item-text">Ephemeral sessions — destroyed on exit, rebuilt on launch</span>
+      </div>
+      <div class="icon-list-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L19 7"/></svg>
+        <span class="item-text">Per-project profiles — no cross-contamination</span>
       </div>
     </div>
 
-    <div class="concluding">Most setups have zero isolation between the agent and your host.</div>
+    <div class="concluding">Contain the agent. Assume it will be compromised.</div>
   </div>
 
   <div class="accent-line"></div>

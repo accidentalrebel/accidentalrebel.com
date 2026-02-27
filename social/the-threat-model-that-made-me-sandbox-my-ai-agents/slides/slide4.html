@@ -33,10 +33,11 @@
   .accent-line { position: absolute; bottom: 88px; left: 72px; width: 60px; height: 3px; background: #dc2626; z-index: 5; }
   .content { position: absolute; top: 180px; left: 72px; right: 72px; z-index: 5; }
   .supporting-text { font-size: 28px; font-weight: 500; color: #24292f; line-height: 1.55; margin-bottom: 48px; }
-  .icon-list { display: flex; flex-direction: column; gap: 28px; margin-bottom: 48px; }
+  .icon-list { display: flex; flex-direction: column; gap: 32px; margin-bottom: 48px; }
   .icon-list-item { display: flex; align-items: flex-start; gap: 20px; }
   .icon-list-item svg { flex-shrink: 0; margin-top: 4px; }
-  .icon-list-item .item-text { font-size: 26px; font-weight: 400; color: #24292f; line-height: 1.45; }
+  .item-text { font-size: 26px; font-weight: 400; color: #24292f; line-height: 1.45; }
+  .item-label { font-weight: 700; }
   .concluding { font-size: 28px; font-weight: 700; color: #24292f; line-height: 1.4; }
 </style>
 </head>
@@ -45,29 +46,33 @@
   <div class="dot-texture"></div>
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
-  <div class="series-marker">02 / 07</div>
+  <div class="series-marker">04 / 07</div>
 
-  <div class="headline">Your Agent Has a Terminal</div>
+  <div class="headline">It Gets Worse</div>
 
   <div class="content">
-    <div class="supporting-text">Most developers hand agents shell access and never think about what that means.</div>
+    <div class="supporting-text">Four more threats from the environment around the agent.</div>
 
     <div class="icon-list">
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Runs arbitrary shell commands on your machine</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 21h20L12 3zM12 9v5M12 17h.01"/></svg>
+        <span class="item-text"><span class="item-label">Lateral movement</span> — one curl to internal APIs, databases, admin panels</span>
       </div>
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Reads and modifies any file your user account can reach</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 21h20L12 3zM12 9v5M12 17h.01"/></svg>
+        <span class="item-text"><span class="item-label">Settings persistence</span> — compromised session alters agent config permanently</span>
       </div>
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Makes network requests to internal infrastructure</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 21h20L12 3zM12 9v5M12 17h.01"/></svg>
+        <span class="item-text"><span class="item-label">Privilege escalation</span> — one careless sudo approval and the agent has root</span>
+      </div>
+      <div class="icon-list-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L2 21h20L12 3zM12 9v5M12 17h.01"/></svg>
+        <span class="item-text"><span class="item-label">Cross-project contamination</span> — client secrets leak into personal sessions</span>
       </div>
     </div>
 
-    <div class="concluding">Most setups have zero isolation between the agent and your host.</div>
+    <div class="concluding">Most of these happen without the agent being malicious.</div>
   </div>
 
   <div class="accent-line"></div>

@@ -36,7 +36,7 @@
   .icon-list { display: flex; flex-direction: column; gap: 28px; margin-bottom: 48px; }
   .icon-list-item { display: flex; align-items: flex-start; gap: 20px; }
   .icon-list-item svg { flex-shrink: 0; margin-top: 4px; }
-  .icon-list-item .item-text { font-size: 26px; font-weight: 400; color: #24292f; line-height: 1.45; }
+  .item-text { font-size: 26px; font-weight: 400; color: #24292f; line-height: 1.45; }
   .concluding { font-size: 28px; font-weight: 700; color: #24292f; line-height: 1.4; }
 </style>
 </head>
@@ -45,29 +45,33 @@
   <div class="dot-texture"></div>
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
-  <div class="series-marker">02 / 07</div>
+  <div class="series-marker">06 / 07</div>
 
-  <div class="headline">Your Agent Has a Terminal</div>
+  <div class="headline">What You Can Do Today</div>
 
   <div class="content">
-    <div class="supporting-text">Most developers hand agents shell access and never think about what that means.</div>
+    <div class="supporting-text">You don't need my tool. Four things you can act on right now.</div>
 
     <div class="icon-list">
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Runs arbitrary shell commands on your machine</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="item-text">Audit your settings.local.json — check what you've approved</span>
       </div>
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Reads and modifies any file your user account can reach</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="item-text">Enable the built-in sandbox (/sandbox in Claude Code)</span>
       </div>
       <div class="icon-list-item">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
-        <span class="item-text">Makes network requests to internal infrastructure</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="item-text">Run agents in Docker containers</span>
+      </div>
+      <div class="icon-list-item">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="item-text">Review installed MCP servers and skills</span>
       </div>
     </div>
 
-    <div class="concluding">Most setups have zero isolation between the agent and your host.</div>
+    <div class="concluding">None of these require building anything. They're just decisions.</div>
   </div>
 
   <div class="accent-line"></div>
