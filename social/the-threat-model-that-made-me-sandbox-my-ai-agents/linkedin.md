@@ -1,4 +1,4 @@
-# LinkedIn Content: The Threat Model That Made Me Sandbox My AI Agents
+# LinkedIn Content
 
 Source: `content/the-threat-model-that-made-me-sandbox-my-ai-agents.md`
 
@@ -6,95 +6,61 @@ Source: `content/the-threat-model-that-made-me-sandbox-my-ai-agents.md`
 
 ## Text Post
 
-I mapped 8 threats that come with giving AI coding agents shell access. Then I built a sandbox to contain them.
+I gave an AI coding agent shell access to my machine, then sat down and mapped everything that could go wrong.
 
-When you launch Claude Code or Codex CLI, you're giving an LLM a terminal. It can run commands, modify files, and reach your network. Both tools have permission prompts -- but be honest, how often do you actually read the command before clicking "allow"?
+Eight specific threats. Not theoretical — based on incidents already happening in the wild. Data exfiltration, credential theft, lateral movement, supply chain injection through compromised MCP servers.
 
-I mapped the realistic attack surface: data exfiltration (an agent can curl your .env to any endpoint), credential theft (your ~/.ssh and ~/.aws are readable), supply chain injection (agents install packages autonomously), lateral movement (one curl to your internal API), and four more. These aren't theoretical. A supply chain attack on Cline CLI already compromised 4,000 installs through prompt injection against the tool's own AI triage.
+The first real MCP supply chain attack already happened. Compromised npm publish token, poisoned package downloaded 4,000 times in 8 hours, autonomous AI agent installed on each machine. An agent on your network is one curl away from infrastructure it has no business touching. Most setups have zero isolation between the agent and your host system.
 
-After mapping the threats, I built a containerized sandbox -- Docker wrapper with iptables firewall, ephemeral sessions, SSH agent forwarding (keys never touch the container), and per-project volume isolation. But you don't need my tool. Four things you can do right now: audit your settings.local.json for broad permissions you forgot you approved, enable Claude Code's built-in /sandbox, run your agent in a basic Docker container, and review what MCP servers and skills your agent loads.
+After mapping the threats, I built a containerized sandbox. Docker wrapper with network lockdown, ephemeral sessions, no host filesystem access. The agent gets full capability inside a container where the blast radius is limited to the project directory.
 
-Full threat model with mitigations at accidentalrebel.com
+You don't need my tool to act on this. Audit your settings.local.json for broad permissions you forgot you approved. Enable the built-in sandbox. Run your agent in a container. Review every MCP server and skill your agent loads.
 
-#AISecurity #ThreatModeling #AgentSecurity #LLMSecurity #DevSecOps
+Full threat model and mitigation matrix at accidentalrebel.com
+
+#AISecurity #ThreatModeling #AgentSecurity #CyberSecurity #LLMSecurity
 
 ---
 
-## Carousel Plan
+## Carousel Plan (3 slides — test run)
 
 ### Visual Identity
 
-- Background: #0D1117 (near-black)
-- Accent color: #58A6FF (electric blue)
-- Warning color: #F85149 (red)
-- Action color: #3FB950 (green, for the actionable steps)
-- Style: Dark tech aesthetic, flat minimal iconography
-- Typography: Clean sans-serif, bold headlines top-left, detail text bottom
-- Motif: Terminal/shield motif
-- Layout: Headline top-left, visual element center, detail text bottom
-- Dimensions: 1080x1080
-- Constraints: No photorealism, no clutter, professional
+- Background: #ffffff (white)
+- Accent color: #dc2626 (red)
+- Text color: #24292f (dark gray)
+- Text muted: #656d76
+- Subtle background: #f6f8fa (light gray)
+- Border: #d0d7de
+- Style: Clean minimal, white-dominant with red accents
+- Typography: Clean sans-serif, bold headlines top-left
+- Motif: Minimal — thin red lines, subtle geometric touches
+- Dimensions: 1080x1350
+- Constraints: No photorealism, no clutter, professional, white/red palette
 
 ---
 
 ### Slide 1 (Cover)
 
-**Headline:** "4 Things You Can Do Today to Secure Your AI Agent"
-**Key detail:** Subtitle -- "No custom tooling required."
-**Visual suggestion:** Shield icon with a checklist overlay
+**Headline:** "8 Threats From Giving AI Agents Shell Access"
+**Key detail:** "I mapped them. Then I built a sandbox."
+**Visual suggestion:** Large stylized terminal icon with a red warning triangle overlay. Clean, bold, high-contrast.
+**Image prompt:** "Clean minimal slide, 1080x1350 portrait, white (#ffffff) background. Center: large stylized terminal window (240px) with thin dark gray (#24292f) strokes, a red (#dc2626) warning triangle overlaid on the terminal. Faint radial gradient glow behind terminal: rgba(220,38,38,0.06). Bottom-left at 280px from bottom: bold 52px dark (#24292f) text 'Eight threats from giving AI agents shell access'. Below that: 28px gray (#656d76) text 'I mapped them. Then I built a sandbox.' Red accent line 60x3px above subtitle. Corner brackets faint red rgba(220,38,38,0.25). Series marker top-right '01 / 03'. No photorealism, no clutter."
 
 ---
 
-### Slide 2 (Core — Threats 1-4)
+### Slide 2 (Core)
 
-**Headline:** "8 Threats From Shell Access"
-**Key detail:** T1 Host filesystem access — reads files outside project. T2 Data exfiltration — sends code/secrets to external endpoints. T3 Supply chain injection — compromised package executes on host. T4 Credential theft — reads SSH keys, API tokens, cloud creds.
-**Visual suggestion:** Grid of 4 threat rows with threat IDs and short descriptions
-
----
-
-### Slide 3 (Core — Threats 5-8)
-
-**Headline:** "8 Threats (continued)"
-**Key detail:** T5 Lateral movement — reaches internal network services. T6 Settings persistence — compromised session alters config permanently. T7 Privilege escalation — gains root or elevated capabilities. T8 Cross-project contamination — secrets from one project leak to another.
-**Visual suggestion:** Grid of 4 threat rows continuing the pattern
+**Headline:** "One curl away from your infrastructure"
+**Key detail:** AI agents have shell access, network access, and your credentials. The first MCP supply chain attack already happened — 4,000 installs in 8 hours.
+**Visual suggestion:** Three threat cards stacked vertically: data exfiltration, credential theft, lateral movement. Each with a small icon and one-line description.
+**Image prompt:** "Clean minimal slide, 1080x1350 portrait, white (#ffffff) background. Top-left: bold 52px dark (#24292f) headline 'One curl away from your infrastructure'. Below headline, vertically stacked, three content cards on light gray (#f6f8fa) backgrounds with #d0d7de borders, rounded 12px. Each card: left-side small SVG icon (stroke #dc2626), right-side 24px dark text name + 18px gray description. Card 1: outbound arrow icon, 'Data exfiltration' / 'Agent sends your code to any endpoint'. Card 2: key icon, 'Credential theft' / 'SSH keys, API tokens, cloud creds — all readable'. Card 3: network icon, 'Lateral movement' / 'One curl to internal services'. Below cards: red-bordered callout box with '4,000 installs in 8 hours' in 28px bold red, 'First real MCP supply chain attack' in 18px gray below. Subtitle bottom: '3 of 8 mapped threats'. Series marker '02 / 03'. Corner brackets, accent line. No photorealism."
 
 ---
 
-### Slide 4 (Core — Action 1)
-
-**Headline:** "Audit Your Permissions"
-**Key detail:** Open .claude/settings.local.json. Look for Bash(sudo:*) or other broad patterns you approved and forgot about. Takes 5 minutes.
-**Visual suggestion:** Code snippet showing settings file with a danger highlight on a broad pattern
-
----
-
-### Slide 5 (Core — Action 2)
-
-**Headline:** "Enable the Built-in Sandbox"
-**Key detail:** Run /sandbox in a Claude Code session. It restricts file writes to the working directory and routes network through a domain-approving proxy. One command.
-**Visual suggestion:** Terminal prompt showing the /sandbox command with a green checkmark
-
----
-
-### Slide 6 (Core — Action 3)
-
-**Headline:** "Run Your Agent in a Container"
-**Key detail:** A basic Docker container with your project directory mounted gives you filesystem isolation, credential separation, and a throwaway environment. Covers 3 of 8 threats immediately.
-**Visual suggestion:** Before/after -- open access vs contained agent in a Docker box
-
----
-
-### Slide 7 (Core — Action 4)
-
-**Headline:** "Review Your MCP Servers and Skills"
-**Key detail:** Each one is third-party code running with agent permissions. Check what's installed, where it came from, and whether you still need it. If you rely on one, fork it.
-**Visual suggestion:** List of loaded tools with a magnifying glass / audit icon
-
----
-
-### Slide 8 (Closing)
+### Slide 3 (Closing)
 
 **Headline:** "Full threat model at accidentalrebel.com"
 **Key detail:** Karlo Licudine / @accidentalrebel
-**Visual suggestion:** Clean close with URL and author
+**Visual suggestion:** Centered text, clean close. Faint shield watermark behind.
+**Image prompt:** "Clean minimal slide, 1080x1350 portrait, white (#ffffff) background. Center vertically: bold 44px dark (#24292f) text 'Full threat model' on first line, 'and mitigation matrix' on second line. Below: 'accidentalrebel.com' in 36px red (#dc2626). Thin gray (#d0d7de) horizontal divider 120px wide. Below divider: 'Karlo Licudine' in 24px dark text, '@accidentalrebel' in 20px gray (#656d76). Faint shield SVG watermark centered behind all text at opacity 0.03, 300px tall, stroke #dc2626. Corner brackets, accent line, series marker '03 / 03'. No photorealism, no clutter."

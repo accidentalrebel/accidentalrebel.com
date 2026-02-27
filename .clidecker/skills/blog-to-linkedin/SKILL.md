@@ -50,12 +50,18 @@ Show the full text post and carousel plan in the conversation as well.
 
 **Close:** "Full technical breakdown at accidentalrebel.com" or similar. Plain URL only.
 
-**Voice:** Apply the `arebel-voice-skill` when writing the text post. Read its SKILL.md for the full voice guidelines before drafting. Key points:
-- Direct, practitioner-grounded. "I found X" not "It was discovered that X"
-- No buzzwords: no "landscape", "leverage", "crucial", "robust", "ecosystem"
-- No engagement bait: no "You won't believe..." or "Here's why you should care..."
-- No fluff padding. Every sentence earns its place
-- Write as a practitioner sharing findings with peers, not a marketer promoting content
+**Writing process (two passes):**
+
+1. **Position with `/wwcd`**: Before drafting, run `/wwcd` on the blog post's topic to get positioning guidance. Use it to identify: what consulting capital this content builds, how to frame it for the target audience (security leadership, practitioners with budget), and what angle makes this post worth promoting. Feed this into the hook and core insight.
+
+2. **Draft the text post** using the positioning from step 1 and the structural constraints above.
+
+3. **Edit with `/arebel-voice`**: Run the draft through `/arebel-voice` for voice consistency. Key voice markers:
+   - Direct, practitioner-grounded. "I found X" not "It was discovered that X"
+   - No buzzwords: no "landscape", "leverage", "crucial", "robust", "ecosystem"
+   - No engagement bait: no "You won't believe..." or "Here's why you should care..."
+   - No fluff padding. Every sentence earns its place
+   - Write as a practitioner sharing findings with peers, not a marketer promoting content
 
 ## Output 2: Carousel Slide Plan
 
@@ -67,18 +73,21 @@ Define this ONCE at the top of the carousel plan. Every slide prompt inherits th
 
 ```
 Visual Identity:
-- Background: [color hex]
-- Accent color: [color hex]
-- Warning/danger color: [color hex]
-- Style: [e.g. flat minimal, dark tech, clean corporate]
-- Typography direction: [e.g. clean sans-serif, bold headlines top-left]
-- Recurring motif: [e.g. circuit-board pattern, node graph, grid lines]
-- Layout grid: [e.g. headline top-left, visual center, detail text bottom]
-- Dimensions: 1080x1080
-- Constraints: no photorealism, no clutter, professional
+- Background: #ffffff (white)
+- Accent color: #dc2626 (red — the blog's signature color)
+- Text color: #24292f (dark gray)
+- Text muted: #656d76
+- Subtle background: #f6f8fa (light gray, for cards/boxes)
+- Border: #d0d7de
+- Style: Clean, minimal, white-dominant with red accents
+- Typography direction: Clean sans-serif, bold headlines top-left
+- Recurring motif: Minimal — thin red lines, subtle geometric touches
+- Layout grid: Headline top-left, visual center, detail text bottom
+- Dimensions: 1080x1350 (4:5 portrait — LinkedIn recommended)
+- Constraints: No photorealism, no clutter, professional, white/red palette
 ```
 
-Choose colors and style that fit the blog post's subject matter. Dark tech aesthetic works for security topics. Adjust for other domains.
+Use the blog's white-and-red color scheme for all carousels. Add variety through layout, visual weight, and selective use of the subtle gray background — not through changing the palette.
 
 ### Per-Slide Format
 
@@ -96,12 +105,12 @@ For each slide, provide:
 
 - **Slide 1 (Cover):** Title + subtitle. Create curiosity or state a bold claim. Make someone start swiping.
 - **Slides 2-N (Core):** One point per slide. Each stands alone — someone swiping fast gets value from any single slide. Prioritize: surprising findings, actionable insights, risk-relevant facts. Cut filler.
-- **Final slide (Closing):** CTA. "Full breakdown at accidentalrebel.com" + "Karlo Licudine / @accidentalrebel"
+- **Final slide (Closing):** CTA. "Full breakdown at accidentalrebel.com" + "Juan Karlo Licudine / @accidentalrebel"
 
 ### Image Prompt Requirements
 
 Each prompt must specify:
-- Dimensions (1080x1080)
+- Dimensions (1080x1350)
 - Background color (from visual identity)
 - Accent colors used in this slide
 - What visual elements appear and where
@@ -130,8 +139,8 @@ After user approval, render each slide as a self-contained HTML file. Save to `s
 ### Key rules (details in reference)
 
 - Use a `<style>` block with CSS classes — NOT inline styles
-- Every slide gets: scanlines overlay, corner brackets (TL+BR), series marker (`"01 / 08"`), accent line
-- 72px margins on all sides, 52px headline, 26px subtitle at bottom
+- Every slide gets: corner brackets (TL+BR), series marker (`"01 / 08"`), accent line
+- 72px margins on all sides, 52px headline, 28px subtitle at bottom
 - Inline SVG with stroke outlines for icons — no external images or libraries
 - No CDN links, no external fonts, no JS libraries
 - Flexbox for layouts (pipelines, grids, stat rows)
@@ -152,7 +161,7 @@ const { chromium } = require('playwright');
 (async () => {
   const browser = await chromium.launch();
   const page = await browser.newPage();
-  await page.setViewportSize({ width: 1080, height: 1080 });
+  await page.setViewportSize({ width: 1080, height: 1350 });
   const dir = 'social/<slug>/slides';
   for (let i = 1; i <= N; i++) {
     await page.goto(`file://${process.cwd()}/${dir}/slide${i}.html`);
@@ -164,7 +173,7 @@ const { chromium } = require('playwright');
 
 Review each PNG using the Read tool (which renders images visually). Check for:
 - Text overlapping other text or visuals
-- Elements clipped by the 1080x1080 boundary
+- Elements clipped by the 1080x1350 boundary
 - Diagram components misaligned or colliding
 - Unreadable text (too small, too low contrast)
 

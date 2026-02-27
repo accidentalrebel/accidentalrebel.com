@@ -4,99 +4,131 @@
 <meta charset="utf-8">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  body { background: #f6f8fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
   .slide {
-    width: 1080px; height: 1080px;
-    background: #0D1117;
+    width: 1080px; height: 1350px;
+    background: #ffffff;
     position: relative; overflow: hidden;
-    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
-  .scanlines {
+  .dot-texture {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
-    pointer-events: none; z-index: 10;
+    background: radial-gradient(circle, rgba(105,105,105,0.18) 4px, transparent 4px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.25) 30%, rgba(0,0,0,0.75) 100%);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.25) 30%, rgba(0,0,0,0.75) 100%);
+    pointer-events: none; z-index: 2;
   }
-  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(88,166,255,0.3); border-left: 2px solid rgba(88,166,255,0.3); z-index: 5; }
-  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(88,166,255,0.3); border-right: 2px solid rgba(88,166,255,0.3); z-index: 5; }
-  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 48px; height: 48px; border-top: 4px solid rgba(220,38,38,0.4); border-left: 4px solid rgba(220,38,38,0.4); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 48px; height: 48px; border-bottom: 4px solid rgba(220,38,38,0.4); border-right: 4px solid rgba(220,38,38,0.4); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 20px; font-weight: 600; color: rgba(36,41,47,0.3); letter-spacing: 3px; text-transform: uppercase; z-index: 5; }
   .headline {
-    position: absolute; top: 72px; left: 72px; right: 72px;
-    font-size: 52px; font-weight: 800; color: #FFFFFF; line-height: 1.15; z-index: 5;
+    position: absolute; left: 72px; right: 72px; top: 72px;
+    font-size: 52px; font-weight: 800; color: #24292f; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
   }
-
-  .threat-list {
-    position: absolute; top: 250px; left: 72px; right: 72px; z-index: 5;
-    display: flex; flex-direction: column; gap: 24px;
-  }
-  .threat-row {
-    display: flex; align-items: center; gap: 20px;
-    padding: 24px 28px; border-radius: 12px;
-    background: rgba(248,81,73,0.04); border: 1.5px solid rgba(248,81,73,0.15);
-  }
-  .threat-id {
-    font-size: 18px; font-weight: 800; color: #F85149;
-    background: rgba(248,81,73,0.1); border-radius: 6px;
-    padding: 6px 12px; flex-shrink: 0; letter-spacing: 1px;
-  }
-  .threat-content { flex: 1; }
-  .threat-name { font-size: 24px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
-  .threat-desc { font-size: 18px; font-weight: 400; color: rgba(255,255,255,0.4); }
-
-  .page-indicator {
-    position: absolute; top: 190px; left: 72px;
-    font-size: 16px; font-weight: 600; color: rgba(248,81,73,0.4); letter-spacing: 1px; z-index: 5;
-  }
-
   .subtitle {
     position: absolute; bottom: 80px; left: 72px; right: 72px;
-    font-size: 26px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+    font-size: 28px; font-weight: 400; color: #656d76; line-height: 1.5; z-index: 5;
   }
-  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #58A6FF; z-index: 5; }
+  .accent-line { position: absolute; bottom: 110px; left: 72px; width: 60px; height: 3px; background: #dc2626; z-index: 5; }
+
+  .threat-cards {
+    position: absolute;
+    top: 260px; left: 72px; right: 72px;
+    display: flex; flex-direction: column; gap: 24px;
+    z-index: 5;
+  }
+  .threat-card {
+    background: #f6f8fa;
+    border: 1px solid #d0d7de;
+    border-radius: 12px;
+    padding: 28px 32px;
+    display: flex; align-items: center; gap: 24px;
+  }
+  .threat-card .icon-wrap {
+    flex-shrink: 0;
+    width: 52px; height: 52px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(220,38,38,0.04);
+    border-radius: 10px;
+  }
+  .threat-card .text-wrap { flex: 1; }
+  .threat-name { font-size: 24px; font-weight: 700; color: #24292f; margin-bottom: 4px; }
+  .threat-desc { font-size: 18px; font-weight: 400; color: #656d76; line-height: 1.4; }
+
+  .callout-box {
+    position: absolute;
+    bottom: 200px; left: 72px; right: 72px;
+    border: 2px solid #dc2626;
+    border-radius: 12px;
+    padding: 28px 48px;
+    text-align: center;
+    background: rgba(220,38,38, 0.03);
+    z-index: 5;
+  }
+  .callout-number { font-size: 36px; font-weight: 900; color: #dc2626; line-height: 1.2; }
+  .callout-label { font-size: 18px; font-weight: 400; color: #656d76; margin-top: 4px; }
 </style>
 </head>
 <body>
 <div class="slide">
-  <div class="scanlines"></div>
+  <div class="dot-texture"></div>
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
-  <div class="series-marker">02 / 08</div>
+  <div class="series-marker">02 / 03</div>
 
-  <div class="headline">8 Threats From<br>Shell Access</div>
-  <div class="page-indicator">1 of 2</div>
+  <div class="headline">One curl away from<br>your infrastructure</div>
 
-  <div class="threat-list">
-    <div class="threat-row">
-      <span class="threat-id">T1</span>
-      <div class="threat-content">
-        <div class="threat-name">Host filesystem access</div>
-        <div class="threat-desc">Agent reads files outside the project directory</div>
+  <div class="threat-cards">
+    <div class="threat-card">
+      <div class="icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M7 17L17 7"/>
+          <path d="M7 7h10v10"/>
+        </svg>
       </div>
-    </div>
-    <div class="threat-row">
-      <span class="threat-id">T2</span>
-      <div class="threat-content">
+      <div class="text-wrap">
         <div class="threat-name">Data exfiltration</div>
-        <div class="threat-desc">Agent sends code or secrets to external endpoints</div>
+        <div class="threat-desc">Agent sends your code, secrets, and git history to any endpoint</div>
       </div>
     </div>
-    <div class="threat-row">
-      <span class="threat-id">T3</span>
-      <div class="threat-content">
-        <div class="threat-name">Supply chain injection</div>
-        <div class="threat-desc">Compromised package executes on the host</div>
+
+    <div class="threat-card">
+      <div class="icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="8" cy="15" r="5"/>
+          <path d="M12 11l7-7"/>
+          <path d="M15 4l4 4"/>
+        </svg>
       </div>
-    </div>
-    <div class="threat-row">
-      <span class="threat-id">T4</span>
-      <div class="threat-content">
+      <div class="text-wrap">
         <div class="threat-name">Credential theft</div>
-        <div class="threat-desc">Agent reads SSH keys, API tokens, cloud credentials</div>
+        <div class="threat-desc">SSH keys, API tokens, cloud creds — all readable from your home directory</div>
+      </div>
+    </div>
+
+    <div class="threat-card">
+      <div class="icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/>
+          <ellipse cx="12" cy="12" rx="4" ry="9"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+        </svg>
+      </div>
+      <div class="text-wrap">
+        <div class="threat-name">Lateral movement</div>
+        <div class="threat-desc">One curl to internal services, databases, and infrastructure</div>
       </div>
     </div>
   </div>
 
-  <div class="subtitle">I mapped these before letting an AI agent touch my code.</div>
+  <div class="callout-box">
+    <div class="callout-number">4,000 installs in 8 hours</div>
+    <div class="callout-label">First real MCP supply chain attack</div>
+  </div>
+
   <div class="accent-line"></div>
+  <div class="subtitle">3 of 8 mapped threats</div>
 </div>
 </body>
 </html>

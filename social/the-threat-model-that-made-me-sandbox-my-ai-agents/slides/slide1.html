@@ -4,71 +4,81 @@
 <meta charset="utf-8">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  body { background: #f6f8fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
   .slide {
-    width: 1080px; height: 1080px;
-    background: #0D1117;
+    width: 1080px; height: 1350px;
+    background: #ffffff;
     position: relative; overflow: hidden;
-    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
-  .scanlines {
+  .dot-texture {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
-    pointer-events: none; z-index: 10;
+    background: radial-gradient(circle, rgba(105,105,105,0.18) 4px, transparent 4px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.25) 30%, rgba(0,0,0,0.75) 100%);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.25) 30%, rgba(0,0,0,0.75) 100%);
+    pointer-events: none; z-index: 2;
   }
-  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(88,166,255,0.3); border-left: 2px solid rgba(88,166,255,0.3); z-index: 5; }
-  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(88,166,255,0.3); border-right: 2px solid rgba(88,166,255,0.3); z-index: 5; }
-  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 48px; height: 48px; border-top: 4px solid rgba(220,38,38,0.4); border-left: 4px solid rgba(220,38,38,0.4); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 48px; height: 48px; border-bottom: 4px solid rgba(220,38,38,0.4); border-right: 4px solid rgba(220,38,38,0.4); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 20px; font-weight: 600; color: rgba(36,41,47,0.3); letter-spacing: 3px; text-transform: uppercase; z-index: 5; }
+  .accent-line { position: absolute; bottom: 110px; left: 72px; width: 60px; height: 3px; background: #dc2626; z-index: 5; }
 
-  .visual {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -55%);
-    z-index: 2;
+  .cover-visual {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -58%);
+    z-index: 3;
   }
   .glow {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -55%);
-    width: 300px; height: 300px; border-radius: 50%;
-    background: radial-gradient(circle, rgba(63,185,80,0.12) 0%, transparent 70%);
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -58%);
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(220,38,38,0.06) 0%, transparent 70%);
     z-index: 1;
   }
-
   .headline {
-    position: absolute; bottom: 200px; left: 72px; right: 72px;
-    font-size: 54px; font-weight: 800; color: #FFFFFF; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
+    position: absolute; left: 72px; right: 72px; bottom: 280px;
+    font-size: 52px; font-weight: 800; color: #24292f; line-height: 1.15; letter-spacing: -0.5px; z-index: 5;
   }
   .subtitle {
-    position: absolute; bottom: 120px; left: 72px; right: 72px;
-    font-size: 26px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
+    position: absolute; bottom: 80px; left: 72px; right: 72px;
+    font-size: 28px; font-weight: 400; color: #656d76; line-height: 1.5; z-index: 5;
   }
-  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #58A6FF; z-index: 5; }
 </style>
 </head>
 <body>
 <div class="slide">
-  <div class="scanlines"></div>
+  <div class="dot-texture"></div>
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
-  <div class="series-marker">01 / 08</div>
+  <div class="series-marker">01 / 03</div>
 
   <div class="glow"></div>
-  <div class="visual">
-    <svg width="200" height="220" viewBox="0 0 200 220" fill="none">
-      <!-- Shield -->
-      <path d="M100 10 L20 50 L20 120 C20 170 55 208 100 220 C145 208 180 170 180 120 L180 50 Z" stroke="#3FB950" stroke-width="2.5" fill="rgba(63,185,80,0.06)"/>
-      <!-- Checklist lines -->
-      <path d="M65 90 L75 100 L95 80" stroke="#3FB950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="105" y1="90" x2="140" y2="90" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
-      <path d="M65 120 L75 130 L95 110" stroke="#3FB950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="105" y1="120" x2="135" y2="120" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
-      <path d="M65 150 L75 160 L95 140" stroke="#3FB950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="105" y1="150" x2="145" y2="150" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="80" cy="180" r="4" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1.5"/>
-      <line x1="105" y1="180" x2="130" y2="180" stroke="rgba(255,255,255,0.15)" stroke-width="2" stroke-linecap="round"/>
+  <div class="cover-visual">
+    <svg width="260" height="300" viewBox="0 0 260 300" fill="none" style="filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));">
+      <rect x="10" y="30" width="240" height="180" rx="12" stroke="#24292f" stroke-width="2.5" fill="#ffffff"/>
+      <line x1="10" y1="62" x2="250" y2="62" stroke="#d0d7de" stroke-width="1.5"/>
+      <circle cx="32" cy="46" r="5" fill="#d0d7de"/>
+      <circle cx="50" cy="46" r="5" fill="#d0d7de"/>
+      <circle cx="68" cy="46" r="5" fill="#d0d7de"/>
+      <line x1="32" y1="86" x2="140" y2="86" stroke="#d0d7de" stroke-width="2" stroke-linecap="round"/>
+      <line x1="32" y1="110" x2="180" y2="110" stroke="#d0d7de" stroke-width="2" stroke-linecap="round"/>
+      <line x1="32" y1="134" x2="120" y2="134" stroke="#d0d7de" stroke-width="2" stroke-linecap="round"/>
+      <line x1="32" y1="158" x2="160" y2="158" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+      <line x1="32" y1="182" x2="90" y2="182" stroke="#dc2626" stroke-width="2" stroke-linecap="round"/>
+      <g transform="translate(155, 220)">
+        <path d="M40 5L75 65H5L40 5z" stroke="#dc2626" stroke-width="2.5" fill="rgba(220,38,38,0.06)"/>
+        <line x1="40" y1="28" x2="40" y2="46" stroke="#dc2626" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="40" cy="55" r="2.5" fill="#dc2626"/>
+      </g>
     </svg>
   </div>
 
-  <div class="headline">4 Things You Can Do<br>Today to Secure Your<br>AI Agent</div>
-  <div class="subtitle">No custom tooling required.</div>
+  <div class="headline">Eight threats from giving<br>AI agents shell access</div>
   <div class="accent-line"></div>
+  <div class="subtitle">I mapped them. Then I built a sandbox.</div>
 </div>
 </body>
 </html>

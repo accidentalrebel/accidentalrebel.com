@@ -4,98 +4,70 @@
 <meta charset="utf-8">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: #000; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+  body { background: #f6f8fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
   .slide {
-    width: 1080px; height: 1080px;
-    background: #0D1117;
+    width: 1080px; height: 1350px;
+    background: #ffffff;
     position: relative; overflow: hidden;
-    font-family: -apple-system, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   }
-  .scanlines {
+  .dot-texture {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.015) 3px, rgba(255,255,255,0.015) 4px);
-    pointer-events: none; z-index: 10;
+    background: radial-gradient(circle, rgba(105,105,105,0.18) 4px, transparent 4px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.25) 30%, rgba(0,0,0,0.75) 100%);
+    mask-image: radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.25) 30%, rgba(0,0,0,0.75) 100%);
+    pointer-events: none; z-index: 2;
   }
-  .corner-tl { position: absolute; top: 48px; left: 48px; width: 24px; height: 24px; border-top: 2px solid rgba(88,166,255,0.3); border-left: 2px solid rgba(88,166,255,0.3); z-index: 5; }
-  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 24px; height: 24px; border-bottom: 2px solid rgba(88,166,255,0.3); border-right: 2px solid rgba(88,166,255,0.3); z-index: 5; }
-  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.25); letter-spacing: 2px; z-index: 5; }
-  .headline {
-    position: absolute; top: 72px; left: 72px; right: 72px;
-    font-size: 52px; font-weight: 800; color: #FFFFFF; line-height: 1.15; z-index: 5;
-  }
+  .corner-tl { position: absolute; top: 48px; left: 48px; width: 48px; height: 48px; border-top: 4px solid rgba(220,38,38,0.4); border-left: 4px solid rgba(220,38,38,0.4); z-index: 5; }
+  .corner-br { position: absolute; bottom: 48px; right: 48px; width: 48px; height: 48px; border-bottom: 4px solid rgba(220,38,38,0.4); border-right: 4px solid rgba(220,38,38,0.4); z-index: 5; }
+  .series-marker { position: absolute; top: 56px; right: 72px; font-size: 20px; font-weight: 600; color: rgba(36,41,47,0.3); letter-spacing: 3px; text-transform: uppercase; z-index: 5; }
+  .accent-line { position: absolute; bottom: 110px; left: 72px; width: 60px; height: 3px; background: #dc2626; z-index: 5; }
 
-  .threat-list {
-    position: absolute; top: 250px; left: 72px; right: 72px; z-index: 5;
-    display: flex; flex-direction: column; gap: 24px;
+  .watermark {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0.03;
+    z-index: 1;
   }
-  .threat-row {
-    display: flex; align-items: center; gap: 20px;
-    padding: 24px 28px; border-radius: 12px;
-    background: rgba(248,81,73,0.04); border: 1.5px solid rgba(248,81,73,0.15);
+  .closing-content {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 5;
   }
-  .threat-id {
-    font-size: 18px; font-weight: 800; color: #F85149;
-    background: rgba(248,81,73,0.1); border-radius: 6px;
-    padding: 6px 12px; flex-shrink: 0; letter-spacing: 1px;
-  }
-  .threat-content { flex: 1; }
-  .threat-name { font-size: 24px; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 4px; }
-  .threat-desc { font-size: 18px; font-weight: 400; color: rgba(255,255,255,0.4); }
-
-  .page-indicator {
-    position: absolute; top: 190px; left: 72px;
-    font-size: 16px; font-weight: 600; color: rgba(248,81,73,0.4); letter-spacing: 1px; z-index: 5;
-  }
-
-  .subtitle {
-    position: absolute; bottom: 80px; left: 72px; right: 72px;
-    font-size: 26px; font-weight: 400; color: rgba(255,255,255,0.5); line-height: 1.5; z-index: 5;
-  }
-  .accent-line { position: absolute; bottom: 100px; left: 72px; width: 60px; height: 3px; background: #58A6FF; z-index: 5; }
+  .cta-line1 { font-size: 44px; font-weight: 800; color: #24292f; line-height: 1.2; }
+  .cta-line2 { font-size: 44px; font-weight: 800; color: #24292f; line-height: 1.2; margin-bottom: 20px; }
+  .cta-url { font-size: 36px; font-weight: 700; color: #dc2626; margin-bottom: 40px; display: block; }
+  .divider { width: 120px; height: 1px; background: #d0d7de; margin: 0 auto 40px auto; }
+  .author-name { font-size: 24px; font-weight: 600; color: #24292f; margin-bottom: 8px; }
+  .author-handle { font-size: 20px; font-weight: 400; color: #656d76; }
 </style>
 </head>
 <body>
 <div class="slide">
-  <div class="scanlines"></div>
+  <div class="dot-texture"></div>
   <div class="corner-tl"></div>
   <div class="corner-br"></div>
-  <div class="series-marker">03 / 08</div>
+  <div class="series-marker">03 / 03</div>
 
-  <div class="headline">8 Threats From<br>Shell Access</div>
-  <div class="page-indicator">2 of 2</div>
-
-  <div class="threat-list">
-    <div class="threat-row">
-      <span class="threat-id">T5</span>
-      <div class="threat-content">
-        <div class="threat-name">Lateral movement</div>
-        <div class="threat-desc">Agent reaches internal network services</div>
-      </div>
-    </div>
-    <div class="threat-row">
-      <span class="threat-id">T6</span>
-      <div class="threat-content">
-        <div class="threat-name">Settings persistence</div>
-        <div class="threat-desc">Compromised session alters agent config permanently</div>
-      </div>
-    </div>
-    <div class="threat-row">
-      <span class="threat-id">T7</span>
-      <div class="threat-content">
-        <div class="threat-name">Privilege escalation</div>
-        <div class="threat-desc">Agent gains root or elevated capabilities</div>
-      </div>
-    </div>
-    <div class="threat-row">
-      <span class="threat-id">T8</span>
-      <div class="threat-content">
-        <div class="threat-name">Cross-project contamination</div>
-        <div class="threat-desc">Secrets from one project leak into another session</div>
-      </div>
-    </div>
+  <div class="watermark">
+    <svg width="300" height="360" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="0.5">
+      <path d="M12 3L4 7v5c0 5 3.5 9.7 8 11 4.5-1.3 8-6 8-11V7l-8-4z"/>
+    </svg>
   </div>
 
-  <div class="subtitle">Here's what you can do about it -- no custom tooling needed.</div>
+  <div class="closing-content">
+    <div class="cta-line1">Full threat model</div>
+    <div class="cta-line2">and mitigation matrix</div>
+    <span class="cta-url">accidentalrebel.com</span>
+    <div class="divider"></div>
+    <div class="author-name">Juan Karlo Licudine</div>
+    <div class="author-handle">@accidentalrebel</div>
+  </div>
+
   <div class="accent-line"></div>
 </div>
 </body>
