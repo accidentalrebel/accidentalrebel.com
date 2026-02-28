@@ -76,3 +76,5 @@ Scott Shambaugh, a volunteer maintainer for matplotlib (~130 million monthly dow
 
 Previous roundup: [AI Agents Under Attack]({filename}/ai-agents-under-attack.md) — Claude finds 500+ vulns and LLMs run autonomous network breaches.
 
+Next roundup: [AI, jailbreaks, and 150GB of unanswered questions]({filename}/ai-jailbreaks-and-150gb-of-unanswered-questions.md)
+
