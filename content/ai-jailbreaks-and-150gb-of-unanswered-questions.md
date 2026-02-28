@@ -1,8 +1,13 @@
 Title: AI, jailbreaks, and 150GB of unanswered questions
 Date: 2026-02-27 10:00
 Slug: ai-jailbreaks-and-150gb-of-unanswered-questions
-Tags: ai, security
+Tags: ai, security, cybersecurity-x-ai, ai-attack-surface, ai-agent-risk, ai-threat-intel
 Category: Cybersecurity x AI
+Image: ai-jailbreaks-and-150gb-of-unanswered-questions.png
+Summary: A hacker allegedly jailbroke Claude to hack Mexican government agencies, but key details remain unverified. Plus Claude Code and Copilot vulns, and Chinese AI firms stealing Anthropic's model.
+
+![AI, jailbreaks, and 150GB of unanswered questions]({attach}/images/ai-jailbreaks-and-150gb-of-unanswered-questions.png)
+*Image made by Gemini*
 
 A hacker allegedly jailbroke Claude to generate exploit code targeting Mexican government agencies, though key details remain unverified. Meanwhile, Claude Code and GitHub Copilot had critical vulnerabilities disclosed, Trail of Bits showed how to extract Gmail data through Perplexity's AI browser, and three Chinese firms ran a 16-million-query campaign to steal Anthropic's model.
 <!-- PELICAN_END_SUMMARY -->
