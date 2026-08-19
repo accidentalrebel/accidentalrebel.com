@@ -1,11 +1,6 @@
 ---
 name: curate-news
-description: |
-  Curates AI + cybersecurity news from RSS feeds for the AccidentalRebel blog.
-  Fetches feeds, filters for AI+security intersection, then presents each
-  candidate article one-by-one for the user to approve, reclassify, or skip.
-  Generates a draft blog post from user-approved selections only.
-  Use when the user wants to create a news roundup post or curate AI security news.
+description: 'Use when the user says "curate news", "news roundup", "curate AI security news", or wants to build a weekly AI+cybersecurity roundup post for the blog from RSS feeds.'
 allowed-tools:
   - WebFetch
   - Read
