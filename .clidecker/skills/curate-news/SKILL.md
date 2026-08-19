@@ -245,7 +245,7 @@ When generating draft content (step 8), use **/wwcd** to frame each write-up fro
 
 Invoke /wwcd with the draft content and ask it to reframe through a consulting lens. This changes the *angle* of each write-up, not the selection of articles.
 
-**Note:** Voice styling (humanizer + arebel-voice) is handled by `/new-post`, not here. Keep the draft focused on accurate, well-framed content.
+**Note:** Voice styling (arebel-voice) is handled by `/new-post`, not here. Keep the draft focused on accurate, well-framed content.
 
 ---
 

@@ -20,10 +20,9 @@ Convert draft markdown to a published Pelican blog post.
 ## Workflow
 
 1. Read the draft file (argument or ask user)
-2. Apply **/humanizer** to remove AI writing patterns (filler phrases, em-dash overuse, promotional language, etc.)
-3. Apply **/arebel-voice** to add the AccidentalRebel personality (direct, practical, shows "why it matters", specific numbers, honest about limitations)
-4. Extract title from first H1 or filename
-5. Generate metadata header:
+2. Apply **/arebel-voice** to remove AI writing patterns (filler phrases, em-dash overuse, promotional language) and add the AccidentalRebel personality (direct, practical, shows "why it matters", specific numbers, honest about limitations)
+3. Extract title from first H1 or filename
+4. Generate metadata header:
    ```
    Title: <title>
    Date: <YYYY-MM-DD HH:MM>
@@ -33,12 +32,12 @@ Convert draft markdown to a published Pelican blog post.
    Summary: <meta description, under 160 chars>
    ```
    **Summary rules:** Include the primary keyword someone would search for. Write in the author's direct voice. No filler ("discover how to", "this article covers", "in this post"). Make it compelling enough to click from a Google search result.
-6. Add internal links: Scan `content/*.md` for topically related posts. Add 1-3 natural links at the end of the post. Use `{filename}` format: `[text]({filename}/slug.md)`. Don't force links where the connection isn't natural.
+5. Add internal links: Scan `content/*.md` for topically related posts. Add 1-3 natural links at the end of the post. Use `{filename}` format: `[text]({filename}/slug.md)`. Don't force links where the connection isn't natural.
    - **Cybersecurity x AI News Roundup posts:** Find the most recent previous roundup by date in `content/` (Category: `cybersecurity-x-ai-news-roundup`) and add `Previous roundup: [Title]({filename}/slug.md)` at the end. Also add `Next roundup:` link to the *previous* roundup's file pointing back to this new post.
-7. Write to `/workspace/content/<slug>.md`
-8. Delete original draft
-9. Build: `source venv/bin/activate && make html`
-10. Report result
+6. Write to `/workspace/content/<slug>.md`
+7. Delete original draft
+8. Build: `source venv/bin/activate && make html`
+9. Report result
 
 ## Tags
 
