@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testing Jev as a gate for agent-submitted knowledge | AccidentalRebel.com</title>
+
+<meta name="description" content="I got access to Jev and have been brainstorming cybersecurity projects to try it on. But I wanted to try it on something simple first, so I integrated it...">
+
+    <link rel="canonical" href="./testing-jev-as-a-gate-for-agent-submitted-knowledge-f6a56d11.html">
+
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+
+    <link rel="stylesheet" href="./theme/css/main.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": ".",
+        "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
+    <meta name="author" content="AccidentalRebel">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="./testing-jev-as-a-gate-for-agent-submitted-knowledge-f6a56d11.html">
+    <meta property="og:title" content="Testing Jev as a gate for agent-submitted knowledge">
+    <meta property="article:author" content="AccidentalRebel">
+    <meta property="article:published_time" content="2026-09-20T00:00:00+08:00">
+    <meta property="og:description" content="I got access to Jev and have been brainstorming cybersecurity projects to try it on. But I wanted to try it on something simple first, so I integrated it into a personal project: my existing knowledge vault for agents. In this integration, Jev evaluates proposed notes against review questions and returns probabilities that the application uses to decide what goes in. The vault uses Obsidian as a backend and Khoj for retrieval. It stores information that agents can use in future tasks, including project facts, shared capabilities, decisions and their reasons, and verified lessons. The tricky part is deciding what deserves to go in. Something that failed on one machine might be useful to remember, but that doesn't mean it should become a rule saying it always fails. An agent finding that note later needs to know the difference. I've used calls to Claude or Codex to help determine what …">
+    <meta property="og:image" content="./images/default-og.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="./testing-jev-as-a-gate-for-agent-submitted-knowledge-f6a56d11.html">
+    <meta property="twitter:title" content="Testing Jev as a gate for agent-submitted knowledge">
+    <meta property="twitter:description" content="I got access to Jev and have been brainstorming cybersecurity projects to try it on. But I wanted to try it on something simple first, so I integrated it into a personal project: my existing knowledge vault for agents. In this integration, Jev evaluates proposed notes against review questions and returns probabilities that the application uses to decide what goes in. The vault uses Obsidian as a backend and Khoj for retrieval. It stores information that agents can use in future tasks, including project facts, shared capabilities, decisions and their reasons, and verified lessons. The tricky part is deciding what deserves to go in. Something that failed on one machine might be useful to remember, but that doesn't mean it should become a rule saying it always fails. An agent finding that note later needs to know the difference. I've used calls to Claude or Codex to help determine what …">
+    <meta property="twitter:image" content="./images/default-og.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Testing Jev as a gate for agent-submitted knowledge",
+        "datePublished": "2026-09-20T00:00:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "./testing-jev-as-a-gate-for-agent-submitted-knowledge-f6a56d11.html",
+        "description": "I got access to Jev and have been brainstorming cybersecurity projects to try it on. But I wanted to try it on something simple first, so I integrated it...",
+        "image": "./images/default-og.png"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
+            { "@type": "ListItem", "position": 2, "name": "misc", "item": "./category/misc.html" },
+            { "@type": "ListItem", "position": 3, "name": "Testing Jev as a gate for agent-submitted knowledge" }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <div class="rebel-stripe"></div>
+    <div class="progress-bar" id="progress"></div>
+
+    <header>
+        <div class="container-wide">
+            <nav>
+                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="./archives.html">Archives</a></li>
+                    <li><a href="./categories.html">Categories</a></li>
+                    <li><a href="./tags.html">Tags</a></li>
+                            <li><a href="./category/cybersecurity-x-ai.html">Newsletter</a></li>
+                            <li><a href="./pages/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
+<article>
+    <header class="article-header">
+        <a href="./category/misc.html" class="article-category-label">misc</a>
+        <h1>Testing Jev as a gate for agent-submitted knowledge</h1>
+        <div class="article-meta">
+            <time datetime="2026-09-20T00:00:00+08:00">Sun 20 September 2026</time>
+        </div>
+    </header>
+
+    <div class="article-content">
+        <p>I got access to <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">Jev</a> and have been brainstorming cybersecurity projects to try it on. But I wanted to try it on something simple first, so I integrated it into a personal project: my existing knowledge vault for agents. In this integration, Jev evaluates proposed notes against review questions and returns probabilities that the application uses to decide what goes in.</p>
+<p><img alt="software architectures dark" src="./images/dashboard/f6a56d11-2363-40a2-838c-6a844d86f653/9f5ebe65-b314-4bdc-a35b-700a11ecec55-software-architectures-dark.webp" /></p>
+<p>The vault uses Obsidian as a backend and Khoj for retrieval. It stores information that agents can use in future tasks, including project facts, shared capabilities, decisions and their reasons, and verified lessons.</p>
+<p>The tricky part is deciding what deserves to go in. Something that failed on one machine might be useful to remember, but that doesn't mean it should become a rule saying it always fails. An agent finding that note later needs to know the difference.</p>
+<p>I've used calls to Claude or Codex to help determine what goes in. That has worked fine, but when I learned about Jev, it seemed like a good fit for my problem. I had to give it a try.</p>
+<p>It's not exactly the best application for Jev (especially when you see the other crazy things people are doing with it), but this is the need that I currently have, and so I made it.</p>
+<h2 id="what-makes-a-note-worth-keeping">What makes a note worth keeping?</h2>
+<p>The vault isn't meant to hold everything an agent did. Routine task summaries, generic advice, and paraphrases of existing entries don't belong there. Neither do unverified claims or secrets. Repositories still hold the authoritative code, commands, configuration, and current status. A note can point to those and explain a lasting constraint without copying the runbook into another place.</p>
+<p>I wanted something like Wikipedia for my agents.</p>
+<p>The integration breaks the review into four questions. These are paraphrases, rather than the exact prompts:</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>What we're asking</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>factual_support</code></td>
+<td>Does the evidence support what the note says?</td>
+</tr>
+<tr>
+<td><code>durability</code></td>
+<td>Will this remain useful beyond the current task?</td>
+</tr>
+<tr>
+<td><code>reference_value</code></td>
+<td>Would a future agent have a reason to consult it?</td>
+</tr>
+<tr>
+<td><code>sensitive_information</code></td>
+<td>Would disclosing this expose sensitive information?</td>
+</tr>
+</tbody>
+</table>
+<p>All four go into one request with the proposed note and its evidence. For each question, Jev returns probabilities over five rubric levels, numbered 0 through 4. The application uses those probabilities to decide what happens next.</p>
+<p>For factual support, for example, approval requires both <code>P(4) ≥ 0.25</code> and <code>P(3-4) ≥ 0.85</code>. That second expression means adding the probabilities for levels 3 and 4. The application checks those values directly instead of turning the distribution into an average score.</p>
+<p>One submission described transcription output exceeding a media worker's log buffer. According to the implementation agent's account, it came with supporting documentation, cleared all four checks, and was published. Quick and easy.</p>
+<p>But there was another note that landed just below the factual-support cutoff: 0.840 against a required 0.85. The implementation agent reran the same packet five times, and every rerun cleared that check. So the same note could pass or fail that check without its contents changing.</p>
+<h2 id="so-what-about-speed-and-cost">So what about speed and cost?</h2>
+<p>According to the measurements, Jev answered all four review questions in roughly 1.1–1.2 seconds. One request used 2,944 input tokens and returned 63 output tokens.</p>
+<p>The agent also reported 17 seconds for the editorial LLM to review and draft one candidate, and around 42 seconds for two. Those timings cover broader work than Jev's four judgments, so they aren't a direct speed comparison. In the workflow the agent described, the editorial LLM still runs, and Jev takes over the manual approval step.</p>
+<p><img alt="jev 2026 09 20 11 06" src="./images/dashboard/f6a56d11-2363-40a2-838c-6a844d86f653/b6affa18-788e-45db-9f98-fe7704607120-jev-2026-09-20_11-06.png" /></p>
+<p>As for cost, I've used 598K tokens over two days of running this, with reported spend of around $0.0243. Very cheap! I don't yet have a comparable cost breakdown for the previous workflow, though, so this isn't a measured savings figure.</p>
+<h2 id="what-comes-next">What comes next</h2>
+<p>My small experiment with Jev has given me useful data, and I'm now thinking of other areas to apply it to. I'm thinking along the lines of SOC work, log analysis, and possibly malware analysis. Something that puts its speed and cost to the test.</p>
+<p>I'm excited to see where this goes.</p>
+<p>You can see the implementation of Jev here: <a href="https://github.com/accidentalrebel/knowledge-vault-public">Knowledge Vault Public</a>.</p>
+    </div>
+
+</article>
+
+
+<section class="newsletter-cta">
+    <h3>Get posts like this in your inbox</h3>
+    <p>Security research, malware analysis, and tools — no spam.</p>
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+    >
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+
+<section class="comments">
+    <script src="https://giscus.app/client.js"
+        data-repo="accidentalrebel/accidentalrebel.com"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMTkzODk2NjU="
+        data-category="Comments"
+        data-category-id="DIC_kwDOBx294c4C26p7"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+    </script>
+</section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="mailto:karlo@accidentalrebel.com" target="_blank" rel="noopener">Email</a></li>
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                        <div class="sidebar-newsletter">
+                            <h4>For weekly Cybersecurity x AI threat analysis subscribe below</h4>
+                            <form
+                                action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+                                method="post"
+                                target="popupwindow"
+                                class="sidebar-newsletter-form"
+                            >
+                                <input type="email" name="email" placeholder="your@email.com" required />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</span>
+                <ul class="footer-links">
+                    <li><a href="mailto:karlo@accidentalrebel.com" target="_blank" rel="noopener">Email</a></li>
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./theme/js/main.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
+    </script>
+</body>
+</html>
