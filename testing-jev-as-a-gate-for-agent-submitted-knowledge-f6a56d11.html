@@ -102,12 +102,12 @@
 
     <div class="article-content">
         <p>I got access to <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">Jev</a> and have been brainstorming cybersecurity projects to try it on. But I wanted to try it on something simple first, so I integrated it into a personal project: my existing knowledge vault for agents. In this integration, Jev evaluates proposed notes against review questions and returns probabilities that the application uses to decide what goes in.</p>
-<p><img alt="software architectures dark" src="./images/dashboard/f6a56d11-2363-40a2-838c-6a844d86f653/9f5ebe65-b314-4bdc-a35b-700a11ecec55-software-architectures-dark.webp" /></p>
 <p>The vault uses Obsidian as a backend and Khoj for retrieval. It stores information that agents can use in future tasks, including project facts, shared capabilities, decisions and their reasons, and verified lessons.</p>
 <p>The tricky part is deciding what deserves to go in. Something that failed on one machine might be useful to remember, but that doesn't mean it should become a rule saying it always fails. An agent finding that note later needs to know the difference.</p>
 <p>I've used calls to Claude or Codex to help determine what goes in. That has worked fine, but when I learned about Jev, it seemed like a good fit for my problem. I had to give it a try.</p>
 <p>It's not exactly the best application for Jev (especially when you see the other crazy things people are doing with it), but this is the need that I currently have, and so I made it.</p>
 <h2 id="what-makes-a-note-worth-keeping">What makes a note worth keeping?</h2>
+<p><img alt="93dd4b6a 4465 4197 a5d2 a704d004890f fit" src="./images/dashboard/f6a56d11-2363-40a2-838c-6a844d86f653/b95411a4-2044-4c78-bf2f-ac5ce3ea70dc-93dd4b6a-4465-4197-a5d2-a704d004890f-fit.png" /></p>
 <p>The vault isn't meant to hold everything an agent did. Routine task summaries, generic advice, and paraphrases of existing entries don't belong there. Neither do unverified claims or secrets. Repositories still hold the authoritative code, commands, configuration, and current status. A note can point to those and explain a lasting constraint without copying the runbook into another place.</p>
 <p>I wanted something like Wikipedia for my agents.</p>
 <p>The integration breaks the review into four questions. These are paraphrases, rather than the exact prompts:</p>
