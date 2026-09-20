@@ -5,8 +5,6 @@ Slug: testing-jev-as-a-gate-for-agent-submitted-knowledge-f6a56d11
 
 I got access to [Jev](https://typesafe.ai/blog/introducing-system-one-models-and-jev) and have been brainstorming cybersecurity projects to try it on. But I wanted to try it on something simple first, so I integrated it into a personal project: my existing knowledge vault for agents. In this integration, Jev evaluates proposed notes against review questions and returns probabilities that the application uses to decide what goes in.
 
-![software architectures dark]({attach}/images/dashboard/f6a56d11-2363-40a2-838c-6a844d86f653/9f5ebe65-b314-4bdc-a35b-700a11ecec55-software-architectures-dark.webp)
-
 The vault uses Obsidian as a backend and Khoj for retrieval. It stores information that agents can use in future tasks, including project facts, shared capabilities, decisions and their reasons, and verified lessons.
 
 The tricky part is deciding what deserves to go in. Something that failed on one machine might be useful to remember, but that doesn't mean it should become a rule saying it always fails. An agent finding that note later needs to know the difference.
@@ -16,6 +14,8 @@ I've used calls to Claude or Codex to help determine what goes in. That has work
 It's not exactly the best application for Jev (especially when you see the other crazy things people are doing with it), but this is the need that I currently have, and so I made it.
 
 ## What makes a note worth keeping?
+
+![93dd4b6a 4465 4197 a5d2 a704d004890f fit]({attach}/images/dashboard/f6a56d11-2363-40a2-838c-6a844d86f653/b95411a4-2044-4c78-bf2f-ac5ce3ea70dc-93dd4b6a-4465-4197-a5d2-a704d004890f-fit.png)
 
 The vault isn't meant to hold everything an agent did. Routine task summaries, generic advice, and paraphrases of existing entries don't belong there. Neither do unverified claims or secrets. Repositories still hold the authoritative code, commands, configuration, and current status. A note can point to those and explain a lasting constraint without copying the runbook into another place.
 
