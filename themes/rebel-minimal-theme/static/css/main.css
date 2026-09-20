@@ -822,3 +822,54 @@ h3 {
     z-index: 1000;
     transition: width 0.2s;
 }
+
+/* Image lightbox */
+.article-content img.is-zoomable {
+    cursor: zoom-in;
+}
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    box-sizing: border-box;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    border: 0;
+    padding: 2vmin;
+    background-color: rgba(0, 0, 0, 0.96);
+    cursor: zoom-out;
+}
+
+.lightbox[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox img {
+    max-width: 96vw;
+    max-height: 96vh;
+    max-height: 96dvh;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 44px;
+    height: 44px;
+    border: 1px solid white;
+    border-radius: 50%;
+    background: #111;
+    color: white;
+    font-size: 2rem;
+    line-height: 1;
+    cursor: pointer;
+}
