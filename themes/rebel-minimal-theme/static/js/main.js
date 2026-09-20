@@ -15,10 +15,7 @@ window.addEventListener('scroll', function() {
     var content = document.querySelector('.article-content');
     if (!content) return;
 
-    // Images that are already links keep their link behaviour
-    var images = [].filter.call(content.querySelectorAll('img'), function (img) {
-        return !img.closest('a');
-    });
+    var images = Array.from(content.querySelectorAll('img'));
     if (!images.length) return;
 
     var overlay = document.createElement('dialog');
@@ -36,24 +33,6 @@ window.addEventListener('scroll', function() {
 
     var previousOverflow = '';
 
-    // Only offer a zoom when the image is actually being scaled down here
-    function markZoomable() {
-        images.forEach(function (img) {
-            var zoomable = img.naturalWidth > img.clientWidth + 1;
-            img.classList.toggle('is-zoomable', zoomable);
-            if (zoomable) {
-                img.setAttribute('tabindex', '0');
-                img.setAttribute('role', 'button');
-                img.setAttribute('aria-label', 'Enlarge image' + (img.alt ? ': ' + img.alt : ''));
-                img.setAttribute('aria-haspopup', 'dialog');
-            } else {
-                ['tabindex', 'role', 'aria-label', 'aria-haspopup'].forEach(function (name) {
-                    img.removeAttribute(name);
-                });
-            }
-        });
-    }
-
     function close() {
         if (!overlay.open) return;
         document.body.style.overflow = previousOverflow;
@@ -61,7 +40,7 @@ window.addEventListener('scroll', function() {
     }
 
     function open(img) {
-        if (!img.classList.contains('is-zoomable') || overlay.open) return;
+        if (overlay.open) return;
         full.src = img.currentSrc || img.src;
         full.alt = img.alt;
         previousOverflow = document.body.style.overflow;
@@ -71,8 +50,15 @@ window.addEventListener('scroll', function() {
     }
 
     images.forEach(function (img) {
-        img.addEventListener('load', markZoomable);
-        img.addEventListener('click', function () { open(img); });
+        img.classList.add('is-zoomable');
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+        img.setAttribute('aria-label', 'View image' + (img.alt ? ': ' + img.alt : ''));
+        img.setAttribute('aria-haspopup', 'dialog');
+        img.addEventListener('click', function (e) {
+            e.preventDefault();
+            open(img);
+        });
         img.addEventListener('keydown', function (e) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
@@ -80,9 +66,6 @@ window.addEventListener('scroll', function() {
             }
         });
     });
-
-    window.addEventListener('resize', markZoomable);
-    markZoomable();
 
     overlay.addEventListener('click', close);
     overlay.addEventListener('keydown', function (e) {
