@@ -39,6 +39,29 @@ try {
     await enlarged.click();
     await dialog.waitFor({ state: 'hidden' });
     assert.equal(await page.evaluate(() => document.body.style.overflow), '');
+    // Small images must open too, including when wrapped in a link.
+    const small = page.locator('.article-content img').nth(1);
+    await small.scrollIntoViewIfNeeded();
+    await small.click();
+    await dialog.waitFor({ state: 'visible' });
+    assert.equal(await enlarged.getAttribute('src'), await small.evaluate(img => img.currentSrc || img.src));
+    await enlarged.click();
+    await dialog.waitFor({ state: 'hidden' });
+    await page.route('**/testing-jev-as-a-gate-for-agent-submitted-knowledge-f6a56d11.html', async route => {
+      const response = await route.fetch();
+      const html = await response.text();
+      const linked = html.replace(/(<img[^>]*b6affa18[^>]*>)/, '<a href="https://example.com/">$1</a>');
+      assert.notEqual(linked, html, 'fixture must include the small image wrapped in a link');
+      await route.fulfill({ response, body: linked });
+    });
+    await page.reload();
+    await small.scrollIntoViewIfNeeded();
+    const before = page.url();
+    await small.click();
+    await dialog.waitFor({ state: 'visible' });
+    assert.equal(page.url(), before, 'image click must open viewer rather than follow link');
+    await enlarged.click();
+    await dialog.waitFor({ state: 'hidden' });
     assert.deepEqual(errors, []);
     await page.close();
   }
