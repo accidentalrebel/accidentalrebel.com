@@ -7,18 +7,18 @@
 
 <meta name="description" content="IOLI Crackme 0x02 walkthrough — computing the password via static analysis of x86 arithmetic, then confirming with dynamic analysis by stepping through IDA.">
 
-    <link rel="canonical" href="./ioli-crackme-0x02.html">
+    <link rel="canonical" href="https://www.accidentalrebel.com/ioli-crackme-0x02.html">
 
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="https://www.accidentalrebel.com/theme/css/main.css">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "AccidentalRebel",
-        "url": ".",
+        "url": "https://www.accidentalrebel.com",
         "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
     }
     </script>
@@ -27,19 +27,19 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="./ioli-crackme-0x02.html">
+    <meta property="og:url" content="https://www.accidentalrebel.com/ioli-crackme-0x02.html">
     <meta property="og:title" content="IOLI Crackme 0x02">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-03-06T10:34:00+08:00">
     <meta property="og:description" content="IOLI Crackme 0x02 walkthrough — computing the password via static analysis of x86 arithmetic, then confirming with dynamic analysis by stepping through IDA.">
-    <meta property="og:image" content="./images/default-og.png">
+    <meta property="og:image" content="https://www.accidentalrebel.com/images/default-og.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="./ioli-crackme-0x02.html">
+    <meta property="twitter:url" content="https://www.accidentalrebel.com/ioli-crackme-0x02.html">
     <meta property="twitter:title" content="IOLI Crackme 0x02">
     <meta property="twitter:description" content="IOLI Crackme 0x02 walkthrough — computing the password via static analysis of x86 arithmetic, then confirming with dynamic analysis by stepping through IDA.">
-    <meta property="twitter:image" content="./images/default-og.png">
+    <meta property="twitter:image" content="https://www.accidentalrebel.com/images/default-og.png">
 
     <script type="application/ld+json">
     {
@@ -49,9 +49,9 @@
         "datePublished": "2021-03-06T10:34:00+08:00",
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
-        "url": "./ioli-crackme-0x02.html",
+        "url": "https://www.accidentalrebel.com/ioli-crackme-0x02.html",
         "description": "IOLI Crackme 0x02 walkthrough — computing the password via static analysis of x86 arithmetic, then confirming with dynamic analysis by stepping through IDA.",
-        "image": "./images/default-og.png"
+        "image": "https://www.accidentalrebel.com/images/default-og.png"
     }
     </script>
 
@@ -60,8 +60,8 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
-            { "@type": "ListItem", "position": 2, "name": "Reverse Engineering", "item": "./category/reverse-engineering.html" },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.accidentalrebel.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Reverse Engineering", "item": "https://www.accidentalrebel.com/category/reverse-engineering.html" },
             { "@type": "ListItem", "position": 3, "name": "IOLI Crackme 0x02" }
         ]
     }
@@ -74,14 +74,14 @@
     <header>
         <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <a href="https://www.accidentalrebel.com/" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="./archives.html">Archives</a></li>
-                    <li><a href="./categories.html">Categories</a></li>
-                    <li><a href="./tags.html">Tags</a></li>
-                            <li><a href="./category/cybersecurity-x-ai.html">Newsletter</a></li>
-                            <li><a href="./pages/about.html">About</a></li>
+                    <li><a href="https://www.accidentalrebel.com/archives.html">Archives</a></li>
+                    <li><a href="https://www.accidentalrebel.com/categories.html">Categories</a></li>
+                    <li><a href="https://www.accidentalrebel.com/tags.html">Tags</a></li>
+                            <li><a href="https://www.accidentalrebel.com/category/cybersecurity-x-ai.html">Newsletter</a></li>
+                            <li><a href="https://www.accidentalrebel.com/pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
@@ -93,7 +93,7 @@
                 <div class="content">
 <article>
     <header class="article-header">
-        <a href="./category/reverse-engineering.html" class="article-category-label">Reverse Engineering</a>
+        <a href="https://www.accidentalrebel.com/category/reverse-engineering.html" class="article-category-label">Reverse Engineering</a>
         <h1>IOLI Crackme 0x02</h1>
         <div class="article-meta">
             <time datetime="2021-03-06T10:34:00+08:00">Sat 06 March 2021</time>
@@ -101,37 +101,37 @@
     </header>
 
     <div class="article-content">
-        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a> and <a href="./ioli-crackme-0x01.html">0x01</a>.</p>
+        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="https://www.accidentalrebel.com/ioli-crackme-0x00.html">0x00</a> and <a href="https://www.accidentalrebel.com/ioli-crackme-0x01.html">0x01</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
 <p>After the first two challenges I kinda know what to expect already so I skipped running the program and immediately loaded it in IDA.</p>
-<p><img alt="ioli-crackme-0x02-01" src="./images/ioli-crackme-0x02-01.png" /></p>
+<p><img alt="ioli-crackme-0x02-01" src="https://www.accidentalrebel.com/images/ioli-crackme-0x02-01.png" /></p>
 <p>So the lines leading to the comparison command now looks more complicated than before. We could easily see that there are some computations that happens thanks to the presence of <code>add</code> and <code>imul</code>. Before those, we have two values (<code>5Ah</code> and <code>1ECh</code>) which we can easily guess are the values that will be worked on by these arithmetic functions.</p>
 <p>So going through the lines sequentially we can see that the two numbers are first added with <code>add [eax], edx</code>. Which results in a value of <code>246h</code>.</p>
 <p>After that we see the line <code>imul eax, [ebp+var_8]</code>, which if you follow the sequence closely effectively multiplies <code>246h</code> by itself, resulting in a value of <code>52B24h</code>.</p>
 <p>Convert <code>52B24h</code> to decimal equates to <code>338724</code>, which is unsprisingly the password that we need.</p>
-<p><img alt="ioli-crackme-0x02-02" src="./images/ioli-crackme-0x02-02.png" /></p>
+<p><img alt="ioli-crackme-0x02-02" src="https://www.accidentalrebel.com/images/ioli-crackme-0x02-02.png" /></p>
 <h1 id="confirming-via-dynamic-analysis">Confirming via dynamic analysis</h1>
 <p>What we did above is that we used static analysis to inspect the program line by line to determine the final computed password value. Let's use dynamic analysis and step through the code to see how our data is manipulated in memory during this process.</p>
 <p>Let's set a breakpoint immediately after the initial two values are loaded into memory.</p>
-<p><img alt="ioli-crackme-0x02-03" src="./images/ioli-crackme-0x02-03.png" /></p>
+<p><img alt="ioli-crackme-0x02-03" src="https://www.accidentalrebel.com/images/ioli-crackme-0x02-03.png" /></p>
 <p>If we look at the memory locations we would see the following:</p>
-<p><img alt="ioli-crackme-0x02-04" src="./images/ioli-crackme-0x02-04.png" /></p>
+<p><img alt="ioli-crackme-0x02-04" src="https://www.accidentalrebel.com/images/ioli-crackme-0x02-04.png" /></p>
 <p><code>epb+var_8</code> points to <code>28FF40</code> which now contains <code>5Ah</code></p>
 <p><code>ebp+var_C</code> points to <code>28FF3C</code> which now contains <code>1ECh</code></p>
 <p>Stepping through the code and checking the memory location after <code>add [eax], edx</code> shows that the result <code>246h</code> is saved at memory location <code>28FF40</code>.</p>
-<p><img alt="ioli-crackme-0x02-05" src="./images/ioli-crackme-0x02-05.png" /></p>
+<p><img alt="ioli-crackme-0x02-05" src="https://www.accidentalrebel.com/images/ioli-crackme-0x02-05.png" /></p>
 <p>Then after <code>imul eax, [ebp+var_8]</code> we see that eax now holds the value of <code>52B24h</code>, confirming the final computed value that we had from our static analysis.</p>
-<p><img alt="ioli-crackme-0x02-06" src="./images/ioli-crackme-0x02-06.png" /></p>
+<p><img alt="ioli-crackme-0x02-06" src="https://www.accidentalrebel.com/images/ioli-crackme-0x02-06.png" /></p>
 <h1 id="patching-the-executables">Patching the executables</h1>
-<p>Patching the executable is actually the same process as <a href="./ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
+<p>Patching the executable is actually the same process as <a href="https://www.accidentalrebel.com/ioli-crackme-0x00.html">my writeup for 0x00</a>.</p>
 <h1 id="on-to-the-next-challenge">On to the next challenge...</h1>
 <p>While the challenge is still easy, we can see that the complexity is slowly ramping up from previous challenges. We also took the time to confirm the result of our static analysis by debugging and stepping through the code. This is a good practice for me to familiarize myself with IDA, which I hope I could use in future challenges.</p>
     </div>
 
     <footer class="article-footer">
         <div class="tags">
-            <a href="./tag/re.html" class="tag">re</a>
-            <a href="./tag/crackme.html" class="tag">crackme</a>
+            <a href="https://www.accidentalrebel.com/tag/re.html" class="tag">re</a>
+            <a href="https://www.accidentalrebel.com/tag/crackme.html" class="tag">crackme</a>
         </div>
     </footer>
 </article>
@@ -171,7 +171,7 @@
                 </div>
                 <aside class="sidebar">
                     <div class="sidebar-sticky">
-                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <img src="https://www.accidentalrebel.com/theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
                         <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
                         <p class="sidebar-realname">Juan Karlo Licudine</p>
                         <p class="sidebar-bio">Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</p>
@@ -211,7 +211,7 @@
         </div>
     </footer>
 
-    <script src="./theme/js/main.js"></script>
+    <script src="https://www.accidentalrebel.com/theme/js/main.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>

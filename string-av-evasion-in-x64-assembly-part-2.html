@@ -7,18 +7,18 @@
 
 <meta name="description" content="How to hide API call strings from antivirus detection using LoadLibrary and GetProcAddress for runtime DLL loading, with a full x64 assembly implementation.">
 
-    <link rel="canonical" href="./string-av-evasion-in-x64-assembly-part-2.html">
+    <link rel="canonical" href="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-2.html">
 
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="https://www.accidentalrebel.com/theme/css/main.css">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "AccidentalRebel",
-        "url": ".",
+        "url": "https://www.accidentalrebel.com",
         "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
     }
     </script>
@@ -27,19 +27,19 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="./string-av-evasion-in-x64-assembly-part-2.html">
+    <meta property="og:url" content="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-2.html">
     <meta property="og:title" content="String anti-virus evasion in x64 assembly (Part 2)">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2022-07-09T12:11:00+08:00">
     <meta property="og:description" content="How to hide API call strings from antivirus detection using LoadLibrary and GetProcAddress for runtime DLL loading, with a full x64 assembly implementation.">
-    <meta property="og:image" content="./images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png">
+    <meta property="og:image" content="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="./string-av-evasion-in-x64-assembly-part-2.html">
+    <meta property="twitter:url" content="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-2.html">
     <meta property="twitter:title" content="String anti-virus evasion in x64 assembly (Part 2)">
     <meta property="twitter:description" content="How to hide API call strings from antivirus detection using LoadLibrary and GetProcAddress for runtime DLL loading, with a full x64 assembly implementation.">
-    <meta property="twitter:image" content="./images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png">
+    <meta property="twitter:image" content="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png">
 
     <script type="application/ld+json">
     {
@@ -49,9 +49,9 @@
         "datePublished": "2022-07-09T12:11:00+08:00",
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
-        "url": "./string-av-evasion-in-x64-assembly-part-2.html",
+        "url": "https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-2.html",
         "description": "How to hide API call strings from antivirus detection using LoadLibrary and GetProcAddress for runtime DLL loading, with a full x64 assembly implementation.",
-        "image": "./images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png"
+        "image": "https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png"
     }
     </script>
 
@@ -60,8 +60,8 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
-            { "@type": "ListItem", "position": 2, "name": "misc", "item": "./category/misc.html" },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.accidentalrebel.com/" },
+            { "@type": "ListItem", "position": 2, "name": "misc", "item": "https://www.accidentalrebel.com/category/misc.html" },
             { "@type": "ListItem", "position": 3, "name": "String anti-virus evasion in x64 assembly (Part 2)" }
         ]
     }
@@ -74,14 +74,14 @@
     <header>
         <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <a href="https://www.accidentalrebel.com/" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="./archives.html">Archives</a></li>
-                    <li><a href="./categories.html">Categories</a></li>
-                    <li><a href="./tags.html">Tags</a></li>
-                            <li><a href="./category/cybersecurity-x-ai.html">Newsletter</a></li>
-                            <li><a href="./pages/about.html">About</a></li>
+                    <li><a href="https://www.accidentalrebel.com/archives.html">Archives</a></li>
+                    <li><a href="https://www.accidentalrebel.com/categories.html">Categories</a></li>
+                    <li><a href="https://www.accidentalrebel.com/tags.html">Tags</a></li>
+                            <li><a href="https://www.accidentalrebel.com/category/cybersecurity-x-ai.html">Newsletter</a></li>
+                            <li><a href="https://www.accidentalrebel.com/pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
@@ -93,7 +93,7 @@
                 <div class="content">
 <article>
     <header class="article-header">
-        <a href="./category/misc.html" class="article-category-label">misc</a>
+        <a href="https://www.accidentalrebel.com/category/misc.html" class="article-category-label">misc</a>
         <h1>String anti-virus evasion in x64 assembly (Part 2)</h1>
         <div class="article-meta">
             <time datetime="2022-07-09T12:11:00+08:00">Sat 09 July 2022</time>
@@ -102,7 +102,7 @@
 
     <div class="article-content">
         <p>In <a href="string-av-evasion-in-x64-assembly-part-1">my last blog post</a>, I discussed a way to hide parameter strings from being detected by an anti-virus. The solution was simple and it worked. However, it was incomplete as strings of function calls and loaded DLLs were still detectable in memory.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-01" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-01.png" /></p>
 <p>In this post I'll be talking about the other technique from the same <a href="https://blog.scrt.ch/2020/07/15/engineering-antivirus-evasion-part-ii/">blog post</a> we were following before. It does a good job of explaining the concept which I'll be covering here too. I will also be writing the code in assembly as an added bonus, so we can better understand what goes on under the hood.</p>
 <h2 id="the-problem">The problem</h2>
 <p>Let's revisit our code from the last time. We have two functions being called <code>ShellExecuteA</code> and <code>ExitProcess</code>.</p>
@@ -119,7 +119,7 @@
 </code></pre></div>
 
 <p>Upon compiling the program, the compiler takes the list of all functions used and places them in the executable (In this case, in the <code>.rdata</code> segment) as a readable string:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-07" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-07" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-07.png" /></p>
 <p>A function name like <code>ShellExecuteA</code> will be sure to raise some eyebrows so we do not want it to be detectable. To hide this we need to do load the DLL at runtime by using <code>LoadLibrary</code> and <code>GetProcAddress</code>.</p>
 <h2 id="coding-in-c">Coding in C</h2>
 <p><code>LoadLibrary</code> accepts a string containing the DLL that we want to load.</p>
@@ -127,16 +127,16 @@
 </code></pre></div>
 
 <p>This loads the DLL's code into memory and returns a handle to that location. We can see the result of this when we look at the memory map in a debugger. Here's the memory map prior to calling <code>LoadLibrary</code>:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-03" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-03.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-03" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-03.png" /></p>
 <p>And here's what it looks like after:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-04" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-04.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-04" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-04.png" /></p>
 <p>The <code>LoadLibrary</code> API loaded <code>shell32.dll</code> along with it's dependencies into memory. We can also see that it automatically handled where the new DLLs will be placed. In this case, in between pre-existing ones.</p>
 <hr />
 <h3 id="aside-how-do-we-know-which-dll-is-needed">Aside: How do we know which DLL is needed?</h3>
 <blockquote>
 <p>We can find out which DLL is needed by a function by looking at it's <a href="https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-loadlibrarya">MSDN documentation</a>. Scroll at the end of every function documentation to see the "Requirements" section that lists the DLL that it needs.</p>
 </blockquote>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-02" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-02.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-02" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-02.png" /></p>
 <hr />
 <p><code>LoadLibrary</code> then returns a <code>HANDLE</code> object which we can then pass to <code>GetProcAddress</code>.</p>
 <div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="n">_ShellExecuteA</span><span class="w"> </span><span class="n">fShellExecuteA</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">_ShellExecuteA</span><span class="p">)</span><span class="w"> </span><span class="n">GetProcAddress</span><span class="p">(</span><span class="n">hShell32</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;ShellExecuteA&quot;</span><span class="p">);</span>
@@ -194,7 +194,7 @@
 </code></pre></div>
 
 <p>This is not yet done, however, as <code>strings.exe</code> can still detect our strings. This is because we now have strings "shell32.dll" and "ShellExecuteA" as parameters for <code>LoadLibrary</code> and <code>GetProcAddress</code>. And these are placed in the <code>.data</code> segment in memory.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-05" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-05.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-05" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-05.png" /></p>
 <p>This is where we can use the technique that we used in <a href="string-av-evasion-in-x64-assembly-part-1">part 1</a>. By declaring the string as an array as a local variable, the data is placed on the stack instead of in the <code>.data</code> segment. </p>
 <p>Applying this technique gives us the following:</p>
 <div class="codehilite"><pre><span></span><code><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">ca_shell32</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="sc">&#39;s&#39;</span><span class="p">,</span><span class="sc">&#39;h&#39;</span><span class="p">,</span><span class="sc">&#39;e&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;3&#39;</span><span class="p">,</span><span class="sc">&#39;2&#39;</span><span class="p">,</span><span class="sc">&#39;.&#39;</span><span class="p">,</span><span class="sc">&#39;d&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="sc">&#39;l&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">};</span>
@@ -205,7 +205,7 @@
 </code></pre></div>
 
 <p>And now we can see that it works!</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-06" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-06.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-06" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-06.png" /></p>
 <h2 id="converting-to-assembly">Converting to assembly</h2>
 <p>As promised, we'll be converting the code above into x64 windows assembly. It's an extra step, but can give us a better understanding by approaching it from a different programming language.</p>
 <p>Starting from the beginning, we'll be using <code>LoadLibraryA</code> and <code>GetProcAddress</code> to dynamically load the <code>ShellExecuteA</code> function at runtime. </p>
@@ -317,21 +317,21 @@
 <p><strong>Note:</strong> Pay special attention to how the stack is reserved (with <code>sub rsp, 16</code>) and released (with <code>add rsp, 16</code>). I did not discuss stack alignments as it's a lengthy explanation in itself. But just remember that we are releasing the data once we've finished passing it to the function.</p>
 </blockquote>
 <p>If done correctly, the strings would not be detectable because the data is now on the stack and not in the <code>.data</code> segment.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-06" src="./images/string-anti-virus-evasion-in-x64-assembly-part-2-06.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-2-06" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-2-06.png" /></p>
 <hr />
 <p>It is important to note that anti-viruses can employ different techniques to do detection, but a huge part of their functionality will rely on detecting malicious strings. So at least, on that front, we now have an idea on how to defeat it.</p>
 <p>You can view the code for part 1 and 2 <a href="https://github.com/accidentalrebel/string-anti-virus-evasion-x64-assembly">on Github</a>. Updates and fixes will be placed there.</p>
 <p>I might post more assembly shenanigans in the future, so stay tuned.</p>
 <p>And as always, for any questions or comments, feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a>.</p>
-<p>For the foundational x64 Windows assembly concepts used throughout this series, see <a href="./converting-a-malware-dropper-to-x64-assembly.html">Converting a Malware Dropper to x64 Assembly</a>.</p>
-<p>These evasion techniques were first applied in <a href="./making-a-rat.html">Making a RAT</a>, where I implemented string obfuscation in a real C project.</p>
+<p>For the foundational x64 Windows assembly concepts used throughout this series, see <a href="https://www.accidentalrebel.com/converting-a-malware-dropper-to-x64-assembly.html">Converting a Malware Dropper to x64 Assembly</a>.</p>
+<p>These evasion techniques were first applied in <a href="https://www.accidentalrebel.com/making-a-rat.html">Making a RAT</a>, where I implemented string obfuscation in a real C project.</p>
     </div>
 
     <footer class="article-footer">
         <div class="tags">
-            <a href="./tag/evasion.html" class="tag">evasion</a>
-            <a href="./tag/assembly.html" class="tag">assembly</a>
-            <a href="./tag/av.html" class="tag">av</a>
+            <a href="https://www.accidentalrebel.com/tag/evasion.html" class="tag">evasion</a>
+            <a href="https://www.accidentalrebel.com/tag/assembly.html" class="tag">assembly</a>
+            <a href="https://www.accidentalrebel.com/tag/av.html" class="tag">av</a>
         </div>
     </footer>
 </article>
@@ -371,7 +371,7 @@
                 </div>
                 <aside class="sidebar">
                     <div class="sidebar-sticky">
-                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <img src="https://www.accidentalrebel.com/theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
                         <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
                         <p class="sidebar-realname">Juan Karlo Licudine</p>
                         <p class="sidebar-bio">Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</p>
@@ -411,7 +411,7 @@
         </div>
     </footer>
 
-    <script src="./theme/js/main.js"></script>
+    <script src="https://www.accidentalrebel.com/theme/js/main.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>

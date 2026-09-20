@@ -7,18 +7,18 @@
 
 <meta name="description" content="IOLI Crackme 0x03 walkthrough — reverse engineering a Caesar-style cipher that shifts each character by 3 to decode garbled success and failure strings.">
 
-    <link rel="canonical" href="./ioli-crackme-0x03.html">
+    <link rel="canonical" href="https://www.accidentalrebel.com/ioli-crackme-0x03.html">
 
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="https://www.accidentalrebel.com/theme/css/main.css">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "AccidentalRebel",
-        "url": ".",
+        "url": "https://www.accidentalrebel.com",
         "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
     }
     </script>
@@ -27,19 +27,19 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="./ioli-crackme-0x03.html">
+    <meta property="og:url" content="https://www.accidentalrebel.com/ioli-crackme-0x03.html">
     <meta property="og:title" content="IOLI Crackme 0x03">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-03-22T20:03:00+08:00">
     <meta property="og:description" content="IOLI Crackme 0x03 walkthrough — reverse engineering a Caesar-style cipher that shifts each character by 3 to decode garbled success and failure strings.">
-    <meta property="og:image" content="./images/ioli-crackme-0x03-03.png">
+    <meta property="og:image" content="https://www.accidentalrebel.com/images/ioli-crackme-0x03-03.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="./ioli-crackme-0x03.html">
+    <meta property="twitter:url" content="https://www.accidentalrebel.com/ioli-crackme-0x03.html">
     <meta property="twitter:title" content="IOLI Crackme 0x03">
     <meta property="twitter:description" content="IOLI Crackme 0x03 walkthrough — reverse engineering a Caesar-style cipher that shifts each character by 3 to decode garbled success and failure strings.">
-    <meta property="twitter:image" content="./images/ioli-crackme-0x03-03.png">
+    <meta property="twitter:image" content="https://www.accidentalrebel.com/images/ioli-crackme-0x03-03.png">
 
     <script type="application/ld+json">
     {
@@ -49,9 +49,9 @@
         "datePublished": "2021-03-22T20:03:00+08:00",
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
-        "url": "./ioli-crackme-0x03.html",
+        "url": "https://www.accidentalrebel.com/ioli-crackme-0x03.html",
         "description": "IOLI Crackme 0x03 walkthrough — reverse engineering a Caesar-style cipher that shifts each character by 3 to decode garbled success and failure strings.",
-        "image": "./images/ioli-crackme-0x03-03.png"
+        "image": "https://www.accidentalrebel.com/images/ioli-crackme-0x03-03.png"
     }
     </script>
 
@@ -60,8 +60,8 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
-            { "@type": "ListItem", "position": 2, "name": "Reverse Engineering", "item": "./category/reverse-engineering.html" },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.accidentalrebel.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Reverse Engineering", "item": "https://www.accidentalrebel.com/category/reverse-engineering.html" },
             { "@type": "ListItem", "position": 3, "name": "IOLI Crackme 0x03" }
         ]
     }
@@ -74,14 +74,14 @@
     <header>
         <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <a href="https://www.accidentalrebel.com/" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="./archives.html">Archives</a></li>
-                    <li><a href="./categories.html">Categories</a></li>
-                    <li><a href="./tags.html">Tags</a></li>
-                            <li><a href="./category/cybersecurity-x-ai.html">Newsletter</a></li>
-                            <li><a href="./pages/about.html">About</a></li>
+                    <li><a href="https://www.accidentalrebel.com/archives.html">Archives</a></li>
+                    <li><a href="https://www.accidentalrebel.com/categories.html">Categories</a></li>
+                    <li><a href="https://www.accidentalrebel.com/tags.html">Tags</a></li>
+                            <li><a href="https://www.accidentalrebel.com/category/cybersecurity-x-ai.html">Newsletter</a></li>
+                            <li><a href="https://www.accidentalrebel.com/pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
@@ -93,7 +93,7 @@
                 <div class="content">
 <article>
     <header class="article-header">
-        <a href="./category/reverse-engineering.html" class="article-category-label">Reverse Engineering</a>
+        <a href="https://www.accidentalrebel.com/category/reverse-engineering.html" class="article-category-label">Reverse Engineering</a>
         <h1>IOLI Crackme 0x03</h1>
         <div class="article-meta">
             <time datetime="2021-03-22T20:03:00+08:00">Mon 22 March 2021</time>
@@ -101,27 +101,27 @@
     </header>
 
     <div class="article-content">
-        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="./ioli-crackme-0x00.html">0x00</a>, <a href="./ioli-crackme-0x01.html">0x01</a>, and <a href="./ioli-crackme-0x02.html">0x02</a>.</p>
+        <p>I am continuing my reverse engineering review by tackling the <em>IOLI crackmes</em> by <a href="https://twitter.com/pof">@pof</a>. These are beginner friendly challenges that is perfect for newbies or for those who want to review the basics like me. Check out my writeups for <a href="https://www.accidentalrebel.com/ioli-crackme-0x00.html">0x00</a>, <a href="https://www.accidentalrebel.com/ioli-crackme-0x01.html">0x01</a>, and <a href="https://www.accidentalrebel.com/ioli-crackme-0x02.html">0x02</a>.</p>
 <h1 id="getting-the-password">Getting the password</h1>
-<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="./ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
-<p><img alt="ioli-crackme-0x03-01" src="./images/ioli-crackme-0x03-01.png" /></p>
+<p>After opening the program in IDA I immediately saw that the code is almost exactly as the one in challenge <a href="https://www.accidentalrebel.com/ioli-crackme-0x02.html">0x02</a>, with the exception of our expected <code>cmp</code> command being inside the <code>_test</code> function.</p>
+<p><img alt="ioli-crackme-0x03-01" src="https://www.accidentalrebel.com/images/ioli-crackme-0x03-01.png" /></p>
 <p>Reading through the code I realized that the password for this challenge is exactly the same as the previous one!</p>
 <p>But what's this? The success and failure messages are all garbled? And plus, what is this other new function called <code>_shift</code>?</p>
-<p><img alt="ioli-crackme-0x03-02" src="./images/ioli-crackme-0x03-02.png" /></p>
+<p><img alt="ioli-crackme-0x03-02" src="https://www.accidentalrebel.com/images/ioli-crackme-0x03-02.png" /></p>
 <h1 id="a-different-kind-of-challenge">A different kind of challenge</h1>
 <p>Opening up the <code>_shift</code> function shows us a short, but interesting looking program flow with two branches and one of the branches looping back. It seems we have a <em>loop</em> here that we could investigate.</p>
-<p><img alt="ioli-crackme-0x03-03" src="./images/ioli-crackme-0x03-03.png" /></p>
+<p><img alt="ioli-crackme-0x03-03" src="https://www.accidentalrebel.com/images/ioli-crackme-0x03-03.png" /></p>
 <p>If we look at the input that the function takes we will find out that the strings that are being passed from the <code>_test</code> function are <code>Lqydolg#Sdvvzrug$</code> and <code>Sdvvzrug#RN$$$#=,</code> for the <em>failure</em> and <em>success</em> messages, respectively. This tells us that a cipher is applied to these strings. What cipher it is using is what we'll be trying to find out.</p>
 <h1 id="discovering-the-cipher">Discovering the cipher</h1>
 <p>The best way to discover the cipher used is to step through the code. We can do it with both static or dynamic analysis, but the latter is way easier.</p>
-<p><img alt="ioli-crackme-0x03-04" src="./images/ioli-crackme-0x03-04.png" /></p>
+<p><img alt="ioli-crackme-0x03-04" src="https://www.accidentalrebel.com/images/ioli-crackme-0x03-04.png" /></p>
 <p>The code above starts with <code>mov eax, [ebp+arg_0]</code> which copies the pointer to the string passed to our <code>_shift</code> function. We then copy that pointer to <code>[esp+98h+Str]</code> which is the memory location pointing to the top of the current stack. This is done so that it can be passed as an argument when we do <code>call _strlen</code>.</p>
 <p>After executing, <code>_strlen</code> returns the length of the specified string and is saved to register <code>eax</code>. This is then used in the line <code>cmp [ebp+var_7C], eax</code>. </p>
 <p>But what is the value of <code>var_7C</code>? If you scroll up at the start of the subroutine, <code>var_7C</code> is assigned a value of zero. If you know how loops work, you'll realize that this variable is going to be used to hold a counter value. It starts at a value of <code>0</code> and it will eventually be incremented after every loop, which is what is happening at <code>401348</code>.</p>
 <p>To make it easy for us to remember this, let's rename <code>var_7C</code> to a more memorable name like <code>var_counter</code>.</p>
-<p><img alt="ioli-crackme-0x03-05" src="./images/ioli-crackme-0x03-05.png" /></p>
+<p><img alt="ioli-crackme-0x03-05" src="https://www.accidentalrebel.com/images/ioli-crackme-0x03-05.png" /></p>
 <p>So going back, to the comparison command <code>cmp [ebp+var_counter], eax</code>, which now translates to <code>cmp 0, 17</code>. <em>17</em> being the length of our failure string <code>Lqydolg#Sdvvzrug$</code>. Since this is not equal it now goes to this next block of code.</p>
-<p><img alt="ioli-crackme-0x03-06" src="./images/ioli-crackme-0x03-06.png" /></p>
+<p><img alt="ioli-crackme-0x03-06" src="https://www.accidentalrebel.com/images/ioli-crackme-0x03-06.png" /></p>
 <p>Now this block is interesting. There's a lot that is happening but the gist of it is that the program gets one character from the input string, with <code>var_counter</code> as an offset. It then decrements that character value by 3, and added to a destination string. I'll be going through the code that I described step by step in the next section.</p>
 <h1 id="stepping-through">Stepping through</h1>
 <p>So to start, <code>lea eax, [ebp+var_78]</code> loads the address to <code>var_78</code> which in my case points to the address <code>28FE90</code>.</p>
@@ -150,8 +150,8 @@
 
     <footer class="article-footer">
         <div class="tags">
-            <a href="./tag/re.html" class="tag">re</a>
-            <a href="./tag/crackme.html" class="tag">crackme</a>
+            <a href="https://www.accidentalrebel.com/tag/re.html" class="tag">re</a>
+            <a href="https://www.accidentalrebel.com/tag/crackme.html" class="tag">crackme</a>
         </div>
     </footer>
 </article>
@@ -191,7 +191,7 @@
                 </div>
                 <aside class="sidebar">
                     <div class="sidebar-sticky">
-                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <img src="https://www.accidentalrebel.com/theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
                         <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
                         <p class="sidebar-realname">Juan Karlo Licudine</p>
                         <p class="sidebar-bio">Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</p>
@@ -231,7 +231,7 @@
         </div>
     </footer>
 
-    <script src="./theme/js/main.js"></script>
+    <script src="https://www.accidentalrebel.com/theme/js/main.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>

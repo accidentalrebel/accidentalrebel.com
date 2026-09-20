@@ -7,18 +7,18 @@
 
 <meta name="description" content="How to hide strings from antivirus detection by placing them on the stack instead of the .data segment, demonstrated in C and x64 Windows assembly.">
 
-    <link rel="canonical" href="./string-av-evasion-in-x64-assembly-part-1.html">
+    <link rel="canonical" href="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-1.html">
 
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="https://www.accidentalrebel.com/theme/css/main.css">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "AccidentalRebel",
-        "url": ".",
+        "url": "https://www.accidentalrebel.com",
         "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
     }
     </script>
@@ -27,19 +27,19 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="./string-av-evasion-in-x64-assembly-part-1.html">
+    <meta property="og:url" content="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-1.html">
     <meta property="og:title" content="String anti-virus evasion in x64 assembly (Part 1)">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2022-07-08T12:11:00+08:00">
     <meta property="og:description" content="How to hide strings from antivirus detection by placing them on the stack instead of the .data segment, demonstrated in C and x64 Windows assembly.">
-    <meta property="og:image" content="./images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png">
+    <meta property="og:image" content="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="./string-av-evasion-in-x64-assembly-part-1.html">
+    <meta property="twitter:url" content="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-1.html">
     <meta property="twitter:title" content="String anti-virus evasion in x64 assembly (Part 1)">
     <meta property="twitter:description" content="How to hide strings from antivirus detection by placing them on the stack instead of the .data segment, demonstrated in C and x64 Windows assembly.">
-    <meta property="twitter:image" content="./images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png">
+    <meta property="twitter:image" content="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png">
 
     <script type="application/ld+json">
     {
@@ -49,9 +49,9 @@
         "datePublished": "2022-07-08T12:11:00+08:00",
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
-        "url": "./string-av-evasion-in-x64-assembly-part-1.html",
+        "url": "https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-1.html",
         "description": "How to hide strings from antivirus detection by placing them on the stack instead of the .data segment, demonstrated in C and x64 Windows assembly.",
-        "image": "./images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png"
+        "image": "https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png"
     }
     </script>
 
@@ -60,8 +60,8 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
-            { "@type": "ListItem", "position": 2, "name": "misc", "item": "./category/misc.html" },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.accidentalrebel.com/" },
+            { "@type": "ListItem", "position": 2, "name": "misc", "item": "https://www.accidentalrebel.com/category/misc.html" },
             { "@type": "ListItem", "position": 3, "name": "String anti-virus evasion in x64 assembly (Part 1)" }
         ]
     }
@@ -74,14 +74,14 @@
     <header>
         <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <a href="https://www.accidentalrebel.com/" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="./archives.html">Archives</a></li>
-                    <li><a href="./categories.html">Categories</a></li>
-                    <li><a href="./tags.html">Tags</a></li>
-                            <li><a href="./category/cybersecurity-x-ai.html">Newsletter</a></li>
-                            <li><a href="./pages/about.html">About</a></li>
+                    <li><a href="https://www.accidentalrebel.com/archives.html">Archives</a></li>
+                    <li><a href="https://www.accidentalrebel.com/categories.html">Categories</a></li>
+                    <li><a href="https://www.accidentalrebel.com/tags.html">Tags</a></li>
+                            <li><a href="https://www.accidentalrebel.com/category/cybersecurity-x-ai.html">Newsletter</a></li>
+                            <li><a href="https://www.accidentalrebel.com/pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
@@ -93,7 +93,7 @@
                 <div class="content">
 <article>
     <header class="article-header">
-        <a href="./category/misc.html" class="article-category-label">misc</a>
+        <a href="https://www.accidentalrebel.com/category/misc.html" class="article-category-label">misc</a>
         <h1>String anti-virus evasion in x64 assembly (Part 1)</h1>
         <div class="article-meta">
             <time datetime="2022-07-08T12:11:00+08:00">Fri 08 July 2022</time>
@@ -126,9 +126,9 @@
 <p>You might think that a call to <code>ShellExecute</code> is already a big red flag, and you are right. It is! But we'll talk about hiding API calls on the next post. Let's focus on the parameter for now.</p>
 </blockquote>
 <p>In the place of the anti-virus, we'll be using the <code>strings</code> command to check for visible strings like so:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-01" src="./images/string-anti-virus-evasion-in-x64-assembly-part-1-01.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-01" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-01.png" /></p>
 <p>As expected, the word "notepad" is easily detected. This is becaues any string that we declare and initialize in a program gets placed in the <code>.data</code> segment in memory by the compiler:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-02" src="./images/string-anti-virus-evasion-in-x64-assembly-part-1-02.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-02" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-02.png" /></p>
 <p>To prevent detection, we need a way for the string to not be present in our compiled executable.</p>
 <h2 id="the-solution">The solution</h2>
 <p>The solution is to declare the string to be passed as the parameter like so:</p>
@@ -137,7 +137,7 @@
 </code></pre></div>
 
 <p>And when <code>strings</code> is run, we now see that the "notepad" string is not present anymore.</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-03" src="./images/string-anti-virus-evasion-in-x64-assembly-part-1-03.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-03" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-03.png" /></p>
 <p>How did this happen?</p>
 <p>This is because data contained in arrays are placed on the stack instead of the <code>.data</code> segment when declared within a function (And also, as long as it is not declared as static).</p>
 <p>To further understand how this happens, let's convert this C program into x64 assembly.</p>
@@ -268,7 +268,7 @@
 <li>We reclaim our reserved space using <code>add rsp, 8</code>.</li>
 </ul>
 <p>After the code above, <code>r8</code> would now point to the location in the stack where our string resides:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-04" src="./images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-04" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-04.png" /></p>
 <hr />
 <h3 id="aside-what-if-we-have-longer-strings">Aside: What if we have longer strings?</h3>
 <blockquote>
@@ -370,23 +370,23 @@ The "powershell" string has 11 characters so we use 16.</p>
 </code></pre></div>
 
 <p>Here is what the result of the macro looks like in the debugger:</p>
-<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-05" src="./images/string-anti-virus-evasion-in-x64-assembly-part-1-05.png" /></p>
+<p><img alt="string-anti-virus-evasion-in-x64-assembly-part-1-05" src="https://www.accidentalrebel.com/images/string-anti-virus-evasion-in-x64-assembly-part-1-05.png" /></p>
 <p>For the full source code visit the repo <a href="https://github.com/accidentalrebel/string-anti-virus-evasion-x64-assembly">on Github</a>. Updates and fixes to the code will be pushed there.</p>
 <hr />
 <p>So there you have it, we were able to successfully hide strings by changing the way how the data is declared and placed in memory. If you think about it, the technique is very simple.</p>
 <p>However, we've only seen it used against the <code>strings</code> command. Can it evade an actual anti-virus? The answer is probably no. In my next post I'll be talking about API call obfuscation that would help hide functions like <code>ShellExecute</code>.</p>
-<p><strong>Edit: <a href="./string-av-evasion-in-x64-assembly-part-2.html">Part 2 here</a></strong></p>
+<p><strong>Edit: <a href="https://www.accidentalrebel.com/string-av-evasion-in-x64-assembly-part-2.html">Part 2 here</a></strong></p>
 <blockquote>
 <p>. Also, for any questions or comments, feel free to reach out to me on <a href="https://twitter.com/accidentalrebel">Twitter</a> or <a href="https://www.linkedin.com/in/juan-karlo-licudine/">LinkedIn</a>.</p>
 </blockquote>
-<p>For another x64 assembly evasion technique, see <a href="./malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Sandbox Evasion by Checking RAM Size</a>.</p>
+<p>For another x64 assembly evasion technique, see <a href="https://www.accidentalrebel.com/malware-sandbox-evasion-in-x64-assembly-by-checking-ram-size-part-1.html">Sandbox Evasion by Checking RAM Size</a>.</p>
     </div>
 
     <footer class="article-footer">
         <div class="tags">
-            <a href="./tag/evasion.html" class="tag">evasion</a>
-            <a href="./tag/assembly.html" class="tag">assembly</a>
-            <a href="./tag/av.html" class="tag">av</a>
+            <a href="https://www.accidentalrebel.com/tag/evasion.html" class="tag">evasion</a>
+            <a href="https://www.accidentalrebel.com/tag/assembly.html" class="tag">assembly</a>
+            <a href="https://www.accidentalrebel.com/tag/av.html" class="tag">av</a>
         </div>
     </footer>
 </article>
@@ -426,7 +426,7 @@ The "powershell" string has 11 characters so we use 16.</p>
                 </div>
                 <aside class="sidebar">
                     <div class="sidebar-sticky">
-                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <img src="https://www.accidentalrebel.com/theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
                         <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
                         <p class="sidebar-realname">Juan Karlo Licudine</p>
                         <p class="sidebar-bio">Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</p>
@@ -466,7 +466,7 @@ The "powershell" string has 11 characters so we use 16.</p>
         </div>
     </footer>
 
-    <script src="./theme/js/main.js"></script>
+    <script src="https://www.accidentalrebel.com/theme/js/main.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>

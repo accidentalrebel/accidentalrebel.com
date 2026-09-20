@@ -7,18 +7,18 @@
 
 <meta name="description" content="CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.">
 
-    <link rel="canonical" href="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">
+    <link rel="canonical" href="https://www.accidentalrebel.com/threat-hunting-from-home-cyber-corp-wmi-persistence.html">
 
     <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
 
-    <link rel="stylesheet" href="./theme/css/main.css">
+    <link rel="stylesheet" href="https://www.accidentalrebel.com/theme/css/main.css">
 
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "Person",
         "name": "AccidentalRebel",
-        "url": ".",
+        "url": "https://www.accidentalrebel.com",
         "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
     }
     </script>
@@ -27,19 +27,19 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="article">
-    <meta property="og:url" content="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">
+    <meta property="og:url" content="https://www.accidentalrebel.com/threat-hunting-from-home-cyber-corp-wmi-persistence.html">
     <meta property="og:title" content="Cyber Corp Case 2 Writeup - Part 1">
     <meta property="article:author" content="AccidentalRebel">
     <meta property="article:published_time" content="2021-10-30T12:00:00+08:00">
     <meta property="og:description" content="CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.">
-    <meta property="og:image" content="./images/cyber-corp-case-2-writeup-01.png">
+    <meta property="og:image" content="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-01.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="./threat-hunting-from-home-cyber-corp-wmi-persistence.html">
+    <meta property="twitter:url" content="https://www.accidentalrebel.com/threat-hunting-from-home-cyber-corp-wmi-persistence.html">
     <meta property="twitter:title" content="Cyber Corp Case 2 Writeup - Part 1">
     <meta property="twitter:description" content="CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.">
-    <meta property="twitter:image" content="./images/cyber-corp-case-2-writeup-01.png">
+    <meta property="twitter:image" content="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-01.png">
 
     <script type="application/ld+json">
     {
@@ -49,9 +49,9 @@
         "datePublished": "2021-10-30T12:00:00+08:00",
         "author": { "@type": "Person", "name": "AccidentalRebel" },
         "publisher": { "@type": "Person", "name": "AccidentalRebel" },
-        "url": "./threat-hunting-from-home-cyber-corp-wmi-persistence.html",
+        "url": "https://www.accidentalrebel.com/threat-hunting-from-home-cyber-corp-wmi-persistence.html",
         "description": "CyberCorp Case 2 threat hunting walkthrough — tracking WMI persistence, a malicious Word document, and a hidden iexproxy.dll download technique in Kibana.",
-        "image": "./images/cyber-corp-case-2-writeup-01.png"
+        "image": "https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-01.png"
     }
     </script>
 
@@ -60,8 +60,8 @@
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            { "@type": "ListItem", "position": 1, "name": "Home", "item": "./" },
-            { "@type": "ListItem", "position": 2, "name": "Threat Hunting", "item": "./category/threat-hunting.html" },
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.accidentalrebel.com/" },
+            { "@type": "ListItem", "position": 2, "name": "Threat Hunting", "item": "https://www.accidentalrebel.com/category/threat-hunting.html" },
             { "@type": "ListItem", "position": 3, "name": "Cyber Corp Case 2 Writeup - Part 1" }
         ]
     }
@@ -74,14 +74,14 @@
     <header>
         <div class="container-wide">
             <nav>
-                <a href="./" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <a href="https://www.accidentalrebel.com/" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
                 <button class="menu-toggle" onclick="toggleMenu()">☰</button>
                 <ul class="nav-links" id="navLinks">
-                    <li><a href="./archives.html">Archives</a></li>
-                    <li><a href="./categories.html">Categories</a></li>
-                    <li><a href="./tags.html">Tags</a></li>
-                            <li><a href="./category/cybersecurity-x-ai.html">Newsletter</a></li>
-                            <li><a href="./pages/about.html">About</a></li>
+                    <li><a href="https://www.accidentalrebel.com/archives.html">Archives</a></li>
+                    <li><a href="https://www.accidentalrebel.com/categories.html">Categories</a></li>
+                    <li><a href="https://www.accidentalrebel.com/tags.html">Tags</a></li>
+                            <li><a href="https://www.accidentalrebel.com/category/cybersecurity-x-ai.html">Newsletter</a></li>
+                            <li><a href="https://www.accidentalrebel.com/pages/about.html">About</a></li>
                 </ul>
             </nav>
         </div>
@@ -93,7 +93,7 @@
                 <div class="content">
 <article>
     <header class="article-header">
-        <a href="./category/threat-hunting.html" class="article-category-label">Threat Hunting</a>
+        <a href="https://www.accidentalrebel.com/category/threat-hunting.html" class="article-category-label">Threat Hunting</a>
         <h1>Cyber Corp Case 2 Writeup - Part 1</h1>
         <div class="article-meta">
             <time datetime="2021-10-30T12:00:00+08:00">Sat 30 October 2021</time>
@@ -109,8 +109,8 @@
 <p>Question 1. The Threat Hunting process usually starts with the analyst making a hypothesis about a possible compromise vector or techniques used by an attacker. In this scenario, your initial hypothesis is as follows: "The attacker used the WMI subscription mechanism to obtain persistence within the infrastructure". Verify this hypothesis and find the name of the WMI Event Consumer used by the attacker to maintain his foothold.</p>
 </blockquote>
 <p>So the question tells us that the attacker used WMI subscription to gain persistence in our network.</p>
-<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="./new-tool-preview-vattack.html">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
-<p><img alt="cyber-corp-case-2-writeup-01" src="./images/cyber-corp-case-2-writeup-01.png" /></p>
+<p>The very first thing I did was to check the Mitre ATT&amp;CK wiki for information about this attack. My search led me to the "<a href="https://attack.mitre.org/techniques/T1546/003/">Event Triggered Execution: Windows Management Instrumentation Event Subscription</a>" with technique ID <code>T1546.003</code>. And, of course, I fired up <a href="https://www.accidentalrebel.com/new-tool-preview-vattack.html">my vATT&amp;CK tool</a> to better visualize the technique and its related information.</p>
+<p><img alt="cyber-corp-case-2-writeup-01" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-01.png" /></p>
 <h2 id="testing-wmi-persistence-in-my-homelab">Testing WMI Persistence in my homelab</h2>
 <p>Now that I understand the concept I then checked <a href="https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1546.003/T1546.003.md">the technique's entry</a> in the Atomic Red Team's repository of adversary emulation techniques. The nice thing about Atomic Red Team is that they have easy-to-follow step-by-step instructions on how to emulate Mitre ATT&amp;CK techniques.</p>
 <p>I took the code on the page and ran it in <a href="building-my-virtual-cybersecurity-home-lab">my homelab</a>. I then fired up Windows Event Viewer and looked for entries with event log ID "5681 (WMI activity)". The entry that I found contains the information below:</p>
@@ -138,7 +138,7 @@
 <li>Event ID 20: WmiEvent (WmiEventConsumer activity detected)</li>
 <li>Event ID 21: WmiEvent (WmiEventConsumerToFilter activity</li>
 </ul>
-<p><img alt="cyber-corp-case-2-writeup-02" src="./images/cyber-corp-case-2-writeup-02.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-02" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-02.png" /></p>
 <p>As we can see, Sysmon separates the WMIEvents into the different types of WmiEvent activities.</p>
 <h2 id="building-the-query-for-the-kibana-search">Building the Query for the Kibana search</h2>
 <p>Now that I know what the important IOCs are, I could now create the query to answer the first question of the challenge.</p>
@@ -147,19 +147,19 @@
 <li>("QueryLanguage = " AND "Consumer = ")</li>
 </ul>
 <p>When the above information is combined, I get the query <code>5861 OR ("QueryLanguage = " AND "Consumer = ")</code>. Putting this in the Kibana search shows us the one and only entry:</p>
-<p><img alt="cyber-corp-case-2-writeup-03" src="./images/cyber-corp-case-2-writeup-03.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-03" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-03.png" /></p>
 <p>From there we could easily see the name of the WMI Event Consumer.</p>
 <h2 id="looking-for-the-wmi-subscriber">Looking for the WMI subscriber</h2>
 <blockquote>
 <p>Question 2. In the previous step, you looked for traces of the attacker's persistence in the compromised system through a WMI subscription mechanism. Now find the process that installed the WMI subscription. Answer the question by specifying the PID of that process and the name of its executable file, separated by a comma without spaces.</p>
 </blockquote>
 <p>Reading the question above, I knew that I needed to look for a process that has happened prior to the WMI subscription. And so, I've set the date range to reflect this.</p>
-<p><img alt="cyber-corp-case-2-writeup-04" src="./images/cyber-corp-case-2-writeup-04.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-04" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-04.png" /></p>
 <p>I wasn't so sure what to look for next so I just looked out for anything suspicious. Thankfully there is the <code>enrich.ioa.*</code> set of fields where enrichment is done that indicate suspiciousness. I've set a filter to show entries that have <code>enrich.ioa.max_severity</code> to <code>exists</code>. This means it'll only show events that are either <code>high</code>, <code>medium</code>, or <code>low</code>.</p>
 <p>These showed some very interesting events:</p>
-<p><img alt="cyber-corp-case-2-writeup-05" src="./images/cyber-corp-case-2-writeup-05.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-05" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-05.png" /></p>
 <p>It seems like <code>winword.exe</code> is connecting to an external IP. Very suspicious. Searching the IP <code>188.135.15.49</code> on VirusTotal reveals that it is indeed malicious.</p>
-<p><img alt="cyber-corp-case-2-writeup-06" src="./images/cyber-corp-case-2-writeup-06.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-06" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-06.png" /></p>
 <p>If we look at more of the events we will find that there are a lot of malicious activity with the <code>proc_cmdline</code> that contains the value:</p>
 <blockquote>
 <p>"C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE" /n "C:!Work\Marketing\Docs\OPEC\OPEC crude oil production.docx" /o ""</p>
@@ -170,7 +170,7 @@
 <p>Question 3. The process described in the previous question was used to open a file extracted from the archive that the user received by email. Specify a SHA256 hash of the file extracted and opened from the archive.</p>
 </blockquote>
 <p>The question said something about a file being opened, and so I added the filters <code>event_type: FileOpen</code> and <code>proc_file_path: C:\Program Files (x86)\Microsoft Office\Office16\WINWORD.EXE</code> to see what files were opened using Word.exe prior to the WMI subscription. This however showed a lot of files.</p>
-<p><img alt="cyber-corp-case-2-writeup-07" src="./images/cyber-corp-case-2-writeup-07.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-07" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-07.png" /></p>
 <p>The question also mentioned that the opened file was extracted from an archive received by email. So I added the query <code>*zip* OR *rar*</code> to find out if there are any "zip" or "rar" files that were processed.</p>
 <p>Sure enough, there was, and one particular really stood out. </p>
 <blockquote>
@@ -187,30 +187,30 @@
 <p>Question 4. The file mentioned in question 3, is not malicious in and of itself, but when it is opened, another file is downloaded from the Internet that already contains the malicious code. Answer the question by specifying the address, from which this file was downloaded, and the SHA256 hash of the downloaded file, separated by commas without spaces.</p>
 </blockquote>
 <p>If we think about it, we can make the date range smaller by starting our range from when the Zip is extracted and from when the WMI subscription happened. </p>
-<p><img alt="cyber-corp-case-2-writeup-08" src="./images/cyber-corp-case-2-writeup-08.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-08" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-08.png" /></p>
 <p>There are three "action" keywords specified in the question that I knew I could filter for. This led me to use the query below:</p>
 <blockquote>
 <p>event_type:NetworkConnection OR event_type:FileOpen OR event_type:FileCreate</p>
 </blockquote>
 <p>What I'm looking for is an event where there is a "NetworkConnection" and a "FileCreate" event (these two signify another file is downloaded from the internet), the "FileOpen" is when the file has been opened and therefore triggered the WMI subscription.</p>
 <p>As you can see in the image below, we have a series of events that shows us the three events that we are looking for in the previous paragraph. But because their timestamps are the same, they are all jumbled.</p>
-<p><img alt="cyber-corp-case-2-writeup-09" src="./images/cyber-corp-case-2-writeup-09.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-09" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-09.png" /></p>
 <p>The way to see if the events happened in the order that we want (Network Connection &gt; FileCreate &gt; FileOpen), then what we can do is to view the surrounding documents on one of the events and see from there. From the image below, we see that the ordering of the events is indeed correct.</p>
-<p><img alt="cyber-corp-case-2-writeup-10" src="./images/cyber-corp-case-2-writeup-10.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-10" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-10.png" /></p>
 <p>The above tells us two of the answers that we need to answer the 4th question. The IP on the network connection and the hash of the file that was opened.</p>
 <h2 id="finding-the-tricky-technique">Finding the tricky technique</h2>
 <blockquote>
 <p>Question 5. The malicious code from the file, mentioned in question 4, directly installed a WMI subscription, which we started our hunting with, and also downloaded several files from the Internet to the compromised host. For file downloading, the attacker used a tricky technique that gave him the opportunity to hide the real process, which initiated the corresponding network activity. Specify the SHA256 hash of the operating system component whose functionality was used by the attacker to download files from the Internet.</p>
 </blockquote>
 <p>So the event that the question is looking for happened after the WMI subscription. I've updated the date range to reflect this.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-1-11" src="./images/cyber-corp-case-2-writeup-part-1-11.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-1-11" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-1-11.png" /></p>
 <p>Initially, I tried doing the same approach as I did before where I would pick up certain "action" keywords from the question. Something similar to the query below:</p>
 <blockquote>
 <p>(event_type:NetworkConnection OR event_type:FileCreate) AND enrich.ioa.max_severity:*</p>
 </blockquote>
 <p>Sadly, no matter where I looked it doesn't seem to be what the question is looking for.</p>
 <p>And so, I had to start my search from scratch but this time only focusing on any entries after the WMI subscription that have an existing value in <code>enrich.ioa.max_severity</code>. This approach worked and it showed me this very interesting entry marked as <code>win_unusual_ie_com_dll_host_process</code>.</p>
-<p><img alt="cyber-corp-case-2-writeup-part-1-12" src="./images/cyber-corp-case-2-writeup-part-1-12.png" /></p>
+<p><img alt="cyber-corp-case-2-writeup-part-1-12" src="https://www.accidentalrebel.com/images/cyber-corp-case-2-writeup-part-1-12.png" /></p>
 <p>So apparently, "winword.exe" loaded the library "iexproxy.dll", which allowed it to use "iexplore.exe" in downloading several files from the internet. This technique is unfamiliar to me and researching about it only showed <a href="https://cyberpolygon.com/materials/hunting-for-advanced-tactics-techniques-and-procedures-ttps/">an article from Cyber Polygon</a>. I'll try to explore this in the future, but at least for now. I have the answer to the question.</p>
 <hr />
 <p>This is part 1 of my write-up for this challenge. Expect the next part which would have the answer to the question that a lot of people have difficulty answering, which is #9. Until then!</p>
@@ -219,8 +219,8 @@
 
     <footer class="article-footer">
         <div class="tags">
-            <a href="./tag/threat-hunting.html" class="tag">threat-hunting</a>
-            <a href="./tag/cyberdefenders.html" class="tag">cyberdefenders</a>
+            <a href="https://www.accidentalrebel.com/tag/threat-hunting.html" class="tag">threat-hunting</a>
+            <a href="https://www.accidentalrebel.com/tag/cyberdefenders.html" class="tag">cyberdefenders</a>
         </div>
     </footer>
 </article>
@@ -260,7 +260,7 @@
                 </div>
                 <aside class="sidebar">
                     <div class="sidebar-sticky">
-                        <img src="./theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <img src="https://www.accidentalrebel.com/theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
                         <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
                         <p class="sidebar-realname">Juan Karlo Licudine</p>
                         <p class="sidebar-bio">Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</p>
@@ -300,7 +300,7 @@
         </div>
     </footer>
 
-    <script src="./theme/js/main.js"></script>
+    <script src="https://www.accidentalrebel.com/theme/js/main.js"></script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
     <script>
