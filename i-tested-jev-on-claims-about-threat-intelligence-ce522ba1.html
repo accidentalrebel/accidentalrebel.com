@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I tested Jev on claims about threat intelligence | AccidentalRebel.com</title>
+
+<meta name="description" content="After trying Jev on a small decision in my knowledge vault, I kept wondering whether it could help with security work. The question was too broad as stated....">
+
+    <link rel="canonical" href="https://www.accidentalrebel.com/i-tested-jev-on-claims-about-threat-intelligence-ce522ba1.html">
+
+    <link href="https://www.accidentalrebel.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="AccidentalRebel.com Atom Feed" />
+
+    <link rel="stylesheet" href="https://www.accidentalrebel.com/theme/css/main.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "AccidentalRebel",
+        "url": "https://www.accidentalrebel.com",
+        "sameAs": ["mailto:karlo@accidentalrebel.com", "https://www.linkedin.com/in/juan-karlo-licudine/", "https://github.com/accidentalrebel"]
+    }
+    </script>
+
+    <meta name="author" content="AccidentalRebel">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://www.accidentalrebel.com/i-tested-jev-on-claims-about-threat-intelligence-ce522ba1.html">
+    <meta property="og:title" content="I tested Jev on claims about threat intelligence">
+    <meta property="article:author" content="AccidentalRebel">
+    <meta property="article:published_time" content="2026-09-27T00:00:00+08:00">
+    <meta property="og:description" content="After trying Jev on a small decision in my knowledge vault, I kept wondering whether it could help with security work. The question was too broad as stated. "Does it know cybersecurity?" could mean anything from recognizing a log pattern to assessing a report about a threat actor. I chose a narrower task I could check: given a claim and a few passages from an advisory, can Jev tell whether the passages support it, contradict it, or leave it unsettled? That distinction matters in threat intelligence. Two facts can both be true while the conclusion joining them is not supported. A report may mention a tool, but that does not mean every actor in the report used it. If I ask a model to check a claim, I want it to stay inside the evidence I gave it. I built 120 claim-and-evidence packets from ten public-domain CISA advisories. Each packet …">
+    <meta property="og:image" content="https://www.accidentalrebel.com/images/default-og.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.accidentalrebel.com/i-tested-jev-on-claims-about-threat-intelligence-ce522ba1.html">
+    <meta property="twitter:title" content="I tested Jev on claims about threat intelligence">
+    <meta property="twitter:description" content="After trying Jev on a small decision in my knowledge vault, I kept wondering whether it could help with security work. The question was too broad as stated. "Does it know cybersecurity?" could mean anything from recognizing a log pattern to assessing a report about a threat actor. I chose a narrower task I could check: given a claim and a few passages from an advisory, can Jev tell whether the passages support it, contradict it, or leave it unsettled? That distinction matters in threat intelligence. Two facts can both be true while the conclusion joining them is not supported. A report may mention a tool, but that does not mean every actor in the report used it. If I ask a model to check a claim, I want it to stay inside the evidence I gave it. I built 120 claim-and-evidence packets from ten public-domain CISA advisories. Each packet …">
+    <meta property="twitter:image" content="https://www.accidentalrebel.com/images/default-og.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": "I tested Jev on claims about threat intelligence",
+        "datePublished": "2026-09-27T00:00:00+08:00",
+        "author": { "@type": "Person", "name": "AccidentalRebel" },
+        "publisher": { "@type": "Person", "name": "AccidentalRebel" },
+        "url": "https://www.accidentalrebel.com/i-tested-jev-on-claims-about-threat-intelligence-ce522ba1.html",
+        "description": "After trying Jev on a small decision in my knowledge vault, I kept wondering whether it could help with security work. The question was too broad as stated....",
+        "image": "https://www.accidentalrebel.com/images/default-og.png"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.accidentalrebel.com/" },
+            { "@type": "ListItem", "position": 2, "name": "misc", "item": "https://www.accidentalrebel.com/category/misc.html" },
+            { "@type": "ListItem", "position": 3, "name": "I tested Jev on claims about threat intelligence" }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <div class="rebel-stripe"></div>
+    <div class="progress-bar" id="progress"></div>
+
+    <header>
+        <div class="container-wide">
+            <nav>
+                <a href="https://www.accidentalrebel.com/" class="site-title">Accidental<span class="rebel">Rebel</span>.com</a>
+                <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="https://www.accidentalrebel.com/archives.html">Archives</a></li>
+                    <li><a href="https://www.accidentalrebel.com/categories.html">Categories</a></li>
+                    <li><a href="https://www.accidentalrebel.com/tags.html">Tags</a></li>
+                            <li><a href="https://www.accidentalrebel.com/category/cybersecurity-x-ai.html">Newsletter</a></li>
+                            <li><a href="https://www.accidentalrebel.com/pages/about.html">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container-wide">
+            <div class="layout">
+                <div class="content">
+<article>
+    <header class="article-header">
+        <a href="https://www.accidentalrebel.com/category/misc.html" class="article-category-label">misc</a>
+        <h1>I tested Jev on claims about threat intelligence</h1>
+        <div class="article-meta">
+            <time datetime="2026-09-27T00:00:00+08:00">Sun 27 September 2026</time>
+        </div>
+    </header>
+
+    <div class="article-content">
+        <p>After <a href="https://www.accidentalrebel.com/testing-jev-as-a-gate-for-agent-submitted-knowledge-f6a56d11.html">trying Jev on a small decision in my knowledge vault</a>, I kept wondering whether it could help with security work. The question was too broad as stated. "Does it know cybersecurity?" could mean anything from recognizing a log pattern to assessing a report about a threat actor. I chose a narrower task I could check: given a claim and a few passages from an advisory, can Jev tell whether the passages support it, contradict it, or leave it unsettled?</p>
+<p>That distinction matters in threat intelligence. Two facts can both be true while the conclusion joining them is not supported. A report may mention a tool, but that does not mean every actor in the report used it. If I ask a model to check a claim, I want it to stay inside the evidence I gave it.</p>
+<p>I built 120 claim-and-evidence packets from ten public-domain CISA advisories. Each packet contains one claim and five passages. The claims were balanced across supported, contradicted, and insufficient evidence. Some contradicted claims reverse a meaning; others swap a single detail. Some insufficient claims concern a fact that appears elsewhere in the advisory but is deliberately absent from the packet. The model has to judge the supplied passages, not guess what the full advisory might say.</p>
+<p>I fixed the questions and labels before running any model. Two reviewers checked the labels without seeing model answers. They disagreed most often about the detail swaps: if a passage gives a list of examples and omits one tool, does that contradict a claim about that tool, or merely fail to support it? That is a real ambiguity, and I do not want to hide it by calling every disagreement a model error.</p>
+<p>On the 116 items that passed the prespecified label check, Jev got 97% right. Claude Sonnet 5 got 98% with the same three-way question. The difference is too small for this set to establish a winner. The run also included NVIDIA's Nemotron 3 Ultra, a free model from outside the Claude and OpenAI families, on the same question. It got 91%, and every one of its misses was a supported or contradicted claim that it called insufficient. Jev's lead over it looks real, but this set is too small to be sure.</p>
+<p>Jev called only one unsupported claim supported, which is the mistake I was most worried about for this task. Its errors clustered in the least confident quarter of answers, so a review queue based on uncertainty would have caught them in this run. Running Jev over all 120 packets cost less than one US cent.</p>
+<p>The harder detail swaps are where I would spend the next round of work. Jev sometimes answered "insufficient" where my original label said "contradicted." One reviewer made the same call on several of those items. Before tuning a prompt or declaring a failure, I need a sharper rule for what an omitted detail means when a passage lists examples rather than an exhaustive inventory.</p>
+<p>This is a small, constructed evaluation. The claims were written from advisories, not collected from a live analyst workflow. Claude helped write and review the set, which may affect comparisons with a Claude model. The result tells me Jev is worth testing further as a claim checker; it does not tell me to let it approve a finished intelligence report on its own.</p>
+<p>I also ran a separate alert-triage experiment on private development material. That run helped me understand how much surrounding context matters, but I am keeping its figures out of this post. If I want to share a SOC result, I need to collect a set of logs I can publish.</p>
+    </div>
+
+    <footer class="article-footer">
+        <div class="tags">
+            <a href="https://www.accidentalrebel.com/tag/ai.html" class="tag">ai</a>
+            <a href="https://www.accidentalrebel.com/tag/cybersecurity.html" class="tag">cybersecurity</a>
+        </div>
+    </footer>
+</article>
+
+
+<section class="newsletter-cta">
+    <h3>Get posts like this in your inbox</h3>
+    <p>Security research, malware analysis, and tools — no spam.</p>
+    <form
+        action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+        method="post"
+        target="popupwindow"
+        class="newsletter-form"
+    >
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Subscribe</button>
+    </form>
+</section>
+
+<section class="comments">
+    <script src="https://giscus.app/client.js"
+        data-repo="accidentalrebel/accidentalrebel.com"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMTkzODk2NjU="
+        data-category="Comments"
+        data-category-id="DIC_kwDOBx294c4C26p7"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="light"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+    </script>
+</section>
+                </div>
+                <aside class="sidebar">
+                    <div class="sidebar-sticky">
+                        <img src="https://www.accidentalrebel.com/theme/images/avatar.png" alt="AccidentalRebel" class="sidebar-avatar">
+                        <h3 class="sidebar-name">Accidental<span class="rebel">Rebel</span></h3>
+                        <p class="sidebar-realname">Juan Karlo Licudine</p>
+                        <p class="sidebar-bio">Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</p>
+                        <ul class="sidebar-social">
+                            <li><a href="mailto:karlo@accidentalrebel.com" target="_blank" rel="noopener">Email</a></li>
+                            <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                            <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                        </ul>
+                        <div class="sidebar-newsletter">
+                            <h4>For weekly Cybersecurity x AI threat analysis subscribe below</h4>
+                            <form
+                                action="https://buttondown.com/api/emails/embed-subscribe/accidentalrebel"
+                                method="post"
+                                target="popupwindow"
+                                class="sidebar-newsletter-form"
+                            >
+                                <input type="email" name="email" placeholder="your@email.com" required />
+                                <button type="submit">Subscribe</button>
+                            </form>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container-wide">
+            <div class="footer-content">
+                <span>&copy; AccidentalRebel. Hands-on AI security. I threat model AI agents, build containment tools, track real-world attacks, and write about what I find.</span>
+                <ul class="footer-links">
+                    <li><a href="mailto:karlo@accidentalrebel.com" target="_blank" rel="noopener">Email</a></li>
+                    <li><a href="https://www.linkedin.com/in/juan-karlo-licudine/" target="_blank" rel="noopener">LinkedIn</a></li>
+                    <li><a href="https://github.com/accidentalrebel" target="_blank" rel="noopener">GitHub</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://www.accidentalrebel.com/theme/js/main.js"></script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-55068085-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-55068085-2');
+    </script>
+</body>
+</html>
